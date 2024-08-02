@@ -5,13 +5,23 @@ import { RoomsService } from './rooms.service';
 export class RoomsController {
   constructor(private readonly roomsService: RoomsService) {}
 
-  create() {}
+  create() {
+    return 'create a room';
+  }
 
-  findOne() {}
+  findOne() {
+    return 'find one room';
+  }
 
-  findAll() {}
+  findAll() {
+    return 'find all rooms';
+  }
 
-  update() {}
+  update() {
+    return 'update one room';
+  }
 
-  delete() {}
+  delete() {
+    return 'delete one room';
+  }
 }
