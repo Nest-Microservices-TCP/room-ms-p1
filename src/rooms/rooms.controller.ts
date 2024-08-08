@@ -6,22 +6,22 @@ export class RoomsController {
   constructor(private readonly roomsService: RoomsService) {}
 
   create() {
-    return 'create a room';
+    return this.roomsService.create();
   }
 
   findOne() {
-    return 'find one room';
+    return this.roomsService.findOne();
   }
 
   findAll() {
-    return 'find all rooms';
+    return this.roomsService.findAll();
   }
 
   update() {
-    return 'update one room';
+    return this.roomsService.update();
   }
 
   delete() {
-    return 'delete one room';
+    return this.roomsService.delete();
   }
 }
