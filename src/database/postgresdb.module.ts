@@ -11,7 +11,7 @@ import { envs } from 'src/config';
       username: envs.dbUsername,
       password: envs.dbPassword,
       database: envs.dbName,
-      entities: [],
+      entities: [__dirname + '/../**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
   ],
