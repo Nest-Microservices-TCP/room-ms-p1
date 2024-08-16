@@ -1,8 +1,9 @@
+import { Status } from '../enums/status.enum';
 import {
-  Column,
-  CreateDateColumn,
-  PrimaryGeneratedColumn,
   UpdateDateColumn,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  Column,
 } from 'typeorm';
 
 export abstract class BaseEntity {
@@ -21,8 +22,13 @@ export abstract class BaseEntity {
   @Column({ name: 'updated_by', type: 'uuid' })
   updatedBy: string;
 
-  @Column({ name: 'status', type: 'boolean' })
-  status: boolean;
+  @Column({
+    name: 'status',
+    type: 'enum',
+    enum: Status,
+    default: Status.ACTIVE,
+  })
+  status: Status;
 
   @Column({ name: 'deleted_at', type: 'timestamp with time zone' })
   deletedAt: Date;
