@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable } from '@nestjs/common';
 import { UnitOfWork } from '../common/unit-of-work/unit-of-work.service';
 import { RoomStateEntity } from './entities/room-state.entity';
 import { CreateRoomStateDto } from './dto/create-room-state.dto';
+import { RpcException } from '@nestjs/microservices';
 
 @Injectable()
 export class RoomsStatesService {
@@ -19,9 +20,10 @@ export class RoomsStatesService {
 
       return newRoomState;
     } catch (error) {
-      throw new Error(
-        `Error al guardar el estado de habitación: ${error.message}`,
-      );
+      throw new RpcException({
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: `Error to create room-state: ${error}`,
+      });
     }
   }
 }
