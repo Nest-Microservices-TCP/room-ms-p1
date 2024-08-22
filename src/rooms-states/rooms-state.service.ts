@@ -12,6 +12,8 @@ export class RoomsStatesService {
     let newRoomState: RoomStateEntity;
 
     try {
+      await this.unitOfWork.start();
+
       await this.unitOfWork.complete(async () => {
         const roomStatesRepository = this.unitOfWork.getRoomsStatesRepository();
 
