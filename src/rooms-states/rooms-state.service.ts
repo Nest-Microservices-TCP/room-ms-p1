@@ -3,6 +3,7 @@ import { UnitOfWork } from '../common/unit-of-work/unit-of-work.service';
 import { RoomStateEntity } from './entities/room-state.entity';
 import { CreateRoomStateDto } from './dto/create-room-state.dto';
 import { RpcException } from '@nestjs/microservices';
+import { FindOneRoomStateByIdDto } from './dto/find-one-room-state-by-id.dto';
 
 @Injectable()
 export class RoomsStatesService {
@@ -25,6 +26,31 @@ export class RoomsStatesService {
       throw new RpcException({
         status: HttpStatus.INTERNAL_SERVER_ERROR,
         message: `Error to create room-state: ${error}`,
+      });
+    }
+  }
+
+  async findOneById(
+    request: FindOneRoomStateByIdDto,
+  ): Promise<RoomStateEntity> {
+    const { roomStateId } = request;
+    let roomState: RoomStateEntity;
+
+    try {
+      await this.unitOfWork.start();
+
+      await this.unitOfWork.complete(async () => {
+        const roomsStatesRepository =
+          this.unitOfWork.getRoomsStatesRepository();
+
+        roomState = await roomsStatesRepository.findById(roomStateId);
+      });
+
+      return roomState;
+    } catch (error) {
+      throw new RpcException({
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: `Error to find room-state: ${error}`,
       });
     }
   }
