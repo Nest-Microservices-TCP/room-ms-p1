@@ -1,5 +1,7 @@
 import { Controller } from '@nestjs/common';
 import { RoomsService } from './rooms.service';
+import { MessagePattern, Payload } from '@nestjs/microservices';
+import { CreateRoomStateDto } from 'src/rooms-states/dto/create-room-state.dto';
 
 @Controller()
 export class RoomsController {
@@ -23,5 +25,11 @@ export class RoomsController {
 
   delete() {
     return this.roomsService.delete();
+  }
+
+  @MessagePattern({ cmd: 'get.hello' })
+  getHello(@Payload() request: CreateRoomStateDto) {
+    console.log('payload->', { request });
+    return 'Hola desde el microservicio';
   }
 }
