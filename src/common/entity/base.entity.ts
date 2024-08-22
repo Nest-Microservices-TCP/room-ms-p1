@@ -16,10 +16,10 @@ export abstract class BaseEntity {
   @UpdateDateColumn({ name: 'updated_at', type: 'timestamp with time zone' })
   updatedAt: Date;
 
-  @Column({ name: 'created_by', type: 'uuid' })
+  @Column({ name: 'created_by', type: 'uuid', nullable: true })
   createdBy: string;
 
-  @Column({ name: 'updated_by', type: 'uuid' })
+  @Column({ name: 'updated_by', type: 'uuid', nullable: true })
   updatedBy: string;
 
   @Column({
@@ -30,6 +30,10 @@ export abstract class BaseEntity {
   })
   status: Status;
 
-  @Column({ name: 'deleted_at', type: 'timestamp with time zone' })
+  @Column({
+    name: 'deleted_at',
+    type: 'timestamp with time zone',
+    nullable: true,
+  })
   deletedAt: Date;
 }
