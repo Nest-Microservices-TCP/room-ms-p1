@@ -13,7 +13,7 @@ export class RoomStateEntity extends BaseEntity {
   @Column({
     name: 'description',
     type: 'text',
-    nullable: false,
+    nullable: true,
   })
   description: string;
 }
