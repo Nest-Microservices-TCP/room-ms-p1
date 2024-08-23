@@ -20,4 +20,9 @@ export class RoomsStatesController {
   ): Promise<RoomStateEntity> {
     return this.roomsStatesService.findOneById(request);
   }
+
+  @MessagePattern({ cmd: 'find.all.rooms.states' })
+  async findAll(): Promise<RoomStateEntity[]> {
+    return this.roomsStatesService.findAll();
+  }
 }
