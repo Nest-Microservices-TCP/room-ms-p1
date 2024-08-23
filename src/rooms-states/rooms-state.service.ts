@@ -54,4 +54,26 @@ export class RoomsStatesService {
       });
     }
   }
+
+  async findAll(): Promise<RoomStateEntity[]> {
+    let roomsStates: RoomStateEntity[];
+
+    try {
+      await this.unitOfWork.start();
+
+      await this.unitOfWork.complete(async () => {
+        const roomsStatesRepository =
+          this.unitOfWork.getRoomsStatesRepository();
+
+        roomsStates = await roomsStatesRepository.findAll();
+      });
+
+      return roomsStates;
+    } catch (error) {
+      throw new RpcException({
+        code: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: `Error to get all room states: ${error}`,
+      });
+    }
+  }
 }
