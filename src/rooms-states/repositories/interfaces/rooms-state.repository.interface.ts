@@ -1,10 +1,10 @@
-import { CreateRoomStateDto } from 'src/rooms-states/dto/create-room-state.dto';
+import { IBaseRepository } from 'src/common/interfaces';
+import { CreateRoomStateDto, UpdateRoomStateDto } from 'src/rooms-states/dto';
 import { RoomStateEntity } from 'src/rooms-states/entities/room-state.entity';
 
-export interface IRoomsStateRepository {
-  findById(id: string): Promise<RoomStateEntity>;
-  findAll(): Promise<RoomStateEntity[]>;
-  create(roomState: Partial<RoomStateEntity>): RoomStateEntity;
-  save(request: CreateRoomStateDto): Promise<RoomStateEntity>;
-  deleteById(id: string): Promise<RoomStateEntity>;
-}
+export interface IRoomsStateRepository
+  extends IBaseRepository<
+    RoomStateEntity,
+    CreateRoomStateDto,
+    UpdateRoomStateDto
+  > {}
