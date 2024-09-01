@@ -19,8 +19,15 @@ export class RoomsService {
     }
   }
 
-  findOne() {
-    return 'get one room';
+  findOneById(id: string): Promise<RoomEntity> {
+    try {
+      return this.roomsRepository.findOneById(id);
+    } catch (error) {
+      throw new RpcException({
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: `Error to get room by ID: ${error}`,
+      });
+    }
   }
 
   findAll() {
