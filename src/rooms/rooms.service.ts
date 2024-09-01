@@ -30,8 +30,15 @@ export class RoomsService {
     }
   }
 
-  findAll() {
-    return 'get all rooms';
+  findAll(): Promise<RoomEntity[]> {
+    try {
+      return this.roomsRepository.findAll();
+    } catch (error) {
+      throw new RpcException({
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: `Error to get the rooms: ${error}`,
+      });
+    }
   }
 
   update() {
