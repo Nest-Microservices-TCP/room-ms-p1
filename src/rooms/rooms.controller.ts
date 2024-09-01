@@ -13,8 +13,8 @@ export class RoomsController {
     return this.roomsService.save(request);
   }
 
-  findOne() {
-    return this.roomsService.findOne();
+  findOnById(id: string): Promise<RoomEntity> {
+    return this.roomsService.findOneById(id);
   }
 
   findAll() {
