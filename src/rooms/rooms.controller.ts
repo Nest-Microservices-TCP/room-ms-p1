@@ -2,13 +2,15 @@ import { Controller } from '@nestjs/common';
 import { RoomsService } from './rooms.service';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { CreateRoomStateDto } from 'src/rooms-states/dto/create-room-state.dto';
+import { CreateRoomDto } from './dto';
+import { RoomEntity } from './entities/room.entity';
 
 @Controller()
 export class RoomsController {
   constructor(private readonly roomsService: RoomsService) {}
 
-  create() {
-    return this.roomsService.create();
+  save(request: CreateRoomDto): Promise<RoomEntity> {
+    return this.roomsService.save(request);
   }
 
   findOne() {
