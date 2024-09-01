@@ -43,7 +43,7 @@ export class RoomsStatesService {
         const roomsStatesRepository =
           this.unitOfWork.getRoomsStatesRepository();
 
-        roomState = await roomsStatesRepository.findById(roomStateId);
+        roomState = await roomsStatesRepository.findOneById(roomStateId);
       });
 
       return roomState;
