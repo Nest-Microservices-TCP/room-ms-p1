@@ -52,7 +52,14 @@ export class RoomsService {
     }
   }
 
-  delete() {
-    return 'delete one room';
+  deleteById(id: string): Promise<RoomEntity> {
+    try {
+      return this.roomsRepository.deleteById(id);
+    } catch (error) {
+      throw new RpcException({
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: `Error to update the room: ${error}`,
+      });
+    }
   }
 }
