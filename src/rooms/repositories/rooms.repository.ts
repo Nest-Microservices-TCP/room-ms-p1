@@ -38,9 +38,14 @@ export class RoomsRepository implements IRoomsRepository {
     return this.roomsRepository.save(request);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  update(request: UpdateRoomDto): Promise<RoomEntity> {
-    throw new Error('Method not implemented.');
+  async update(request: UpdateRoomDto): Promise<RoomEntity> {
+    const { room_id } = request;
+
+    const room = await this.findOneById(room_id);
+
+    Object.assign(room, request);
+
+    return this.roomsRepository.save(room);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
