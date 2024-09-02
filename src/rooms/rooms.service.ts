@@ -1,7 +1,7 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { RoomsRepository } from './repositories/rooms.repository';
 import { RpcException } from '@nestjs/microservices';
-import { CreateRoomDto } from './dto';
+import { CreateRoomDto, UpdateRoomDto } from './dto';
 import { RoomEntity } from './entities/room.entity';
 
 @Injectable()
@@ -41,8 +41,15 @@ export class RoomsService {
     }
   }
 
-  update() {
-    return 'update one room';
+  update(request: UpdateRoomDto) {
+    try {
+      return this.roomsRepository.update(request);
+    } catch (error) {
+      throw new RpcException({
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: `Error to update room: ${error}`,
+      });
+    }
   }
 
   delete() {
