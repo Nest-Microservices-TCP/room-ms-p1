@@ -3,6 +3,7 @@ import { CreateRoomDto, UpdateRoomDto } from '../dto';
 import { RoomEntity } from '../entities/room.entity';
 import { IRoomsRepository } from './interfaces/rooms.repository.interface';
 import { InjectRepository } from '@nestjs/typeorm';
+import { EntityNotFoundException } from 'src/common/exceptions/custom/entity-not-found.exception';
 
 export class RoomsRepository implements IRoomsRepository {
   private roomsRepository: Repository<RoomEntity>;
@@ -26,8 +27,14 @@ export class RoomsRepository implements IRoomsRepository {
     return this.roomsRepository.find();
   }
 
-  findOneById(id: string): Promise<RoomEntity> {
-    return this.roomsRepository.findOne({ where: { id } });
+  async findOneById(id: string): Promise<RoomEntity> {
+    const room = await this.roomsRepository.findOne({ where: { id } });
+
+    if (!room) {
+      throw new EntityNotFoundException('roomId');
+    }
+
+    return room;
   }
 
   create(request: Partial<RoomEntity>): RoomEntity {
