@@ -25,8 +25,8 @@ export class RoomsController {
     return this.roomsService.update(request);
   }
 
-  delete() {
-    return this.roomsService.delete();
+  delete(id: string): Promise<RoomEntity> {
+    return this.roomsService.deleteById(id);
   }
 
   @MessagePattern({ cmd: 'get.hello' })
