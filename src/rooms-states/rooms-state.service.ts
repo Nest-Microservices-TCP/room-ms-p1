@@ -4,10 +4,15 @@ import { RoomStateEntity } from './entities/room-state.entity';
 import { CreateRoomStateDto } from './dto/create-room-state.dto';
 import { RpcException } from '@nestjs/microservices';
 import { FindOneRoomStateByIdDto } from './dto/find-one-room-state-by-id.dto';
+import { RoomsStatesRepository } from './repositories/rooms-state.repository';
+import { UpdateRoomStateDto } from './dto';
 
 @Injectable()
 export class RoomsStatesService {
-  constructor(private readonly unitOfWork: UnitOfWork) {}
+  constructor(
+    private readonly unitOfWork: UnitOfWork,
+    private readonly roomsStatesRepository: RoomsStatesRepository,
+  ) {}
 
   async save(request: CreateRoomStateDto): Promise<RoomStateEntity> {
     let newRoomState: RoomStateEntity;
@@ -73,6 +78,17 @@ export class RoomsStatesService {
       throw new RpcException({
         code: HttpStatus.INTERNAL_SERVER_ERROR,
         message: `Error to get all room states: ${error}`,
+      });
+    }
+  }
+
+  update(request: UpdateRoomStateDto): Promise<RoomStateEntity> {
+    try {
+      return this.roomsStatesRepository.update(request);
+    } catch (error) {
+      throw new RpcException({
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: `Error to update the room state: ${error}`,
       });
     }
   }
