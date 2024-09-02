@@ -5,6 +5,7 @@ import { Injectable } from '@nestjs/common';
 import { QueryRunner, Repository } from 'typeorm';
 import { CreateRoomStateDto } from '../dto/create-room-state.dto';
 import { UpdateRoomStateDto } from '../dto';
+import { EntityNotFoundException } from 'src/common/exceptions/custom/entity-not-found.exception';
 
 @Injectable()
 export class RoomsStatesRepository implements IRoomsStateRepository {
@@ -26,8 +27,16 @@ export class RoomsStatesRepository implements IRoomsStateRepository {
     }
   }
 
-  findOneById(id: string): Promise<RoomStateEntity> {
-    return this.roomsStatesRepository.findOne({ where: { id } });
+  async findOneById(id: string): Promise<RoomStateEntity> {
+    const roomState = await this.roomsStatesRepository.findOne({
+      where: { id },
+    });
+
+    if (!roomState) {
+      throw new EntityNotFoundException('roomStateId');
+    }
+
+    return roomState;
   }
 
   findAll(): Promise<RoomStateEntity[]> {
