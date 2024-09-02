@@ -1,9 +1,10 @@
-import { QueryRunner, Repository } from 'typeorm';
+import { DeleteResult, QueryRunner, Repository } from 'typeorm';
 import { CreateRoomDto, UpdateRoomDto } from '../dto';
 import { RoomEntity } from '../entities/room.entity';
 import { IRoomsRepository } from './interfaces/rooms.repository.interface';
 import { InjectRepository } from '@nestjs/typeorm';
 import { EntityNotFoundException } from 'src/common/exceptions/custom/entity-not-found.exception';
+import { InternalServerErrorException } from '@nestjs/common';
 
 export class RoomsRepository implements IRoomsRepository {
   private roomsRepository: Repository<RoomEntity>;
@@ -55,8 +56,17 @@ export class RoomsRepository implements IRoomsRepository {
     return this.roomsRepository.save(room);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  deleteById(id: string): Promise<RoomEntity> {
-    throw new Error('Method not implemented.');
+  async deleteById(id: string): Promise<RoomEntity> {
+    const room = await this.findOneById(id);
+
+    const result: DeleteResult = await this.roomsRepository.delete(id);
+
+    if (result.affected === 0) {
+      throw new InternalServerErrorException(
+        `Error to update the room, try again`,
+      );
+    }
+
+    return room;
   }
 }
