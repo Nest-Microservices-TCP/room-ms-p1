@@ -2,7 +2,7 @@ import { Controller } from '@nestjs/common';
 import { RoomsService } from './rooms.service';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { CreateRoomStateDto } from 'src/rooms-states/dto/create-room-state.dto';
-import { CreateRoomDto } from './dto';
+import { CreateRoomDto, UpdateRoomDto } from './dto';
 import { RoomEntity } from './entities/room.entity';
 
 @Controller()
@@ -21,8 +21,8 @@ export class RoomsController {
     return this.roomsService.findAll();
   }
 
-  update() {
-    return this.roomsService.update();
+  update(request: UpdateRoomDto): Promise<RoomEntity> {
+    return this.roomsService.update(request);
   }
 
   delete() {
