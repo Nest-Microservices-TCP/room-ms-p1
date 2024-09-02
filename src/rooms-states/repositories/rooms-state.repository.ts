@@ -52,9 +52,14 @@ export class RoomsStatesRepository implements IRoomsStateRepository {
     return this.roomsStatesRepository.save(request);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  update(request: UpdateRoomStateDto): Promise<RoomStateEntity> {
-    throw new Error('Method not implemented.');
+  async update(request: UpdateRoomStateDto): Promise<RoomStateEntity> {
+    const { roomStateId } = request;
+
+    const roomState = await this.findOneById(roomStateId);
+
+    Object.assign(roomState, request);
+
+    return this.roomsStatesRepository.save(roomState);
   }
 
   async deleteById(id: string): Promise<RoomStateEntity> {
