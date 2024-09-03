@@ -9,7 +9,7 @@ import {
 export class UpdateRoomDto {
   @IsUUID()
   @IsNotEmpty()
-  room_id: string;
+  roomId: string;
 
   @IsNumber()
   @IsPositive()
