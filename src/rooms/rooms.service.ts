@@ -3,20 +3,15 @@ import { RoomsRepository } from './repositories/rooms.repository';
 import { RpcException } from '@nestjs/microservices';
 import { CreateRoomDto, UpdateRoomDto } from './dto';
 import { RoomEntity } from './entities/room.entity';
+import { HandleRpcExceptions } from 'src/common/decorators';
 
 @Injectable()
 export class RoomsService {
   constructor(private readonly roomsRepository: RoomsRepository) {}
 
+  @HandleRpcExceptions()
   save(request: CreateRoomDto): Promise<RoomEntity> {
-    try {
-      return this.roomsRepository.save(request);
-    } catch (error) {
-      throw new RpcException({
-        status: HttpStatus.INTERNAL_SERVER_ERROR,
-        message: `Error to save room: ${error}`,
-      });
-    }
+    return this.roomsRepository.save(request);
   }
 
   findOneById(id: string): Promise<RoomEntity> {
