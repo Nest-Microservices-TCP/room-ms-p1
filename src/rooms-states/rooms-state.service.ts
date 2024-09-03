@@ -92,4 +92,15 @@ export class RoomsStatesService {
       });
     }
   }
+
+  deleteById(id: string): Promise<RoomStateEntity> {
+    try {
+      return this.roomsStatesRepository.deleteById(id);
+    } catch (error) {
+      throw new RpcException({
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: `Error to delete room state: ${error}`,
+      });
+    }
+  }
 }
