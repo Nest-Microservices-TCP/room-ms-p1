@@ -47,9 +47,9 @@ export class RoomsRepository implements IRoomsRepository {
   }
 
   async update(request: UpdateRoomDto): Promise<RoomEntity> {
-    const { room_id } = request;
+    const { roomId } = request;
 
-    const room = await this.findOneById(room_id);
+    const room = await this.findOneById(roomId);
 
     Object.assign(room, request);
 
