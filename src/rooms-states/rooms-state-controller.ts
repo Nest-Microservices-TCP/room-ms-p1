@@ -4,6 +4,7 @@ import { CreateRoomStateDto } from './dto/create-room-state.dto';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { RoomStateEntity } from './entities/room-state.entity';
 import { FindOneRoomStateByIdDto } from './dto/find-one-room-state-by-id.dto';
+import { UpdateRoomStateDto } from './dto';
 
 @Controller()
 export class RoomsStatesController {
@@ -24,5 +25,9 @@ export class RoomsStatesController {
   @MessagePattern({ cmd: 'find.all.rooms.states' })
   async findAll(): Promise<RoomStateEntity[]> {
     return this.roomsStatesService.findAll();
+  }
+
+  update(request: UpdateRoomStateDto): Promise<RoomStateEntity> {
+    return this.roomsStatesService.update(request);
   }
 }
