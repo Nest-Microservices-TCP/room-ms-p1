@@ -1,106 +1,40 @@
-import { HttpStatus, Injectable } from '@nestjs/common';
-import { UnitOfWork } from '../common/unit-of-work/unit-of-work.service';
+import { Injectable } from '@nestjs/common';
 import { RoomStateEntity } from './entities/room-state.entity';
 import { CreateRoomStateDto } from './dto/create-room-state.dto';
-import { RpcException } from '@nestjs/microservices';
 import { FindOneRoomStateByIdDto } from './dto/find-one-room-state-by-id.dto';
 import { RoomsStatesRepository } from './repositories/rooms-state.repository';
 import { UpdateRoomStateDto } from './dto';
+import { HandleRpcExceptions } from 'src/common/decorators';
 
 @Injectable()
 export class RoomsStatesService {
-  constructor(
-    private readonly unitOfWork: UnitOfWork,
-    private readonly roomsStatesRepository: RoomsStatesRepository,
-  ) {}
+  constructor(private readonly roomsStatesRepository: RoomsStatesRepository) {}
 
+  @HandleRpcExceptions()
   async save(request: CreateRoomStateDto): Promise<RoomStateEntity> {
-    let newRoomState: RoomStateEntity;
-
-    try {
-      await this.unitOfWork.start();
-
-      await this.unitOfWork.complete(async () => {
-        const roomStatesRepository = this.unitOfWork.getRoomsStatesRepository();
-
-        newRoomState = await roomStatesRepository.save(request);
-      });
-
-      return newRoomState;
-    } catch (error) {
-      throw new RpcException({
-        status: HttpStatus.INTERNAL_SERVER_ERROR,
-        message: `Error to create room-state: ${error}`,
-      });
-    }
+    return this.roomsStatesRepository.save(request);
   }
 
+  @HandleRpcExceptions()
   async findOneById(
     request: FindOneRoomStateByIdDto,
   ): Promise<RoomStateEntity> {
     const { roomStateId } = request;
-    let roomState: RoomStateEntity;
-
-    try {
-      await this.unitOfWork.start();
-
-      await this.unitOfWork.complete(async () => {
-        const roomsStatesRepository =
-          this.unitOfWork.getRoomsStatesRepository();
-
-        roomState = await roomsStatesRepository.findOneById(roomStateId);
-      });
-
-      return roomState;
-    } catch (error) {
-      throw new RpcException({
-        status: HttpStatus.INTERNAL_SERVER_ERROR,
-        message: `Error to find room-state: ${error}`,
-      });
-    }
+    return this.roomsStatesRepository.findOneById(roomStateId);
   }
 
+  @HandleRpcExceptions()
   async findAll(): Promise<RoomStateEntity[]> {
-    let roomsStates: RoomStateEntity[];
-
-    try {
-      await this.unitOfWork.start();
-
-      await this.unitOfWork.complete(async () => {
-        const roomsStatesRepository =
-          this.unitOfWork.getRoomsStatesRepository();
-
-        roomsStates = await roomsStatesRepository.findAll();
-      });
-
-      return roomsStates;
-    } catch (error) {
-      throw new RpcException({
-        code: HttpStatus.INTERNAL_SERVER_ERROR,
-        message: `Error to get all room states: ${error}`,
-      });
-    }
+    return this.roomsStatesRepository.findAll();
   }
 
+  @HandleRpcExceptions()
   update(request: UpdateRoomStateDto): Promise<RoomStateEntity> {
-    try {
-      return this.roomsStatesRepository.update(request);
-    } catch (error) {
-      throw new RpcException({
-        status: HttpStatus.INTERNAL_SERVER_ERROR,
-        message: `Error to update the room state: ${error}`,
-      });
-    }
+    return this.roomsStatesRepository.update(request);
   }
 
+  @HandleRpcExceptions()
   deleteById(id: string): Promise<RoomStateEntity> {
-    try {
-      return this.roomsStatesRepository.deleteById(id);
-    } catch (error) {
-      throw new RpcException({
-        status: HttpStatus.INTERNAL_SERVER_ERROR,
-        message: `Error to delete room state: ${error}`,
-      });
-    }
+    return this.roomsStatesRepository.deleteById(id);
   }
 }
