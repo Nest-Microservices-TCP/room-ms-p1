@@ -1,11 +1,16 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { RoomStateEntity } from '../entities/room-state.entity';
 import { IRoomsStateRepository } from './interfaces/rooms-state.repository.interface';
-import { Injectable } from '@nestjs/common';
-import { QueryRunner, Repository } from 'typeorm';
+import {
+  ConflictException,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
+import { QueryRunner, Repository, UpdateResult } from 'typeorm';
 import { CreateRoomStateDto } from '../dto/create-room-state.dto';
 import { UpdateRoomStateDto } from '../dto';
 import { EntityNotFoundException } from 'src/common/exceptions/custom/entity-not-found.exception';
+import { Status } from 'src/common';
 
 @Injectable()
 export class RoomsStatesRepository implements IRoomsStateRepository {
@@ -40,15 +45,32 @@ export class RoomsStatesRepository implements IRoomsStateRepository {
   }
 
   findAll(): Promise<RoomStateEntity[]> {
-    return this.roomsStatesRepository.find();
+    return this.roomsStatesRepository.find({
+      where: {
+        status: Status.ACTIVE,
+      },
+    });
   }
 
   create(request: Partial<RoomStateEntity>): RoomStateEntity {
     return this.roomsStatesRepository.create(request);
   }
 
-  save(request: CreateRoomStateDto): Promise<RoomStateEntity> {
-    //TODO: Validate repeated rooms
+  async save(request: CreateRoomStateDto): Promise<RoomStateEntity> {
+    const { name } = request;
+
+    const roomState = await this.roomsStatesRepository.findOne({
+      where: {
+        name,
+      },
+    });
+
+    if (roomState) {
+      throw new ConflictException(
+        `Already exists a room state with name: ${name}`,
+      );
+    }
+
     return this.roomsStatesRepository.save(request);
   }
 
@@ -63,12 +85,22 @@ export class RoomsStatesRepository implements IRoomsStateRepository {
   }
 
   async deleteById(id: string): Promise<RoomStateEntity> {
-    const roomState = await this.roomsStatesRepository.findOne({
-      where: { id },
-    });
+    const { id: roomStateId } = await this.findOneById(id);
 
-    await this.roomsStatesRepository.delete(id);
+    const result: UpdateResult = await this.roomsStatesRepository.update(
+      roomStateId,
+      {
+        status: Status.DELETED,
+        deletedAt: new Date(),
+      },
+    );
 
-    return roomState;
+    if (result.affected !== 1) {
+      throw new InternalServerErrorException(
+        'Error to delete the room state, try later',
+      );
+    }
+
+    return this.findOneById(roomStateId);
   }
 }
