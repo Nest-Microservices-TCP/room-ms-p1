@@ -1,6 +1,5 @@
-import { HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { RoomsRepository } from './repositories/rooms.repository';
-import { RpcException } from '@nestjs/microservices';
 import { CreateRoomDto, UpdateRoomDto } from './dto';
 import { RoomEntity } from './entities/room.entity';
 import { HandleRpcExceptions } from 'src/common/decorators';
@@ -14,47 +13,23 @@ export class RoomsService {
     return this.roomsRepository.save(request);
   }
 
+  @HandleRpcExceptions()
   findOneById(id: string): Promise<RoomEntity> {
-    try {
-      return this.roomsRepository.findOneById(id);
-    } catch (error) {
-      throw new RpcException({
-        status: HttpStatus.INTERNAL_SERVER_ERROR,
-        message: `Error to get room by ID: ${error}`,
-      });
-    }
+    return this.roomsRepository.findOneById(id);
   }
 
+  @HandleRpcExceptions()
   findAll(): Promise<RoomEntity[]> {
-    try {
-      return this.roomsRepository.findAll();
-    } catch (error) {
-      throw new RpcException({
-        status: HttpStatus.INTERNAL_SERVER_ERROR,
-        message: `Error to get the rooms: ${error}`,
-      });
-    }
+    return this.roomsRepository.findAll();
   }
 
+  @HandleRpcExceptions()
   update(request: UpdateRoomDto) {
-    try {
-      return this.roomsRepository.update(request);
-    } catch (error) {
-      throw new RpcException({
-        status: HttpStatus.INTERNAL_SERVER_ERROR,
-        message: `Error to update room: ${error}`,
-      });
-    }
+    return this.roomsRepository.update(request);
   }
 
+  @HandleRpcExceptions()
   deleteById(id: string): Promise<RoomEntity> {
-    try {
-      return this.roomsRepository.deleteById(id);
-    } catch (error) {
-      throw new RpcException({
-        status: HttpStatus.INTERNAL_SERVER_ERROR,
-        message: `Error to update the room: ${error}`,
-      });
-    }
+    return this.roomsRepository.deleteById(id);
   }
 }
