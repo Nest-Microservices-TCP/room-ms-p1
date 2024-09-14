@@ -40,7 +40,7 @@ export class RoomsRepository implements IRoomsRepository {
     const room = await this.roomsRepository.findOne({ where: { id } });
 
     if (!room) {
-      throw new EntityNotFoundException('roomId');
+      throw new EntityNotFoundException('room');
     }
 
     return room;
