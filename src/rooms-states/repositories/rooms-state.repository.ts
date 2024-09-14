@@ -38,7 +38,7 @@ export class RoomsStatesRepository implements IRoomsStateRepository {
     });
 
     if (!roomState) {
-      throw new EntityNotFoundException('roomStateId');
+      throw new EntityNotFoundException('room-state');
     }
 
     return roomState;
