@@ -1,4 +1,4 @@
-truncate rooms_states ;
+TRUNCATE rooms_states ;
 
 INSERT INTO public.rooms_states
 (created_by, updated_by, status, deleted_at, "name")
