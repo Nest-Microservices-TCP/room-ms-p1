@@ -1,8 +1,8 @@
 import { Controller } from '@nestjs/common';
 import { RoomsService } from './rooms.service';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import { CreateRoomDto, UpdateRoomDto } from './dto';
 import { RoomEntity } from './entities/room.entity';
+import { CreateRoomDto, UpdateRoomDto } from './dto/request';
 
 @Controller()
 export class RoomsController {
