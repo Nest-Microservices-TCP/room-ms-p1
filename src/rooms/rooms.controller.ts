@@ -3,6 +3,7 @@ import { RoomsService } from './rooms.service';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { RoomEntity } from './entities/room.entity';
 import { CreateRoomDto, UpdateRoomDto } from './dto/request';
+import { RoomResponseDto } from './dto/response';
 
 @Controller()
 export class RoomsController {
@@ -14,7 +15,7 @@ export class RoomsController {
   }
 
   @MessagePattern({ cmd: 'find.one.room.by.id' })
-  findOnById(@Payload('id') id: string): Promise<RoomEntity> {
+  findOnById(@Payload('id') id: string): Promise<RoomResponseDto> {
     return this.roomsService.findOneById(id);
   }
 
