@@ -1,5 +1,4 @@
 import { QueryRunner, Repository, UpdateResult } from 'typeorm';
-import { CreateRoomDto, UpdateRoomDto } from '../dto';
 import { RoomEntity } from '../entities/room.entity';
 import { IRoomsRepository } from './interfaces/rooms.repository.interface';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -9,6 +8,7 @@ import {
   InternalServerErrorException,
 } from '@nestjs/common';
 import { Status } from 'src/common';
+import { CreateRoomDto, UpdateRoomDto } from '../dto/request';
 
 export class RoomsRepository implements IRoomsRepository {
   private roomsRepository: Repository<RoomEntity>;
