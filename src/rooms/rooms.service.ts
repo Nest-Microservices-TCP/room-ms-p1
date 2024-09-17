@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { RoomsRepository } from './repositories/rooms.repository';
-import { CreateRoomDto, UpdateRoomDto } from './dto';
 import { RoomEntity } from './entities/room.entity';
 import { HandleRpcExceptions } from 'src/common/decorators';
+import { CreateRoomDto, UpdateRoomDto } from './dto/request';
 
 @Injectable()
 export class RoomsService {
