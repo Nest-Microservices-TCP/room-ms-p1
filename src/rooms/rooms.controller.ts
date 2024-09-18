@@ -1,7 +1,6 @@
 import { Controller } from '@nestjs/common';
 import { RoomsService } from './rooms.service';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import { RoomEntity } from './entities/room.entity';
 import { CreateRoomDto, UpdateRoomDto } from './dto/request';
 import { RoomResponseDto } from './dto/response';
 
@@ -30,7 +29,7 @@ export class RoomsController {
   }
 
   @MessagePattern({ cmd: 'delete.room.by.id' })
-  deleteById(@Payload('id') id: string): Promise<RoomEntity> {
+  deleteById(@Payload('id') id: string): Promise<RoomResponseDto> {
     return this.roomsService.deleteById(id);
   }
 }

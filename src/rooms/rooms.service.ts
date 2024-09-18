@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { RoomsRepository } from './repositories/rooms.repository';
-import { RoomEntity } from './entities/room.entity';
 import { HandleRpcExceptions } from 'src/common/decorators';
 import { CreateRoomDto, UpdateRoomDto } from './dto/request';
 import { RoomResponseDto } from './dto/response';
@@ -47,7 +46,11 @@ export class RoomsService {
   }
 
   @HandleRpcExceptions()
-  deleteById(id: string): Promise<RoomEntity> {
-    return this.roomsRepository.deleteById(id);
+  async deleteById(id: string): Promise<RoomResponseDto> {
+    const room = await this.roomsRepository.deleteById(id);
+
+    return plainToInstance(RoomResponseDto, room, {
+      excludeExtraneousValues: true,
+    });
   }
 }
