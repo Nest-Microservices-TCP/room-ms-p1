@@ -10,7 +10,7 @@ export class RoomsController {
   constructor(private readonly roomsService: RoomsService) {}
 
   @MessagePattern({ cmd: 'save.room' })
-  save(@Payload() request: CreateRoomDto): Promise<RoomEntity> {
+  save(@Payload() request: CreateRoomDto): Promise<RoomResponseDto> {
     return this.roomsService.save(request);
   }
 

@@ -11,8 +11,12 @@ export class RoomsService {
   constructor(private readonly roomsRepository: RoomsRepository) {}
 
   @HandleRpcExceptions()
-  save(request: CreateRoomDto): Promise<RoomEntity> {
-    return this.roomsRepository.save(request);
+  async save(request: CreateRoomDto): Promise<RoomResponseDto> {
+    const room = await this.roomsRepository.save(request);
+
+    return plainToInstance(RoomResponseDto, room, {
+      excludeExtraneousValues: true,
+    });
   }
 
   @HandleRpcExceptions()
