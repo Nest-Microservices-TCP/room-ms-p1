@@ -7,8 +7,7 @@ import {
   InternalServerErrorException,
 } from '@nestjs/common';
 import { QueryRunner, Repository, UpdateResult } from 'typeorm';
-import { CreateRoomStateDto } from '../dto/create-room-state.dto';
-import { UpdateRoomStateDto } from '../dto';
+import { UpdateRoomStateDto, CreateRoomStateDto } from '../dto/request';
 import { EntityNotFoundException } from 'src/common/exceptions/custom/entity-not-found.exception';
 import { Status } from 'src/common';
 
