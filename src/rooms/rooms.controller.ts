@@ -25,7 +25,7 @@ export class RoomsController {
   }
 
   @MessagePattern({ cmd: 'update.room' })
-  update(@Payload() request: UpdateRoomDto): Promise<RoomEntity> {
+  update(@Payload() request: UpdateRoomDto): Promise<RoomResponseDto> {
     return this.roomsService.update(request);
   }
 

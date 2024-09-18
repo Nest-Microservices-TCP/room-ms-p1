@@ -38,8 +38,12 @@ export class RoomsService {
   }
 
   @HandleRpcExceptions()
-  update(request: UpdateRoomDto) {
-    return this.roomsRepository.update(request);
+  async update(request: UpdateRoomDto) {
+    const room = await this.roomsRepository.update(request);
+
+    return plainToInstance(RoomResponseDto, room, {
+      excludeExtraneousValues: true,
+    });
   }
 
   @HandleRpcExceptions()
