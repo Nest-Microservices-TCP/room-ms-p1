@@ -20,7 +20,7 @@ export class RoomsController {
   }
 
   @MessagePattern({ cmd: 'find.all.rooms' })
-  findAll() {
+  findAll(): Promise<RoomResponseDto[]> {
     return this.roomsService.findAll();
   }
 
