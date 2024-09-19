@@ -45,8 +45,12 @@ export class RoomsStatesService {
   }
 
   @HandleRpcExceptions()
-  update(request: UpdateRoomStateDto): Promise<RoomStateEntity> {
-    return this.roomsStatesRepository.update(request);
+  async update(request: UpdateRoomStateDto): Promise<RoomStateResponse> {
+    const roomState = await this.roomsStatesRepository.update(request);
+
+    return plainToInstance(RoomStateResponse, roomState, {
+      excludeExtraneousValues: true,
+    });
   }
 
   @HandleRpcExceptions()

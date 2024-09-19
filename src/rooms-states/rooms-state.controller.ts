@@ -35,7 +35,7 @@ export class RoomsStatesController {
   @MessagePattern({ cmd: 'update.roomState' })
   async update(
     @Payload() request: UpdateRoomStateDto,
-  ): Promise<RoomStateEntity> {
+  ): Promise<RoomStateResponse> {
     return this.roomsStatesService.update(request);
   }
 
