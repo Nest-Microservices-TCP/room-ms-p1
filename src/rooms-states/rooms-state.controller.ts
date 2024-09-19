@@ -23,7 +23,7 @@ export class RoomsStatesController {
   @MessagePattern({ cmd: 'find.one.roomState' })
   async findOneById(
     @Payload() request: FindOneRoomStateByIdDto,
-  ): Promise<RoomStateEntity> {
+  ): Promise<RoomStateResponse> {
     return this.roomsStatesService.findOneById(request);
   }
 

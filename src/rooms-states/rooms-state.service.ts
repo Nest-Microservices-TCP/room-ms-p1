@@ -26,9 +26,13 @@ export class RoomsStatesService {
   @HandleRpcExceptions()
   async findOneById(
     request: FindOneRoomStateByIdDto,
-  ): Promise<RoomStateEntity> {
+  ): Promise<RoomStateResponse> {
     const { roomStateId } = request;
-    return this.roomsStatesRepository.findOneById(roomStateId);
+    const roomState = await this.roomsStatesRepository.findOneById(roomStateId);
+
+    return plainToInstance(RoomStateResponse, roomState, {
+      excludeExtraneousValues: true,
+    });
   }
 
   @HandleRpcExceptions()
