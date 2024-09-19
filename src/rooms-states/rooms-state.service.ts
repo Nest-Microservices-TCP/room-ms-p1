@@ -7,14 +7,20 @@ import {
   FindOneRoomStateByIdDto,
 } from './dto/request';
 import { HandleRpcExceptions } from 'src/common/decorators';
+import { RoomStateResponse } from './dto/response';
+import { plainToInstance } from 'class-transformer';
 
 @Injectable()
 export class RoomsStatesService {
   constructor(private readonly roomsStatesRepository: RoomsStatesRepository) {}
 
   @HandleRpcExceptions()
-  async save(request: CreateRoomStateDto): Promise<RoomStateEntity> {
-    return this.roomsStatesRepository.save(request);
+  async save(request: CreateRoomStateDto): Promise<RoomStateResponse> {
+    const roomState = await this.roomsStatesRepository.save(request);
+
+    return plainToInstance(RoomStateResponse, roomState, {
+      excludeExtraneousValues: true,
+    });
   }
 
   @HandleRpcExceptions()

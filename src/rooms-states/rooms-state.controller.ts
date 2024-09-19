@@ -7,13 +7,16 @@ import {
   FindOneRoomStateByIdDto,
   UpdateRoomStateDto,
 } from './dto/request';
+import { RoomStateResponse } from './dto/response';
 
 @Controller()
 export class RoomsStatesController {
   constructor(private readonly roomsStatesService: RoomsStatesService) {}
 
   @MessagePattern({ cmd: 'save.roomState' })
-  async save(@Payload() request: CreateRoomStateDto): Promise<RoomStateEntity> {
+  async save(
+    @Payload() request: CreateRoomStateDto,
+  ): Promise<RoomStateResponse> {
     return this.roomsStatesService.save(request);
   }
 
