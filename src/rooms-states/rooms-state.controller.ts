@@ -1,10 +1,12 @@
 import { Controller } from '@nestjs/common';
 import { RoomsStatesService } from './rooms-state.service';
-import { CreateRoomStateDto } from './dto/create-room-state.dto';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { RoomStateEntity } from './entities/room-state.entity';
-import { FindOneRoomStateByIdDto } from './dto/find-one-room-state-by-id.dto';
-import { UpdateRoomStateDto } from './dto';
+import {
+  CreateRoomStateDto,
+  FindOneRoomStateByIdDto,
+  UpdateRoomStateDto,
+} from './dto/request';
 
 @Controller()
 export class RoomsStatesController {
