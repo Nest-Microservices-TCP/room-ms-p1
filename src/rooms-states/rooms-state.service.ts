@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { RoomStateEntity } from './entities/room-state.entity';
 import { RoomsStatesRepository } from './repositories/rooms-state.repository';
 import {
   UpdateRoomStateDto,
@@ -54,7 +53,11 @@ export class RoomsStatesService {
   }
 
   @HandleRpcExceptions()
-  deleteById(id: string): Promise<RoomStateEntity> {
-    return this.roomsStatesRepository.deleteById(id);
+  async deleteById(id: string): Promise<RoomStateResponse> {
+    const roomState = await this.roomsStatesRepository.deleteById(id);
+
+    return plainToInstance(RoomStateResponse, roomState, {
+      excludeExtraneousValues: true,
+    });
   }
 }
