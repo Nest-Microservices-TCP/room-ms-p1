@@ -28,7 +28,7 @@ export class RoomsStatesController {
   }
 
   @MessagePattern({ cmd: 'find.all.roomsStates' })
-  async findAll(): Promise<RoomStateEntity[]> {
+  async findAll(): Promise<RoomStateResponse[]> {
     return this.roomsStatesService.findAll();
   }
 

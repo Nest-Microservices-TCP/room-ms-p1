@@ -36,8 +36,12 @@ export class RoomsStatesService {
   }
 
   @HandleRpcExceptions()
-  async findAll(): Promise<RoomStateEntity[]> {
-    return this.roomsStatesRepository.findAll();
+  async findAll(): Promise<RoomStateResponse[]> {
+    const roomsStates = await this.roomsStatesRepository.findAll();
+
+    return plainToInstance(RoomStateResponse, roomsStates, {
+      excludeExtraneousValues: true,
+    });
   }
 
   @HandleRpcExceptions()
