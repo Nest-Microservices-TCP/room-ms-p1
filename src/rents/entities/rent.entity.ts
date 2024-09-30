@@ -1,5 +1,5 @@
 import { BaseEntity } from 'src/common';
-import { EntryType } from '../enum';
+import { AccommodationType, EntryType } from '../enum';
 
 export class RentEntity extends BaseEntity {
   folio: number;
@@ -13,7 +13,7 @@ export class RentEntity extends BaseEntity {
   totalIncome: number;
   rentState: 'finalizada' | 'pagada' | 'pago_pendiente' | 'cancelada'; //TODO: hacer el enum, revisar una mejor forma
   guestName: string;
-  accommodationType: 'hotel' | 'motel';
+  accommodationType: AccommodationType;
   subtotals: string; //TODO: es un jsonb, revisar una mejor forma
 
   roomId: string;
