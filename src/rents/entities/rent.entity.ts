@@ -1,5 +1,5 @@
 import { BaseEntity } from 'src/common';
-import { AccommodationType, EntryType, PaymentState } from '../enum';
+import { AccommodationType, EntryType, PaymentState, RentState } from '../enum';
 
 export class RentEntity extends BaseEntity {
   folio: number;
@@ -11,7 +11,7 @@ export class RentEntity extends BaseEntity {
   overtime: number;
   entryType: EntryType;
   totalIncome: number;
-  rentState: 'finalizada' | 'pagada' | 'pago_pendiente' | 'cancelada';
+  rentState: RentState;
   paymentSate: PaymentState;
   guestName: string;
   accommodationType: AccommodationType;
