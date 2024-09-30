@@ -1,4 +1,5 @@
 import { BaseEntity } from 'src/common';
+import { EntryType } from '../enum';
 
 export class RentEntity extends BaseEntity {
   folio: number;
@@ -8,7 +9,7 @@ export class RentEntity extends BaseEntity {
   extraAccommodations: number;
   extraPeople: number;
   overtime: number;
-  entryType: 'a_pie' | 'auto'; //TODO: hacer el enum
+  entryType: EntryType;
   totalIncome: number;
   rentState: 'finalizada' | 'pagada' | 'pago_pendiente' | 'cancelada'; //TODO: hacer el enum, revisar una mejor forma
   guestName: string;
