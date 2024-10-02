@@ -1,7 +1,13 @@
 import { BaseEntity } from 'src/common';
 import { AccommodationType, EntryType, PaymentState, RentState } from '../enum';
+import { PrimaryGeneratedColumn } from 'typeorm';
 
 export class RentEntity extends BaseEntity {
+  @PrimaryGeneratedColumn('uuid', {
+    name: 'rent_id',
+  })
+  rent_id: string;
+
   folio: number;
   checkoutDate: Date;
   departureAt: Date;
@@ -15,9 +21,4 @@ export class RentEntity extends BaseEntity {
   paymentSate: PaymentState;
   guestName: string;
   accommodationType: AccommodationType;
-  subtotals: string; //TODO: es un jsonb, revisar una mejor forma
-
-  roomId: string;
-  rateId: string;
-  hotelId: string;
 }
