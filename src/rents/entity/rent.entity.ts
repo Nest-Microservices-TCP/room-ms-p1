@@ -1,7 +1,8 @@
 import { BaseEntity } from 'src/common';
 import { AccommodationType, EntryType, PaymentState, RentState } from '../enum';
-import { OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { RentSubtotalsEntity } from './rent-subtotals.entity';
+import { RoomEntity } from 'src/rooms/entities/room.entity';
 
 export class RentEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid', {
@@ -39,4 +40,8 @@ export class RentEntity extends BaseEntity {
     cascade: true,
   })
   rentSubtotals: RentSubtotalsEntity;
+
+  @OneToOne(() => RoomEntity, (room) => room.rent)
+  @JoinColumn({ name: 'room_id' })
+  room: RoomEntity;
 }
