@@ -8,7 +8,7 @@ export class RentEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid', {
     name: 'rent_id',
   })
-  rent_id: string;
+  rentId: string;
 
   folio: number;
   checkoutDate: Date;
