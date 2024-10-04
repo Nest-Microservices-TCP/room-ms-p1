@@ -12,7 +12,7 @@ export class RentSubtotalsEntity {
   @PrimaryGeneratedColumn('uuid', {
     name: 'rent_subtotals_id',
   })
-  subtotals_id: string;
+  rentSubtotalsId: string;
 
   @Column({
     name: 'room_total',
