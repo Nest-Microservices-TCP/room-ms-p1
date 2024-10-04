@@ -7,7 +7,7 @@ export class RoomEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid', {
     name: 'room_id',
   })
-  room_id: string;
+  roomId: string;
 
   @Column({
     name: 'number',
