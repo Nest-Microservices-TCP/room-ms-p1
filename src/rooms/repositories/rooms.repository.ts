@@ -1,5 +1,5 @@
 import { QueryRunner, Repository, UpdateResult } from 'typeorm';
-import { RoomEntity } from '../entities/room.entity';
+import { RoomEntity } from '../entity/room.entity';
 import { IRoomsRepository } from './interfaces/rooms.repository.interface';
 import { InjectRepository } from '@nestjs/typeorm';
 import { EntityNotFoundException } from 'src/common/exceptions/custom/entity-not-found.exception';
