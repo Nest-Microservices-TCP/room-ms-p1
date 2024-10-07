@@ -1,8 +1,8 @@
-import { BaseEntity } from 'src/common';
 import { AccommodationType, EntryType, PaymentState, RentState } from '../enum';
 import { JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { RentSubtotalsEntity } from './rent-subtotals.entity';
 import { RoomEntity } from 'src/rooms/entity/room.entity';
+import { BaseEntity } from 'src/common/entity';
 
 export class RentEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid', {
