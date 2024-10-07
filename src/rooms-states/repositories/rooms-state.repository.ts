@@ -9,7 +9,7 @@ import {
 import { QueryRunner, Repository, UpdateResult } from 'typeorm';
 import { UpdateRoomStateDto, CreateRoomStateDto } from '../dto/request';
 import { EntityNotFoundException } from 'src/common/exceptions/custom/entity-not-found.exception';
-import { Status } from 'src/common';
+import { Status } from 'src/common/enums';
 
 @Injectable()
 export class RoomsStatesRepository implements IRoomsStateRepository {
@@ -31,9 +31,9 @@ export class RoomsStatesRepository implements IRoomsStateRepository {
     }
   }
 
-  async findOneById(id: string): Promise<RoomStateEntity> {
+  async findOneById(roomStateId: string): Promise<RoomStateEntity> {
     const roomState = await this.roomsStatesRepository.findOne({
-      where: { id },
+      where: { roomStateId },
     });
 
     if (!roomState) {
@@ -83,8 +83,8 @@ export class RoomsStatesRepository implements IRoomsStateRepository {
     return this.roomsStatesRepository.save(roomState);
   }
 
-  async deleteById(id: string): Promise<RoomStateEntity> {
-    const { id: roomStateId } = await this.findOneById(id);
+  async deleteById(roomStateId: string): Promise<RoomStateEntity> {
+    await this.findOneById(roomStateId);
 
     const result: UpdateResult = await this.roomsStatesRepository.update(
       roomStateId,
