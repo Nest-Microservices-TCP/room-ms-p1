@@ -7,8 +7,8 @@ import {
   ConflictException,
   InternalServerErrorException,
 } from '@nestjs/common';
-import { Status } from 'src/common';
 import { CreateRoomDto, UpdateRoomDto } from '../dto/request';
+import { Status } from 'src/common/enums';
 
 export class RoomsRepository implements IRoomsRepository {
   private roomsRepository: Repository<RoomEntity>;
@@ -36,8 +36,8 @@ export class RoomsRepository implements IRoomsRepository {
     });
   }
 
-  async findOneById(id: string): Promise<RoomEntity> {
-    const room = await this.roomsRepository.findOne({ where: { id } });
+  async findOneById(roomId: string): Promise<RoomEntity> {
+    const room = await this.roomsRepository.findOne({ where: { roomId } });
 
     if (!room) {
       throw new EntityNotFoundException('room');
@@ -74,8 +74,8 @@ export class RoomsRepository implements IRoomsRepository {
     return this.roomsRepository.save(room);
   }
 
-  async deleteById(id: string): Promise<RoomEntity> {
-    const { id: roomId } = await this.findOneById(id);
+  async deleteById(roomId: string): Promise<RoomEntity> {
+    await this.findOneById(roomId);
 
     const result: UpdateResult = await this.roomsRepository.update(roomId, {
       status: Status.DELETED,
