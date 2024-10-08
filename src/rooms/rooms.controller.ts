@@ -14,8 +14,8 @@ export class RoomsController {
   }
 
   @MessagePattern({ cmd: 'find.one.room.by.id' })
-  findOnById(@Payload('id') id: string): Promise<RoomResponseDto> {
-    return this.roomsService.findOneById(id);
+  findOnById(@Payload('roomId') roomId: string): Promise<RoomResponseDto> {
+    return this.roomsService.findOneById(roomId);
   }
 
   @MessagePattern({ cmd: 'find.all.rooms' })
@@ -29,7 +29,7 @@ export class RoomsController {
   }
 
   @MessagePattern({ cmd: 'delete.room.by.id' })
-  deleteById(@Payload('id') id: string): Promise<RoomResponseDto> {
-    return this.roomsService.deleteById(id);
+  deleteById(@Payload('roomId') roomId: string): Promise<RoomResponseDto> {
+    return this.roomsService.deleteById(roomId);
   }
 }
