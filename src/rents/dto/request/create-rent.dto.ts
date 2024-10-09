@@ -1,7 +1,9 @@
+import { AccommodationType, EntryType } from 'src/rents/enum';
+
 export class CreateRentDto {
   guestName: string;
-  accommodationType: 'hotel' | 'motel';
-  entryType: 'a_pie' | 'auto'; //TODO: usar el enum
+  accommodationType: AccommodationType;
+  entryType: EntryType;
   guests: number;
   extraAccommodations: number;
   extraPeople: number;
