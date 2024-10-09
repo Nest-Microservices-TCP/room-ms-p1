@@ -39,7 +39,9 @@ export class RoomsStatesController {
   }
 
   @MessagePattern({ cmd: 'delete.roomState.by.id' })
-  async deleteById(@Payload('id') id: string): Promise<RoomStateResponse> {
-    return this.roomsStatesService.deleteById(id);
+  async deleteById(
+    @Payload('roomStateId') roomStateId: string,
+  ): Promise<RoomStateResponse> {
+    return this.roomsStatesService.deleteById(roomStateId);
   }
 }
