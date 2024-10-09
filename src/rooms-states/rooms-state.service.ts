@@ -53,8 +53,8 @@ export class RoomsStatesService {
   }
 
   @HandleRpcExceptions()
-  async deleteById(id: string): Promise<RoomStateResponse> {
-    const roomState = await this.roomsStatesRepository.deleteById(id);
+  async deleteById(roomStateId: string): Promise<RoomStateResponse> {
+    const roomState = await this.roomsStatesRepository.deleteById(roomStateId);
 
     return plainToInstance(RoomStateResponse, roomState, {
       excludeExtraneousValues: true,
