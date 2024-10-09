@@ -1,3 +1,5 @@
+import { AccommodationType, EntryType } from 'src/rents/enum';
+
 export class UpdateRentDto {
   checkoutDate: Date;
   departureAt: Date;
@@ -5,11 +7,11 @@ export class UpdateRentDto {
   extraAccommodations: number;
   extraPeople: number;
   overtime: number;
-  entryType: 'a_pie' | 'auto'; //TODO: hacer el enum
+  entryType: EntryType;
   totalIncome: number;
   rentState: 'finalizada' | 'pagada' | 'pago_pendiente' | 'cancelada'; //TODO: hacer el enum, revisar una mejor forma
   guestName: string;
-  accommodationType: 'hotel' | 'motel';
+  accommodationType: AccommodationType;
   subtotals: string; //TODO: es un jsonb, revisar una mejor forma
 
   roomId: string;
