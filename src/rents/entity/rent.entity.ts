@@ -1,22 +1,41 @@
 import { AccommodationType, EntryType, PaymentState, RentState } from '../enum';
-import { JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  Generated,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { RentSubtotalsEntity } from './rent-subtotals.entity';
 import { RoomEntity } from 'src/rooms/entity/room.entity';
 import { BaseEntity } from 'src/common/entity';
 
+@Entity({ name: 'rent' })
 export class RentEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid', {
     name: 'rent_id',
   })
   rentId: string;
 
+  @Column({
+    name: 'folio',
+    type: 'integer',
+  })
+  @Generated('increment')
   folio: number;
+
+  @Column({
+    name: 'checkout_date',
+    type: 'timestamp with time zone',
+  })
   checkoutDate: Date;
+
+  @Column({
+    name: 'departure_at',
+    type: 'timestamp with time zone',
+  })
   departureAt: Date;
-  guests: number;
-  extraAccommodations: number;
-  extraPeople: number;
-  overtime: number;
   entryType: EntryType;
   totalIncome: number;
   rentState: RentState;
