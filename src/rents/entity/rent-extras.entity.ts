@@ -7,6 +7,9 @@ export class RentExtrasEntity {
   })
   rentExtrasId: string;
 
+  /**
+   * @smallint -32,768 hasta 32,767
+   */
   @Column({
     name: 'guests',
     type: 'smallint',
