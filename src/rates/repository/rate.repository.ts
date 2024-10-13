@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { QueryRunner, Repository } from 'typeorm';
-import { CreateRateDto, UpdateRateDto } from '../dto/request';
+import { Status } from 'src/common/enums';
 import { RateEntity } from '../entity/rate.entity';
-import { IRatesRepository } from './interfaces/rate.repository.interface';
+import { QueryRunner, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CreateRateDto, UpdateRateDto } from '../dto/request';
+import { IRatesRepository } from './interfaces/rate.repository.interface';
 
 export class RatesRepository implements IRatesRepository {
   private ratesRepository: Repository<RateEntity>;
@@ -24,8 +25,13 @@ export class RatesRepository implements IRatesRepository {
   }
 
   findAll(): Promise<RateEntity[]> {
-    throw new Error('Method not implemented.');
+    return this.ratesRepository.find({
+      where: {
+        status: Status.ACTIVE,
+      },
+    });
   }
+
   findOneById(id: string): Promise<RateEntity> {
     throw new Error('Method not implemented.');
   }
