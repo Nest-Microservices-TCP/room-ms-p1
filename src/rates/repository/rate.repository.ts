@@ -48,8 +48,9 @@ export class RatesRepository implements IRatesRepository {
   }
 
   create(request: Partial<RateEntity>): RateEntity {
-    throw new Error('Method not implemented.');
+    return this.ratesRepository.create(request);
   }
+
   save(request: CreateRateDto): Promise<RateEntity> {
     throw new Error('Method not implemented.');
   }
