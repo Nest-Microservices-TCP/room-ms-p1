@@ -16,4 +16,13 @@ export class RatesService {
       excludeExtraneousValues: true,
     });
   }
+
+  @HandleRpcExceptions()
+  async findOneById(rateId: string): Promise<RateResponseDto> {
+    const rate = await this.ratesRepository.findOneById(rateId);
+
+    return plainToInstance(RateResponseDto, rate, {
+      excludeExtraneousValues: true,
+    });
+  }
 }
