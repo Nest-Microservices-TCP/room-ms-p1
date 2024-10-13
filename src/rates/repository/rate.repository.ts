@@ -5,6 +5,7 @@ import { QueryRunner, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateRateDto, UpdateRateDto } from '../dto/request';
 import { IRatesRepository } from './interfaces/rate.repository.interface';
+import { EntityNotFoundException } from 'src/common/exceptions/custom';
 
 export class RatesRepository implements IRatesRepository {
   private ratesRepository: Repository<RateEntity>;
@@ -32,9 +33,20 @@ export class RatesRepository implements IRatesRepository {
     });
   }
 
-  findOneById(id: string): Promise<RateEntity> {
-    throw new Error('Method not implemented.');
+  async findOneById(rateId: string): Promise<RateEntity> {
+    const rate = await this.ratesRepository.findOne({
+      where: {
+        rateId,
+      },
+    });
+
+    if (!rate) {
+      throw new EntityNotFoundException('rate');
+    }
+
+    return rate;
   }
+
   create(request: Partial<RateEntity>): RateEntity {
     throw new Error('Method not implemented.');
   }
