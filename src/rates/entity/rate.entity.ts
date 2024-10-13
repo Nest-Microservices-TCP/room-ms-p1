@@ -7,7 +7,7 @@ export class RateEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid', {
     name: 'rate_id',
   })
-  rate_id: string;
+  rateId: string;
 
   @Column({
     name: 'name',
