@@ -1,14 +1,12 @@
-import { QueryRunner, Repository, UpdateResult } from 'typeorm';
-import { RoomEntity } from '../entity/room.entity';
-import { IRoomsRepository } from './interfaces/rooms.repository.interface';
-import { InjectRepository } from '@nestjs/typeorm';
-import { EntityNotFoundException } from 'src/common/exceptions/custom/entity-not-found.exception';
-import {
-  ConflictException,
-  InternalServerErrorException,
-} from '@nestjs/common';
-import { CreateRoomDto, UpdateRoomDto } from '../dto/request';
 import { Status } from 'src/common/enums';
+import { RoomEntity } from '../entity/room.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { ConflictException } from '@nestjs/common';
+import { CreateRoomDto, UpdateRoomDto } from '../dto/request';
+import { QueryRunner, Repository, UpdateResult } from 'typeorm';
+import { FailedDeleteException } from 'src/common/exceptions/custom';
+import { IRoomsRepository } from './interfaces/rooms.repository.interface';
+import { EntityNotFoundException } from 'src/common/exceptions/custom/entity-not-found.exception';
 
 export class RoomsRepository implements IRoomsRepository {
   private roomsRepository: Repository<RoomEntity>;
@@ -83,9 +81,7 @@ export class RoomsRepository implements IRoomsRepository {
     });
 
     if (result.affected === 0) {
-      throw new InternalServerErrorException(
-        `Error to delete the room, try again`,
-      );
+      throw new FailedDeleteException('room');
     }
 
     return this.findOneById(roomId);
