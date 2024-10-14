@@ -1,15 +1,12 @@
-import { InjectRepository } from '@nestjs/typeorm';
-import { RoomStateEntity } from '../entities/room-state.entity';
-import { IRoomsStateRepository } from './interfaces/rooms-state.repository.interface';
-import {
-  ConflictException,
-  Injectable,
-  InternalServerErrorException,
-} from '@nestjs/common';
-import { QueryRunner, Repository, UpdateResult } from 'typeorm';
-import { UpdateRoomStateDto, CreateRoomStateDto } from '../dto/request';
-import { EntityNotFoundException } from 'src/common/exceptions/custom/entity-not-found.exception';
 import { Status } from 'src/common/enums';
+import { InjectRepository } from '@nestjs/typeorm';
+import { ConflictException, Injectable } from '@nestjs/common';
+import { QueryRunner, Repository, UpdateResult } from 'typeorm';
+import { RoomStateEntity } from '../entities/room-state.entity';
+import { FailedDeleteException } from 'src/common/exceptions/custom';
+import { UpdateRoomStateDto, CreateRoomStateDto } from '../dto/request';
+import { IRoomsStateRepository } from './interfaces/rooms-state.repository.interface';
+import { EntityNotFoundException } from 'src/common/exceptions/custom/entity-not-found.exception';
 
 @Injectable()
 export class RoomsStatesRepository implements IRoomsStateRepository {
@@ -95,9 +92,7 @@ export class RoomsStatesRepository implements IRoomsStateRepository {
     );
 
     if (result.affected !== 1) {
-      throw new InternalServerErrorException(
-        'Error to delete the room state, try later',
-      );
+      throw new FailedDeleteException('room-state');
     }
 
     return this.findOneById(roomStateId);
