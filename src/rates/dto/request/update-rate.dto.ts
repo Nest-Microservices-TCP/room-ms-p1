@@ -13,7 +13,7 @@ import { AccommodationType } from 'src/rents/enum';
 
 export class UpdateRateDto {
   @IsUUID()
-  rate_id: string;
+  rateId: string;
 
   @IsOptional()
   @IsString({ message: 'The rate name must be a string' })
