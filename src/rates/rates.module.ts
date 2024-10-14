@@ -3,7 +3,7 @@ import { RatesService } from './rates.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { RateEntity } from './entity/rate.entity';
 import { RatesController } from './rates.controller';
-import { RatesRepository } from './repository/rate.repository';
+import { RatesRepository } from './repository/rates.repository';
 
 @Module({
   imports: [TypeOrmModule.forFeature([RateEntity])],
