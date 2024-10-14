@@ -22,7 +22,7 @@ export class CreateRateDto {
     message: 'The checkout hour must be in the format HH:mm',
   })
   @IsString({ message: 'The rate duration must be a string' })
-  duration: number;
+  duration: string;
 
   @IsNumber()
   @Min(1, { message: 'The minimum value for accommodation cost is 1 ' })
