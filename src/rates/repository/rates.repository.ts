@@ -1,11 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import {
+  FailedDeleteException,
+  EntityNotFoundException,
+} from 'src/common/exceptions/custom';
 import { Status } from 'src/common/enums';
 import { RateEntity } from '../entity/rate.entity';
-import { QueryRunner, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateRateDto, UpdateRateDto } from '../dto/request';
-import { IRatesRepository } from './interfaces/rate.repository.interface';
-import { EntityNotFoundException } from 'src/common/exceptions/custom';
+import { QueryRunner, Repository, UpdateResult } from 'typeorm';
+import { IRatesRepository } from './interfaces/rates.repository.interface';
 
 export class RatesRepository implements IRatesRepository {
   private ratesRepository: Repository<RateEntity>;
@@ -52,12 +55,31 @@ export class RatesRepository implements IRatesRepository {
   }
 
   save(request: CreateRateDto): Promise<RateEntity> {
-    throw new Error('Method not implemented.');
+    return this.ratesRepository.save(request);
   }
-  update(request: UpdateRateDto): Promise<RateEntity> {
-    throw new Error('Method not implemented.');
+
+  async update(request: UpdateRateDto): Promise<RateEntity> {
+    const { rateId } = request;
+
+    const rate = await this.findOneById(rateId);
+
+    Object.assign(rate, request);
+
+    return this.ratesRepository.save(rate);
   }
-  deleteById(id: string): Promise<RateEntity> {
-    throw new Error('Method not implemented.');
+
+  async deleteById(rateId: string): Promise<RateEntity> {
+    await this.findOneById(rateId);
+
+    const result: UpdateResult = await this.ratesRepository.update(rateId, {
+      status: Status.DELETED,
+      deletedAt: new Date(),
+    });
+
+    if (result.affected !== 1) {
+      throw new FailedDeleteException('rate');
+    }
+
+    return this.findOneById(rateId);
   }
 }
