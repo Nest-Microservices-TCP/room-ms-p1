@@ -36,11 +36,50 @@ export class RentEntity extends BaseEntity {
     type: 'timestamp with time zone',
   })
   departureAt: Date;
+
+  @Column({
+    name: 'entry_type',
+    type: 'enum',
+    enum: EntryType,
+  })
   entryType: EntryType;
+
+  @Column({
+    name: 'total_income',
+    type: 'numeric',
+    precision: 9,
+    scale: 2,
+    default: null,
+    nullable: true,
+  })
   totalIncome: number;
+
+  @Column({
+    name: 'rent_state',
+    type: 'enum',
+    enum: RentState,
+  })
   rentState: RentState;
+
+  @Column({
+    name: 'payment_state',
+    type: 'enum',
+    enum: PaymentState,
+  })
   paymentSate: PaymentState;
+
+  @Column({
+    name: 'guest_name',
+    type: 'varchar',
+    length: 255,
+  })
   guestName: string;
+
+  @Column({
+    name: 'accommodation_type',
+    type: 'enum',
+    enum: AccommodationType,
+  })
   accommodationType: AccommodationType;
 
   /**
