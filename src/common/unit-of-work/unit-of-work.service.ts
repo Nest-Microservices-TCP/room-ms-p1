@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { DataSource, QueryRunner } from 'typeorm';
-import { RoomsStatesRepository } from '../../rooms-states/repositories/rooms-state.repository';
 import { IUnitForWork } from './interfaces/unit-of-work.interface';
+import { RoomsStatesRepository } from '../../rooms-states/repository/rooms-state.repository';
 
 @Injectable()
 export class UnitOfWork implements IUnitForWork {

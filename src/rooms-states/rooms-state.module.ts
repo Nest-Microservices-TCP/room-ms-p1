@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { RoomsStatesService } from './rooms-state.service';
 import { RoomStateEntity } from './entity/room-state.entity';
 import { RoomsStatesController } from './rooms-state.controller';
-import { RoomsStatesRepository } from './repositories/rooms-state.repository';
+import { RoomsStatesRepository } from './repository/rooms-state.repository';
 
 @Module({
   imports: [TypeOrmModule.forFeature([RoomStateEntity])],
