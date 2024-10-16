@@ -12,6 +12,7 @@ export class RoomStateEntity extends BaseEntity {
     name: 'name',
     type: 'text',
     nullable: false,
+    unique: true,
   })
   name: string;
 
