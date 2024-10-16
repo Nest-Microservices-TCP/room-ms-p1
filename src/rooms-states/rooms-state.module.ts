@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { RoomsStatesController } from './rooms-state.controller';
-import { RoomsStatesService } from './rooms-state.service';
-import { RoomStateEntity } from './entities/room-state.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { RoomsStatesService } from './rooms-state.service';
+import { RoomStateEntity } from './entity/room-state.entity';
+import { RoomsStatesController } from './rooms-state.controller';
 import { RoomsStatesRepository } from './repositories/rooms-state.repository';
 
 @Module({

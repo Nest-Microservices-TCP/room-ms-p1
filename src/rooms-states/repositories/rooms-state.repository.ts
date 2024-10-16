@@ -1,8 +1,8 @@
 import { Status } from 'src/common/enums';
 import { InjectRepository } from '@nestjs/typeorm';
+import { RoomStateEntity } from '../entity/room-state.entity';
 import { ConflictException, Injectable } from '@nestjs/common';
 import { QueryRunner, Repository, UpdateResult } from 'typeorm';
-import { RoomStateEntity } from '../entities/room-state.entity';
 import { FailedDeleteException } from 'src/common/exceptions/custom';
 import { UpdateRoomStateDto, CreateRoomStateDto } from '../dto/request';
 import { IRoomsStateRepository } from './interfaces/rooms-state.repository.interface';
