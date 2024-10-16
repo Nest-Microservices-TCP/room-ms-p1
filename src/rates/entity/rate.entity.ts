@@ -13,6 +13,7 @@ export class RateEntity extends BaseEntity {
     name: 'name',
     type: 'varchar',
     length: 255,
+    unique: true,
   })
   name: string;
 
