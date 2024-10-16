@@ -13,6 +13,7 @@ export class RoomEntity extends BaseEntity {
     name: 'number',
     type: 'int',
     nullable: false,
+    unique: true,
   })
   number: number;
 
