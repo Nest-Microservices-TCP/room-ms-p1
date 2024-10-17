@@ -48,11 +48,13 @@ export class RentsRepository implements IRentsRepository {
   }
 
   create(request: Partial<RentEntity>): RentEntity {
-    throw new Error('Method not implemented.');
+    return this.rentsRepository.create(request);
   }
+
   save(request: CreateRentDto): Promise<RentEntity> {
-    throw new Error('Method not implemented.');
+    return this.rentsRepository.save(request);
   }
+
   update(request: UpdateRentDto): Promise<RentEntity> {
     throw new Error('Method not implemented.');
   }
