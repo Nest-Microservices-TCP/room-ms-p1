@@ -72,6 +72,8 @@ export class RentEntity extends BaseEntity {
     name: 'guest_name',
     type: 'varchar',
     length: 255,
+    nullable: true,
+    default: null,
   })
   guestName: string;
 
