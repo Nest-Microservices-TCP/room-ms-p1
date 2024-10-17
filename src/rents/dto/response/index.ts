@@ -1,1 +1,1 @@
-export * from './rent-response.dto';
+export * from './rent.response.dto';
