@@ -4,6 +4,8 @@ import { QueryRunner, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateRentDto, UpdateRentDto } from '../dto/request';
 import { IRentsRepository } from './interfaces/rents.repository.interface';
+import { Status } from 'src/common/enums';
+import { EntityNotFoundException } from 'src/common/exceptions/custom';
 
 export class RentsRepository implements IRentsRepository {
   private rentsRepository: Repository<RentEntity>;
@@ -24,11 +26,27 @@ export class RentsRepository implements IRentsRepository {
   }
 
   findAll(): Promise<RentEntity[]> {
-    throw new Error('Method not implemented.');
+    return this.rentsRepository.find({
+      where: {
+        status: Status.ACTIVE,
+      },
+    });
   }
-  findOneById(id: string): Promise<RentEntity> {
-    throw new Error('Method not implemented.');
+
+  async findOneById(rentId: string): Promise<RentEntity> {
+    const rent = await this.rentsRepository.findOne({
+      where: {
+        rentId,
+      },
+    });
+
+    if (!rent) {
+      throw new EntityNotFoundException('rent');
+    }
+
+    return rent;
   }
+
   create(request: Partial<RentEntity>): RentEntity {
     throw new Error('Method not implemented.');
   }
