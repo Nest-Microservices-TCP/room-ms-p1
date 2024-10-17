@@ -1,6 +1,7 @@
 import { AccommodationType, EntryType } from 'src/rents/enum';
 
 export class UpdateRentDto {
+  rentId: string;
   checkoutDate: Date;
   departureAt: Date;
   guests: number;
