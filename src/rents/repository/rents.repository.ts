@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { QueryRunner, Repository } from 'typeorm';
-import { CreateRentDto, UpdateRentDto } from '../dto/request';
 import { RentEntity } from '../entity';
-import { IRentsRepository } from './interfaces/rents.repository.interface';
+import { QueryRunner, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CreateRentDto, UpdateRentDto } from '../dto/request';
+import { IRentsRepository } from './interfaces/rents.repository.interface';
 
 export class RentsRepository implements IRentsRepository {
   private rentsRepository: Repository<RentEntity>;
@@ -16,7 +16,11 @@ export class RentsRepository implements IRentsRepository {
   }
 
   setQueryRunner(queryRunner: QueryRunner): void {
-    throw new Error('Method not implemented.');
+    if (queryRunner) {
+      this.rentsRepository = queryRunner.manager.getRepository(RentEntity);
+    } else {
+      this.rentsRepository = this.defaultRepository;
+    }
   }
 
   findAll(): Promise<RentEntity[]> {
