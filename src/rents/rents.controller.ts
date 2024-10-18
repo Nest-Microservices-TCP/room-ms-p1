@@ -44,4 +44,13 @@ export class RentsController {
       excludeExtraneousValues: true,
     });
   }
+
+  @MessagePattern({ cmd: 'delete.rent.by.id' })
+  async deleteById(rentId: string): Promise<RentResponseDto> {
+    const rent = await this.rentsService.deleteById(rentId);
+
+    return plainToInstance(RentResponseDto, rent, {
+      excludeExtraneousValues: true,
+    });
+  }
 }
