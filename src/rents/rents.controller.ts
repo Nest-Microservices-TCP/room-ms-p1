@@ -3,6 +3,7 @@ import { RentsService } from './rents.service';
 import { RentResponseDto } from './dto/response';
 import { plainToInstance } from 'class-transformer';
 import { MessagePattern } from '@nestjs/microservices';
+import { CreateRentDto, UpdateRentDto } from './dto/request';
 
 @Controller()
 export class RentsController {
@@ -20,6 +21,24 @@ export class RentsController {
   @MessagePattern({ cmd: 'find.one.rent.by.id' })
   async findOneById(rentId): Promise<RentResponseDto> {
     const rent = await this.rentsService.findOneById(rentId);
+
+    return plainToInstance(RentResponseDto, rent, {
+      excludeExtraneousValues: true,
+    });
+  }
+
+  @MessagePattern({ cmd: 'save.rent' })
+  async save(request: CreateRentDto): Promise<RentResponseDto> {
+    const rent = await this.rentsService.save(request);
+
+    return plainToInstance(RentResponseDto, rent, {
+      excludeExtraneousValues: true,
+    });
+  }
+
+  @MessagePattern({ cmd: 'update.rent' })
+  async update(request: UpdateRentDto): Promise<RentResponseDto> {
+    const rent = await this.rentsService.update(request);
 
     return plainToInstance(RentResponseDto, rent, {
       excludeExtraneousValues: true,
