@@ -1,1 +1,3 @@
-export class CreateExtraDto {}
+export class CreateExtraDto {
+  name: string;
+}
