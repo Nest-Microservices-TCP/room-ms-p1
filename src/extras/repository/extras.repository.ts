@@ -48,11 +48,13 @@ export class ExtrasRepository implements IExtrasRepository {
   }
 
   create(request: Partial<ExtraEntity>): ExtraEntity {
-    throw new Error('Method not implemented.');
+    return this.extrasRepository.create(request);
   }
+
   save(request: CreateExtraDto): Promise<ExtraEntity> {
-    throw new Error('Method not implemented.');
+    return this.extrasRepository.save(request);
   }
+
   update(request: UpdateExtraDto): Promise<ExtraEntity> {
     throw new Error('Method not implemented.');
   }
