@@ -44,4 +44,13 @@ export class ExtrasService {
       excludeExtraneousValues: true,
     });
   }
+
+  @HandleRpcExceptions()
+  async deleteById(extraId: string): Promise<ExtraResponseDto> {
+    const extra = await this.extrasRepository.deleteById(extraId);
+
+    return plainToInstance(ExtraResponseDto, extra, {
+      excludeExtraneousValues: true,
+    });
+  }
 }
