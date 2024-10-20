@@ -2,7 +2,7 @@
 import { QueryRunner } from 'typeorm';
 import { ExtraEntity } from '../entity/extra.entity';
 import { CreateExtraDto, UpdateExtraDto } from '../dto/request';
-import { IExtrasRepository } from './interfaces/exras.repository.interface';
+import { IExtrasRepository } from './interfaces/extras.repository.interface';
 
 export class ExtrasRepository implements IExtrasRepository {
   setQueryRunner(queryRunner: QueryRunner): void {
