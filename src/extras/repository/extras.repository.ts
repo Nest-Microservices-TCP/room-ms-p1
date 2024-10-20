@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { Status } from 'src/common/enums';
 import { QueryRunner, Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 import { ExtraEntity } from '../entity/extra.entity';
 import { CreateExtraDto, UpdateExtraDto } from '../dto/request';
+import { EntityNotFoundException } from 'src/common/exceptions/custom';
 import { IExtrasRepository } from './interfaces/extras.repository.interface';
-import { InjectRepository } from '@nestjs/typeorm';
 
 export class ExtrasRepository implements IExtrasRepository {
   private extrasRepository: Repository<ExtraEntity>;
@@ -24,11 +26,27 @@ export class ExtrasRepository implements IExtrasRepository {
   }
 
   findAll(): Promise<ExtraEntity[]> {
-    throw new Error('Method not implemented.');
+    return this.extrasRepository.find({
+      where: {
+        status: Status.ACTIVE,
+      },
+    });
   }
-  findOneById(id: string): Promise<ExtraEntity> {
-    throw new Error('Method not implemented.');
+
+  async findOneById(extraId: string): Promise<ExtraEntity> {
+    const extra = await this.extrasRepository.findOne({
+      where: {
+        extraId,
+      },
+    });
+
+    if (!extra) {
+      throw new EntityNotFoundException('extra');
+    }
+
+    return extra;
   }
+
   create(request: Partial<ExtraEntity>): ExtraEntity {
     throw new Error('Method not implemented.');
   }
