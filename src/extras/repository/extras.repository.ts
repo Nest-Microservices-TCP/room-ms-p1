@@ -1,10 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Status } from 'src/common/enums';
-import { QueryRunner, Repository } from 'typeorm';
+import { QueryRunner, Repository, UpdateResult } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ExtraEntity } from '../entity/extra.entity';
 import { CreateExtraDto, UpdateExtraDto } from '../dto/request';
-import { EntityNotFoundException } from 'src/common/exceptions/custom';
+import {
+  EntityNotFoundException,
+  FailedDeleteException,
+} from 'src/common/exceptions/custom';
 import { IExtrasRepository } from './interfaces/extras.repository.interface';
 
 export class ExtrasRepository implements IExtrasRepository {
@@ -55,10 +58,28 @@ export class ExtrasRepository implements IExtrasRepository {
     return this.extrasRepository.save(request);
   }
 
-  update(request: UpdateExtraDto): Promise<ExtraEntity> {
-    throw new Error('Method not implemented.');
+  async update(request: UpdateExtraDto): Promise<ExtraEntity> {
+    const { extraId } = request;
+
+    const extra = await this.findOneById(extraId);
+
+    Object.assign(extra, request);
+
+    return this.save(extra);
   }
-  deleteById(id: string): Promise<ExtraEntity> {
-    throw new Error('Method not implemented.');
+
+  async deleteById(extraId: string): Promise<ExtraEntity> {
+    await this.findOneById(extraId);
+
+    const result: UpdateResult = await this.extrasRepository.update(extraId, {
+      status: Status.DELETED,
+      deletedAt: new Date(),
+    });
+
+    if (result?.affected === 0) {
+      throw new FailedDeleteException('extra');
+    }
+
+    return this.findOneById(extraId);
   }
 }
