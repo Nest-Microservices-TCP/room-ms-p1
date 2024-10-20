@@ -1,7 +1,6 @@
 import { BaseEntity } from 'src/common/entity';
-import { ExtraType } from '../enum';
-import { RentEntity } from 'src/rents/entity';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { RentExtraEntity } from 'src/rents-extras/entity/rent-extra.entity';
 
 @Entity({ name: 'extras' })
 export class ExtraEntity extends BaseEntity {
@@ -11,26 +10,11 @@ export class ExtraEntity extends BaseEntity {
   extraId: string;
 
   @Column({
-    name: 'extra_type',
-    type: 'enum',
-    enum: ExtraType,
+    name: 'name',
+    type: 'varchar',
+    length: 255,
   })
-  extraType: ExtraType; //TODO: En lugar de ser un enum, se tendría un nombre pudiendo crear mas extras
+  name: string;
 
-  @Column({
-    name: 'quantity',
-    type: 'smallint',
-  })
-  quantity: number;
-
-  @Column({
-    name: 'total',
-    type: 'decimal',
-    scale: 2,
-    precision: 9,
-  })
-  total: number;
-
-  //TODO: Agregar tabla intermedia para la relación con rentas
-  rent: RentEntity;
+  rentExtras: RentExtraEntity; //TODO: Añadir relación con la tabla pivote
 }
