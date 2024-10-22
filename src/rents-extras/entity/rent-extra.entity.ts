@@ -1,6 +1,6 @@
-import { ExtraEntity } from 'src/extras/entity/extra.entity';
 import { RentEntity } from 'src/rents/entity';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { ExtraEntity } from 'src/extras/entity/extra.entity';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'rents_extras' })
 export class RentExtraEntity {
@@ -23,7 +23,21 @@ export class RentExtraEntity {
   })
   total: number;
 
-  //Todo: Añadir relaciones con las tablas
-  extra: ExtraEntity;
+  /**
+   * @onDelete @onUpdate
+   * Cuando se elimine o actualice un registro de la tabla Rents o
+   * Extras, automáticamente se eliminaran o actualizaran los registros
+   * correspondientes en esta tabla intermedia RentsExtras
+   */
+  @ManyToOne(() => RentEntity, (rent) => rent.rentExtras, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   rent: RentEntity;
+
+  @ManyToOne(() => ExtraEntity, (extra) => extra.rentExtras, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  extra: ExtraEntity;
 }
