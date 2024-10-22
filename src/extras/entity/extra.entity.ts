@@ -1,5 +1,5 @@
 import { BaseEntity } from 'src/common/entity';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { RentExtraEntity } from 'src/rents-extras/entity/rent-extra.entity';
 
 @Entity({ name: 'extras' })
@@ -16,5 +16,15 @@ export class ExtraEntity extends BaseEntity {
   })
   name: string;
 
-  rentExtras: RentExtraEntity; //TODO: Añadir relación con la tabla pivote
+  /**
+   * * { cascade: true }
+   * Esto asegura que las operaciones de inserción y actualización se
+   * realicen en cascada. Si por ejemplo, se añade o modifica una relación
+   * en Extra, los cambios se propagaran automáticamente a la tabla
+   * intermedia RentsExtras
+   */
+  @OneToMany(() => RentExtraEntity, (rentExtra) => rentExtra.extra, {
+    cascade: true,
+  })
+  rentExtras: RentExtraEntity[];
 }
