@@ -1,15 +1,17 @@
-import { AccommodationType, EntryType, PaymentState, RentState } from '../enum';
 import {
   Column,
   Entity,
-  Generated,
-  JoinColumn,
   OneToOne,
+  Generated,
+  OneToMany,
+  JoinColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { RentSubtotalsEntity } from './rent-subtotals.entity';
-import { RoomEntity } from 'src/rooms/entity/room.entity';
 import { BaseEntity } from 'src/common/entity';
+import { RoomEntity } from 'src/rooms/entity/room.entity';
+import { RentSubtotalsEntity } from './rent-subtotals.entity';
+import { RentExtraEntity } from 'src/rents-extras/entity/rent-extra.entity';
+import { AccommodationType, EntryType, PaymentState, RentState } from '../enum';
 
 @Entity({ name: 'rent' })
 export class RentEntity extends BaseEntity {
@@ -104,4 +106,25 @@ export class RentEntity extends BaseEntity {
   @OneToOne(() => RoomEntity, (room) => room.rent)
   @JoinColumn({ name: 'room_id' })
   room: RoomEntity;
+
+  //TODO: Eliminar las entidades y columnas que ya no serian necesarias debido a esta relación
+  /**
+   * * Relación ManyToMany a traves de una tabla intermedia/pivote.
+   *
+   * Se establece una relación OneToMany hacia la tabla intermedia usando
+   * la entidad como la relación, lo mismo ocurrirá para la contraparte o
+   * la tabla con la que se esta conectando a traves de la tabla pivote
+   */
+
+  /**
+   * * { cascade: true }
+   * Esto asegura que las operaciones de inserción y actualización se
+   * realicen en cascada. Si por ejemplo, se añade o modifica una relación
+   * en Extra, los cambios se propagaran automáticamente a la tabla
+   * intermedia RentsExtras
+   */
+  @OneToMany(() => RentExtraEntity, (rentExtra) => rentExtra.rent, {
+    cascade: true,
+  })
+  rentExtras: RentExtraEntity[];
 }
