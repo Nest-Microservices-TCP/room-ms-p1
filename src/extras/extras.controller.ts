@@ -27,4 +27,9 @@ export class ExtrasController {
   update(@Payload() request: UpdateExtraDto): Promise<ExtraResponseDto> {
     return this.extrasService.update(request);
   }
+
+  @MessagePattern({ cmd: 'delete.extra.by.id' })
+  deleteById(@Payload('extraId') extraId: string): Promise<ExtraResponseDto> {
+    return this.extrasService.deleteById(extraId);
+  }
 }
