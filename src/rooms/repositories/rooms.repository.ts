@@ -55,16 +55,6 @@ export class RoomsRepository implements IRoomsRepository {
   }
 
   async save(request: CreateRoomDto): Promise<RoomEntity> {
-    const { number } = request;
-
-    const room = await this.roomsRepository.findOne({ where: { number } });
-
-    if (room) {
-      throw new ConflictException(
-        `Already exists a room with number: ${number}`,
-      );
-    }
-
     return this.roomsRepository.save(request);
   }
 
