@@ -12,6 +12,7 @@ import {
   QueryRunner,
   UpdateResult,
   FindOptionsWhere,
+  DeleteResult,
 } from 'typeorm';
 
 export class RoomsRepository implements IRoomsRepository {
@@ -68,13 +69,10 @@ export class RoomsRepository implements IRoomsRepository {
     return this.roomsRepository.save(room);
   }
 
-  async deleteById(roomId: string): Promise<RoomEntity> {
+  async remove(roomId: string): Promise<RoomEntity> {
     await this.findOneById(roomId);
 
-    const result: UpdateResult = await this.roomsRepository.update(roomId, {
-      status: Status.DELETED,
-      deletedAt: new Date(),
-    });
+    const result: DeleteResult = await this.roomsRepository.delete(roomId);
 
     if (result.affected === 0) {
       throw new FailedRemoveException('room');
