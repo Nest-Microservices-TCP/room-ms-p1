@@ -18,6 +18,11 @@ export class RoomsController {
     return this.roomsService.findOneById(roomId);
   }
 
+  @MessagePattern({ cmd: 'find.rooms.by.ids' })
+  findByIds(@Payload() roomsIds: string[]): Promise<RoomResponseDto[]> {
+    return this.roomsService.findByIds(roomsIds);
+  }
+
   @MessagePattern({ cmd: 'find.all.rooms' })
   findAll(): Promise<RoomResponseDto[]> {
     return this.roomsService.findAll();
