@@ -95,11 +95,13 @@ export class RoomsRepository implements IRoomsRepository {
   }
 
   findWithRelations(relations: string[]): Promise<RoomEntity[]> {
-    throw new Error('Method not implemented.');
+    return this.roomsRepository.find({ relations });
   }
+
   count(criteria: FindOptionsWhere<RoomEntity>): Promise<number> {
-    throw new Error('Method not implemented.');
+    return this.roomsRepository.count({ where: criteria });
   }
+
   paginate(page: number, limit: number): Promise<[RoomEntity[], number]> {
     throw new Error('Method not implemented.');
   }
