@@ -1,8 +1,8 @@
-import { Controller } from '@nestjs/common';
-import { RoomsService } from './rooms.service';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { CreateRoomDto, UpdateRoomDto } from './dto/request';
 import { RoomResponseDto } from './dto/response';
+import { RoomsService } from './rooms.service';
+import { Controller } from '@nestjs/common';
 
 @Controller()
 export class RoomsController {
@@ -28,8 +28,8 @@ export class RoomsController {
     return this.roomsService.update(request);
   }
 
-  @MessagePattern({ cmd: 'delete.room.by.id' })
-  deleteById(@Payload('roomId') roomId: string): Promise<RoomResponseDto> {
-    return this.roomsService.deleteById(roomId);
+  @MessagePattern({ cmd: 'remove.room.by.id' })
+  remove(@Payload('roomId') roomId: string): Promise<RoomResponseDto> {
+    return this.roomsService.remove(roomId);
   }
 }
