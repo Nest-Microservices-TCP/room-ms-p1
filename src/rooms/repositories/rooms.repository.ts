@@ -1,24 +1,22 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { EntityNotFoundException } from 'src/common/exceptions/custom/entity-not-found.exception';
 import { IRoomsRepository } from './interfaces/rooms.repository.interface';
-import {
-  FailedRemoveException,
-  FailedRestoreException,
-  FailedSoftDeleteException,
-} from 'src/common/exceptions/custom';
 import { CreateRoomDto, UpdateRoomDto } from '../dto/request';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ConflictException } from '@nestjs/common';
 import { RoomEntity } from '../entity/room.entity';
 import { Status } from 'src/common/enums';
 import {
+  In,
   Repository,
   QueryRunner,
   UpdateResult,
   DeleteResult,
   FindOptionsWhere,
-  In,
 } from 'typeorm';
+import {
+  FailedRemoveException,
+  FailedRestoreException,
+  FailedSoftDeleteException,
+} from 'src/common/exceptions/custom';
 
 export class RoomsRepository implements IRoomsRepository {
   private roomsRepository: Repository<RoomEntity>;
@@ -158,6 +156,6 @@ export class RoomsRepository implements IRoomsRepository {
   }
 
   customQuery(query: string, params: any[]): Promise<any> {
-    throw new Error('Method not implemented.');
+    return this.roomsRepository.query(query, params);
   }
 }
