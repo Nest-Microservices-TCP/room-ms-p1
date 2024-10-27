@@ -11,8 +11,9 @@ import {
   Repository,
   QueryRunner,
   UpdateResult,
-  FindOptionsWhere,
   DeleteResult,
+  FindOptionsWhere,
+  In,
 } from 'typeorm';
 
 export class RoomsRepository implements IRoomsRepository {
@@ -81,12 +82,18 @@ export class RoomsRepository implements IRoomsRepository {
     return this.findOneById(roomId);
   }
 
-  findByIds(ids: string[]): Promise<RoomEntity[]> {
-    throw new Error('Method not implemented.');
+  findByIds(roomsIds: string[]): Promise<RoomEntity[]> {
+    return this.roomsRepository.find({
+      where: {
+        roomId: In(roomsIds),
+      },
+    });
   }
+
   findByCriteria(criteria: FindOptionsWhere<RoomEntity>): Promise<RoomEntity> {
-    throw new Error('Method not implemented.');
+    return this.roomsRepository.findOne({ where: criteria });
   }
+
   findWithRelations(relations: string[]): Promise<RoomEntity[]> {
     throw new Error('Method not implemented.');
   }
