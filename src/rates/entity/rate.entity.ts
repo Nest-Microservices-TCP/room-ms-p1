@@ -1,6 +1,6 @@
-import { BaseEntity } from 'src/common/entity';
-import { AccommodationType } from 'src/rents/enum';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { AccommodationType } from 'src/rents/enum';
+import { BaseEntity } from 'src/common/entity';
 
 @Entity({ name: 'rates' })
 export class RateEntity extends BaseEntity {
