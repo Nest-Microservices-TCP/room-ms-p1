@@ -1,7 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { EntityNotFoundException } from 'src/common/exceptions/custom/entity-not-found.exception';
 import { IRoomsRepository } from './interfaces/rooms.repository.interface';
-import { FailedRemoveException } from 'src/common/exceptions/custom';
+import {
+  FailedRemoveException,
+  FailedRestoreException,
+  FailedSoftDeleteException,
+} from 'src/common/exceptions/custom';
 import { CreateRoomDto, UpdateRoomDto } from '../dto/request';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ConflictException } from '@nestjs/common';
@@ -115,12 +119,36 @@ export class RoomsRepository implements IRoomsRepository {
     return count > 0;
   }
 
-  softDelete(id: string): Promise<RoomEntity> {
-    throw new Error('Method not implemented.');
+  async softDelete(roomId: string): Promise<RoomEntity> {
+    await this.findOneById(roomId);
+
+    const result: UpdateResult = await this.roomsRepository.update(roomId, {
+      status: Status.DELETED,
+      deletedAt: new Date(),
+    });
+
+    if (result.affected === 0) {
+      throw new FailedSoftDeleteException('room');
+    }
+
+    return this.findOneById(roomId);
   }
-  restore(id: string): Promise<RoomEntity> {
-    throw new Error('Method not implemented.');
+
+  async restore(roomId: string): Promise<RoomEntity> {
+    await this.findOneById(roomId);
+
+    const result: UpdateResult = await this.roomsRepository.update(roomId, {
+      status: Status.ACTIVE,
+      deletedAt: null,
+    });
+
+    if (result.affected === 0) {
+      throw new FailedRestoreException('room');
+    }
+
+    return this.findOneById(roomId);
   }
+
   bulkSave(entities: RoomEntity[]): Promise<RoomEntity[]> {
     throw new Error('Method not implemented.');
   }
