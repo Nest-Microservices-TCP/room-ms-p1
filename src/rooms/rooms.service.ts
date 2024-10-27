@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
 import { RoomsRepository } from './repositories/rooms.repository';
-import { HandleRpcExceptions } from 'src/common/decorators';
 import { CreateRoomDto, UpdateRoomDto } from './dto/request';
-import { RoomResponseDto } from './dto/response';
+import { HandleRpcExceptions } from 'src/common/decorators';
 import { plainToInstance } from 'class-transformer';
+import { RoomResponseDto } from './dto/response';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class RoomsService {
@@ -46,8 +46,8 @@ export class RoomsService {
   }
 
   @HandleRpcExceptions()
-  async deleteById(roomId: string): Promise<RoomResponseDto> {
-    const room = await this.roomsRepository.deleteById(roomId);
+  async remove(roomId: string): Promise<RoomResponseDto> {
+    const room = await this.roomsRepository.remove(roomId);
 
     return plainToInstance(RoomResponseDto, room, {
       excludeExtraneousValues: true,
