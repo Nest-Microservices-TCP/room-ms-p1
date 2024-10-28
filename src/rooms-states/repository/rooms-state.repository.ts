@@ -185,6 +185,6 @@ export class RoomsStatesRepository implements IRoomsStateRepository {
   }
 
   customQuery(query: string, params: any[]): Promise<any> {
-    throw new Error('Method not implemented.');
+    return this.roomsStatesRepository.query(query, params);
   }
 }
