@@ -16,6 +16,7 @@ import {
 } from 'typeorm';
 import {
   FailedRemoveException,
+  FailedRestoreException,
   FailedSoftDeleteException,
 } from 'src/common/exceptions/custom';
 
@@ -157,9 +158,24 @@ export class RoomsStatesRepository implements IRoomsStateRepository {
     return this.findOneById(roomStateId);
   }
 
-  restore(id: string): Promise<RoomStateEntity> {
-    throw new Error('Method not implemented.');
+  async restore(roomStateId: string): Promise<RoomStateEntity> {
+    await this.findOneById(roomStateId);
+
+    const result: UpdateResult = await this.roomsStatesRepository.update(
+      roomStateId,
+      {
+        status: Status.ACTIVE,
+        deletedAt: null,
+      },
+    );
+
+    if (result?.affected === 0) {
+      throw new FailedRestoreException('room-state');
+    }
+
+    return this.findOneById(roomStateId);
   }
+
   bulkSave(entities: RoomStateEntity[]): Promise<RoomStateEntity[]> {
     throw new Error('Method not implemented.');
   }
