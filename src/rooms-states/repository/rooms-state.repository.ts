@@ -11,6 +11,7 @@ import {
   QueryRunner,
   UpdateResult,
   FindOptionsWhere,
+  DeleteResult,
 } from 'typeorm';
 import { FailedRemoveException } from 'src/common/exceptions/custom';
 
@@ -86,27 +87,19 @@ export class RoomsStatesRepository implements IRoomsStateRepository {
     return this.roomsStatesRepository.save(roomState);
   }
 
-  async deleteById(roomStateId: string): Promise<RoomStateEntity> {
-    await this.findOneById(roomStateId);
+  async remove(roomStateId: string): Promise<RoomStateEntity> {
+    const roomState = await this.findOneById(roomStateId);
 
-    const result: UpdateResult = await this.roomsStatesRepository.update(
-      roomStateId,
-      {
-        status: Status.DELETED,
-        deletedAt: new Date(),
-      },
-    );
+    const result: DeleteResult =
+      await this.roomsStatesRepository.delete(roomStateId);
 
-    if (result.affected !== 1) {
+    if (result.affected === 0) {
       throw new FailedRemoveException('room-state');
     }
 
-    return this.findOneById(roomStateId);
+    return roomState;
   }
 
-  remove(id: string): Promise<RoomStateEntity> {
-    throw new Error('Method not implemented.');
-  }
   findByIds(ids: string[]): Promise<RoomStateEntity[]> {
     throw new Error('Method not implemented.');
   }
