@@ -124,15 +124,22 @@ export class RoomsStatesRepository implements IRoomsStateRepository {
   }
 
   paginate(page: number, limit: number): Promise<[RoomStateEntity[], number]> {
-    throw new Error('Method not implemented.');
+    return this.roomsStatesRepository.findAndCount({
+      skip: (page - 1) * limit,
+      take: limit,
+    });
   }
+
+  async exists(criteria: FindOptionsWhere<RoomStateEntity>): Promise<boolean> {
+    const count = await this.roomsStatesRepository.count({ where: criteria });
+
+    return count > 0;
+  }
+
   softDelete(id: string): Promise<RoomStateEntity> {
     throw new Error('Method not implemented.');
   }
   restore(id: string): Promise<RoomStateEntity> {
-    throw new Error('Method not implemented.');
-  }
-  exists(criteria: FindOptionsWhere<RoomStateEntity>): Promise<boolean> {
     throw new Error('Method not implemented.');
   }
   bulkSave(entities: RoomStateEntity[]): Promise<RoomStateEntity[]> {
