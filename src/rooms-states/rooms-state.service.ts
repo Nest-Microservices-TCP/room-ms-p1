@@ -1,13 +1,13 @@
+import { RoomsStatesRepository } from './repository/rooms-state.repository';
+import { HandleRpcExceptions } from 'src/common/decorators';
+import { plainToInstance } from 'class-transformer';
+import { RoomStateResponse } from './dto/response';
+import { Injectable } from '@nestjs/common';
 import {
   UpdateRoomStateDto,
   CreateRoomStateDto,
   FindOneRoomStateByIdDto,
 } from './dto/request';
-import { Injectable } from '@nestjs/common';
-import { RoomStateResponse } from './dto/response';
-import { plainToInstance } from 'class-transformer';
-import { HandleRpcExceptions } from 'src/common/decorators';
-import { RoomsStatesRepository } from './repository/rooms-state.repository';
 
 @Injectable()
 export class RoomsStatesService {
@@ -53,8 +53,8 @@ export class RoomsStatesService {
   }
 
   @HandleRpcExceptions()
-  async deleteById(roomStateId: string): Promise<RoomStateResponse> {
-    const roomState = await this.roomsStatesRepository.deleteById(roomStateId);
+  async remove(roomStateId: string): Promise<RoomStateResponse> {
+    const roomState = await this.roomsStatesRepository.remove(roomStateId);
 
     return plainToInstance(RoomStateResponse, roomState, {
       excludeExtraneousValues: true,

@@ -7,12 +7,12 @@ import { RoomStateEntity } from '../entity/room-state.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Status } from 'src/common/enums';
 import {
+  In,
   Repository,
   QueryRunner,
   UpdateResult,
-  FindOptionsWhere,
   DeleteResult,
-  In,
+  FindOptionsWhere,
 } from 'typeorm';
 import {
   FailedRemoveException,
