@@ -176,12 +176,14 @@ export class RoomsStatesRepository implements IRoomsStateRepository {
     return this.findOneById(roomStateId);
   }
 
-  bulkSave(entities: RoomStateEntity[]): Promise<RoomStateEntity[]> {
-    throw new Error('Method not implemented.');
+  bulkSave(roomsStates: RoomStateEntity[]): Promise<RoomStateEntity[]> {
+    return this.roomsStatesRepository.save(roomsStates);
   }
-  bulkUpdate(entities: RoomStateEntity[]): Promise<RoomStateEntity[]> {
-    throw new Error('Method not implemented.');
+
+  bulkUpdate(roomsStates: RoomStateEntity[]): Promise<RoomStateEntity[]> {
+    return this.roomsStatesRepository.save(roomsStates);
   }
+
   customQuery(query: string, params: any[]): Promise<any> {
     throw new Error('Method not implemented.');
   }
