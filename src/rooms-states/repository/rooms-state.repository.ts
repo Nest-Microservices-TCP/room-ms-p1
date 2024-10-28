@@ -12,6 +12,7 @@ import {
   UpdateResult,
   FindOptionsWhere,
   DeleteResult,
+  In,
 } from 'typeorm';
 import { FailedRemoveException } from 'src/common/exceptions/custom';
 
@@ -100,14 +101,20 @@ export class RoomsStatesRepository implements IRoomsStateRepository {
     return roomState;
   }
 
-  findByIds(ids: string[]): Promise<RoomStateEntity[]> {
-    throw new Error('Method not implemented.');
+  findByIds(roomsStatesIds: string[]): Promise<RoomStateEntity[]> {
+    return this.roomsStatesRepository.find({
+      where: {
+        roomStateId: In(roomsStatesIds),
+      },
+    });
   }
+
   findByCriteria(
     criteria: FindOptionsWhere<RoomStateEntity>,
   ): Promise<RoomStateEntity> {
-    throw new Error('Method not implemented.');
+    return this.roomsStatesRepository.findOne({ where: criteria });
   }
+
   findWithRelations(relations: string[]): Promise<RoomStateEntity[]> {
     throw new Error('Method not implemented.');
   }
