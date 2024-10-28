@@ -14,7 +14,10 @@ import {
   DeleteResult,
   In,
 } from 'typeorm';
-import { FailedRemoveException } from 'src/common/exceptions/custom';
+import {
+  FailedRemoveException,
+  FailedSoftDeleteException,
+} from 'src/common/exceptions/custom';
 
 @Injectable()
 export class RoomsStatesRepository implements IRoomsStateRepository {
@@ -136,9 +139,24 @@ export class RoomsStatesRepository implements IRoomsStateRepository {
     return count > 0;
   }
 
-  softDelete(id: string): Promise<RoomStateEntity> {
-    throw new Error('Method not implemented.');
+  async softDelete(roomStateId: string): Promise<RoomStateEntity> {
+    await this.findOneById(roomStateId);
+
+    const result: UpdateResult = await this.roomsStatesRepository.update(
+      roomStateId,
+      {
+        status: Status.DELETED,
+        deletedAt: new Date(),
+      },
+    );
+
+    if (result?.affected === 0) {
+      throw new FailedSoftDeleteException('room-state');
+    }
+
+    return this.findOneById(roomStateId);
   }
+
   restore(id: string): Promise<RoomStateEntity> {
     throw new Error('Method not implemented.');
   }
