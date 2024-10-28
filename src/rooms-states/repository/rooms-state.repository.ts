@@ -1,12 +1,18 @@
-import { Status } from 'src/common/enums';
-import { InjectRepository } from '@nestjs/typeorm';
-import { RoomStateEntity } from '../entity/room-state.entity';
-import { ConflictException, Injectable } from '@nestjs/common';
-import { QueryRunner, Repository, UpdateResult } from 'typeorm';
-import { FailedDeleteException } from 'src/common/exceptions/custom';
-import { UpdateRoomStateDto, CreateRoomStateDto } from '../dto/request';
-import { IRoomsStateRepository } from './interfaces/rooms-state.repository.interface';
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { EntityNotFoundException } from 'src/common/exceptions/custom/entity-not-found.exception';
+import { IRoomsStateRepository } from './interfaces/rooms-state.repository.interface';
+import { UpdateRoomStateDto, CreateRoomStateDto } from '../dto/request';
+import { ConflictException, Injectable } from '@nestjs/common';
+import { RoomStateEntity } from '../entity/room-state.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Status } from 'src/common/enums';
+import {
+  Repository,
+  QueryRunner,
+  UpdateResult,
+  FindOptionsWhere,
+} from 'typeorm';
+import { FailedRemoveException } from 'src/common/exceptions/custom';
 
 @Injectable()
 export class RoomsStatesRepository implements IRoomsStateRepository {
@@ -92,9 +98,48 @@ export class RoomsStatesRepository implements IRoomsStateRepository {
     );
 
     if (result.affected !== 1) {
-      throw new FailedDeleteException('room-state');
+      throw new FailedRemoveException('room-state');
     }
 
     return this.findOneById(roomStateId);
+  }
+
+  remove(id: string): Promise<RoomStateEntity> {
+    throw new Error('Method not implemented.');
+  }
+  findByIds(ids: string[]): Promise<RoomStateEntity[]> {
+    throw new Error('Method not implemented.');
+  }
+  findByCriteria(
+    criteria: FindOptionsWhere<RoomStateEntity>,
+  ): Promise<RoomStateEntity> {
+    throw new Error('Method not implemented.');
+  }
+  findWithRelations(relations: string[]): Promise<RoomStateEntity[]> {
+    throw new Error('Method not implemented.');
+  }
+  count(criteria: FindOptionsWhere<RoomStateEntity>): Promise<number> {
+    throw new Error('Method not implemented.');
+  }
+  paginate(page: number, limit: number): Promise<[RoomStateEntity[], number]> {
+    throw new Error('Method not implemented.');
+  }
+  softDelete(id: string): Promise<RoomStateEntity> {
+    throw new Error('Method not implemented.');
+  }
+  restore(id: string): Promise<RoomStateEntity> {
+    throw new Error('Method not implemented.');
+  }
+  exists(criteria: FindOptionsWhere<RoomStateEntity>): Promise<boolean> {
+    throw new Error('Method not implemented.');
+  }
+  bulkSave(entities: RoomStateEntity[]): Promise<RoomStateEntity[]> {
+    throw new Error('Method not implemented.');
+  }
+  bulkUpdate(entities: RoomStateEntity[]): Promise<RoomStateEntity[]> {
+    throw new Error('Method not implemented.');
+  }
+  customQuery(query: string, params: any[]): Promise<any> {
+    throw new Error('Method not implemented.');
   }
 }
