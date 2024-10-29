@@ -1,4 +1,4 @@
-import { RoomsStatesRepository } from './repository/rooms-state.repository';
+import { RoomsStatesRepository } from './repository/rooms-states.repository';
 import { HandleRpcExceptions } from 'src/common/decorators';
 import { RoomStateResponseDto } from './dto/response';
 import { plainToInstance } from 'class-transformer';
