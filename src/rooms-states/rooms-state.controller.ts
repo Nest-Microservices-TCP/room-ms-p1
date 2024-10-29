@@ -1,5 +1,5 @@
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import { RoomsStatesService } from './rooms-state.service';
+import { RoomsStatesService } from './rooms-states.service';
 import { RoomStateResponseDto } from './dto/response';
 import { Controller } from '@nestjs/common';
 import {
