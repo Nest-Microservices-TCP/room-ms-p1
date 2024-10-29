@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { EntityNotFoundException } from 'src/common/exceptions/custom/entity-not-found.exception';
-import { IRoomsStateRepository } from './interfaces/rooms-state.repository.interface';
+import { IRoomsStateRepository } from './interfaces/rooms-states.repository.interface';
 import { UpdateRoomStateDto, CreateRoomStateDto } from '../dto/request';
 import { ConflictException, Injectable } from '@nestjs/common';
 import { RoomStateEntity } from '../entity/room-state.entity';
