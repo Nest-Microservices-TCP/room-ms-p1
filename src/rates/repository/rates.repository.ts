@@ -107,15 +107,22 @@ export class RatesRepository implements IRatesRepository {
   }
 
   paginate(page: number, limit: number): Promise<[RateEntity[], number]> {
-    throw new Error('Method not implemented.');
+    return this.ratesRepository.findAndCount({
+      skip: (page - 1) * limit,
+      take: limit,
+    });
   }
+
+  async exists(criteria: FindOptionsWhere<RateEntity>): Promise<boolean> {
+    const count = await this.ratesRepository.count({ where: criteria });
+
+    return count > 0;
+  }
+
   softDelete(id: string): Promise<RateEntity> {
     throw new Error('Method not implemented.');
   }
   restore(id: string): Promise<RateEntity> {
-    throw new Error('Method not implemented.');
-  }
-  exists(criteria: FindOptionsWhere<RateEntity>): Promise<boolean> {
     throw new Error('Method not implemented.');
   }
   bulkSave(entities: RateEntity[]): Promise<RateEntity[]> {
