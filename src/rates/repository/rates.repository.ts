@@ -15,6 +15,7 @@ import {
 import {
   FailedRemoveException,
   EntityNotFoundException,
+  FailedRestoreException,
 } from 'src/common/exceptions/custom';
 
 export class RatesRepository implements IRatesRepository {
@@ -135,9 +136,21 @@ export class RatesRepository implements IRatesRepository {
     return this.findOneById(rateId);
   }
 
-  restore(id: string): Promise<RateEntity> {
-    throw new Error('Method not implemented.');
+  async restore(rateId: string): Promise<RateEntity> {
+    await this.findOneById(rateId);
+
+    const result: UpdateResult = await this.ratesRepository.update(rateId, {
+      status: Status.ACTIVE,
+      deletedAt: null,
+    });
+
+    if (result?.affected === 0) {
+      throw new FailedRestoreException('rate');
+    }
+
+    return this.findOneById(rateId);
   }
+
   bulkSave(entities: RateEntity[]): Promise<RateEntity[]> {
     throw new Error('Method not implemented.');
   }
