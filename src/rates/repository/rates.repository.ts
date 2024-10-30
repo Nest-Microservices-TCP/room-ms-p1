@@ -7,7 +7,7 @@ import { Status } from 'src/common/enums';
 import {
   Repository,
   QueryRunner,
-  UpdateResult,
+  DeleteResult,
   FindOptionsWhere,
 } from 'typeorm';
 import {
@@ -73,24 +73,18 @@ export class RatesRepository implements IRatesRepository {
     return this.ratesRepository.save(rate);
   }
 
-  async deleteById(rateId: string): Promise<RateEntity> {
-    await this.findOneById(rateId);
+  async remove(rateId: string): Promise<RateEntity> {
+    const rate = await this.findOneById(rateId);
 
-    const result: UpdateResult = await this.ratesRepository.update(rateId, {
-      status: Status.DELETED,
-      deletedAt: new Date(),
-    });
+    const result: DeleteResult = await this.ratesRepository.delete(rateId);
 
     if (result.affected !== 1) {
       throw new FailedRemoveException('rate');
     }
 
-    return this.findOneById(rateId);
+    return rate;
   }
 
-  remove(id: string): Promise<RateEntity> {
-    throw new Error('Method not implemented.');
-  }
   findByIds(ids: string[]): Promise<RateEntity[]> {
     throw new Error('Method not implemented.');
   }
