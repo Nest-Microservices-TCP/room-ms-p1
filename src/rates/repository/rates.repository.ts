@@ -10,6 +10,7 @@ import {
   DeleteResult,
   FindOptionsWhere,
   In,
+  UpdateResult,
 } from 'typeorm';
 import {
   FailedRemoveException,
@@ -119,9 +120,21 @@ export class RatesRepository implements IRatesRepository {
     return count > 0;
   }
 
-  softDelete(id: string): Promise<RateEntity> {
-    throw new Error('Method not implemented.');
+  async softDelete(rateId: string): Promise<RateEntity> {
+    await this.findOneById(rateId);
+
+    const result: UpdateResult = await this.ratesRepository.update(rateId, {
+      status: Status.DELETED,
+      deletedAt: new Date(),
+    });
+
+    if (result?.affected === 0) {
+      throw new EntityNotFoundException('rate');
+    }
+
+    return this.findOneById(rateId);
   }
+
   restore(id: string): Promise<RateEntity> {
     throw new Error('Method not implemented.');
   }
