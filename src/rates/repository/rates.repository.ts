@@ -151,12 +151,14 @@ export class RatesRepository implements IRatesRepository {
     return this.findOneById(rateId);
   }
 
-  bulkSave(entities: RateEntity[]): Promise<RateEntity[]> {
-    throw new Error('Method not implemented.');
+  bulkSave(rates: RateEntity[]): Promise<RateEntity[]> {
+    return this.ratesRepository.save(rates);
   }
-  bulkUpdate(entities: RateEntity[]): Promise<RateEntity[]> {
-    throw new Error('Method not implemented.');
+
+  bulkUpdate(rates: RateEntity[]): Promise<RateEntity[]> {
+    return this.ratesRepository.save(rates);
   }
+
   customQuery(query: string, params: any[]): Promise<any> {
     throw new Error('Method not implemented.');
   }
