@@ -99,11 +99,13 @@ export class RatesRepository implements IRatesRepository {
   }
 
   findWithRelations(relations: string[]): Promise<RateEntity[]> {
-    throw new Error('Method not implemented.');
+    return this.ratesRepository.find({ relations });
   }
+
   count(criteria: FindOptionsWhere<RateEntity>): Promise<number> {
-    throw new Error('Method not implemented.');
+    return this.ratesRepository.count({ where: criteria });
   }
+
   paginate(page: number, limit: number): Promise<[RateEntity[], number]> {
     throw new Error('Method not implemented.');
   }
