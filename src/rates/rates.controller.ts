@@ -1,8 +1,8 @@
-import { Controller } from '@nestjs/common';
-import { RatesService } from './rates.service';
-import { RateResponseDto } from './dto/response';
-import { CreateRateDto, UpdateRateDto } from './dto/request';
 import { MessagePattern, Payload } from '@nestjs/microservices';
+import { CreateRateDto, UpdateRateDto } from './dto/request';
+import { RateResponseDto } from './dto/response';
+import { RatesService } from './rates.service';
+import { Controller } from '@nestjs/common';
 
 @Controller()
 export class RatesController {
@@ -28,8 +28,8 @@ export class RatesController {
     return this.ratesService.update(request);
   }
 
-  @MessagePattern({ cmd: 'delete.rate.by.id' })
-  deleteById(@Payload('rateId') rateId: string): Promise<RateResponseDto> {
-    return this.ratesService.deleteById(rateId);
+  @MessagePattern({ cmd: 'remove.rate.by.id' })
+  remove(@Payload('rateId') rateId: string): Promise<RateResponseDto> {
+    return this.ratesService.remove(rateId);
   }
 }
