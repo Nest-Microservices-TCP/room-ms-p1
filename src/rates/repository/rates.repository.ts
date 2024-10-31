@@ -1,21 +1,20 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { IRatesRepository } from './interfaces/rates.repository.interface';
 import { CreateRateDto, UpdateRateDto } from '../dto/request';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RateEntity } from '../entity/rate.entity';
 import { Status } from 'src/common/enums';
 import {
+  In,
   Repository,
   QueryRunner,
+  UpdateResult,
   DeleteResult,
   FindOptionsWhere,
-  In,
-  UpdateResult,
 } from 'typeorm';
 import {
   FailedRemoveException,
-  EntityNotFoundException,
   FailedRestoreException,
+  EntityNotFoundException,
 } from 'src/common/exceptions/custom';
 
 export class RatesRepository implements IRatesRepository {
@@ -160,6 +159,6 @@ export class RatesRepository implements IRatesRepository {
   }
 
   customQuery(query: string, params: any[]): Promise<any> {
-    throw new Error('Method not implemented.');
+    return this.ratesRepository.query(query, params);
   }
 }
