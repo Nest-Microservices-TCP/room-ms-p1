@@ -1,14 +1,19 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { IExtrasRepository } from './interfaces/extras.repository.interface';
+import { CreateExtraDto, UpdateExtraDto } from '../dto/request';
+import { ExtraEntity } from '../entity/extra.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Status } from 'src/common/enums';
 import {
-  FailedDeleteException,
+  Repository,
+  QueryRunner,
+  UpdateResult,
+  FindOptionsWhere,
+} from 'typeorm';
+import {
+  FailedRemoveException,
   EntityNotFoundException,
 } from 'src/common/exceptions/custom';
-import { Status } from 'src/common/enums';
-import { InjectRepository } from '@nestjs/typeorm';
-import { ExtraEntity } from '../entity/extra.entity';
-import { CreateExtraDto, UpdateExtraDto } from '../dto/request';
-import { QueryRunner, Repository, UpdateResult } from 'typeorm';
-import { IExtrasRepository } from './interfaces/extras.repository.interface';
 
 export class ExtrasRepository implements IExtrasRepository {
   private extrasRepository: Repository<ExtraEntity>;
@@ -77,9 +82,48 @@ export class ExtrasRepository implements IExtrasRepository {
     });
 
     if (result?.affected === 0) {
-      throw new FailedDeleteException('extra');
+      throw new FailedRemoveException('extra');
     }
 
     return this.findOneById(extraId);
+  }
+
+  remove(id: string): Promise<ExtraEntity> {
+    throw new Error('Method not implemented.');
+  }
+  findByIds(ids: string[]): Promise<ExtraEntity[]> {
+    throw new Error('Method not implemented.');
+  }
+  findByCriteria(
+    criteria: FindOptionsWhere<ExtraEntity>,
+  ): Promise<ExtraEntity> {
+    throw new Error('Method not implemented.');
+  }
+  findWithRelations(relations: string[]): Promise<ExtraEntity[]> {
+    throw new Error('Method not implemented.');
+  }
+  count(criteria: FindOptionsWhere<ExtraEntity>): Promise<number> {
+    throw new Error('Method not implemented.');
+  }
+  paginate(page: number, limit: number): Promise<[ExtraEntity[], number]> {
+    throw new Error('Method not implemented.');
+  }
+  softDelete(id: string): Promise<ExtraEntity> {
+    throw new Error('Method not implemented.');
+  }
+  restore(id: string): Promise<ExtraEntity> {
+    throw new Error('Method not implemented.');
+  }
+  exists(criteria: FindOptionsWhere<ExtraEntity>): Promise<boolean> {
+    throw new Error('Method not implemented.');
+  }
+  bulkSave(entities: ExtraEntity[]): Promise<ExtraEntity[]> {
+    throw new Error('Method not implemented.');
+  }
+  bulkUpdate(entities: ExtraEntity[]): Promise<ExtraEntity[]> {
+    throw new Error('Method not implemented.');
+  }
+  customQuery(query: string, params: any[]): Promise<any> {
+    throw new Error('Method not implemented.');
   }
 }
