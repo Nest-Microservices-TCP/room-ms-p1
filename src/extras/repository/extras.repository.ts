@@ -154,11 +154,12 @@ export class ExtrasRepository implements IExtrasRepository {
     return this.findOneById(extraId);
   }
 
-  bulkSave(entities: ExtraEntity[]): Promise<ExtraEntity[]> {
-    throw new Error('Method not implemented.');
+  bulkSave(extras: ExtraEntity[]): Promise<ExtraEntity[]> {
+    return this.extrasRepository.save(extras);
   }
-  bulkUpdate(entities: ExtraEntity[]): Promise<ExtraEntity[]> {
-    throw new Error('Method not implemented.');
+
+  bulkUpdate(extras: ExtraEntity[]): Promise<ExtraEntity[]> {
+    return this.extrasRepository.save(extras);
   }
   customQuery(query: string, params: any[]): Promise<any> {
     throw new Error('Method not implemented.');
