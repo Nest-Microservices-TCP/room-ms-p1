@@ -16,6 +16,7 @@ import {
   FailedRemoveException,
   EntityNotFoundException,
   FailedSoftDeleteException,
+  FailedRestoreException,
 } from 'src/common/exceptions/custom';
 
 export class ExtrasRepository implements IExtrasRepository {
@@ -138,9 +139,21 @@ export class ExtrasRepository implements IExtrasRepository {
     return this.findOneById(extraId);
   }
 
-  restore(id: string): Promise<ExtraEntity> {
-    throw new Error('Method not implemented.');
+  async restore(extraId: string): Promise<ExtraEntity> {
+    await this.findOneById(extraId);
+
+    const result: UpdateResult = await this.extrasRepository.update(extraId, {
+      status: Status.ACTIVE,
+      deletedAt: null,
+    });
+
+    if (result?.affected === 0) {
+      throw new FailedRestoreException('extra');
+    }
+
+    return this.findOneById(extraId);
   }
+
   bulkSave(entities: ExtraEntity[]): Promise<ExtraEntity[]> {
     throw new Error('Method not implemented.');
   }
