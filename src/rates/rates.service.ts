@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
-import { RateResponseDto } from './dto/response';
-import { plainToInstance } from 'class-transformer';
-import { HandleRpcExceptions } from 'src/common/decorators';
-import { CreateRateDto, UpdateRateDto } from './dto/request';
 import { RatesRepository } from './repository/rates.repository';
+import { CreateRateDto, UpdateRateDto } from './dto/request';
+import { HandleRpcExceptions } from 'src/common/decorators';
+import { plainToInstance } from 'class-transformer';
+import { RateResponseDto } from './dto/response';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class RatesService {
@@ -46,8 +46,8 @@ export class RatesService {
   }
 
   @HandleRpcExceptions()
-  async deleteById(rateId: string): Promise<RateResponseDto> {
-    const rate = await this.ratesRepository.deleteById(rateId);
+  async remove(rateId: string): Promise<RateResponseDto> {
+    const rate = await this.ratesRepository.remove(rateId);
 
     return plainToInstance(RateResponseDto, rate, {
       excludeExtraneousValues: true,
