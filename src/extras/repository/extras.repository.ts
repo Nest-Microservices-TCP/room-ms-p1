@@ -10,6 +10,7 @@ import {
   UpdateResult,
   FindOptionsWhere,
   DeleteResult,
+  In,
 } from 'typeorm';
 import {
   FailedRemoveException,
@@ -86,14 +87,20 @@ export class ExtrasRepository implements IExtrasRepository {
     return this.findOneById(extraId);
   }
 
-  findByIds(ids: string[]): Promise<ExtraEntity[]> {
-    throw new Error('Method not implemented.');
+  findByIds(extrasIds: string[]): Promise<ExtraEntity[]> {
+    return this.extrasRepository.find({
+      where: {
+        extraId: In(extrasIds),
+      },
+    });
   }
+
   findByCriteria(
     criteria: FindOptionsWhere<ExtraEntity>,
   ): Promise<ExtraEntity> {
-    throw new Error('Method not implemented.');
+    return this.extrasRepository.findOne({ where: criteria });
   }
+
   findWithRelations(relations: string[]): Promise<ExtraEntity[]> {
     throw new Error('Method not implemented.');
   }
