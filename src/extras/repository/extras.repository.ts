@@ -110,15 +110,22 @@ export class ExtrasRepository implements IExtrasRepository {
   }
 
   paginate(page: number, limit: number): Promise<[ExtraEntity[], number]> {
-    throw new Error('Method not implemented.');
+    return this.extrasRepository.findAndCount({
+      skip: (page - 1) * limit,
+      take: limit,
+    });
   }
+
+  async exists(criteria: FindOptionsWhere<ExtraEntity>): Promise<boolean> {
+    const count = await this.extrasRepository.count({ where: criteria });
+
+    return count > 0;
+  }
+
   softDelete(id: string): Promise<ExtraEntity> {
     throw new Error('Method not implemented.');
   }
   restore(id: string): Promise<ExtraEntity> {
-    throw new Error('Method not implemented.');
-  }
-  exists(criteria: FindOptionsWhere<ExtraEntity>): Promise<boolean> {
     throw new Error('Method not implemented.');
   }
   bulkSave(entities: ExtraEntity[]): Promise<ExtraEntity[]> {
