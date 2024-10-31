@@ -102,11 +102,13 @@ export class ExtrasRepository implements IExtrasRepository {
   }
 
   findWithRelations(relations: string[]): Promise<ExtraEntity[]> {
-    throw new Error('Method not implemented.');
+    return this.extrasRepository.find({ relations });
   }
+
   count(criteria: FindOptionsWhere<ExtraEntity>): Promise<number> {
-    throw new Error('Method not implemented.');
+    return this.extrasRepository.count({ where: criteria });
   }
+
   paginate(page: number, limit: number): Promise<[ExtraEntity[], number]> {
     throw new Error('Method not implemented.');
   }
