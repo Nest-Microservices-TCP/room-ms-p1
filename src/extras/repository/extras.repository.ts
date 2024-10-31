@@ -9,6 +9,7 @@ import {
   QueryRunner,
   UpdateResult,
   FindOptionsWhere,
+  DeleteResult,
 } from 'typeorm';
 import {
   FailedRemoveException,
@@ -73,13 +74,10 @@ export class ExtrasRepository implements IExtrasRepository {
     return this.save(extra);
   }
 
-  async deleteById(extraId: string): Promise<ExtraEntity> {
+  async remove(extraId: string): Promise<ExtraEntity> {
     await this.findOneById(extraId);
 
-    const result: UpdateResult = await this.extrasRepository.update(extraId, {
-      status: Status.DELETED,
-      deletedAt: new Date(),
-    });
+    const result: DeleteResult = await this.extrasRepository.delete(extraId);
 
     if (result?.affected === 0) {
       throw new FailedRemoveException('extra');
@@ -88,9 +86,6 @@ export class ExtrasRepository implements IExtrasRepository {
     return this.findOneById(extraId);
   }
 
-  remove(id: string): Promise<ExtraEntity> {
-    throw new Error('Method not implemented.');
-  }
   findByIds(ids: string[]): Promise<ExtraEntity[]> {
     throw new Error('Method not implemented.');
   }
