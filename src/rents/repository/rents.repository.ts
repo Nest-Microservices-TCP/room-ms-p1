@@ -99,11 +99,13 @@ export class RentsRepository implements IRentsRepository {
   }
 
   findWithRelations(relations: string[]): Promise<RentEntity[]> {
-    throw new Error('Method not implemented.');
+    return this.rentsRepository.find({ relations });
   }
+
   count(criteria: FindOptionsWhere<RentEntity>): Promise<number> {
-    throw new Error('Method not implemented.');
+    return this.rentsRepository.count({ where: criteria });
   }
+
   paginate(page: number, limit: number): Promise<[RentEntity[], number]> {
     throw new Error('Method not implemented.');
   }
