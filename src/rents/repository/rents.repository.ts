@@ -9,6 +9,7 @@ import {
   QueryRunner,
   DeleteResult,
   FindOptionsWhere,
+  In,
 } from 'typeorm';
 import {
   FailedRemoveException,
@@ -85,12 +86,18 @@ export class RentsRepository implements IRentsRepository {
     return this.findOneById(rentId);
   }
 
-  findByIds(ids: string[]): Promise<RentEntity[]> {
-    throw new Error('Method not implemented.');
+  findByIds(rentsIds: string[]): Promise<RentEntity[]> {
+    return this.rentsRepository.find({
+      where: {
+        rentId: In(rentsIds),
+      },
+    });
   }
+
   findByCriteria(criteria: FindOptionsWhere<RentEntity>): Promise<RentEntity> {
-    throw new Error('Method not implemented.');
+    return this.rentsRepository.findOne({ where: criteria });
   }
+
   findWithRelations(relations: string[]): Promise<RentEntity[]> {
     throw new Error('Method not implemented.');
   }
