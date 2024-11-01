@@ -28,6 +28,15 @@ export class ExtrasService {
   }
 
   @HandleRpcExceptions()
+  async findByIds(extrasIds: string[]): Promise<ExtraResponseDto[]> {
+    const extras = await this.extrasRepository.findByIds(extrasIds);
+
+    return plainToInstance(ExtraResponseDto, extras, {
+      excludeExtraneousValues: true,
+    });
+  }
+
+  @HandleRpcExceptions()
   async save(request: CreateExtraDto): Promise<ExtraResponseDto> {
     const extra = await this.extrasRepository.save(request);
 
