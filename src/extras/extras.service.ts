@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
-import { ExtraResponseDto } from './dto/response';
-import { plainToInstance } from 'class-transformer';
-import { HandleRpcExceptions } from 'src/common/decorators';
-import { CreateExtraDto, UpdateExtraDto } from './dto/request';
 import { ExtrasRepository } from './repository/extras.repository';
+import { CreateExtraDto, UpdateExtraDto } from './dto/request';
+import { HandleRpcExceptions } from 'src/common/decorators';
+import { plainToInstance } from 'class-transformer';
+import { ExtraResponseDto } from './dto/response';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class ExtrasService {
@@ -46,8 +46,8 @@ export class ExtrasService {
   }
 
   @HandleRpcExceptions()
-  async deleteById(extraId: string): Promise<ExtraResponseDto> {
-    const extra = await this.extrasRepository.deleteById(extraId);
+  async remove(extraId: string): Promise<ExtraResponseDto> {
+    const extra = await this.extrasRepository.remove(extraId);
 
     return plainToInstance(ExtraResponseDto, extra, {
       excludeExtraneousValues: true,
