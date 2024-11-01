@@ -1,14 +1,19 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { IRentsRepository } from './interfaces/rents.repository.interface';
+import { CreateRentDto, UpdateRentDto } from '../dto/request';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Status } from 'src/common/enums';
+import { RentEntity } from '../entity';
 import {
-  FailedDeleteException,
+  Repository,
+  QueryRunner,
+  UpdateResult,
+  FindOptionsWhere,
+} from 'typeorm';
+import {
+  FailedRemoveException,
   EntityNotFoundException,
 } from 'src/common/exceptions/custom';
-import { RentEntity } from '../entity';
-import { Status } from 'src/common/enums';
-import { InjectRepository } from '@nestjs/typeorm';
-import { CreateRentDto, UpdateRentDto } from '../dto/request';
-import { QueryRunner, Repository, UpdateResult } from 'typeorm';
-import { IRentsRepository } from './interfaces/rents.repository.interface';
 
 export class RentsRepository implements IRentsRepository {
   private rentsRepository: Repository<RentEntity>;
@@ -77,9 +82,46 @@ export class RentsRepository implements IRentsRepository {
     });
 
     if (result.affected !== 0) {
-      throw new FailedDeleteException('rent');
+      throw new FailedRemoveException('rent');
     }
 
     return this.findOneById(rentId);
+  }
+
+  remove(id: string): Promise<RentEntity> {
+    throw new Error('Method not implemented.');
+  }
+  findByIds(ids: string[]): Promise<RentEntity[]> {
+    throw new Error('Method not implemented.');
+  }
+  findByCriteria(criteria: FindOptionsWhere<RentEntity>): Promise<RentEntity> {
+    throw new Error('Method not implemented.');
+  }
+  findWithRelations(relations: string[]): Promise<RentEntity[]> {
+    throw new Error('Method not implemented.');
+  }
+  count(criteria: FindOptionsWhere<RentEntity>): Promise<number> {
+    throw new Error('Method not implemented.');
+  }
+  paginate(page: number, limit: number): Promise<[RentEntity[], number]> {
+    throw new Error('Method not implemented.');
+  }
+  softDelete(id: string): Promise<RentEntity> {
+    throw new Error('Method not implemented.');
+  }
+  restore(id: string): Promise<RentEntity> {
+    throw new Error('Method not implemented.');
+  }
+  exists(criteria: FindOptionsWhere<RentEntity>): Promise<boolean> {
+    throw new Error('Method not implemented.');
+  }
+  bulkSave(entities: RentEntity[]): Promise<RentEntity[]> {
+    throw new Error('Method not implemented.');
+  }
+  bulkUpdate(entities: RentEntity[]): Promise<RentEntity[]> {
+    throw new Error('Method not implemented.');
+  }
+  customQuery(query: string, params: any[]): Promise<any> {
+    throw new Error('Method not implemented.');
   }
 }
