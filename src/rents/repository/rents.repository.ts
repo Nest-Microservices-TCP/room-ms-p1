@@ -107,15 +107,22 @@ export class RentsRepository implements IRentsRepository {
   }
 
   paginate(page: number, limit: number): Promise<[RentEntity[], number]> {
-    throw new Error('Method not implemented.');
+    return this.rentsRepository.findAndCount({
+      skip: (page - 1) * limit,
+      take: limit,
+    });
   }
+
+  async exists(criteria: FindOptionsWhere<RentEntity>): Promise<boolean> {
+    const count = await this.rentsRepository.count({ where: criteria });
+
+    return count > 0;
+  }
+
   softDelete(id: string): Promise<RentEntity> {
     throw new Error('Method not implemented.');
   }
   restore(id: string): Promise<RentEntity> {
-    throw new Error('Method not implemented.');
-  }
-  exists(criteria: FindOptionsWhere<RentEntity>): Promise<boolean> {
     throw new Error('Method not implemented.');
   }
   bulkSave(entities: RentEntity[]): Promise<RentEntity[]> {
