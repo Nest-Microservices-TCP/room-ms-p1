@@ -7,7 +7,7 @@ import { RentEntity } from '../entity';
 import {
   Repository,
   QueryRunner,
-  UpdateResult,
+  DeleteResult,
   FindOptionsWhere,
 } from 'typeorm';
 import {
@@ -73,13 +73,10 @@ export class RentsRepository implements IRentsRepository {
     return this.rentsRepository.save(rent);
   }
 
-  async deleteById(rentId: string): Promise<RentEntity> {
+  async remove(rentId: string): Promise<RentEntity> {
     await this.findOneById(rentId);
 
-    const result: UpdateResult = await this.rentsRepository.update(rentId, {
-      status: Status.DELETED,
-      deletedAt: new Date(),
-    });
+    const result: DeleteResult = await this.rentsRepository.delete(rentId);
 
     if (result.affected !== 0) {
       throw new FailedRemoveException('rent');
@@ -88,9 +85,6 @@ export class RentsRepository implements IRentsRepository {
     return this.findOneById(rentId);
   }
 
-  remove(id: string): Promise<RentEntity> {
-    throw new Error('Method not implemented.');
-  }
   findByIds(ids: string[]): Promise<RentEntity[]> {
     throw new Error('Method not implemented.');
   }
