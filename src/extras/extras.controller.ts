@@ -28,8 +28,8 @@ export class ExtrasController {
     return this.extrasService.update(request);
   }
 
-  @MessagePattern({ cmd: 'delete.extra.by.id' })
-  deleteById(@Payload('extraId') extraId: string): Promise<ExtraResponseDto> {
-    return this.extrasService.deleteById(extraId);
+  @MessagePattern({ cmd: 'remove.extra.by.id' })
+  remove(@Payload('extraId') extraId: string): Promise<ExtraResponseDto> {
+    return this.extrasService.remove(extraId);
   }
 }
