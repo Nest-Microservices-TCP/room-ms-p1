@@ -18,6 +18,11 @@ export class ExtrasController {
     return this.extrasService.findOneById(extraId);
   }
 
+  @MessagePattern({ cmd: 'find.extras.by.ids' })
+  findByIds(@Payload() extrasIds: string[]): Promise<ExtraResponseDto[]> {
+    return this.extrasService.findByIds(extrasIds);
+  }
+
   @MessagePattern({ cmd: 'save.extra' })
   save(@Payload() request: CreateExtraDto): Promise<ExtraResponseDto> {
     return this.extrasService.save(request);
