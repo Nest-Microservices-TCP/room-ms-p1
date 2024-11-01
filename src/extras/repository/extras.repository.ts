@@ -5,18 +5,18 @@ import { ExtraEntity } from '../entity/extra.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Status } from 'src/common/enums';
 import {
+  In,
   Repository,
   QueryRunner,
   UpdateResult,
-  FindOptionsWhere,
   DeleteResult,
-  In,
+  FindOptionsWhere,
 } from 'typeorm';
 import {
   FailedRemoveException,
+  FailedRestoreException,
   EntityNotFoundException,
   FailedSoftDeleteException,
-  FailedRestoreException,
 } from 'src/common/exceptions/custom';
 
 export class ExtrasRepository implements IExtrasRepository {
@@ -161,7 +161,8 @@ export class ExtrasRepository implements IExtrasRepository {
   bulkUpdate(extras: ExtraEntity[]): Promise<ExtraEntity[]> {
     return this.extrasRepository.save(extras);
   }
+
   customQuery(query: string, params: any[]): Promise<any> {
-    throw new Error('Method not implemented.');
+    return this.extrasRepository.query(query, params);
   }
 }
