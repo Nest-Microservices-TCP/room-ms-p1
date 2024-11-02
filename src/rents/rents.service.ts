@@ -11,8 +11,12 @@ export class RentsService {
   constructor(private readonly rentsRepository: RentsRepository) {}
 
   @HandleRpcExceptions()
-  async findAll(): Promise<RentEntity[]> {
-    return this.rentsRepository.findAll();
+  async findAll(): Promise<RentResponseDto[]> {
+    const rents = await this.rentsRepository.findAll();
+
+    return plainToInstance(RentResponseDto, rents, {
+      excludeExtraneousValues: true,
+    });
   }
 
   @HandleRpcExceptions()
