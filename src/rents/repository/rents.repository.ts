@@ -156,8 +156,8 @@ export class RentsRepository implements IRentsRepository {
     return this.rentsRepository.save(rents);
   }
 
-  bulkUpdate(entities: RentEntity[]): Promise<RentEntity[]> {
-    throw new Error('Method not implemented.');
+  bulkUpdate(rents: RentEntity[]): Promise<RentEntity[]> {
+    return this.rentsRepository.save(rents);
   }
   customQuery(query: string, params: any[]): Promise<any> {
     throw new Error('Method not implemented.');
