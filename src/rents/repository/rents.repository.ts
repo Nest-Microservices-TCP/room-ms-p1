@@ -16,6 +16,7 @@ import {
   FailedRemoveException,
   EntityNotFoundException,
   FailedSoftDeleteException,
+  FailedRestoreException,
 } from 'src/common/exceptions/custom';
 
 export class RentsRepository implements IRentsRepository {
@@ -136,9 +137,21 @@ export class RentsRepository implements IRentsRepository {
     return this.findOneById(rentId);
   }
 
-  restore(id: string): Promise<RentEntity> {
-    throw new Error('Method not implemented.');
+  async restore(rentId: string): Promise<RentEntity> {
+    await this.findOneById(rentId);
+
+    const result: UpdateResult = await this.rentsRepository.update(rentId, {
+      status: Status.ACTIVE,
+      deletedAt: null,
+    });
+
+    if (result?.affected === 0) {
+      throw new FailedRestoreException('rent');
+    }
+
+    return this.findOneById(rentId);
   }
+
   bulkSave(entities: RentEntity[]): Promise<RentEntity[]> {
     throw new Error('Method not implemented.');
   }
