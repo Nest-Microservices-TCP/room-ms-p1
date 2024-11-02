@@ -1,5 +1,5 @@
+import { MessagePattern, Payload } from '@nestjs/microservices';
 import { CreateRentDto, UpdateRentDto } from './dto/request';
-import { MessagePattern } from '@nestjs/microservices';
 import { plainToInstance } from 'class-transformer';
 import { RentResponseDto } from './dto/response';
 import { RentsService } from './rents.service';
@@ -25,6 +25,11 @@ export class RentsController {
     return plainToInstance(RentResponseDto, rent, {
       excludeExtraneousValues: true,
     });
+  }
+
+  @MessagePattern({ cmd: 'find.rents.by.ids' })
+  async findByIds(@Payload() rentsIds: string[]): Promise<RentResponseDto[]> {
+    return this.rentsService.findByIds(rentsIds);
   }
 
   @MessagePattern({ cmd: 'save.rent' })
