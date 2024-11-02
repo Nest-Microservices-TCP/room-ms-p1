@@ -1,8 +1,8 @@
-import { RentEntity } from './entity';
-import { Injectable } from '@nestjs/common';
-import { HandleRpcExceptions } from 'src/common/decorators';
-import { CreateRentDto, UpdateRentDto } from './dto/request';
 import { RentsRepository } from './repository/rents.repository';
+import { CreateRentDto, UpdateRentDto } from './dto/request';
+import { HandleRpcExceptions } from 'src/common/decorators';
+import { Injectable } from '@nestjs/common';
+import { RentEntity } from './entity';
 
 @Injectable()
 export class RentsService {
@@ -29,7 +29,7 @@ export class RentsService {
   }
 
   @HandleRpcExceptions()
-  async deleteById(rentId: string): Promise<RentEntity> {
-    return this.rentsRepository.deleteById(rentId);
+  async remove(rentId: string): Promise<RentEntity> {
+    return this.rentsRepository.remove(rentId);
   }
 }
