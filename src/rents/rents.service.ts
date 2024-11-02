@@ -1,6 +1,8 @@
 import { RentsRepository } from './repository/rents.repository';
 import { CreateRentDto, UpdateRentDto } from './dto/request';
 import { HandleRpcExceptions } from 'src/common/decorators';
+import { plainToInstance } from 'class-transformer';
+import { RentResponseDto } from './dto/response';
 import { Injectable } from '@nestjs/common';
 import { RentEntity } from './entity';
 
@@ -16,6 +18,15 @@ export class RentsService {
   @HandleRpcExceptions()
   async findOneById(rentId: string): Promise<RentEntity> {
     return this.rentsRepository.findOneById(rentId);
+  }
+
+  @HandleRpcExceptions()
+  async findByIds(rentsIds: string[]): Promise<RentResponseDto[]> {
+    const rents = await this.rentsRepository.findByIds(rentsIds);
+
+    return plainToInstance(RentResponseDto, rents, {
+      excludeExtraneousValues: true,
+    });
   }
 
   @HandleRpcExceptions()
