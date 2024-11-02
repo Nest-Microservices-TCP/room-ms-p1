@@ -1,9 +1,9 @@
-import { Controller } from '@nestjs/common';
-import { RentsService } from './rents.service';
-import { RentResponseDto } from './dto/response';
-import { plainToInstance } from 'class-transformer';
-import { MessagePattern } from '@nestjs/microservices';
 import { CreateRentDto, UpdateRentDto } from './dto/request';
+import { MessagePattern } from '@nestjs/microservices';
+import { plainToInstance } from 'class-transformer';
+import { RentResponseDto } from './dto/response';
+import { RentsService } from './rents.service';
+import { Controller } from '@nestjs/common';
 
 @Controller()
 export class RentsController {
@@ -45,9 +45,9 @@ export class RentsController {
     });
   }
 
-  @MessagePattern({ cmd: 'delete.rent.by.id' })
-  async deleteById(rentId: string): Promise<RentResponseDto> {
-    const rent = await this.rentsService.deleteById(rentId);
+  @MessagePattern({ cmd: 'remove.rent.by.id' })
+  async remove(rentId: string): Promise<RentResponseDto> {
+    const rent = await this.rentsService.remove(rentId);
 
     return plainToInstance(RentResponseDto, rent, {
       excludeExtraneousValues: true,
