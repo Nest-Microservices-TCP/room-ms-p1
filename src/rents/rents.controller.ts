@@ -37,11 +37,7 @@ export class RentsController {
   }
 
   @MessagePattern({ cmd: 'remove.rent.by.id' })
-  async remove(rentId: string): Promise<RentResponseDto> {
-    const rent = await this.rentsService.remove(rentId);
-
-    return plainToInstance(RentResponseDto, rent, {
-      excludeExtraneousValues: true,
-    });
+  async remove(@Payload('rentId') rentId: string): Promise<RentResponseDto> {
+    return this.rentsService.remove(rentId);
   }
 }
