@@ -38,8 +38,12 @@ export class RentsService {
   }
 
   @HandleRpcExceptions()
-  async save(request: CreateRentDto): Promise<RentEntity> {
-    return this.rentsRepository.save(request);
+  async save(request: CreateRentDto): Promise<RentResponseDto> {
+    const rent = await this.rentsRepository.save(request);
+
+    return plainToInstance(RentResponseDto, rent, {
+      excludeExtraneousValues: true,
+    });
   }
 
   @HandleRpcExceptions()
