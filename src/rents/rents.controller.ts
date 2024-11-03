@@ -15,12 +15,10 @@ export class RentsController {
   }
 
   @MessagePattern({ cmd: 'find.one.rent.by.id' })
-  async findOneById(rentId): Promise<RentResponseDto> {
-    const rent = await this.rentsService.findOneById(rentId);
-
-    return plainToInstance(RentResponseDto, rent, {
-      excludeExtraneousValues: true,
-    });
+  async findOneById(
+    @Payload('rentId') rentId: string,
+  ): Promise<RentResponseDto> {
+    return this.rentsService.findOneById(rentId);
   }
 
   @MessagePattern({ cmd: 'find.rents.by.ids' })
