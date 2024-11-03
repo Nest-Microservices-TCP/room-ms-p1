@@ -11,11 +11,7 @@ export class RentsController {
 
   @MessagePattern({ cmd: 'find.all.rents' })
   async findAll(): Promise<RentResponseDto[]> {
-    const rents = await this.rentsService.findAll();
-
-    return plainToInstance(RentResponseDto, rents, {
-      excludeExtraneousValues: true,
-    });
+    return this.rentsService.findAll();
   }
 
   @MessagePattern({ cmd: 'find.one.rent.by.id' })
