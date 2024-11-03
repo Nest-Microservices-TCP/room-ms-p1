@@ -47,8 +47,12 @@ export class RentsService {
   }
 
   @HandleRpcExceptions()
-  async update(request: UpdateRentDto): Promise<RentEntity> {
-    return this.rentsRepository.update(request);
+  async update(request: UpdateRentDto): Promise<RentResponseDto> {
+    const rent = await this.rentsRepository.update(request);
+
+    return plainToInstance(RentResponseDto, rent, {
+      excludeExtraneousValues: true,
+    });
   }
 
   @HandleRpcExceptions()
