@@ -4,7 +4,6 @@ import { HandleRpcExceptions } from 'src/common/decorators';
 import { plainToInstance } from 'class-transformer';
 import { RentResponseDto } from './dto/response';
 import { Injectable } from '@nestjs/common';
-import { RentEntity } from './entity';
 
 @Injectable()
 export class RentsService {
@@ -56,7 +55,11 @@ export class RentsService {
   }
 
   @HandleRpcExceptions()
-  async remove(rentId: string): Promise<RentEntity> {
-    return this.rentsRepository.remove(rentId);
+  async remove(rentId: string): Promise<RentResponseDto> {
+    const rent = await this.rentsRepository.remove(rentId);
+
+    return plainToInstance(RentResponseDto, rent, {
+      excludeExtraneousValues: true,
+    });
   }
 }
