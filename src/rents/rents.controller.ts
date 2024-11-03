@@ -27,12 +27,8 @@ export class RentsController {
   }
 
   @MessagePattern({ cmd: 'save.rent' })
-  async save(request: CreateRentDto): Promise<RentResponseDto> {
-    const rent = await this.rentsService.save(request);
-
-    return plainToInstance(RentResponseDto, rent, {
-      excludeExtraneousValues: true,
-    });
+  async save(@Payload() request: CreateRentDto): Promise<RentResponseDto> {
+    return this.rentsService.save(request);
   }
 
   @MessagePattern({ cmd: 'update.rent' })
