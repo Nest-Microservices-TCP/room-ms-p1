@@ -1,6 +1,5 @@
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { CreateRentDto, UpdateRentDto } from './dto/request';
-import { plainToInstance } from 'class-transformer';
 import { RentResponseDto } from './dto/response';
 import { RentsService } from './rents.service';
 import { Controller } from '@nestjs/common';
