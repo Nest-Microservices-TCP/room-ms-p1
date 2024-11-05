@@ -1,5 +1,6 @@
 import { EntityNotFoundException } from 'src/common/exceptions/custom/entity-not-found.exception';
 import { IRoomsRepository } from './interfaces/rooms.repository.interface';
+import { DeleteResultResponse } from 'src/common/dto/response';
 import { CreateRoomDto, UpdateRoomDto } from '../dto/request';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RoomEntity } from '../entity/room.entity';
@@ -72,7 +73,7 @@ export class RoomsRepository implements IRoomsRepository {
     return this.roomsRepository.save(room);
   }
 
-  async remove(roomId: string): Promise<RoomEntity> {
+  async remove(roomId: string): Promise<DeleteResultResponse> {
     await this.findOneById(roomId);
 
     const result: DeleteResult = await this.roomsRepository.delete(roomId);
@@ -81,7 +82,7 @@ export class RoomsRepository implements IRoomsRepository {
       throw new FailedRemoveException('room');
     }
 
-    return this.findOneById(roomId);
+    return { deleted: true, affected: result.affected };
   }
 
   findByIds(roomsIds: string[]): Promise<RoomEntity[]> {
