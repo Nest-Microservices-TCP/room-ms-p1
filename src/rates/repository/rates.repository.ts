@@ -1,4 +1,5 @@
 import { IRatesRepository } from './interfaces/rates.repository.interface';
+import { DeleteResultResponse } from 'src/common/dto/response';
 import { CreateRateDto, UpdateRateDto } from '../dto/request';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RateEntity } from '../entity/rate.entity';
@@ -75,16 +76,16 @@ export class RatesRepository implements IRatesRepository {
     return this.ratesRepository.save(rate);
   }
 
-  async remove(rateId: string): Promise<RateEntity> {
-    const rate = await this.findOneById(rateId);
+  async remove(rateId: string): Promise<DeleteResultResponse> {
+    await this.findOneById(rateId);
 
     const result: DeleteResult = await this.ratesRepository.delete(rateId);
 
-    if (result.affected !== 1) {
+    if (result.affected === 0) {
       throw new FailedRemoveException('rate');
     }
 
-    return rate;
+    return { deleted: true, affected: result.affected };
   }
 
   findByIds(ratesIds: string[]): Promise<RateEntity[]> {
