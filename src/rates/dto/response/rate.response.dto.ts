@@ -1,7 +1,8 @@
-import { Expose } from 'class-transformer';
+import { BaseResponseDto } from 'src/common/dto/response';
 import { AccommodationType } from 'src/rents/enum';
+import { Expose } from 'class-transformer';
 
-export class RateResponseDto {
+export class RateResponseDto extends BaseResponseDto {
   @Expose()
   rate_id: string;
 
