@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { IExtrasRepository } from './interfaces/extras.repository.interface';
 import { CreateExtraDto, UpdateExtraDto } from '../dto/request';
+import { DeleteResultResponse } from 'src/common/dto/response';
 import { ExtraEntity } from '../entity/extra.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Status } from 'src/common/enums';
@@ -77,7 +78,7 @@ export class ExtrasRepository implements IExtrasRepository {
     return this.save(extra);
   }
 
-  async remove(extraId: string): Promise<ExtraEntity> {
+  async remove(extraId: string): Promise<DeleteResultResponse> {
     await this.findOneById(extraId);
 
     const result: DeleteResult = await this.extrasRepository.delete(extraId);
@@ -86,7 +87,7 @@ export class ExtrasRepository implements IExtrasRepository {
       throw new FailedRemoveException('extra');
     }
 
-    return this.findOneById(extraId);
+    return { deleted: true, affected: result.affected };
   }
 
   findByIds(extrasIds: string[]): Promise<ExtraEntity[]> {
