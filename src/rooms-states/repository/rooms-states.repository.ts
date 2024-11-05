@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { EntityNotFoundException } from 'src/common/exceptions/custom/entity-not-found.exception';
 import { IRoomsStateRepository } from './interfaces/rooms-states.repository.interface';
 import { UpdateRoomStateDto, CreateRoomStateDto } from '../dto/request';
+import { DeleteResultResponse } from 'src/common/dto/response';
 import { ConflictException, Injectable } from '@nestjs/common';
 import { RoomStateEntity } from '../entity/room-state.entity';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -92,8 +92,8 @@ export class RoomsStatesRepository implements IRoomsStateRepository {
     return this.roomsStatesRepository.save(roomState);
   }
 
-  async remove(roomStateId: string): Promise<RoomStateEntity> {
-    const roomState = await this.findOneById(roomStateId);
+  async remove(roomStateId: string): Promise<DeleteResultResponse> {
+    await this.findOneById(roomStateId);
 
     const result: DeleteResult =
       await this.roomsStatesRepository.delete(roomStateId);
@@ -102,7 +102,7 @@ export class RoomsStatesRepository implements IRoomsStateRepository {
       throw new FailedRemoveException('room-state');
     }
 
-    return roomState;
+    return { deleted: true, affected: result.affected };
   }
 
   findByIds(roomsStatesIds: string[]): Promise<RoomStateEntity[]> {
