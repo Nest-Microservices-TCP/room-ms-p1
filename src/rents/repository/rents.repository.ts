@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { IRentsRepository } from './interfaces/rents.repository.interface';
+import { DeleteResultResponse } from 'src/common/dto/response';
 import { CreateRentDto, UpdateRentDto } from '../dto/request';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Status } from 'src/common/enums';
@@ -77,16 +77,16 @@ export class RentsRepository implements IRentsRepository {
     return this.rentsRepository.save(rent);
   }
 
-  async remove(rentId: string): Promise<RentEntity> {
+  async remove(rentId: string): Promise<DeleteResultResponse> {
     await this.findOneById(rentId);
 
     const result: DeleteResult = await this.rentsRepository.delete(rentId);
 
-    if (result.affected !== 0) {
+    if (result.affected === 0) {
       throw new FailedRemoveException('rent');
     }
 
-    return this.findOneById(rentId);
+    return { deleted: true, affected: result.affected };
   }
 
   findByIds(rentsIds: string[]): Promise<RentEntity[]> {
