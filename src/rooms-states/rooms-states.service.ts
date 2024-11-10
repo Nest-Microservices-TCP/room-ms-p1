@@ -1,4 +1,5 @@
 import { RoomsStatesRepository } from './repository/rooms-states.repository';
+import { DeleteResultResponse } from 'src/common/dto/response';
 import { HandleRpcExceptions } from 'src/common/decorators';
 import { RoomStateResponseDto } from './dto/response';
 import { plainToInstance } from 'class-transformer';
@@ -54,10 +55,10 @@ export class RoomsStatesService {
   }
 
   @HandleRpcExceptions()
-  async update(request: UpdateRoomStateDto): Promise<RoomStateResponseDto> {
-    const roomState = await this.roomsStatesRepository.update(request);
+  async update(request: UpdateRoomStateDto): Promise<DeleteResultResponse> {
+    const deleteResult = await this.roomsStatesRepository.update(request);
 
-    return plainToInstance(RoomStateResponseDto, roomState, {
+    return plainToInstance(DeleteResultResponse, deleteResult, {
       excludeExtraneousValues: true,
     });
   }
