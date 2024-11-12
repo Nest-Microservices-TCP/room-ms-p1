@@ -1,4 +1,5 @@
 import { MessagePattern, Payload } from '@nestjs/microservices';
+import { DeleteResultResponse } from 'src/common/dto/response';
 import { RoomsStatesService } from './rooms-states.service';
 import { RoomStateResponseDto } from './dto/response';
 import { Controller } from '@nestjs/common';
@@ -46,7 +47,7 @@ export class RoomsStatesController {
   @MessagePattern({ cmd: 'remove.roomState.by.id' })
   async remove(
     @Payload('roomStateId') roomStateId: string,
-  ): Promise<RoomStateResponseDto> {
+  ): Promise<DeleteResultResponse> {
     return this.roomsStatesService.remove(roomStateId);
   }
 }
