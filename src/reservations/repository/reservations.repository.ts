@@ -33,9 +33,14 @@ export class ReservationsRepository implements IReservationsRepository {
     });
   }
 
-  findOneById(id: string): Promise<ReservationEntity> {
-    throw new Error('Method not implemented.');
+  findOneById(reservationId: string): Promise<ReservationEntity> {
+    return this.reservationsRepository.findOne({
+      where: {
+        reservationId,
+      },
+    });
   }
+
   create(request: Partial<ReservationEntity>): ReservationEntity {
     throw new Error('Method not implemented.');
   }
