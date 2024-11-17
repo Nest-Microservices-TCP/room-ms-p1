@@ -5,6 +5,7 @@ import { ReservationEntity } from '../entity/reservation.entity';
 import { DeleteResultResponse } from 'src/common/dto/response';
 import { QueryRunner, FindOptionsWhere, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Status } from 'src/common/enums';
 
 export class ReservationsRepository implements IReservationsRepository {
   private reservationsRepository: Repository<ReservationEntity>;
@@ -24,8 +25,14 @@ export class ReservationsRepository implements IReservationsRepository {
   }
 
   findAll(): Promise<ReservationEntity[]> {
-    throw new Error('Method not implemented.');
+    // TODO: Agregar un dto que permita enviar filtros
+    return this.reservationsRepository.find({
+      where: {
+        status: Status.ACTIVE,
+      },
+    });
   }
+
   findOneById(id: string): Promise<ReservationEntity> {
     throw new Error('Method not implemented.');
   }
