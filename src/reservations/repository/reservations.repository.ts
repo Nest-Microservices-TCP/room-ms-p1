@@ -6,6 +6,7 @@ import { DeleteResultResponse } from 'src/common/dto/response';
 import { QueryRunner, FindOptionsWhere, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Status } from 'src/common/enums';
+import { EntityNotFoundException } from 'src/common/exceptions/custom';
 
 export class ReservationsRepository implements IReservationsRepository {
   private reservationsRepository: Repository<ReservationEntity>;
@@ -33,12 +34,18 @@ export class ReservationsRepository implements IReservationsRepository {
     });
   }
 
-  findOneById(reservationId: string): Promise<ReservationEntity> {
-    return this.reservationsRepository.findOne({
+  async findOneById(reservationId: string): Promise<ReservationEntity> {
+    const reservation = await this.reservationsRepository.findOne({
       where: {
         reservationId,
       },
     });
+
+    if (!reservation) {
+      throw new EntityNotFoundException('reservation');
+    }
+
+    return reservation;
   }
 
   create(request: Partial<ReservationEntity>): ReservationEntity {
