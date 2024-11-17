@@ -3,9 +3,15 @@ import { IReservationsRepository } from './interfaces/reservations.repository.in
 import { CreateReservationDto, UpdateReservationDto } from '../dto/request';
 import { ReservationEntity } from '../entity/reservation.entity';
 import { DeleteResultResponse } from 'src/common/dto/response';
-import { QueryRunner, FindOptionsWhere } from 'typeorm';
+import { QueryRunner, FindOptionsWhere, Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 
 export class ReservationsRepository implements IReservationsRepository {
+  constructor(
+    @InjectRepository(ReservationEntity)
+    private readonly reservationsRepository: Repository<ReservationEntity>,
+  ) {}
+
   setQueryRunner(queryRunner: QueryRunner): void {
     throw new Error('Method not implemented.');
   }
