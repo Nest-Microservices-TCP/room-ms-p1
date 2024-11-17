@@ -42,8 +42,9 @@ export class ReservationsRepository implements IReservationsRepository {
   }
 
   create(request: Partial<ReservationEntity>): ReservationEntity {
-    throw new Error('Method not implemented.');
+    return this.reservationsRepository.create(request);
   }
+
   save(request: CreateReservationDto): Promise<ReservationEntity> {
     throw new Error('Method not implemented.');
   }
