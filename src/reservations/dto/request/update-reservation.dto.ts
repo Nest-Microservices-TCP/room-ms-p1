@@ -1,11 +1,50 @@
 import { ReservationOrigin, ReservationState } from 'src/reservations/enum';
+import {
+  Min,
+  IsDate,
+  IsEnum,
+  IsUUID,
+  IsNumber,
+  IsPositive,
+  IsOptional,
+} from 'class-validator';
 
 export class UpdateReservationDto {
-  checkoutDate: Date;
-  departureDate: Date;
-  peopleQuantity: number;
-  state: ReservationState;
-  total: number;
-  origin: ReservationOrigin;
+  @IsUUID('4')
+  reservation_id: string;
+
+  @IsDate()
+  @IsOptional()
+  @IsOptional()
+  checkoutDate?: Date;
+
+  @IsDate()
+  @IsOptional()
+  @IsOptional()
+  departureDate?: Date;
+
+  @IsNumber()
+  @IsPositive()
+  @Min(1)
+  @IsOptional()
+  peopleQuantity?: number;
+
+  @IsEnum(ReservationState)
+  state?: ReservationState;
+
+  @IsNumber()
+  @IsPositive()
+  @Min(1)
+  @IsOptional()
+  total?: number;
+
+  @IsEnum(ReservationOrigin)
+  @IsOptional()
+  origin?: ReservationOrigin;
+
+  @IsNumber()
+  @IsPositive()
+  @Min(0)
+  @IsOptional()
   balance: number;
 }
