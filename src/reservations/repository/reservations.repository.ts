@@ -49,9 +49,16 @@ export class ReservationsRepository implements IReservationsRepository {
     return this.reservationsRepository.save(request);
   }
 
-  update(request: UpdateReservationDto): Promise<ReservationEntity> {
-    throw new Error('Method not implemented.');
+  async update(request: UpdateReservationDto): Promise<ReservationEntity> {
+    const { reservationId } = request;
+
+    const reservation = await this.findOneById(reservationId);
+
+    Object.assign(reservation, request);
+
+    return this.reservationsRepository.save(reservation);
   }
+
   remove(id: string): Promise<DeleteResultResponse> {
     throw new Error('Method not implemented.');
   }
