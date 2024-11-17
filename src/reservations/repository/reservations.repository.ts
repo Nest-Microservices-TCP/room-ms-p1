@@ -7,14 +7,22 @@ import { QueryRunner, FindOptionsWhere, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 export class ReservationsRepository implements IReservationsRepository {
+  private reservationsRepository: Repository<ReservationEntity>;
+
   constructor(
     @InjectRepository(ReservationEntity)
-    private readonly reservationsRepository: Repository<ReservationEntity>,
+    private readonly defaultRepository: Repository<ReservationEntity>,
   ) {}
 
   setQueryRunner(queryRunner: QueryRunner): void {
-    throw new Error('Method not implemented.');
+    if (queryRunner) {
+      this.reservationsRepository =
+        queryRunner.manager.getRepository(ReservationEntity);
+    } else {
+      this.reservationsRepository = this.defaultRepository;
+    }
   }
+
   findAll(): Promise<ReservationEntity[]> {
     throw new Error('Method not implemented.');
   }
