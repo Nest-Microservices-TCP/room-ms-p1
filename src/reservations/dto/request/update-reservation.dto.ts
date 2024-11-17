@@ -11,7 +11,7 @@ import {
 
 export class UpdateReservationDto {
   @IsUUID('4')
-  reservation_id: string;
+  reservationId: string;
 
   @IsDate()
   @IsOptional()

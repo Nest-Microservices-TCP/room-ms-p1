@@ -3,7 +3,7 @@ import { Expose } from 'class-transformer';
 
 export class ReservationResponseDto {
   @Expose()
-  reservation_id: string;
+  reservationId: string;
 
   @Expose()
   checkoutDate: Date;

@@ -8,7 +8,7 @@ export class ReservationEntity extends BaseEntity {
     primaryKeyConstraintName: 'PK_reservation_id',
     name: 'reservation_id',
   })
-  reservation_id: string;
+  reservationId: string;
 
   @Column({
     name: 'checkout_date',
