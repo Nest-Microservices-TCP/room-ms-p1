@@ -115,8 +115,12 @@ export class ReservationsRepository implements IReservationsRepository {
     page: number,
     limit: number,
   ): Promise<[ReservationEntity[], number]> {
-    throw new Error('Method not implemented.');
+    return this.reservationsRepository.findAndCount({
+      skip: (page - 1) * limit,
+      take: limit,
+    });
   }
+
   softDelete(id: string): Promise<ReservationEntity> {
     throw new Error('Method not implemented.');
   }
