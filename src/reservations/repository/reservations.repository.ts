@@ -8,6 +8,7 @@ import {
   FindOptionsWhere,
   Repository,
   DeleteResult,
+  In,
 } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Status } from 'src/common/enums';
@@ -88,9 +89,14 @@ export class ReservationsRepository implements IReservationsRepository {
     return { deleted: true, affected: result.affected };
   }
 
-  findByIds(ids: string[]): Promise<ReservationEntity[]> {
-    throw new Error('Method not implemented.');
+  findByIds(reservationsIds: string[]): Promise<ReservationEntity[]> {
+    return this.reservationsRepository.find({
+      where: {
+        reservationId: In(reservationsIds),
+      },
+    });
   }
+
   findByCriteria(
     criteria: FindOptionsWhere<ReservationEntity>,
   ): Promise<ReservationEntity> {
