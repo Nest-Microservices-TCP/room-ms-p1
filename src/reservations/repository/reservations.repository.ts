@@ -106,9 +106,11 @@ export class ReservationsRepository implements IReservationsRepository {
   findWithRelations(relations: string[]): Promise<ReservationEntity[]> {
     return this.reservationsRepository.find({ relations });
   }
+
   count(criteria: FindOptionsWhere<ReservationEntity>): Promise<number> {
-    throw new Error('Method not implemented.');
+    return this.reservationsRepository.count({ where: criteria });
   }
+
   paginate(
     page: number,
     limit: number,
