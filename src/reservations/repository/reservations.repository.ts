@@ -9,12 +9,15 @@ import {
   Repository,
   DeleteResult,
   In,
+  UpdateResult,
 } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Status } from 'src/common/enums';
 import {
   EntityNotFoundException,
   FailedRemoveException,
+  FailedRestoreException,
+  FailedSoftDeleteException,
 } from 'src/common/exceptions/custom';
 
 export class ReservationsRepository implements IReservationsRepository {
@@ -121,9 +124,24 @@ export class ReservationsRepository implements IReservationsRepository {
     });
   }
 
-  softDelete(id: string): Promise<ReservationEntity> {
-    throw new Error('Method not implemented.');
+  async softDelete(reservationId: string): Promise<ReservationEntity> {
+    await this.findOneById(reservationId);
+
+    const result: UpdateResult = await this.reservationsRepository.update(
+      reservationId,
+      {
+        status: Status.DELETED,
+        deletedAt: new Date(),
+      },
+    );
+
+    if (result?.affected === 0) {
+      throw new FailedSoftDeleteException('reservation');
+    }
+
+    return this.findOneById(reservationId);
   }
+
   restore(id: string): Promise<ReservationEntity> {
     throw new Error('Method not implemented.');
   }
