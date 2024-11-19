@@ -142,9 +142,24 @@ export class ReservationsRepository implements IReservationsRepository {
     return this.findOneById(reservationId);
   }
 
-  restore(id: string): Promise<ReservationEntity> {
-    throw new Error('Method not implemented.');
+  async restore(reservationId: string): Promise<ReservationEntity> {
+    await this.findOneById(reservationId);
+
+    const result: UpdateResult = await this.reservationsRepository.update(
+      reservationId,
+      {
+        status: Status.ACTIVE,
+        deletedAt: null,
+      },
+    );
+
+    if (result?.affected === 0) {
+      throw new FailedRestoreException('reservation');
+    }
+
+    return this.findOneById(reservationId);
   }
+
   exists(criteria: FindOptionsWhere<ReservationEntity>): Promise<boolean> {
     throw new Error('Method not implemented.');
   }
