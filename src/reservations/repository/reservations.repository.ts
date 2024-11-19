@@ -168,9 +168,10 @@ export class ReservationsRepository implements IReservationsRepository {
     return count > 0;
   }
 
-  bulkSave(entities: ReservationEntity[]): Promise<ReservationEntity[]> {
-    throw new Error('Method not implemented.');
+  bulkSave(reservations: ReservationEntity[]): Promise<ReservationEntity[]> {
+    return this.reservationsRepository.save(reservations);
   }
+
   bulkUpdate(entities: ReservationEntity[]): Promise<ReservationEntity[]> {
     throw new Error('Method not implemented.');
   }
