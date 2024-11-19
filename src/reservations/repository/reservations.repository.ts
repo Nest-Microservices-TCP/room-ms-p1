@@ -160,9 +160,14 @@ export class ReservationsRepository implements IReservationsRepository {
     return this.findOneById(reservationId);
   }
 
-  exists(criteria: FindOptionsWhere<ReservationEntity>): Promise<boolean> {
-    throw new Error('Method not implemented.');
+  async exists(
+    criteria: FindOptionsWhere<ReservationEntity>,
+  ): Promise<boolean> {
+    const count = await this.reservationsRepository.count({ where: criteria });
+
+    return count > 0;
   }
+
   bulkSave(entities: ReservationEntity[]): Promise<ReservationEntity[]> {
     throw new Error('Method not implemented.');
   }
