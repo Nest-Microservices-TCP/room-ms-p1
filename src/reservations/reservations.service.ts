@@ -1,10 +1,10 @@
-import { plainToInstance } from 'class-transformer';
-import { ReservationResponseDto } from './dto/response';
 import { ReservationsRepository } from './repository/reservations.repository';
-import { Injectable } from '@nestjs/common';
-import { HandleRpcExceptions } from 'src/common/decorators';
 import { CreateReservationDto, UpdateReservationDto } from './dto/request';
 import { DeleteResultResponse } from 'src/common/dto/response';
+import { HandleRpcExceptions } from 'src/common/decorators';
+import { ReservationResponseDto } from './dto/response';
+import { plainToInstance } from 'class-transformer';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class ReservationsService {
@@ -56,6 +56,18 @@ export class ReservationsService {
       await this.reservationsRepository.remove(reservationId);
 
     return plainToInstance(DeleteResultResponse, deleteResult, {
+      excludeExtraneousValues: true,
+    });
+  }
+
+  @HandleRpcExceptions()
+  async findByIds(
+    reservationsIds: string[],
+  ): Promise<ReservationResponseDto[]> {
+    const reservations =
+      await this.reservationsRepository.findByIds(reservationsIds);
+
+    return plainToInstance(ReservationResponseDto, reservations, {
       excludeExtraneousValues: true,
     });
   }
