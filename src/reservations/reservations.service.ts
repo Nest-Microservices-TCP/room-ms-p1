@@ -4,6 +4,7 @@ import { ReservationsRepository } from './repository/reservations.repository';
 import { Injectable } from '@nestjs/common';
 import { HandleRpcExceptions } from 'src/common/decorators';
 import { CreateReservationDto, UpdateReservationDto } from './dto/request';
+import { DeleteResultResponse } from 'src/common/dto/response';
 
 @Injectable()
 export class ReservationsService {
@@ -45,6 +46,16 @@ export class ReservationsService {
       await this.reservationsRepository.update(request);
 
     return plainToInstance(ReservationResponseDto, reservationUpdated, {
+      excludeExtraneousValues: true,
+    });
+  }
+
+  @HandleRpcExceptions()
+  async remove(reservationId: string): Promise<DeleteResultResponse> {
+    const deleteResult =
+      await this.reservationsRepository.remove(reservationId);
+
+    return plainToInstance(DeleteResultResponse, deleteResult, {
       excludeExtraneousValues: true,
     });
   }
