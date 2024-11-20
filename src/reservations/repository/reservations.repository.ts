@@ -1,22 +1,21 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { IReservationsRepository } from './interfaces/reservations.repository.interface';
 import { CreateReservationDto, UpdateReservationDto } from '../dto/request';
 import { ReservationEntity } from '../entity/reservation.entity';
 import { DeleteResultResponse } from 'src/common/dto/response';
-import {
-  QueryRunner,
-  FindOptionsWhere,
-  Repository,
-  DeleteResult,
-  In,
-  UpdateResult,
-} from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Status } from 'src/common/enums';
 import {
-  EntityNotFoundException,
+  In,
+  Repository,
+  QueryRunner,
+  DeleteResult,
+  UpdateResult,
+  FindOptionsWhere,
+} from 'typeorm';
+import {
   FailedRemoveException,
   FailedRestoreException,
+  EntityNotFoundException,
   FailedSoftDeleteException,
 } from 'src/common/exceptions/custom';
 
@@ -177,6 +176,6 @@ export class ReservationsRepository implements IReservationsRepository {
   }
 
   customQuery(query: string, params: any[]): Promise<any> {
-    throw new Error('Method not implemented.');
+    return this.reservationsRepository.query(query, params);
   }
 }
