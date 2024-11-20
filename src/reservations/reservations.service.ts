@@ -3,6 +3,7 @@ import { ReservationResponseDto } from './dto/response';
 import { ReservationsRepository } from './repository/reservations.repository';
 import { Injectable } from '@nestjs/common';
 import { HandleRpcExceptions } from 'src/common/decorators';
+import { CreateReservationDto } from './dto/request';
 
 @Injectable()
 export class ReservationsService {
@@ -25,6 +26,15 @@ export class ReservationsService {
       await this.reservationsRepository.findOneById(reservationId);
 
     return plainToInstance(ReservationResponseDto, reservation, {
+      excludeExtraneousValues: true,
+    });
+  }
+
+  @HandleRpcExceptions()
+  async save(request: CreateReservationDto): Promise<ReservationResponseDto> {
+    const newReservation = await this.reservationsRepository.save(request);
+
+    return plainToInstance(ReservationResponseDto, newReservation, {
       excludeExtraneousValues: true,
     });
   }
