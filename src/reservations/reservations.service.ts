@@ -18,4 +18,14 @@ export class ReservationsService {
       excludeExtraneousValues: true,
     });
   }
+
+  @HandleRpcExceptions()
+  async findOneById(reservationId: string): Promise<ReservationResponseDto> {
+    const reservation =
+      await this.reservationsRepository.findOneById(reservationId);
+
+    return plainToInstance(ReservationResponseDto, reservation, {
+      excludeExtraneousValues: true,
+    });
+  }
 }
