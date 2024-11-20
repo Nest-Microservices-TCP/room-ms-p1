@@ -1,9 +1,9 @@
+import { RentsRepository } from './repository/rents.repository';
+import { RentsController } from './rents.controller';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { RentsService } from './rents.service';
 import { Module } from '@nestjs/common';
 import { RentEntity } from './entity';
-import { RentsService } from './rents.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { RentsController } from './rents.controller';
-import { RentsRepository } from './repository/rents.repository';
 
 @Module({
   imports: [TypeOrmModule.forFeature([RentEntity])],
