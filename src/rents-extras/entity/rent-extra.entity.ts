@@ -1,6 +1,6 @@
-import { RentEntity } from 'src/rents/entity';
-import { ExtraEntity } from 'src/extras/entity/extra.entity';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { ExtraEntity } from 'src/extras/entity/extra.entity';
+import { RentEntity } from 'src/rents/entity';
 
 @Entity({ name: 'rents_extras' })
 export class RentExtraEntity {
