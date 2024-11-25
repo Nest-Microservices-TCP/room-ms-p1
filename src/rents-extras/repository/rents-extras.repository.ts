@@ -1,11 +1,19 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { DeleteResultResponse } from 'src/common/dto/response';
-import { QueryRunner, FindOptionsWhere } from 'typeorm';
+import { QueryRunner, FindOptionsWhere, Repository } from 'typeorm';
 import { CreateRentExtraDto, UpdateRentExtraDto } from '../dto/request';
 import { RentExtraEntity } from '../entity/rent-extra.entity';
 import { IRentsExtrasRepository } from './interfaces/rents-extras.repository.interface';
+import { InjectRepository } from '@nestjs/typeorm';
 
 export class RentsExtrasRepository implements IRentsExtrasRepository {
+  private rentsExtrasRepository: Repository<RentExtraEntity>;
+
+  constructor(
+    @InjectRepository(RentExtraEntity)
+    private readonly defaultRepository: Repository<RentExtraEntity>,
+  ) {}
+
   setQueryRunner(queryRunner: QueryRunner): void {
     throw new Error('Method not implemented.');
   }
