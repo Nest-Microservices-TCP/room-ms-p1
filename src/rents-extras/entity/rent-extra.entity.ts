@@ -1,9 +1,10 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { ExtraEntity } from 'src/extras/entity/extra.entity';
+import { BaseEntity } from 'src/common/entity';
 import { RentEntity } from 'src/rents/entity';
 
 @Entity({ name: 'rents_extras' })
-export class RentExtraEntity {
+export class RentExtraEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid', {
     name: 'renta_extra_id',
   })
