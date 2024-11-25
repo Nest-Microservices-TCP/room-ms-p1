@@ -6,6 +6,7 @@ import { RentExtraEntity } from '../entity/rent-extra.entity';
 import { IRentsExtrasRepository } from './interfaces/rents-extras.repository.interface';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Status } from 'src/common/enums';
+import { EntityNotFoundException } from 'src/common/exceptions/custom';
 
 export class RentsExtrasRepository implements IRentsExtrasRepository {
   private rentsExtrasRepository: Repository<RentExtraEntity>;
@@ -32,9 +33,18 @@ export class RentsExtrasRepository implements IRentsExtrasRepository {
     });
   }
 
-  findOneById(id: string): Promise<RentExtraEntity> {
-    throw new Error('Method not implemented.');
+  async findOneById(rentExtraId: string): Promise<RentExtraEntity> {
+    const rentExtra = await this.rentsExtrasRepository.findOne({
+      where: { rentExtraId },
+    });
+
+    if (!rentExtra) {
+      throw new EntityNotFoundException('rent-extra');
+    }
+
+    return rentExtra;
   }
+
   create(request: Partial<RentExtraEntity>): RentExtraEntity {
     throw new Error('Method not implemented.');
   }
