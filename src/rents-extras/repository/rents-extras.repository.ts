@@ -5,6 +5,7 @@ import { CreateRentExtraDto, UpdateRentExtraDto } from '../dto/request';
 import { RentExtraEntity } from '../entity/rent-extra.entity';
 import { IRentsExtrasRepository } from './interfaces/rents-extras.repository.interface';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Status } from 'src/common/enums';
 
 export class RentsExtrasRepository implements IRentsExtrasRepository {
   private rentsExtrasRepository: Repository<RentExtraEntity>;
@@ -24,8 +25,13 @@ export class RentsExtrasRepository implements IRentsExtrasRepository {
   }
 
   findAll(): Promise<RentExtraEntity[]> {
-    throw new Error('Method not implemented.');
+    return this.rentsExtrasRepository.find({
+      where: {
+        status: Status.ACTIVE,
+      },
+    });
   }
+
   findOneById(id: string): Promise<RentExtraEntity> {
     throw new Error('Method not implemented.');
   }
