@@ -15,8 +15,14 @@ export class RentsExtrasRepository implements IRentsExtrasRepository {
   ) {}
 
   setQueryRunner(queryRunner: QueryRunner): void {
-    throw new Error('Method not implemented.');
+    if (queryRunner) {
+      this.rentsExtrasRepository =
+        queryRunner.manager.getRepository(RentExtraEntity);
+    } else {
+      this.rentsExtrasRepository = this.defaultRepository;
+    }
   }
+
   findAll(): Promise<RentExtraEntity[]> {
     throw new Error('Method not implemented.');
   }
