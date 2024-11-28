@@ -1,12 +1,20 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { DeleteResultResponse } from 'src/common/dto/response';
-import { QueryRunner, FindOptionsWhere, Repository } from 'typeorm';
+import {
+  QueryRunner,
+  FindOptionsWhere,
+  Repository,
+  DeleteResult,
+} from 'typeorm';
 import { CreateRentExtraDto, UpdateRentExtraDto } from '../dto/request';
 import { RentExtraEntity } from '../entity/rent-extra.entity';
 import { IRentsExtrasRepository } from './interfaces/rents-extras.repository.interface';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Status } from 'src/common/enums';
-import { EntityNotFoundException } from 'src/common/exceptions/custom';
+import {
+  EntityNotFoundException,
+  FailedRemoveException,
+} from 'src/common/exceptions/custom';
 
 export class RentsExtrasRepository implements IRentsExtrasRepository {
   private rentsExtrasRepository: Repository<RentExtraEntity>;
@@ -63,9 +71,19 @@ export class RentsExtrasRepository implements IRentsExtrasRepository {
     return this.rentsExtrasRepository.save(rentExtra);
   }
 
-  remove(id: string): Promise<DeleteResultResponse> {
-    throw new Error('Method not implemented.');
+  async remove(rentExtraId: string): Promise<DeleteResultResponse> {
+    await this.findOneById(rentExtraId);
+
+    const result: DeleteResult =
+      await this.rentsExtrasRepository.delete(rentExtraId);
+
+    if (result.affected === 0) {
+      throw new FailedRemoveException('rent-extra');
+    }
+
+    return { deleted: true, affected: result.affected };
   }
+
   findByIds(ids: string[]): Promise<RentExtraEntity[]> {
     throw new Error('Method not implemented.');
   }
