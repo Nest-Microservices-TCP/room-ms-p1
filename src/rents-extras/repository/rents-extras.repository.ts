@@ -53,9 +53,16 @@ export class RentsExtrasRepository implements IRentsExtrasRepository {
     return this.rentsExtrasRepository.save(request);
   }
 
-  update(request: UpdateRentExtraDto): Promise<RentExtraEntity> {
-    throw new Error('Method not implemented.');
+  async update(request: UpdateRentExtraDto): Promise<RentExtraEntity> {
+    const { rentExtraId } = request;
+
+    const rentExtra = await this.findOneById(rentExtraId);
+
+    Object.assign(rentExtra, request);
+
+    return this.rentsExtrasRepository.save(rentExtra);
   }
+
   remove(id: string): Promise<DeleteResultResponse> {
     throw new Error('Method not implemented.');
   }
