@@ -18,6 +18,11 @@ export class RatesController {
     return this.ratesService.findOneById(rateId);
   }
 
+  @MessagePattern({ cmd: 'find.rates.by.ids' })
+  findByIds(@Payload() ratesIds: string[]): Promise<RateResponseDto[]> {
+    return this.ratesService.findByIds(ratesIds);
+  }
+
   @MessagePattern({ cmd: 'save.rate' })
   save(@Payload() request: CreateRateDto): Promise<RateResponseDto> {
     return this.ratesService.save(request);
