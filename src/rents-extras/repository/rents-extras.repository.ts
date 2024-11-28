@@ -5,6 +5,7 @@ import {
   FindOptionsWhere,
   Repository,
   DeleteResult,
+  In,
 } from 'typeorm';
 import { CreateRentExtraDto, UpdateRentExtraDto } from '../dto/request';
 import { RentExtraEntity } from '../entity/rent-extra.entity';
@@ -84,9 +85,14 @@ export class RentsExtrasRepository implements IRentsExtrasRepository {
     return { deleted: true, affected: result.affected };
   }
 
-  findByIds(ids: string[]): Promise<RentExtraEntity[]> {
-    throw new Error('Method not implemented.');
+  findByIds(rentsExtrasIds: string[]): Promise<RentExtraEntity[]> {
+    return this.rentsExtrasRepository.find({
+      where: {
+        rentExtraId: In(rentsExtrasIds),
+      },
+    });
   }
+
   findByCriteria(
     criteria: FindOptionsWhere<RentExtraEntity>,
   ): Promise<RentExtraEntity> {
