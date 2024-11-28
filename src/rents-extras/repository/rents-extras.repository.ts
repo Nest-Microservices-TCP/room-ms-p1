@@ -46,11 +46,13 @@ export class RentsExtrasRepository implements IRentsExtrasRepository {
   }
 
   create(request: Partial<RentExtraEntity>): RentExtraEntity {
-    throw new Error('Method not implemented.');
+    return this.rentsExtrasRepository.create(request);
   }
+
   save(request: CreateRentExtraDto): Promise<RentExtraEntity> {
-    throw new Error('Method not implemented.');
+    return this.rentsExtrasRepository.save(request);
   }
+
   update(request: UpdateRentExtraDto): Promise<RentExtraEntity> {
     throw new Error('Method not implemented.');
   }
