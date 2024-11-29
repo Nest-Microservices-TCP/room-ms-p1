@@ -1,22 +1,21 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { DeleteResultResponse } from 'src/common/dto/response';
-import {
-  QueryRunner,
-  FindOptionsWhere,
-  Repository,
-  DeleteResult,
-  In,
-  UpdateResult,
-} from 'typeorm';
-import { CreateRentExtraDto, UpdateRentExtraDto } from '../dto/request';
-import { RentExtraEntity } from '../entity/rent-extra.entity';
 import { IRentsExtrasRepository } from './interfaces/rents-extras.repository.interface';
+import { CreateRentExtraDto, UpdateRentExtraDto } from '../dto/request';
+import { DeleteResultResponse } from 'src/common/dto/response';
+import { RentExtraEntity } from '../entity/rent-extra.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Status } from 'src/common/enums';
 import {
-  EntityNotFoundException,
+  In,
+  Repository,
+  QueryRunner,
+  UpdateResult,
+  DeleteResult,
+  FindOptionsWhere,
+} from 'typeorm';
+import {
   FailedRemoveException,
   FailedRestoreException,
+  EntityNotFoundException,
   FailedSoftDeleteException,
 } from 'src/common/exceptions/custom';
 
