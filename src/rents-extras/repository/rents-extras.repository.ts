@@ -108,8 +108,12 @@ export class RentsExtrasRepository implements IRentsExtrasRepository {
   }
 
   paginate(page: number, limit: number): Promise<[RentExtraEntity[], number]> {
-    throw new Error('Method not implemented.');
+    return this.rentsExtrasRepository.findAndCount({
+      skip: (page - 1) * limit,
+      take: limit,
+    });
   }
+
   softDelete(id: string): Promise<RentExtraEntity> {
     throw new Error('Method not implemented.');
   }
