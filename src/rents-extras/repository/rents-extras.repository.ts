@@ -16,6 +16,7 @@ import { Status } from 'src/common/enums';
 import {
   EntityNotFoundException,
   FailedRemoveException,
+  FailedRestoreException,
   FailedSoftDeleteException,
 } from 'src/common/exceptions/custom';
 
@@ -134,9 +135,24 @@ export class RentsExtrasRepository implements IRentsExtrasRepository {
     return rentExtra;
   }
 
-  restore(id: string): Promise<RentExtraEntity> {
-    throw new Error('Method not implemented.');
+  async restore(rentExtraId: string): Promise<RentExtraEntity> {
+    const rentExtra = await this.findOneById(rentExtraId);
+
+    const result: UpdateResult = await this.rentsExtrasRepository.update(
+      rentExtraId,
+      {
+        status: Status.ACTIVE,
+        deletedAt: null,
+      },
+    );
+
+    if (result?.affected === 0) {
+      throw new FailedRestoreException('ren-extra');
+    }
+
+    return rentExtra;
   }
+
   exists(criteria: FindOptionsWhere<RentExtraEntity>): Promise<boolean> {
     throw new Error('Method not implemented.');
   }
