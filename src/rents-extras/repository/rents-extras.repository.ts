@@ -6,6 +6,7 @@ import {
   Repository,
   DeleteResult,
   In,
+  UpdateResult,
 } from 'typeorm';
 import { CreateRentExtraDto, UpdateRentExtraDto } from '../dto/request';
 import { RentExtraEntity } from '../entity/rent-extra.entity';
@@ -15,6 +16,7 @@ import { Status } from 'src/common/enums';
 import {
   EntityNotFoundException,
   FailedRemoveException,
+  FailedSoftDeleteException,
 } from 'src/common/exceptions/custom';
 
 export class RentsExtrasRepository implements IRentsExtrasRepository {
@@ -114,9 +116,24 @@ export class RentsExtrasRepository implements IRentsExtrasRepository {
     });
   }
 
-  softDelete(id: string): Promise<RentExtraEntity> {
-    throw new Error('Method not implemented.');
+  async softDelete(rentExtraId: string): Promise<RentExtraEntity> {
+    const rentExtra = await this.findOneById(rentExtraId);
+
+    const result: UpdateResult = await this.rentsExtrasRepository.update(
+      rentExtraId,
+      {
+        status: Status.DELETED,
+        deletedAt: new Date(),
+      },
+    );
+
+    if (result?.affected === 0) {
+      throw new FailedSoftDeleteException('rent-extra');
+    }
+
+    return rentExtra;
   }
+
   restore(id: string): Promise<RentExtraEntity> {
     throw new Error('Method not implemented.');
   }
