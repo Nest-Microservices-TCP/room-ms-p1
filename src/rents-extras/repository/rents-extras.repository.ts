@@ -104,8 +104,9 @@ export class RentsExtrasRepository implements IRentsExtrasRepository {
   }
 
   count(criteria: FindOptionsWhere<RentExtraEntity>): Promise<number> {
-    throw new Error('Method not implemented.');
+    return this.rentsExtrasRepository.count({ where: criteria });
   }
+
   paginate(page: number, limit: number): Promise<[RentExtraEntity[], number]> {
     throw new Error('Method not implemented.');
   }
