@@ -96,8 +96,9 @@ export class RentsExtrasRepository implements IRentsExtrasRepository {
   findByCriteria(
     criteria: FindOptionsWhere<RentExtraEntity>,
   ): Promise<RentExtraEntity> {
-    throw new Error('Method not implemented.');
+    return this.rentsExtrasRepository.findOne({ where: criteria });
   }
+
   findWithRelations(relations: string[]): Promise<RentExtraEntity[]> {
     throw new Error('Method not implemented.');
   }
