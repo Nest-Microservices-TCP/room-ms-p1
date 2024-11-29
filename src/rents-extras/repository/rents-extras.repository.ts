@@ -159,9 +159,10 @@ export class RentsExtrasRepository implements IRentsExtrasRepository {
     return count > 0;
   }
 
-  bulkSave(entities: RentExtraEntity[]): Promise<RentExtraEntity[]> {
-    throw new Error('Method not implemented.');
+  bulkSave(rentsExtras: RentExtraEntity[]): Promise<RentExtraEntity[]> {
+    return this.rentsExtrasRepository.save(rentsExtras);
   }
+
   bulkUpdate(entities: RentExtraEntity[]): Promise<RentExtraEntity[]> {
     throw new Error('Method not implemented.');
   }
