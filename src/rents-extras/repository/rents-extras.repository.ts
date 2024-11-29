@@ -168,6 +168,6 @@ export class RentsExtrasRepository implements IRentsExtrasRepository {
   }
 
   customQuery(query: string, params: any[]): Promise<any> {
-    throw new Error('Method not implemented.');
+    return this.rentsExtrasRepository.query(query, params);
   }
 }
