@@ -153,9 +153,12 @@ export class RentsExtrasRepository implements IRentsExtrasRepository {
     return rentExtra;
   }
 
-  exists(criteria: FindOptionsWhere<RentExtraEntity>): Promise<boolean> {
-    throw new Error('Method not implemented.');
+  async exists(criteria: FindOptionsWhere<RentExtraEntity>): Promise<boolean> {
+    const count = await this.rentsExtrasRepository.count({ where: criteria });
+
+    return count > 0;
   }
+
   bulkSave(entities: RentExtraEntity[]): Promise<RentExtraEntity[]> {
     throw new Error('Method not implemented.');
   }
