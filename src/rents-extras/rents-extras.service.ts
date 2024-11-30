@@ -4,6 +4,7 @@ import { RentsExtrasRepository } from './repository/rents-extras.repository';
 import { Injectable } from '@nestjs/common';
 import { HandleRpcExceptions } from 'src/common/decorators';
 import { CreateRentExtraDto, UpdateRentExtraDto } from './dto/request';
+import { DeleteResultResponse } from 'src/common/dto/response';
 
 @Injectable()
 export class RentsExtrasService {
@@ -42,6 +43,15 @@ export class RentsExtrasService {
     const updatedRentExtra = await this.rentsExtrasRepository.update(request);
 
     return plainToInstance(RentExtraResponseDto, updatedRentExtra, {
+      excludeExtraneousValues: true,
+    });
+  }
+
+  @HandleRpcExceptions()
+  async remove(rentExtraId: string): Promise<DeleteResultResponse> {
+    const deleteResult = await this.rentsExtrasRepository.remove(rentExtraId);
+
+    return plainToInstance(DeleteResultResponse, deleteResult, {
       excludeExtraneousValues: true,
     });
   }
