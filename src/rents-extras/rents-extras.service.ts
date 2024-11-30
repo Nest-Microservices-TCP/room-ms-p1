@@ -3,6 +3,7 @@ import { RentExtraResponseDto } from './dto/response';
 import { RentsExtrasRepository } from './repository/rents-extras.repository';
 import { Injectable } from '@nestjs/common';
 import { HandleRpcExceptions } from 'src/common/decorators';
+import { CreateRentExtraDto } from './dto/request';
 
 @Injectable()
 export class RentsExtrasService {
@@ -23,6 +24,15 @@ export class RentsExtrasService {
     const rentExtra = await this.rentsExtrasRepository.findOneById(rentExtraId);
 
     return plainToInstance(RentExtraResponseDto, rentExtra, {
+      excludeExtraneousValues: true,
+    });
+  }
+
+  @HandleRpcExceptions()
+  async save(request: CreateRentExtraDto): Promise<RentExtraResponseDto> {
+    const newRentExtra = await this.rentsExtrasRepository.save(request);
+
+    return plainToInstance(RentExtraResponseDto, newRentExtra, {
       excludeExtraneousValues: true,
     });
   }
