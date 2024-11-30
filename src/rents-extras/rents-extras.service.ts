@@ -12,7 +12,17 @@ export class RentsExtrasService {
   async findAll(): Promise<RentExtraResponseDto[]> {
     const rentsExtras = await this.rentsExtrasRepository.findAll();
 
+    // TODO: Separar esta funcionalidad para que sea reutilizaba (decorador quizá)
     return plainToInstance(RentExtraResponseDto, rentsExtras, {
+      excludeExtraneousValues: true,
+    });
+  }
+
+  @HandleRpcExceptions()
+  async findOneById(rentExtraId: string): Promise<RentExtraResponseDto> {
+    const rentExtra = await this.rentsExtrasRepository.findOneById(rentExtraId);
+
+    return plainToInstance(RentExtraResponseDto, rentExtra, {
       excludeExtraneousValues: true,
     });
   }
