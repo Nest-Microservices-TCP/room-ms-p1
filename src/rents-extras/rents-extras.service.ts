@@ -1,10 +1,10 @@
-import { plainToInstance } from 'class-transformer';
-import { RentExtraResponseDto } from './dto/response';
 import { RentsExtrasRepository } from './repository/rents-extras.repository';
-import { Injectable } from '@nestjs/common';
-import { HandleRpcExceptions } from 'src/common/decorators';
 import { CreateRentExtraDto, UpdateRentExtraDto } from './dto/request';
 import { DeleteResultResponse } from 'src/common/dto/response';
+import { HandleRpcExceptions } from 'src/common/decorators';
+import { RentExtraResponseDto } from './dto/response';
+import { plainToInstance } from 'class-transformer';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class RentsExtrasService {
@@ -25,6 +25,16 @@ export class RentsExtrasService {
     const rentExtra = await this.rentsExtrasRepository.findOneById(rentExtraId);
 
     return plainToInstance(RentExtraResponseDto, rentExtra, {
+      excludeExtraneousValues: true,
+    });
+  }
+
+  @HandleRpcExceptions()
+  async findByIds(rentsExtrasIds: string[]): Promise<RentExtraResponseDto[]> {
+    const rentsExtras =
+      await this.rentsExtrasRepository.findByIds(rentsExtrasIds);
+
+    return plainToInstance(RentExtraResponseDto, rentsExtras, {
       excludeExtraneousValues: true,
     });
   }
@@ -52,16 +62,6 @@ export class RentsExtrasService {
     const deleteResult = await this.rentsExtrasRepository.remove(rentExtraId);
 
     return plainToInstance(DeleteResultResponse, deleteResult, {
-      excludeExtraneousValues: true,
-    });
-  }
-
-  @HandleRpcExceptions()
-  async findByIds(rentsExtrasIds: string[]): Promise<RentExtraResponseDto[]> {
-    const rentsExtras =
-      await this.rentsExtrasRepository.findByIds(rentsExtrasIds);
-
-    return plainToInstance(RentExtraResponseDto, rentsExtras, {
       excludeExtraneousValues: true,
     });
   }
