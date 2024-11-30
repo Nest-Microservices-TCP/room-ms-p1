@@ -55,4 +55,14 @@ export class RentsExtrasService {
       excludeExtraneousValues: true,
     });
   }
+
+  @HandleRpcExceptions()
+  async findByIds(rentsExtrasIds: string[]): Promise<RentExtraResponseDto[]> {
+    const rentsExtras =
+      await this.rentsExtrasRepository.findByIds(rentsExtrasIds);
+
+    return plainToInstance(RentExtraResponseDto, rentsExtras, {
+      excludeExtraneousValues: true,
+    });
+  }
 }
