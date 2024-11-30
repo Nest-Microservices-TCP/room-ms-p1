@@ -11,4 +11,9 @@ export class RentsExtrasController {
   async findAll(): Promise<RentExtraResponseDto[]> {
     return this.rentsExtrasService.findAll();
   }
+
+  @MessagePattern({ cmd: 'find.one.rent.extra.by.id' })
+  async findOneById(rentExtraId: string): Promise<RentExtraResponseDto> {
+    return this.rentsExtrasService.findOneById(rentExtraId);
+  }
 }
