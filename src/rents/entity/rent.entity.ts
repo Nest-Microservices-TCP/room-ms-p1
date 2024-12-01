@@ -1,3 +1,8 @@
+import { AccommodationType, EntryType, PaymentState, RentState } from '../enum';
+import { RentExtraEntity } from 'src/rents-extras/entity/rent-extra.entity';
+import { RentSubtotalsEntity } from './rent-subtotals.entity';
+import { RoomEntity } from 'src/rooms/entity/room.entity';
+import { BaseEntity } from 'src/common/entity';
 import {
   Column,
   Entity,
@@ -7,22 +12,19 @@ import {
   JoinColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { BaseEntity } from 'src/common/entity';
-import { RoomEntity } from 'src/rooms/entity/room.entity';
-import { RentSubtotalsEntity } from './rent-subtotals.entity';
-import { RentExtraEntity } from 'src/rents-extras/entity/rent-extra.entity';
-import { AccommodationType, EntryType, PaymentState, RentState } from '../enum';
 
 @Entity({ name: 'rent' })
 export class RentEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid', {
     name: 'rent_id',
+    primaryKeyConstraintName: 'PK_rent',
   })
   rentId: string;
 
   @Column({
     name: 'folio',
     type: 'integer',
+    nullable: false,
   })
   @Generated('increment')
   folio: number;
@@ -30,12 +32,14 @@ export class RentEntity extends BaseEntity {
   @Column({
     name: 'checkout_date',
     type: 'timestamp with time zone',
+    nullable: false,
   })
   checkoutDate: Date;
 
   @Column({
     name: 'departure_at',
     type: 'timestamp with time zone',
+    nullable: false,
   })
   departureAt: Date;
 
@@ -43,6 +47,7 @@ export class RentEntity extends BaseEntity {
     name: 'entry_type',
     type: 'enum',
     enum: EntryType,
+    nullable: false,
   })
   entryType: EntryType;
 
@@ -51,8 +56,7 @@ export class RentEntity extends BaseEntity {
     type: 'numeric',
     precision: 9,
     scale: 2,
-    default: null,
-    nullable: true,
+    nullable: false,
   })
   totalIncome: number;
 
@@ -60,6 +64,7 @@ export class RentEntity extends BaseEntity {
     name: 'rent_state',
     type: 'enum',
     enum: RentState,
+    nullable: false,
   })
   rentState: RentState;
 
@@ -67,6 +72,7 @@ export class RentEntity extends BaseEntity {
     name: 'payment_state',
     type: 'enum',
     enum: PaymentState,
+    nullable: false,
   })
   paymentSate: PaymentState;
 
@@ -83,6 +89,7 @@ export class RentEntity extends BaseEntity {
     name: 'accommodation_type',
     type: 'enum',
     enum: AccommodationType,
+    nullable: false,
   })
   accommodationType: AccommodationType;
 
@@ -100,10 +107,11 @@ export class RentEntity extends BaseEntity {
    */
   @OneToOne(() => RentSubtotalsEntity, (subtotals) => subtotals.rent, {
     cascade: true,
+    nullable: false,
   })
   rentSubtotals: RentSubtotalsEntity;
 
-  @OneToOne(() => RoomEntity, (room) => room.rent)
+  @OneToOne(() => RoomEntity, (room) => room.rent, { nullable: false })
   @JoinColumn({ name: 'room_id' })
   room: RoomEntity;
 
@@ -125,6 +133,7 @@ export class RentEntity extends BaseEntity {
    */
   @OneToMany(() => RentExtraEntity, (rentExtra) => rentExtra.rent, {
     cascade: true,
+    nullable: false,
   })
   rentExtras: RentExtraEntity[];
 }
