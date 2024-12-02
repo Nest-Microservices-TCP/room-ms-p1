@@ -1,11 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { DeleteResultResponse } from 'src/common/dto/response';
-import { QueryRunner, FindOptionsWhere } from 'typeorm';
+import { QueryRunner, FindOptionsWhere, Repository } from 'typeorm';
 import { CreateAmenityDto, UpdateAmenityDto } from '../dto/request';
 import { AmenityEntity } from '../entity/amenity.entity';
 import { IAmenitiesRepository } from './interfaces/amenities.repository.interface';
+import { InjectRepository } from '@nestjs/typeorm';
 
 export class AmenitiesRepository implements IAmenitiesRepository {
+  constructor(
+    @InjectRepository(AmenityEntity)
+    private readonly defaultRepository: Repository<AmenityEntity>,
+  ) {}
+
   setQueryRunner(queryRunner: QueryRunner): void {
     throw new Error('Method not implemented.');
   }
