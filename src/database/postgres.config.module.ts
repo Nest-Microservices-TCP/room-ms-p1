@@ -16,4 +16,4 @@ import { envs } from 'src/config';
     }),
   ],
 })
-export class PostgresDBModule {}
+export class PostgresConfigModule {}
