@@ -1,1 +1,65 @@
-export class AmenitiesRepository {}
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { DeleteResultResponse } from 'src/common/dto/response';
+import { QueryRunner, FindOptionsWhere } from 'typeorm';
+import { CreateAmenityDto, UpdateAmenityDto } from '../dto/request';
+import { AmenityEntity } from '../entity/amenity.entity';
+import { IAmenitiesRepository } from './interfaces/amenities.repository.interface';
+
+export class AmenitiesRepository implements IAmenitiesRepository {
+  setQueryRunner(queryRunner: QueryRunner): void {
+    throw new Error('Method not implemented.');
+  }
+  findAll(): Promise<AmenityEntity[]> {
+    throw new Error('Method not implemented.');
+  }
+  findOneById(id: string): Promise<AmenityEntity> {
+    throw new Error('Method not implemented.');
+  }
+  create(request: Partial<AmenityEntity>): AmenityEntity {
+    throw new Error('Method not implemented.');
+  }
+  save(request: CreateAmenityDto): Promise<AmenityEntity> {
+    throw new Error('Method not implemented.');
+  }
+  update(request: UpdateAmenityDto): Promise<AmenityEntity> {
+    throw new Error('Method not implemented.');
+  }
+  remove(id: string): Promise<DeleteResultResponse> {
+    throw new Error('Method not implemented.');
+  }
+  findByIds(ids: string[]): Promise<AmenityEntity[]> {
+    throw new Error('Method not implemented.');
+  }
+  findByCriteria(
+    criteria: FindOptionsWhere<AmenityEntity>,
+  ): Promise<AmenityEntity> {
+    throw new Error('Method not implemented.');
+  }
+  findWithRelations(relations: string[]): Promise<AmenityEntity[]> {
+    throw new Error('Method not implemented.');
+  }
+  count(criteria: FindOptionsWhere<AmenityEntity>): Promise<number> {
+    throw new Error('Method not implemented.');
+  }
+  paginate(page: number, limit: number): Promise<[AmenityEntity[], number]> {
+    throw new Error('Method not implemented.');
+  }
+  softDelete(id: string): Promise<AmenityEntity> {
+    throw new Error('Method not implemented.');
+  }
+  restore(id: string): Promise<AmenityEntity> {
+    throw new Error('Method not implemented.');
+  }
+  exists(criteria: FindOptionsWhere<AmenityEntity>): Promise<boolean> {
+    throw new Error('Method not implemented.');
+  }
+  bulkSave(entities: AmenityEntity[]): Promise<AmenityEntity[]> {
+    throw new Error('Method not implemented.');
+  }
+  bulkUpdate(entities: AmenityEntity[]): Promise<AmenityEntity[]> {
+    throw new Error('Method not implemented.');
+  }
+  customQuery(query: string, params: any[]): Promise<any> {
+    throw new Error('Method not implemented.');
+  }
+}
