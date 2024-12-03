@@ -55,9 +55,16 @@ export class AmenitiesRepository implements IAmenitiesRepository {
     return this.amenitiesRepository.save(request);
   }
 
-  update(request: UpdateAmenityDto): Promise<AmenityEntity> {
-    throw new Error('Method not implemented.');
+  async update(request: UpdateAmenityDto): Promise<AmenityEntity> {
+    const { amenityId } = request;
+
+    const amenity = await this.findOneById(amenityId);
+
+    Object.assign(amenity, request);
+
+    return this.amenitiesRepository.save(amenity);
   }
+
   remove(id: string): Promise<DeleteResultResponse> {
     throw new Error('Method not implemented.');
   }
