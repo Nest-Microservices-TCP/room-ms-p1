@@ -6,6 +6,7 @@ import { AmenityEntity } from '../entity/amenity.entity';
 import { IAmenitiesRepository } from './interfaces/amenities.repository.interface';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Status } from 'src/common/enums';
+import { EntityNotFoundException } from 'src/common/exceptions/custom';
 
 export class AmenitiesRepository implements IAmenitiesRepository {
   private amenitiesRepository: Repository<AmenityEntity>;
@@ -32,9 +33,20 @@ export class AmenitiesRepository implements IAmenitiesRepository {
     });
   }
 
-  findOneById(id: string): Promise<AmenityEntity> {
-    throw new Error('Method not implemented.');
+  async findOneById(amenityId: string): Promise<AmenityEntity> {
+    const amenity = await this.amenitiesRepository.findOne({
+      where: {
+        amenityId,
+      },
+    });
+
+    if (!amenity) {
+      throw new EntityNotFoundException('amenity');
+    }
+
+    return amenity;
   }
+
   create(request: Partial<AmenityEntity>): AmenityEntity {
     throw new Error('Method not implemented.');
   }
