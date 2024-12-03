@@ -52,8 +52,9 @@ export class AmenitiesRepository implements IAmenitiesRepository {
   }
 
   save(request: CreateAmenityDto): Promise<AmenityEntity> {
-    throw new Error('Method not implemented.');
+    return this.amenitiesRepository.save(request);
   }
+
   update(request: UpdateAmenityDto): Promise<AmenityEntity> {
     throw new Error('Method not implemented.');
   }
