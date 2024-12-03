@@ -48,8 +48,9 @@ export class AmenitiesRepository implements IAmenitiesRepository {
   }
 
   create(request: Partial<AmenityEntity>): AmenityEntity {
-    throw new Error('Method not implemented.');
+    return this.amenitiesRepository.create(request);
   }
+
   save(request: CreateAmenityDto): Promise<AmenityEntity> {
     throw new Error('Method not implemented.');
   }
