@@ -1,12 +1,21 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { DeleteResultResponse } from 'src/common/dto/response';
-import { QueryRunner, FindOptionsWhere, Repository } from 'typeorm';
+import {
+  QueryRunner,
+  FindOptionsWhere,
+  Repository,
+  UpdateResult,
+  DeleteResult,
+} from 'typeorm';
 import { CreateAmenityDto, UpdateAmenityDto } from '../dto/request';
 import { AmenityEntity } from '../entity/amenity.entity';
 import { IAmenitiesRepository } from './interfaces/amenities.repository.interface';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Status } from 'src/common/enums';
-import { EntityNotFoundException } from 'src/common/exceptions/custom';
+import {
+  EntityNotFoundException,
+  FailedRemoveException,
+} from 'src/common/exceptions/custom';
 
 export class AmenitiesRepository implements IAmenitiesRepository {
   private amenitiesRepository: Repository<AmenityEntity>;
@@ -65,9 +74,19 @@ export class AmenitiesRepository implements IAmenitiesRepository {
     return this.amenitiesRepository.save(amenity);
   }
 
-  remove(id: string): Promise<DeleteResultResponse> {
-    throw new Error('Method not implemented.');
+  async remove(amenityId: string): Promise<DeleteResultResponse> {
+    await this.findOneById(amenityId);
+
+    const result: DeleteResult =
+      await this.amenitiesRepository.delete(amenityId);
+
+    if (result?.affected === 0) {
+      throw new FailedRemoveException('amenity');
+    }
+
+    return { deleted: true, affected: result.affected };
   }
+
   findByIds(ids: string[]): Promise<AmenityEntity[]> {
     throw new Error('Method not implemented.');
   }
