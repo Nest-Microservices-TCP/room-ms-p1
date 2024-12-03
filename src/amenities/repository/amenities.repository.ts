@@ -5,6 +5,7 @@ import { CreateAmenityDto, UpdateAmenityDto } from '../dto/request';
 import { AmenityEntity } from '../entity/amenity.entity';
 import { IAmenitiesRepository } from './interfaces/amenities.repository.interface';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Status } from 'src/common/enums';
 
 export class AmenitiesRepository implements IAmenitiesRepository {
   private amenitiesRepository: Repository<AmenityEntity>;
@@ -24,8 +25,13 @@ export class AmenitiesRepository implements IAmenitiesRepository {
   }
 
   findAll(): Promise<AmenityEntity[]> {
-    throw new Error('Method not implemented.');
+    return this.amenitiesRepository.find({
+      where: {
+        status: Status.ACTIVE,
+      },
+    });
   }
+
   findOneById(id: string): Promise<AmenityEntity> {
     throw new Error('Method not implemented.');
   }
