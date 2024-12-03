@@ -99,8 +99,9 @@ export class AmenitiesRepository implements IAmenitiesRepository {
   findByCriteria(
     criteria: FindOptionsWhere<AmenityEntity>,
   ): Promise<AmenityEntity> {
-    throw new Error('Method not implemented.');
+    return this.amenitiesRepository.findOne({ where: criteria });
   }
+
   findWithRelations(relations: string[]): Promise<AmenityEntity[]> {
     throw new Error('Method not implemented.');
   }
