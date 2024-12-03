@@ -7,14 +7,22 @@ import { IAmenitiesRepository } from './interfaces/amenities.repository.interfac
 import { InjectRepository } from '@nestjs/typeorm';
 
 export class AmenitiesRepository implements IAmenitiesRepository {
+  private amenitiesRepository: Repository<AmenityEntity>;
+
   constructor(
     @InjectRepository(AmenityEntity)
     private readonly defaultRepository: Repository<AmenityEntity>,
   ) {}
 
   setQueryRunner(queryRunner: QueryRunner): void {
-    throw new Error('Method not implemented.');
+    if (queryRunner) {
+      this.amenitiesRepository =
+        queryRunner.manager.getRepository(AmenityEntity);
+    } else {
+      this.amenitiesRepository = this.defaultRepository;
+    }
   }
+
   findAll(): Promise<AmenityEntity[]> {
     throw new Error('Method not implemented.');
   }
