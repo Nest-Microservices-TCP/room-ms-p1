@@ -6,6 +6,7 @@ import {
   Repository,
   UpdateResult,
   DeleteResult,
+  In,
 } from 'typeorm';
 import { CreateAmenityDto, UpdateAmenityDto } from '../dto/request';
 import { AmenityEntity } from '../entity/amenity.entity';
@@ -87,9 +88,14 @@ export class AmenitiesRepository implements IAmenitiesRepository {
     return { deleted: true, affected: result.affected };
   }
 
-  findByIds(ids: string[]): Promise<AmenityEntity[]> {
-    throw new Error('Method not implemented.');
+  findByIds(amenitiesIds: string[]): Promise<AmenityEntity[]> {
+    return this.amenitiesRepository.find({
+      where: {
+        amenityId: In(amenitiesIds),
+      },
+    });
   }
+
   findByCriteria(
     criteria: FindOptionsWhere<AmenityEntity>,
   ): Promise<AmenityEntity> {
