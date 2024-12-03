@@ -107,8 +107,9 @@ export class AmenitiesRepository implements IAmenitiesRepository {
   }
 
   count(criteria: FindOptionsWhere<AmenityEntity>): Promise<number> {
-    throw new Error('Method not implemented.');
+    return this.amenitiesRepository.count({ where: criteria });
   }
+
   paginate(page: number, limit: number): Promise<[AmenityEntity[], number]> {
     throw new Error('Method not implemented.');
   }
