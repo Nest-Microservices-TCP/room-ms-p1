@@ -16,4 +16,9 @@ export class RentsExtrasController {
   async findOneById(rentExtraId: string): Promise<RentExtraResponseDto> {
     return this.rentsExtrasService.findOneById(rentExtraId);
   }
+
+  @MessagePattern({ cmd: 'find.rents.extras.by.ids' })
+  async findByIds(rentsExtrasIds: string[]): Promise<RentExtraResponseDto[]> {
+    return this.rentsExtrasService.findByIds(rentsExtrasIds);
+  }
 }
