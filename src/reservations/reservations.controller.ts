@@ -20,6 +20,13 @@ export class ReservationsController {
     return this.reservationsService.findOneById(reservationId);
   }
 
+  @MessagePattern({ cmd: 'find.reservations.by.ids' })
+  async findByIds(
+    reservationsIds: string[],
+  ): Promise<ReservationResponseDto[]> {
+    return this.reservationsService.findByIds(reservationsIds);
+  }
+
   @MessagePattern({ cmd: 'save.reservation' })
   async save(
     @Payload() request: CreateReservationDto,
