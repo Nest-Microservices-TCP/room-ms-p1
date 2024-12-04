@@ -16,6 +16,7 @@ import { Status } from 'src/common/enums';
 import {
   EntityNotFoundException,
   FailedRemoveException,
+  FailedSoftDeleteException,
 } from 'src/common/exceptions/custom';
 
 export class AmenitiesRepository implements IAmenitiesRepository {
@@ -117,9 +118,24 @@ export class AmenitiesRepository implements IAmenitiesRepository {
     });
   }
 
-  softDelete(id: string): Promise<AmenityEntity> {
-    throw new Error('Method not implemented.');
+  async softDelete(amenityId: string): Promise<AmenityEntity> {
+    await this.findOneById(amenityId);
+
+    const result: UpdateResult = await this.amenitiesRepository.update(
+      amenityId,
+      {
+        status: Status.DELETED,
+        deletedAt: new Date(),
+      },
+    );
+
+    if (result?.affected === 0) {
+      throw new FailedSoftDeleteException('amenity');
+    }
+
+    return this.findOneById(amenityId);
   }
+
   restore(id: string): Promise<AmenityEntity> {
     throw new Error('Method not implemented.');
   }
