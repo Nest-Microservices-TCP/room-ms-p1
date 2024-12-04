@@ -1,8 +1,9 @@
-import { Controller } from '@nestjs/common';
+import { CreateReservationDto, UpdateReservationDto } from './dto/request';
+import { MessagePattern, Payload } from '@nestjs/microservices';
+import { DeleteResultResponse } from 'src/common/dto/response';
 import { ReservationsService } from './reservations.service';
 import { ReservationResponseDto } from './dto/response';
-import { MessagePattern, Payload } from '@nestjs/microservices';
-import { CreateReservationDto, UpdateReservationDto } from './dto/request';
+import { Controller } from '@nestjs/common';
 
 @Controller()
 export class ReservationsController {
@@ -39,5 +40,10 @@ export class ReservationsController {
     @Payload() request: UpdateReservationDto,
   ): Promise<ReservationResponseDto> {
     return this.reservationsService.update(request);
+  }
+
+  @MessagePattern({ cmd: 'remove.reservation.by.id' })
+  async remove(reservationId: string): Promise<DeleteResultResponse> {
+    return this.reservationsService.remove(reservationId);
   }
 }
