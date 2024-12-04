@@ -2,7 +2,7 @@ import { RentsExtrasService } from './rents-extras.service';
 import { MessagePattern } from '@nestjs/microservices';
 import { RentExtraResponseDto } from './dto/response';
 import { Controller } from '@nestjs/common';
-import { CreateRentExtraDto } from './dto/request';
+import { CreateRentExtraDto, UpdateRentExtraDto } from './dto/request';
 
 @Controller()
 export class RentsExtrasController {
@@ -26,5 +26,10 @@ export class RentsExtrasController {
   @MessagePattern({ cmd: 'save.rent.extra' })
   async save(request: CreateRentExtraDto): Promise<RentExtraResponseDto> {
     return this.rentsExtrasService.save(request);
+  }
+
+  @MessagePattern({ cmd: 'update.rent.extra' })
+  async update(request: UpdateRentExtraDto): Promise<RentExtraResponseDto> {
+    return this.rentsExtrasService.update(request);
   }
 }
