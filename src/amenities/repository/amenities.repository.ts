@@ -111,8 +111,12 @@ export class AmenitiesRepository implements IAmenitiesRepository {
   }
 
   paginate(page: number, limit: number): Promise<[AmenityEntity[], number]> {
-    throw new Error('Method not implemented.');
+    return this.amenitiesRepository.findAndCount({
+      skip: (page - 1) * limit,
+      take: limit,
+    });
   }
+
   softDelete(id: string): Promise<AmenityEntity> {
     throw new Error('Method not implemented.');
   }
