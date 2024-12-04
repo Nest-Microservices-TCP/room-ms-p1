@@ -2,6 +2,7 @@ import { RentsExtrasService } from './rents-extras.service';
 import { MessagePattern } from '@nestjs/microservices';
 import { RentExtraResponseDto } from './dto/response';
 import { Controller } from '@nestjs/common';
+import { CreateRentExtraDto } from './dto/request';
 
 @Controller()
 export class RentsExtrasController {
@@ -20,5 +21,10 @@ export class RentsExtrasController {
   @MessagePattern({ cmd: 'find.rents.extras.by.ids' })
   async findByIds(rentsExtrasIds: string[]): Promise<RentExtraResponseDto[]> {
     return this.rentsExtrasService.findByIds(rentsExtrasIds);
+  }
+
+  @MessagePattern({ cmd: 'save.rent.extra' })
+  async save(request: CreateRentExtraDto): Promise<RentExtraResponseDto> {
+    return this.rentsExtrasService.save(request);
   }
 }
