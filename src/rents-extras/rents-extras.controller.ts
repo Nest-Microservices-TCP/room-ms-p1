@@ -1,8 +1,9 @@
+import { CreateRentExtraDto, UpdateRentExtraDto } from './dto/request';
+import { DeleteResultResponse } from 'src/common/dto/response';
 import { RentsExtrasService } from './rents-extras.service';
 import { MessagePattern } from '@nestjs/microservices';
 import { RentExtraResponseDto } from './dto/response';
 import { Controller } from '@nestjs/common';
-import { CreateRentExtraDto, UpdateRentExtraDto } from './dto/request';
 
 @Controller()
 export class RentsExtrasController {
@@ -31,5 +32,10 @@ export class RentsExtrasController {
   @MessagePattern({ cmd: 'update.rent.extra' })
   async update(request: UpdateRentExtraDto): Promise<RentExtraResponseDto> {
     return this.rentsExtrasService.update(request);
+  }
+
+  @MessagePattern({ cmd: 'remove.rent.extra.by.id' })
+  async remove(rentExtraId: string): Promise<DeleteResultResponse> {
+    return this.rentsExtrasService.remove(rentExtraId);
   }
 }
