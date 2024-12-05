@@ -155,9 +155,12 @@ export class AmenitiesRepository implements IAmenitiesRepository {
     return this.findOneById(amenityId);
   }
 
-  exists(criteria: FindOptionsWhere<AmenityEntity>): Promise<boolean> {
-    throw new Error('Method not implemented.');
+  async exists(criteria: FindOptionsWhere<AmenityEntity>): Promise<boolean> {
+    const count = await this.count(criteria);
+
+    return count > 0;
   }
+
   bulkSave(entities: AmenityEntity[]): Promise<AmenityEntity[]> {
     throw new Error('Method not implemented.');
   }
