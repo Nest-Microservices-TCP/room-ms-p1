@@ -161,9 +161,10 @@ export class AmenitiesRepository implements IAmenitiesRepository {
     return count > 0;
   }
 
-  bulkSave(entities: AmenityEntity[]): Promise<AmenityEntity[]> {
-    throw new Error('Method not implemented.');
+  bulkSave(amenities: AmenityEntity[]): Promise<AmenityEntity[]> {
+    return this.amenitiesRepository.save(amenities);
   }
+
   bulkUpdate(entities: AmenityEntity[]): Promise<AmenityEntity[]> {
     throw new Error('Method not implemented.');
   }
