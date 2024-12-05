@@ -25,4 +25,13 @@ export class AmenitiesService {
       excludeExtraneousValues: true,
     });
   }
+
+  @HandleRpcExceptions()
+  async findByIds(amenitiesIds: string[]): Promise<AmenityResponseDto[]> {
+    const amenities = await this.amenitiesRepository.findByIds(amenitiesIds);
+
+    return plainToInstance(AmenityResponseDto, amenities, {
+      excludeExtraneousValues: true,
+    });
+  }
 }
