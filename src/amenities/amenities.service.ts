@@ -16,4 +16,13 @@ export class AmenitiesService {
       excludeExtraneousValues: true,
     });
   }
+
+  @HandleRpcExceptions()
+  async findOneById(amenityId: string): Promise<AmenityResponseDto> {
+    const amenity = await this.amenitiesRepository.findOneById(amenityId);
+
+    return plainToInstance(AmenityResponseDto, amenity, {
+      excludeExtraneousValues: true,
+    });
+  }
 }
