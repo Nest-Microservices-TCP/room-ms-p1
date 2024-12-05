@@ -3,6 +3,7 @@ import { AmenitiesRepository } from './repository/amenities.repository';
 import { AmenityResponseDto } from './dto/response';
 import { plainToInstance } from 'class-transformer';
 import { HandleRpcExceptions } from 'src/common/decorators';
+import { CreateAmenityDto } from './dto/request';
 
 @Injectable()
 export class AmenitiesService {
@@ -31,6 +32,15 @@ export class AmenitiesService {
     const amenities = await this.amenitiesRepository.findByIds(amenitiesIds);
 
     return plainToInstance(AmenityResponseDto, amenities, {
+      excludeExtraneousValues: true,
+    });
+  }
+
+  @HandleRpcExceptions()
+  async save(request: CreateAmenityDto): Promise<AmenityResponseDto> {
+    const newAmenity = await this.amenitiesRepository.save(request);
+
+    return plainToInstance(AmenityResponseDto, newAmenity, {
       excludeExtraneousValues: true,
     });
   }
