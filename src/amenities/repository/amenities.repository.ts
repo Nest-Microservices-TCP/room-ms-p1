@@ -1,22 +1,21 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { DeleteResultResponse } from 'src/common/dto/response';
-import {
-  QueryRunner,
-  FindOptionsWhere,
-  Repository,
-  UpdateResult,
-  DeleteResult,
-  In,
-} from 'typeorm';
-import { CreateAmenityDto, UpdateAmenityDto } from '../dto/request';
-import { AmenityEntity } from '../entity/amenity.entity';
 import { IAmenitiesRepository } from './interfaces/amenities.repository.interface';
+import { CreateAmenityDto, UpdateAmenityDto } from '../dto/request';
+import { DeleteResultResponse } from 'src/common/dto/response';
+import { AmenityEntity } from '../entity/amenity.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Status } from 'src/common/enums';
 import {
-  EntityNotFoundException,
+  In,
+  Repository,
+  QueryRunner,
+  DeleteResult,
+  UpdateResult,
+  FindOptionsWhere,
+} from 'typeorm';
+import {
   FailedRemoveException,
   FailedRestoreException,
+  EntityNotFoundException,
   FailedSoftDeleteException,
 } from 'src/common/exceptions/custom';
 
