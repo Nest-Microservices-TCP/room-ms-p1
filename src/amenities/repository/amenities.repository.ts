@@ -170,6 +170,6 @@ export class AmenitiesRepository implements IAmenitiesRepository {
   }
 
   customQuery(query: string, params: any[]): Promise<any> {
-    throw new Error('Method not implemented.');
+    return this.amenitiesRepository.query(query, params);
   }
 }
