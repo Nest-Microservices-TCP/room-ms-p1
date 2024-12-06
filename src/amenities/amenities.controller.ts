@@ -1,7 +1,7 @@
 import { Controller } from '@nestjs/common';
 import { AmenitiesService } from './amenities.service';
 import { AmenityResponseDto } from './dto/response';
-import { MessagePattern } from '@nestjs/microservices';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 
 @Controller()
 export class AmenitiesController {
@@ -10,5 +10,12 @@ export class AmenitiesController {
   @MessagePattern({ cmd: 'find.all.amenities' })
   async findAll(): Promise<AmenityResponseDto[]> {
     return this.amenitiesService.findAll();
+  }
+
+  @MessagePattern({ cmd: 'find.one.amenity.by.id' })
+  async findOneById(
+    @Payload('amenityId') amenityId: string,
+  ): Promise<AmenityResponseDto> {
+    return this.amenitiesService.findOneById(amenityId);
   }
 }
