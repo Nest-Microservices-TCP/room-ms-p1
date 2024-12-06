@@ -18,4 +18,11 @@ export class AmenitiesController {
   ): Promise<AmenityResponseDto> {
     return this.amenitiesService.findOneById(amenityId);
   }
+
+  @MessagePattern({ cmd: 'find.amenities.by.ids' })
+  async findByIds(
+    @Payload('amenitiesIds') amenitiesIds: string[],
+  ): Promise<AmenityResponseDto[]> {
+    return this.amenitiesService.findByIds(amenitiesIds);
+  }
 }
