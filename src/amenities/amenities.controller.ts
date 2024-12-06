@@ -2,6 +2,7 @@ import { Controller } from '@nestjs/common';
 import { AmenitiesService } from './amenities.service';
 import { AmenityResponseDto } from './dto/response';
 import { MessagePattern, Payload } from '@nestjs/microservices';
+import { CreateAmenityDto } from './dto/request';
 
 @Controller()
 export class AmenitiesController {
@@ -24,5 +25,12 @@ export class AmenitiesController {
     @Payload('amenitiesIds') amenitiesIds: string[],
   ): Promise<AmenityResponseDto[]> {
     return this.amenitiesService.findByIds(amenitiesIds);
+  }
+
+  @MessagePattern({ cmd: 'save.amenity' })
+  async save(
+    @Payload() request: CreateAmenityDto,
+  ): Promise<AmenityResponseDto> {
+    return this.amenitiesService.save(request);
   }
 }
