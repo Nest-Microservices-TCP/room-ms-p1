@@ -2,7 +2,7 @@ import { Controller } from '@nestjs/common';
 import { AmenitiesService } from './amenities.service';
 import { AmenityResponseDto } from './dto/response';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import { CreateAmenityDto } from './dto/request';
+import { CreateAmenityDto, UpdateAmenityDto } from './dto/request';
 
 @Controller()
 export class AmenitiesController {
@@ -32,5 +32,12 @@ export class AmenitiesController {
     @Payload() request: CreateAmenityDto,
   ): Promise<AmenityResponseDto> {
     return this.amenitiesService.save(request);
+  }
+
+  @MessagePattern({ cmd: 'update.amenity' })
+  async update(
+    @Payload() request: UpdateAmenityDto,
+  ): Promise<AmenityResponseDto> {
+    return this.amenitiesService.update(request);
   }
 }
