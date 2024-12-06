@@ -4,6 +4,7 @@ import { AmenityResponseDto } from './dto/response';
 import { plainToInstance } from 'class-transformer';
 import { HandleRpcExceptions } from 'src/common/decorators';
 import { CreateAmenityDto, UpdateAmenityDto } from './dto/request';
+import { DeleteResultResponse } from 'src/common/dto/response';
 
 @Injectable()
 export class AmenitiesService {
@@ -50,6 +51,15 @@ export class AmenitiesService {
     const amenityUpdated = await this.amenitiesRepository.update(request);
 
     return plainToInstance(AmenityResponseDto, amenityUpdated, {
+      excludeExtraneousValues: true,
+    });
+  }
+
+  @HandleRpcExceptions()
+  async remove(amenityId: string): Promise<DeleteResultResponse> {
+    const deleteResult = await this.amenitiesRepository.remove(amenityId);
+
+    return plainToInstance(DeleteResultResponse, deleteResult, {
       excludeExtraneousValues: true,
     });
   }
