@@ -2,7 +2,7 @@ import { IRatesRepository } from './interfaces/rates.repository.interface';
 import { DeleteResultResponse } from 'src/common/dto/response';
 import { CreateRateDto, UpdateRateDto } from '../dto/request';
 import { InjectRepository } from '@nestjs/typeorm';
-import { RateEntity } from '../entity/rate.entity';
+import { Rate } from '../entity/rate.entity';
 import { Status } from 'src/common/enums';
 import {
   In,
@@ -19,24 +19,24 @@ import {
 } from 'src/common/exceptions/custom';
 
 export class RatesRepository implements IRatesRepository {
-  private ratesRepository: Repository<RateEntity>;
+  private ratesRepository: Repository<Rate>;
 
   constructor(
-    @InjectRepository(RateEntity)
-    private readonly defaultRepository: Repository<RateEntity>,
+    @InjectRepository(Rate)
+    private readonly defaultRepository: Repository<Rate>,
   ) {
     this.ratesRepository = defaultRepository;
   }
 
   setQueryRunner(queryRunner: QueryRunner): void {
     if (queryRunner) {
-      this.ratesRepository = queryRunner.manager.getRepository(RateEntity);
+      this.ratesRepository = queryRunner.manager.getRepository(Rate);
     } else {
       this.ratesRepository = this.defaultRepository;
     }
   }
 
-  findAll(): Promise<RateEntity[]> {
+  findAll(): Promise<Rate[]> {
     return this.ratesRepository.find({
       where: {
         status: Status.ACTIVE,
@@ -44,7 +44,7 @@ export class RatesRepository implements IRatesRepository {
     });
   }
 
-  async findOneById(rateId: string): Promise<RateEntity> {
+  async findOneById(rateId: string): Promise<Rate> {
     const rate = await this.ratesRepository.findOne({
       where: {
         rateId,
@@ -58,15 +58,15 @@ export class RatesRepository implements IRatesRepository {
     return rate;
   }
 
-  create(request: Partial<RateEntity>): RateEntity {
+  create(request: Partial<Rate>): Rate {
     return this.ratesRepository.create(request);
   }
 
-  save(request: CreateRateDto): Promise<RateEntity> {
+  save(request: CreateRateDto): Promise<Rate> {
     return this.ratesRepository.save(request);
   }
 
-  async update(request: UpdateRateDto): Promise<RateEntity> {
+  async update(request: UpdateRateDto): Promise<Rate> {
     const { rateId } = request;
 
     const rate = await this.findOneById(rateId);
@@ -88,7 +88,7 @@ export class RatesRepository implements IRatesRepository {
     return { deleted: true, affected: result.affected };
   }
 
-  findByIds(ratesIds: string[]): Promise<RateEntity[]> {
+  findByIds(ratesIds: string[]): Promise<Rate[]> {
     return this.ratesRepository.find({
       where: {
         rateId: In(ratesIds),
@@ -96,32 +96,32 @@ export class RatesRepository implements IRatesRepository {
     });
   }
 
-  findByCriteria(criteria: FindOptionsWhere<RateEntity>): Promise<RateEntity> {
+  findByCriteria(criteria: FindOptionsWhere<Rate>): Promise<Rate> {
     return this.ratesRepository.findOne({ where: criteria });
   }
 
-  findWithRelations(relations: string[]): Promise<RateEntity[]> {
+  findWithRelations(relations: string[]): Promise<Rate[]> {
     return this.ratesRepository.find({ relations });
   }
 
-  count(criteria: FindOptionsWhere<RateEntity>): Promise<number> {
+  count(criteria: FindOptionsWhere<Rate>): Promise<number> {
     return this.ratesRepository.count({ where: criteria });
   }
 
-  paginate(page: number, limit: number): Promise<[RateEntity[], number]> {
+  paginate(page: number, limit: number): Promise<[Rate[], number]> {
     return this.ratesRepository.findAndCount({
       skip: (page - 1) * limit,
       take: limit,
     });
   }
 
-  async exists(criteria: FindOptionsWhere<RateEntity>): Promise<boolean> {
+  async exists(criteria: FindOptionsWhere<Rate>): Promise<boolean> {
     const count = await this.ratesRepository.count({ where: criteria });
 
     return count > 0;
   }
 
-  async softDelete(rateId: string): Promise<RateEntity> {
+  async softDelete(rateId: string): Promise<Rate> {
     await this.findOneById(rateId);
 
     const result: UpdateResult = await this.ratesRepository.update(rateId, {
@@ -136,7 +136,7 @@ export class RatesRepository implements IRatesRepository {
     return this.findOneById(rateId);
   }
 
-  async restore(rateId: string): Promise<RateEntity> {
+  async restore(rateId: string): Promise<Rate> {
     await this.findOneById(rateId);
 
     const result: UpdateResult = await this.ratesRepository.update(rateId, {
@@ -151,11 +151,11 @@ export class RatesRepository implements IRatesRepository {
     return this.findOneById(rateId);
   }
 
-  bulkSave(rates: RateEntity[]): Promise<RateEntity[]> {
+  bulkSave(rates: Rate[]): Promise<Rate[]> {
     return this.ratesRepository.save(rates);
   }
 
-  bulkUpdate(rates: RateEntity[]): Promise<RateEntity[]> {
+  bulkUpdate(rates: Rate[]): Promise<Rate[]> {
     return this.ratesRepository.save(rates);
   }
 

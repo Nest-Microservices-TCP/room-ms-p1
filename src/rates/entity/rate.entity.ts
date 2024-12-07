@@ -3,7 +3,7 @@ import { AccommodationType } from 'src/rents/enum';
 import { BaseEntity } from 'src/common/entity';
 
 @Entity({ name: 'rates' })
-export class RateEntity extends BaseEntity {
+export class Rate extends BaseEntity {
   @PrimaryGeneratedColumn('uuid', {
     name: 'rate_id',
   })
