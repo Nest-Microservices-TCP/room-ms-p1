@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { IExtrasRepository } from './interfaces/extras.repository.interface';
 import { CreateExtraDto, UpdateExtraDto } from '../dto/request';
 import { DeleteResultResponse } from 'src/common/dto/response';
-import { ExtraEntity } from '../entity/extra.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Extra } from '../entity/extra.entity';
 import { Status } from 'src/common/enums';
 import {
   In,
@@ -21,24 +20,24 @@ import {
 } from 'src/common/exceptions/custom';
 
 export class ExtrasRepository implements IExtrasRepository {
-  private extrasRepository: Repository<ExtraEntity>;
+  private extrasRepository: Repository<Extra>;
 
   constructor(
-    @InjectRepository(ExtraEntity)
-    private readonly defaultRepository: Repository<ExtraEntity>,
+    @InjectRepository(Extra)
+    private readonly defaultRepository: Repository<Extra>,
   ) {
     this.extrasRepository = this.defaultRepository;
   }
 
   setQueryRunner(queryRunner: QueryRunner): void {
     if (queryRunner) {
-      this.extrasRepository = queryRunner.manager.getRepository(ExtraEntity);
+      this.extrasRepository = queryRunner.manager.getRepository(Extra);
     } else {
       this.extrasRepository = this.defaultRepository;
     }
   }
 
-  findAll(): Promise<ExtraEntity[]> {
+  findAll(): Promise<Extra[]> {
     return this.extrasRepository.find({
       where: {
         status: Status.ACTIVE,
@@ -46,7 +45,7 @@ export class ExtrasRepository implements IExtrasRepository {
     });
   }
 
-  async findOneById(extraId: string): Promise<ExtraEntity> {
+  async findOneById(extraId: string): Promise<Extra> {
     const extra = await this.extrasRepository.findOne({
       where: {
         extraId,
@@ -60,15 +59,15 @@ export class ExtrasRepository implements IExtrasRepository {
     return extra;
   }
 
-  create(request: Partial<ExtraEntity>): ExtraEntity {
+  create(request: Partial<Extra>): Extra {
     return this.extrasRepository.create(request);
   }
 
-  save(request: CreateExtraDto): Promise<ExtraEntity> {
+  save(request: CreateExtraDto): Promise<Extra> {
     return this.extrasRepository.save(request);
   }
 
-  async update(request: UpdateExtraDto): Promise<ExtraEntity> {
+  async update(request: UpdateExtraDto): Promise<Extra> {
     const { extraId } = request;
 
     const extra = await this.findOneById(extraId);
@@ -90,7 +89,7 @@ export class ExtrasRepository implements IExtrasRepository {
     return { deleted: true, affected: result.affected };
   }
 
-  findByIds(extrasIds: string[]): Promise<ExtraEntity[]> {
+  findByIds(extrasIds: string[]): Promise<Extra[]> {
     return this.extrasRepository.find({
       where: {
         extraId: In(extrasIds),
@@ -98,34 +97,32 @@ export class ExtrasRepository implements IExtrasRepository {
     });
   }
 
-  findByCriteria(
-    criteria: FindOptionsWhere<ExtraEntity>,
-  ): Promise<ExtraEntity> {
+  findByCriteria(criteria: FindOptionsWhere<Extra>): Promise<Extra> {
     return this.extrasRepository.findOne({ where: criteria });
   }
 
-  findWithRelations(relations: string[]): Promise<ExtraEntity[]> {
+  findWithRelations(relations: string[]): Promise<Extra[]> {
     return this.extrasRepository.find({ relations });
   }
 
-  count(criteria: FindOptionsWhere<ExtraEntity>): Promise<number> {
+  count(criteria: FindOptionsWhere<Extra>): Promise<number> {
     return this.extrasRepository.count({ where: criteria });
   }
 
-  paginate(page: number, limit: number): Promise<[ExtraEntity[], number]> {
+  paginate(page: number, limit: number): Promise<[Extra[], number]> {
     return this.extrasRepository.findAndCount({
       skip: (page - 1) * limit,
       take: limit,
     });
   }
 
-  async exists(criteria: FindOptionsWhere<ExtraEntity>): Promise<boolean> {
+  async exists(criteria: FindOptionsWhere<Extra>): Promise<boolean> {
     const count = await this.extrasRepository.count({ where: criteria });
 
     return count > 0;
   }
 
-  async softDelete(extraId: string): Promise<ExtraEntity> {
+  async softDelete(extraId: string): Promise<Extra> {
     await this.findOneById(extraId);
 
     const result: UpdateResult = await this.extrasRepository.update(extraId, {
@@ -140,7 +137,7 @@ export class ExtrasRepository implements IExtrasRepository {
     return this.findOneById(extraId);
   }
 
-  async restore(extraId: string): Promise<ExtraEntity> {
+  async restore(extraId: string): Promise<Extra> {
     await this.findOneById(extraId);
 
     const result: UpdateResult = await this.extrasRepository.update(extraId, {
@@ -155,11 +152,11 @@ export class ExtrasRepository implements IExtrasRepository {
     return this.findOneById(extraId);
   }
 
-  bulkSave(extras: ExtraEntity[]): Promise<ExtraEntity[]> {
+  bulkSave(extras: Extra[]): Promise<Extra[]> {
     return this.extrasRepository.save(extras);
   }
 
-  bulkUpdate(extras: ExtraEntity[]): Promise<ExtraEntity[]> {
+  bulkUpdate(extras: Extra[]): Promise<Extra[]> {
     return this.extrasRepository.save(extras);
   }
 
