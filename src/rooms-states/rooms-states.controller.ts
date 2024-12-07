@@ -28,7 +28,9 @@ export class RoomsStatesController {
   }
 
   @MessagePattern({ cmd: 'find.rooms.states.by.ids' })
-  async findByIds(roomsStatesIds: string[]): Promise<RoomStateResponseDto[]> {
+  async findByIds(
+    @Payload('roomsStatesIds') roomsStatesIds: string[],
+  ): Promise<RoomStateResponseDto[]> {
     return this.roomsStatesService.findByIds(roomsStatesIds);
   }
 
