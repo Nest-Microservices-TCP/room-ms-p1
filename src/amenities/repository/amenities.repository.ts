@@ -1,8 +1,8 @@
 import { IAmenitiesRepository } from './interfaces/amenities.repository.interface';
 import { CreateAmenityDto, UpdateAmenityDto } from '../dto/request';
 import { DeleteResultResponse } from 'src/common/dto/response';
-import { AmenityEntity } from '../entity/amenity.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Amenity } from '../entity/amenity.entity';
 import { Status } from 'src/common/enums';
 import {
   In,
@@ -20,23 +20,22 @@ import {
 } from 'src/common/exceptions/custom';
 
 export class AmenitiesRepository implements IAmenitiesRepository {
-  private amenitiesRepository: Repository<AmenityEntity>;
+  private amenitiesRepository: Repository<Amenity>;
 
   constructor(
-    @InjectRepository(AmenityEntity)
-    private readonly defaultRepository: Repository<AmenityEntity>,
+    @InjectRepository(Amenity)
+    private readonly defaultRepository: Repository<Amenity>,
   ) {}
 
   setQueryRunner(queryRunner: QueryRunner): void {
     if (queryRunner) {
-      this.amenitiesRepository =
-        queryRunner.manager.getRepository(AmenityEntity);
+      this.amenitiesRepository = queryRunner.manager.getRepository(Amenity);
     } else {
       this.amenitiesRepository = this.defaultRepository;
     }
   }
 
-  findAll(): Promise<AmenityEntity[]> {
+  findAll(): Promise<Amenity[]> {
     return this.amenitiesRepository.find({
       where: {
         status: Status.ACTIVE,
@@ -44,7 +43,7 @@ export class AmenitiesRepository implements IAmenitiesRepository {
     });
   }
 
-  async findOneById(amenityId: string): Promise<AmenityEntity> {
+  async findOneById(amenityId: string): Promise<Amenity> {
     const amenity = await this.amenitiesRepository.findOne({
       where: {
         amenityId,
@@ -58,15 +57,15 @@ export class AmenitiesRepository implements IAmenitiesRepository {
     return amenity;
   }
 
-  create(request: Partial<AmenityEntity>): AmenityEntity {
+  create(request: Partial<Amenity>): Amenity {
     return this.amenitiesRepository.create(request);
   }
 
-  save(request: CreateAmenityDto): Promise<AmenityEntity> {
+  save(request: CreateAmenityDto): Promise<Amenity> {
     return this.amenitiesRepository.save(request);
   }
 
-  async update(request: UpdateAmenityDto): Promise<AmenityEntity> {
+  async update(request: UpdateAmenityDto): Promise<Amenity> {
     const { amenityId } = request;
 
     const amenity = await this.findOneById(amenityId);
@@ -89,7 +88,7 @@ export class AmenitiesRepository implements IAmenitiesRepository {
     return { deleted: true, affected: result.affected };
   }
 
-  findByIds(amenitiesIds: string[]): Promise<AmenityEntity[]> {
+  findByIds(amenitiesIds: string[]): Promise<Amenity[]> {
     return this.amenitiesRepository.find({
       where: {
         amenityId: In(amenitiesIds),
@@ -97,28 +96,26 @@ export class AmenitiesRepository implements IAmenitiesRepository {
     });
   }
 
-  findByCriteria(
-    criteria: FindOptionsWhere<AmenityEntity>,
-  ): Promise<AmenityEntity> {
+  findByCriteria(criteria: FindOptionsWhere<Amenity>): Promise<Amenity> {
     return this.amenitiesRepository.findOne({ where: criteria });
   }
 
-  findWithRelations(relations: string[]): Promise<AmenityEntity[]> {
+  findWithRelations(relations: string[]): Promise<Amenity[]> {
     return this.amenitiesRepository.find({ relations });
   }
 
-  count(criteria: FindOptionsWhere<AmenityEntity>): Promise<number> {
+  count(criteria: FindOptionsWhere<Amenity>): Promise<number> {
     return this.amenitiesRepository.count({ where: criteria });
   }
 
-  paginate(page: number, limit: number): Promise<[AmenityEntity[], number]> {
+  paginate(page: number, limit: number): Promise<[Amenity[], number]> {
     return this.amenitiesRepository.findAndCount({
       skip: (page - 1) * limit,
       take: limit,
     });
   }
 
-  async softDelete(amenityId: string): Promise<AmenityEntity> {
+  async softDelete(amenityId: string): Promise<Amenity> {
     await this.findOneById(amenityId);
 
     const result: UpdateResult = await this.amenitiesRepository.update(
@@ -136,7 +133,7 @@ export class AmenitiesRepository implements IAmenitiesRepository {
     return this.findOneById(amenityId);
   }
 
-  async restore(amenityId: string): Promise<AmenityEntity> {
+  async restore(amenityId: string): Promise<Amenity> {
     await this.findOneById(amenityId);
 
     const result: UpdateResult = await this.amenitiesRepository.update(
@@ -154,17 +151,17 @@ export class AmenitiesRepository implements IAmenitiesRepository {
     return this.findOneById(amenityId);
   }
 
-  async exists(criteria: FindOptionsWhere<AmenityEntity>): Promise<boolean> {
+  async exists(criteria: FindOptionsWhere<Amenity>): Promise<boolean> {
     const count = await this.count(criteria);
 
     return count > 0;
   }
 
-  bulkSave(amenities: AmenityEntity[]): Promise<AmenityEntity[]> {
+  bulkSave(amenities: Amenity[]): Promise<Amenity[]> {
     return this.amenitiesRepository.save(amenities);
   }
 
-  bulkUpdate(amenities: AmenityEntity[]): Promise<AmenityEntity[]> {
+  bulkUpdate(amenities: Amenity[]): Promise<Amenity[]> {
     return this.amenitiesRepository.save(amenities);
   }
 
