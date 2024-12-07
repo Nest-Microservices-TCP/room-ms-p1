@@ -1,4 +1,4 @@
-import { ExtraEntity } from 'src/extras/entity/extra.entity';
+import { Extra } from 'src/extras/entity/extra.entity';
 import { RentEntity } from 'src/rents/entity';
 import { Expose } from 'class-transformer';
 
@@ -16,5 +16,5 @@ export class RentExtraResponseDto {
   rent: RentEntity;
 
   @Expose()
-  extra: ExtraEntity;
+  extra: Extra;
 }

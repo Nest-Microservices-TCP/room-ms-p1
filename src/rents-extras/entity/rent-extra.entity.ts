@@ -1,5 +1,5 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { ExtraEntity } from 'src/extras/entity/extra.entity';
+import { Extra } from 'src/extras/entity/extra.entity';
 import { BaseEntity } from 'src/common/entity';
 import { RentEntity } from 'src/rents/entity';
 
@@ -36,9 +36,9 @@ export class RentExtraEntity extends BaseEntity {
   })
   rent: RentEntity;
 
-  @ManyToOne(() => ExtraEntity, (extra) => extra.rentExtras, {
+  @ManyToOne(() => Extra, (extra) => extra.rentExtras, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
-  extra: ExtraEntity;
+  extra: Extra;
 }

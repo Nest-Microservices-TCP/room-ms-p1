@@ -1,5 +1,5 @@
 import { IsNumber, IsOptional, IsPositive, IsUUID, Min } from 'class-validator';
-import { ExtraEntity } from 'src/extras/entity/extra.entity';
+import { Extra } from 'src/extras/entity/extra.entity';
 import { RentEntity } from 'src/rents/entity';
 
 export class UpdateRentExtraDto {
@@ -19,5 +19,5 @@ export class UpdateRentExtraDto {
   total?: number;
 
   rent: RentEntity;
-  extra: ExtraEntity;
+  extra: Extra;
 }
