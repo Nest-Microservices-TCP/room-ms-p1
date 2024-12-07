@@ -1,7 +1,7 @@
 import { CreateRentExtraDto, UpdateRentExtraDto } from './dto/request';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 import { DeleteResultResponse } from 'src/common/dto/response';
 import { RentsExtrasService } from './rents-extras.service';
-import { MessagePattern } from '@nestjs/microservices';
 import { RentExtraResponseDto } from './dto/response';
 import { Controller } from '@nestjs/common';
 
@@ -15,27 +15,37 @@ export class RentsExtrasController {
   }
 
   @MessagePattern({ cmd: 'find.one.rent.extra.by.id' })
-  async findOneById(rentExtraId: string): Promise<RentExtraResponseDto> {
+  async findOneById(
+    @Payload('rentExtraId') rentExtraId: string,
+  ): Promise<RentExtraResponseDto> {
     return this.rentsExtrasService.findOneById(rentExtraId);
   }
 
   @MessagePattern({ cmd: 'find.rents.extras.by.ids' })
-  async findByIds(rentsExtrasIds: string[]): Promise<RentExtraResponseDto[]> {
+  async findByIds(
+    @Payload('rentsExtrasIds') rentsExtrasIds: string[],
+  ): Promise<RentExtraResponseDto[]> {
     return this.rentsExtrasService.findByIds(rentsExtrasIds);
   }
 
   @MessagePattern({ cmd: 'save.rent.extra' })
-  async save(request: CreateRentExtraDto): Promise<RentExtraResponseDto> {
+  async save(
+    @Payload() request: CreateRentExtraDto,
+  ): Promise<RentExtraResponseDto> {
     return this.rentsExtrasService.save(request);
   }
 
   @MessagePattern({ cmd: 'update.rent.extra' })
-  async update(request: UpdateRentExtraDto): Promise<RentExtraResponseDto> {
+  async update(
+    @Payload() request: UpdateRentExtraDto,
+  ): Promise<RentExtraResponseDto> {
     return this.rentsExtrasService.update(request);
   }
 
   @MessagePattern({ cmd: 'remove.rent.extra.by.id' })
-  async remove(rentExtraId: string): Promise<DeleteResultResponse> {
+  async remove(
+    @Payload('rentExtraId') rentExtraId: string,
+  ): Promise<DeleteResultResponse> {
     return this.rentsExtrasService.remove(rentExtraId);
   }
 }
