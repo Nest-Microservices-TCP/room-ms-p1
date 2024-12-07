@@ -23,7 +23,7 @@ export class ReservationsController {
 
   @MessagePattern({ cmd: 'find.reservations.by.ids' })
   async findByIds(
-    reservationsIds: string[],
+    @Payload('reservationsIds') reservationsIds: string[],
   ): Promise<ReservationResponseDto[]> {
     return this.reservationsService.findByIds(reservationsIds);
   }
@@ -43,7 +43,9 @@ export class ReservationsController {
   }
 
   @MessagePattern({ cmd: 'remove.reservation.by.id' })
-  async remove(reservationId: string): Promise<DeleteResultResponse> {
+  async remove(
+    @Payload('reservationId') reservationId: string,
+  ): Promise<DeleteResultResponse> {
     return this.reservationsService.remove(reservationId);
   }
 }
