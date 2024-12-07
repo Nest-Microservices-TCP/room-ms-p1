@@ -4,7 +4,7 @@ import { BaseEntity } from 'src/common/entity';
 import { RentEntity } from 'src/rents/entity';
 
 @Entity({ name: 'rents_extras' })
-export class RentExtraEntity extends BaseEntity {
+export class RentExtra extends BaseEntity {
   @PrimaryGeneratedColumn('uuid', {
     name: 'renta_extra_id',
   })

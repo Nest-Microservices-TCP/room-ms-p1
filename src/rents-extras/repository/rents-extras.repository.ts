@@ -1,7 +1,7 @@
 import { IRentsExtrasRepository } from './interfaces/rents-extras.repository.interface';
 import { CreateRentExtraDto, UpdateRentExtraDto } from '../dto/request';
 import { DeleteResultResponse } from 'src/common/dto/response';
-import { RentExtraEntity } from '../entity/rent-extra.entity';
+import { RentExtra } from '../entity/rent-extra.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Status } from 'src/common/enums';
 import {
@@ -20,23 +20,22 @@ import {
 } from 'src/common/exceptions/custom';
 
 export class RentsExtrasRepository implements IRentsExtrasRepository {
-  private rentsExtrasRepository: Repository<RentExtraEntity>;
+  private rentsExtrasRepository: Repository<RentExtra>;
 
   constructor(
-    @InjectRepository(RentExtraEntity)
-    private readonly defaultRepository: Repository<RentExtraEntity>,
+    @InjectRepository(RentExtra)
+    private readonly defaultRepository: Repository<RentExtra>,
   ) {}
 
   setQueryRunner(queryRunner: QueryRunner): void {
     if (queryRunner) {
-      this.rentsExtrasRepository =
-        queryRunner.manager.getRepository(RentExtraEntity);
+      this.rentsExtrasRepository = queryRunner.manager.getRepository(RentExtra);
     } else {
       this.rentsExtrasRepository = this.defaultRepository;
     }
   }
 
-  findAll(): Promise<RentExtraEntity[]> {
+  findAll(): Promise<RentExtra[]> {
     return this.rentsExtrasRepository.find({
       where: {
         status: Status.ACTIVE,
@@ -44,7 +43,7 @@ export class RentsExtrasRepository implements IRentsExtrasRepository {
     });
   }
 
-  async findOneById(rentExtraId: string): Promise<RentExtraEntity> {
+  async findOneById(rentExtraId: string): Promise<RentExtra> {
     const rentExtra = await this.rentsExtrasRepository.findOne({
       where: { rentExtraId },
     });
@@ -56,15 +55,15 @@ export class RentsExtrasRepository implements IRentsExtrasRepository {
     return rentExtra;
   }
 
-  create(request: Partial<RentExtraEntity>): RentExtraEntity {
+  create(request: Partial<RentExtra>): RentExtra {
     return this.rentsExtrasRepository.create(request);
   }
 
-  save(request: CreateRentExtraDto): Promise<RentExtraEntity> {
+  save(request: CreateRentExtraDto): Promise<RentExtra> {
     return this.rentsExtrasRepository.save(request);
   }
 
-  async update(request: UpdateRentExtraDto): Promise<RentExtraEntity> {
+  async update(request: UpdateRentExtraDto): Promise<RentExtra> {
     const { rentExtraId } = request;
 
     const rentExtra = await this.findOneById(rentExtraId);
@@ -87,7 +86,7 @@ export class RentsExtrasRepository implements IRentsExtrasRepository {
     return { deleted: true, affected: result.affected };
   }
 
-  findByIds(rentsExtrasIds: string[]): Promise<RentExtraEntity[]> {
+  findByIds(rentsExtrasIds: string[]): Promise<RentExtra[]> {
     return this.rentsExtrasRepository.find({
       where: {
         rentExtraId: In(rentsExtrasIds),
@@ -95,28 +94,26 @@ export class RentsExtrasRepository implements IRentsExtrasRepository {
     });
   }
 
-  findByCriteria(
-    criteria: FindOptionsWhere<RentExtraEntity>,
-  ): Promise<RentExtraEntity> {
+  findByCriteria(criteria: FindOptionsWhere<RentExtra>): Promise<RentExtra> {
     return this.rentsExtrasRepository.findOne({ where: criteria });
   }
 
-  findWithRelations(relations: string[]): Promise<RentExtraEntity[]> {
+  findWithRelations(relations: string[]): Promise<RentExtra[]> {
     return this.rentsExtrasRepository.find({ relations });
   }
 
-  count(criteria: FindOptionsWhere<RentExtraEntity>): Promise<number> {
+  count(criteria: FindOptionsWhere<RentExtra>): Promise<number> {
     return this.rentsExtrasRepository.count({ where: criteria });
   }
 
-  paginate(page: number, limit: number): Promise<[RentExtraEntity[], number]> {
+  paginate(page: number, limit: number): Promise<[RentExtra[], number]> {
     return this.rentsExtrasRepository.findAndCount({
       skip: (page - 1) * limit,
       take: limit,
     });
   }
 
-  async softDelete(rentExtraId: string): Promise<RentExtraEntity> {
+  async softDelete(rentExtraId: string): Promise<RentExtra> {
     const rentExtra = await this.findOneById(rentExtraId);
 
     const result: UpdateResult = await this.rentsExtrasRepository.update(
@@ -134,7 +131,7 @@ export class RentsExtrasRepository implements IRentsExtrasRepository {
     return rentExtra;
   }
 
-  async restore(rentExtraId: string): Promise<RentExtraEntity> {
+  async restore(rentExtraId: string): Promise<RentExtra> {
     const rentExtra = await this.findOneById(rentExtraId);
 
     const result: UpdateResult = await this.rentsExtrasRepository.update(
@@ -152,17 +149,17 @@ export class RentsExtrasRepository implements IRentsExtrasRepository {
     return rentExtra;
   }
 
-  async exists(criteria: FindOptionsWhere<RentExtraEntity>): Promise<boolean> {
+  async exists(criteria: FindOptionsWhere<RentExtra>): Promise<boolean> {
     const count = await this.rentsExtrasRepository.count({ where: criteria });
 
     return count > 0;
   }
 
-  bulkSave(rentsExtras: RentExtraEntity[]): Promise<RentExtraEntity[]> {
+  bulkSave(rentsExtras: RentExtra[]): Promise<RentExtra[]> {
     return this.rentsExtrasRepository.save(rentsExtras);
   }
 
-  bulkUpdate(rentsExtras: RentExtraEntity[]): Promise<RentExtraEntity[]> {
+  bulkUpdate(rentsExtras: RentExtra[]): Promise<RentExtra[]> {
     return this.rentsExtrasRepository.save(rentsExtras);
   }
 
