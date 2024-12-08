@@ -1,7 +1,7 @@
 import { IReservationsRepository } from './interfaces/reservations.repository.interface';
 import { CreateReservationDto, UpdateReservationDto } from '../dto/request';
-import { ReservationEntity } from '../entity/reservation.entity';
 import { DeleteResultResponse } from 'src/common/dto/response';
+import { Reservation } from '../entity/reservation.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Status } from 'src/common/enums';
 import {
@@ -20,23 +20,23 @@ import {
 } from 'src/common/exceptions/custom';
 
 export class ReservationsRepository implements IReservationsRepository {
-  private reservationsRepository: Repository<ReservationEntity>;
+  private reservationsRepository: Repository<Reservation>;
 
   constructor(
-    @InjectRepository(ReservationEntity)
-    private readonly defaultRepository: Repository<ReservationEntity>,
+    @InjectRepository(Reservation)
+    private readonly defaultRepository: Repository<Reservation>,
   ) {}
 
   setQueryRunner(queryRunner: QueryRunner): void {
     if (queryRunner) {
       this.reservationsRepository =
-        queryRunner.manager.getRepository(ReservationEntity);
+        queryRunner.manager.getRepository(Reservation);
     } else {
       this.reservationsRepository = this.defaultRepository;
     }
   }
 
-  findAll(): Promise<ReservationEntity[]> {
+  findAll(): Promise<Reservation[]> {
     // TODO: Agregar un dto que permita enviar filtros
     return this.reservationsRepository.find({
       where: {
@@ -45,7 +45,7 @@ export class ReservationsRepository implements IReservationsRepository {
     });
   }
 
-  async findOneById(reservationId: string): Promise<ReservationEntity> {
+  async findOneById(reservationId: string): Promise<Reservation> {
     const reservation = await this.reservationsRepository.findOne({
       where: {
         reservationId,
@@ -59,15 +59,15 @@ export class ReservationsRepository implements IReservationsRepository {
     return reservation;
   }
 
-  create(request: Partial<ReservationEntity>): ReservationEntity {
+  create(request: Partial<Reservation>): Reservation {
     return this.reservationsRepository.create(request);
   }
 
-  save(request: CreateReservationDto): Promise<ReservationEntity> {
+  save(request: CreateReservationDto): Promise<Reservation> {
     return this.reservationsRepository.save(request);
   }
 
-  async update(request: UpdateReservationDto): Promise<ReservationEntity> {
+  async update(request: UpdateReservationDto): Promise<Reservation> {
     const { reservationId } = request;
 
     const reservation = await this.findOneById(reservationId);
@@ -91,7 +91,7 @@ export class ReservationsRepository implements IReservationsRepository {
     return { deleted: true, affected: result.affected };
   }
 
-  findByIds(reservationsIds: string[]): Promise<ReservationEntity[]> {
+  findByIds(reservationsIds: string[]): Promise<Reservation[]> {
     return this.reservationsRepository.find({
       where: {
         reservationId: In(reservationsIds),
@@ -100,30 +100,27 @@ export class ReservationsRepository implements IReservationsRepository {
   }
 
   findByCriteria(
-    criteria: FindOptionsWhere<ReservationEntity>,
-  ): Promise<ReservationEntity> {
+    criteria: FindOptionsWhere<Reservation>,
+  ): Promise<Reservation> {
     return this.reservationsRepository.findOne({ where: criteria });
   }
 
-  findWithRelations(relations: string[]): Promise<ReservationEntity[]> {
+  findWithRelations(relations: string[]): Promise<Reservation[]> {
     return this.reservationsRepository.find({ relations });
   }
 
-  count(criteria: FindOptionsWhere<ReservationEntity>): Promise<number> {
+  count(criteria: FindOptionsWhere<Reservation>): Promise<number> {
     return this.reservationsRepository.count({ where: criteria });
   }
 
-  paginate(
-    page: number,
-    limit: number,
-  ): Promise<[ReservationEntity[], number]> {
+  paginate(page: number, limit: number): Promise<[Reservation[], number]> {
     return this.reservationsRepository.findAndCount({
       skip: (page - 1) * limit,
       take: limit,
     });
   }
 
-  async softDelete(reservationId: string): Promise<ReservationEntity> {
+  async softDelete(reservationId: string): Promise<Reservation> {
     await this.findOneById(reservationId);
 
     const result: UpdateResult = await this.reservationsRepository.update(
@@ -141,7 +138,7 @@ export class ReservationsRepository implements IReservationsRepository {
     return this.findOneById(reservationId);
   }
 
-  async restore(reservationId: string): Promise<ReservationEntity> {
+  async restore(reservationId: string): Promise<Reservation> {
     await this.findOneById(reservationId);
 
     const result: UpdateResult = await this.reservationsRepository.update(
@@ -159,19 +156,17 @@ export class ReservationsRepository implements IReservationsRepository {
     return this.findOneById(reservationId);
   }
 
-  async exists(
-    criteria: FindOptionsWhere<ReservationEntity>,
-  ): Promise<boolean> {
+  async exists(criteria: FindOptionsWhere<Reservation>): Promise<boolean> {
     const count = await this.reservationsRepository.count({ where: criteria });
 
     return count > 0;
   }
 
-  bulkSave(reservations: ReservationEntity[]): Promise<ReservationEntity[]> {
+  bulkSave(reservations: Reservation[]): Promise<Reservation[]> {
     return this.reservationsRepository.save(reservations);
   }
 
-  bulkUpdate(reservations: ReservationEntity[]): Promise<ReservationEntity[]> {
+  bulkUpdate(reservations: Reservation[]): Promise<Reservation[]> {
     return this.reservationsRepository.save(reservations);
   }
 

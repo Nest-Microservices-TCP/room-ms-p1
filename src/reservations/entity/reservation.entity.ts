@@ -3,7 +3,7 @@ import { ReservationOrigin, ReservationState } from '../enum';
 import { BaseEntity } from 'src/common/entity';
 
 @Entity({ name: 'reservations' })
-export class ReservationEntity extends BaseEntity {
+export class Reservation extends BaseEntity {
   @PrimaryGeneratedColumn('uuid', {
     primaryKeyConstraintName: 'PK_reservation_id',
     name: 'reservation_id',

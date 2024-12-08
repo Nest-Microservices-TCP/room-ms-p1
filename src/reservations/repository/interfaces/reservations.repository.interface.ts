@@ -1,4 +1,4 @@
-import { ReservationEntity } from 'src/reservations/entity/reservation.entity';
+import { Reservation } from 'src/reservations/entity/reservation.entity';
 import { IBaseRepository } from 'src/common/interfaces';
 import {
   UpdateReservationDto,
@@ -7,7 +7,7 @@ import {
 
 export interface IReservationsRepository
   extends IBaseRepository<
-    ReservationEntity,
+    Reservation,
     CreateReservationDto,
     UpdateReservationDto
   > {}
