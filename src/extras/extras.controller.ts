@@ -14,8 +14,8 @@ export class ExtrasController {
   }
 
   @MessagePattern({ cmd: 'find.one.extra.by.id' })
-  findOneById(@Payload('extraId') extraId: string): Promise<ExtraResponseDto> {
-    return this.extrasService.findOneById(extraId);
+  findOne(@Payload('extraId') extraId: string): Promise<ExtraResponseDto> {
+    return this.extrasService.findOne(extraId);
   }
 
   @MessagePattern({ cmd: 'find.extras.by.ids' })

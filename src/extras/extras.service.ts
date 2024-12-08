@@ -19,8 +19,8 @@ export class ExtrasService {
   }
 
   @HandleRpcExceptions()
-  async findOneById(extraId: string): Promise<ExtraResponseDto> {
-    const extra = await this.extrasRepository.findOneById(extraId);
+  async findOne(extraId: string): Promise<ExtraResponseDto> {
+    const extra = await this.extrasRepository.findOne(extraId);
 
     return plainToInstance(ExtraResponseDto, extra, {
       excludeExtraneousValues: true,
