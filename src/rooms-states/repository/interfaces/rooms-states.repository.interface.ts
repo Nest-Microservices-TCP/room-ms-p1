@@ -1,13 +1,9 @@
-import { RoomStateEntity } from 'src/rooms-states/entity/room-state.entity';
+import { RoomState } from 'src/rooms-states/entity/room-state.entity';
 import { IBaseRepository } from 'src/common/interfaces';
 import {
-  CreateRoomStateDto,
   UpdateRoomStateDto,
+  CreateRoomStateDto,
 } from 'src/rooms-states/dto/request';
 
 export interface IRoomsStateRepository
-  extends IBaseRepository<
-    RoomStateEntity,
-    CreateRoomStateDto,
-    UpdateRoomStateDto
-  > {}
+  extends IBaseRepository<RoomState, CreateRoomStateDto, UpdateRoomStateDto> {}

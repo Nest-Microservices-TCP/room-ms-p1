@@ -3,7 +3,7 @@ import { IRoomsStateRepository } from './interfaces/rooms-states.repository.inte
 import { UpdateRoomStateDto, CreateRoomStateDto } from '../dto/request';
 import { DeleteResultResponse } from 'src/common/dto/response';
 import { ConflictException, Injectable } from '@nestjs/common';
-import { RoomStateEntity } from '../entity/room-state.entity';
+import { RoomState } from '../entity/room-state.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Status } from 'src/common/enums';
 import {
@@ -22,25 +22,24 @@ import {
 
 @Injectable()
 export class RoomsStatesRepository implements IRoomsStateRepository {
-  private roomsStatesRepository: Repository<RoomStateEntity>;
+  private roomsStatesRepository: Repository<RoomState>;
 
   constructor(
-    @InjectRepository(RoomStateEntity)
-    private readonly defaultRepository: Repository<RoomStateEntity>,
+    @InjectRepository(RoomState)
+    private readonly defaultRepository: Repository<RoomState>,
   ) {
     this.roomsStatesRepository = this.defaultRepository;
   }
 
   setQueryRunner(queryRunner: QueryRunner): void {
     if (queryRunner) {
-      this.roomsStatesRepository =
-        queryRunner.manager.getRepository(RoomStateEntity);
+      this.roomsStatesRepository = queryRunner.manager.getRepository(RoomState);
     } else {
       this.roomsStatesRepository = this.defaultRepository;
     }
   }
 
-  async findOneById(roomStateId: string): Promise<RoomStateEntity> {
+  async findOneById(roomStateId: string): Promise<RoomState> {
     const roomState = await this.roomsStatesRepository.findOne({
       where: { roomStateId },
     });
@@ -52,7 +51,7 @@ export class RoomsStatesRepository implements IRoomsStateRepository {
     return roomState;
   }
 
-  findAll(): Promise<RoomStateEntity[]> {
+  findAll(): Promise<RoomState[]> {
     return this.roomsStatesRepository.find({
       where: {
         status: Status.ACTIVE,
@@ -60,11 +59,11 @@ export class RoomsStatesRepository implements IRoomsStateRepository {
     });
   }
 
-  create(request: Partial<RoomStateEntity>): RoomStateEntity {
+  create(request: Partial<RoomState>): RoomState {
     return this.roomsStatesRepository.create(request);
   }
 
-  async save(request: CreateRoomStateDto): Promise<RoomStateEntity> {
+  async save(request: CreateRoomStateDto): Promise<RoomState> {
     const { name } = request;
 
     const roomState = await this.roomsStatesRepository.findOne({
@@ -82,7 +81,7 @@ export class RoomsStatesRepository implements IRoomsStateRepository {
     return this.roomsStatesRepository.save(request);
   }
 
-  async update(request: UpdateRoomStateDto): Promise<RoomStateEntity> {
+  async update(request: UpdateRoomStateDto): Promise<RoomState> {
     const { roomStateId } = request;
 
     const roomState = await this.findOneById(roomStateId);
@@ -105,7 +104,7 @@ export class RoomsStatesRepository implements IRoomsStateRepository {
     return { deleted: true, affected: result.affected };
   }
 
-  findByIds(roomsStatesIds: string[]): Promise<RoomStateEntity[]> {
+  findByIds(roomsStatesIds: string[]): Promise<RoomState[]> {
     return this.roomsStatesRepository.find({
       where: {
         roomStateId: In(roomsStatesIds),
@@ -113,34 +112,32 @@ export class RoomsStatesRepository implements IRoomsStateRepository {
     });
   }
 
-  findByCriteria(
-    criteria: FindOptionsWhere<RoomStateEntity>,
-  ): Promise<RoomStateEntity> {
+  findByCriteria(criteria: FindOptionsWhere<RoomState>): Promise<RoomState> {
     return this.roomsStatesRepository.findOne({ where: criteria });
   }
 
-  findWithRelations(relations: string[]): Promise<RoomStateEntity[]> {
+  findWithRelations(relations: string[]): Promise<RoomState[]> {
     return this.roomsStatesRepository.find({ relations });
   }
 
-  count(criteria: FindOptionsWhere<RoomStateEntity>): Promise<number> {
+  count(criteria: FindOptionsWhere<RoomState>): Promise<number> {
     return this.roomsStatesRepository.count({ where: criteria });
   }
 
-  paginate(page: number, limit: number): Promise<[RoomStateEntity[], number]> {
+  paginate(page: number, limit: number): Promise<[RoomState[], number]> {
     return this.roomsStatesRepository.findAndCount({
       skip: (page - 1) * limit,
       take: limit,
     });
   }
 
-  async exists(criteria: FindOptionsWhere<RoomStateEntity>): Promise<boolean> {
+  async exists(criteria: FindOptionsWhere<RoomState>): Promise<boolean> {
     const count = await this.roomsStatesRepository.count({ where: criteria });
 
     return count > 0;
   }
 
-  async softDelete(roomStateId: string): Promise<RoomStateEntity> {
+  async softDelete(roomStateId: string): Promise<RoomState> {
     await this.findOneById(roomStateId);
 
     const result: UpdateResult = await this.roomsStatesRepository.update(
@@ -158,7 +155,7 @@ export class RoomsStatesRepository implements IRoomsStateRepository {
     return this.findOneById(roomStateId);
   }
 
-  async restore(roomStateId: string): Promise<RoomStateEntity> {
+  async restore(roomStateId: string): Promise<RoomState> {
     await this.findOneById(roomStateId);
 
     const result: UpdateResult = await this.roomsStatesRepository.update(
@@ -176,11 +173,11 @@ export class RoomsStatesRepository implements IRoomsStateRepository {
     return this.findOneById(roomStateId);
   }
 
-  bulkSave(roomsStates: RoomStateEntity[]): Promise<RoomStateEntity[]> {
+  bulkSave(roomsStates: RoomState[]): Promise<RoomState[]> {
     return this.roomsStatesRepository.save(roomsStates);
   }
 
-  bulkUpdate(roomsStates: RoomStateEntity[]): Promise<RoomStateEntity[]> {
+  bulkUpdate(roomsStates: RoomState[]): Promise<RoomState[]> {
     return this.roomsStatesRepository.save(roomsStates);
   }
 
