@@ -3,7 +3,7 @@ import { IRoomsRepository } from './interfaces/rooms.repository.interface';
 import { DeleteResultResponse } from 'src/common/dto/response';
 import { CreateRoomDto, UpdateRoomDto } from '../dto/request';
 import { InjectRepository } from '@nestjs/typeorm';
-import { RoomEntity } from '../entity/room.entity';
+import { Room } from '../entity/room.entity';
 import { Status } from 'src/common/enums';
 import {
   In,
@@ -20,24 +20,24 @@ import {
 } from 'src/common/exceptions/custom';
 
 export class RoomsRepository implements IRoomsRepository {
-  private roomsRepository: Repository<RoomEntity>;
+  private roomsRepository: Repository<Room>;
 
   constructor(
-    @InjectRepository(RoomEntity)
-    private readonly defaultRepository: Repository<RoomEntity>,
+    @InjectRepository(Room)
+    private readonly defaultRepository: Repository<Room>,
   ) {
     this.roomsRepository = defaultRepository;
   }
 
   setQueryRunner(queryRunner: QueryRunner): void {
     if (queryRunner) {
-      this.roomsRepository = queryRunner.manager.getRepository(RoomEntity);
+      this.roomsRepository = queryRunner.manager.getRepository(Room);
     } else {
       this.roomsRepository = this.defaultRepository;
     }
   }
 
-  findAll(): Promise<RoomEntity[]> {
+  findAll(): Promise<Room[]> {
     return this.roomsRepository.find({
       where: {
         status: Status.ACTIVE,
@@ -45,7 +45,7 @@ export class RoomsRepository implements IRoomsRepository {
     });
   }
 
-  async findOneById(roomId: string): Promise<RoomEntity> {
+  async findOneById(roomId: string): Promise<Room> {
     const room = await this.roomsRepository.findOne({ where: { roomId } });
 
     if (!room) {
@@ -55,15 +55,15 @@ export class RoomsRepository implements IRoomsRepository {
     return room;
   }
 
-  create(request: Partial<RoomEntity>): RoomEntity {
+  create(request: Partial<Room>): Room {
     return this.roomsRepository.create(request);
   }
 
-  async save(request: CreateRoomDto): Promise<RoomEntity> {
+  async save(request: CreateRoomDto): Promise<Room> {
     return this.roomsRepository.save(request);
   }
 
-  async update(request: UpdateRoomDto): Promise<RoomEntity> {
+  async update(request: UpdateRoomDto): Promise<Room> {
     const { roomId } = request;
 
     const room = await this.findOneById(roomId);
@@ -85,7 +85,7 @@ export class RoomsRepository implements IRoomsRepository {
     return { deleted: true, affected: result.affected };
   }
 
-  findByIds(roomsIds: string[]): Promise<RoomEntity[]> {
+  findByIds(roomsIds: string[]): Promise<Room[]> {
     return this.roomsRepository.find({
       where: {
         roomId: In(roomsIds),
@@ -93,32 +93,32 @@ export class RoomsRepository implements IRoomsRepository {
     });
   }
 
-  findByCriteria(criteria: FindOptionsWhere<RoomEntity>): Promise<RoomEntity> {
+  findByCriteria(criteria: FindOptionsWhere<Room>): Promise<Room> {
     return this.roomsRepository.findOne({ where: criteria });
   }
 
-  findWithRelations(relations: string[]): Promise<RoomEntity[]> {
+  findWithRelations(relations: string[]): Promise<Room[]> {
     return this.roomsRepository.find({ relations });
   }
 
-  count(criteria: FindOptionsWhere<RoomEntity>): Promise<number> {
+  count(criteria: FindOptionsWhere<Room>): Promise<number> {
     return this.roomsRepository.count({ where: criteria });
   }
 
-  paginate(page: number, limit: number): Promise<[RoomEntity[], number]> {
+  paginate(page: number, limit: number): Promise<[Room[], number]> {
     return this.roomsRepository.findAndCount({
       skip: (page - 1) * limit,
       take: limit,
     });
   }
 
-  async exists(criteria: FindOptionsWhere<RoomEntity>): Promise<boolean> {
+  async exists(criteria: FindOptionsWhere<Room>): Promise<boolean> {
     const count = await this.roomsRepository.count({ where: criteria });
 
     return count > 0;
   }
 
-  async softDelete(roomId: string): Promise<RoomEntity> {
+  async softDelete(roomId: string): Promise<Room> {
     await this.findOneById(roomId);
 
     const result: UpdateResult = await this.roomsRepository.update(roomId, {
@@ -133,7 +133,7 @@ export class RoomsRepository implements IRoomsRepository {
     return this.findOneById(roomId);
   }
 
-  async restore(roomId: string): Promise<RoomEntity> {
+  async restore(roomId: string): Promise<Room> {
     await this.findOneById(roomId);
 
     const result: UpdateResult = await this.roomsRepository.update(roomId, {
@@ -148,11 +148,11 @@ export class RoomsRepository implements IRoomsRepository {
     return this.findOneById(roomId);
   }
 
-  bulkSave(rooms: RoomEntity[]): Promise<RoomEntity[]> {
+  bulkSave(rooms: Room[]): Promise<Room[]> {
     return this.roomsRepository.save(rooms);
   }
 
-  bulkUpdate(rooms: RoomEntity[]): Promise<RoomEntity[]> {
+  bulkUpdate(rooms: Room[]): Promise<Room[]> {
     return this.roomsRepository.save(rooms);
   }
 

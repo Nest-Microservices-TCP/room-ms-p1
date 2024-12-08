@@ -1,9 +1,9 @@
 import {
   IsUUID,
-  IsPositive,
-  IsOptional,
   IsNumber,
+  IsOptional,
   IsNotEmpty,
+  IsPositive,
 } from 'class-validator';
 
 export class UpdateRoomDto {
