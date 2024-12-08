@@ -45,7 +45,7 @@ export class ExtrasRepository implements IExtrasRepository {
     });
   }
 
-  async findOneById(extraId: string): Promise<Extra> {
+  async findOne(extraId: string): Promise<Extra> {
     const extra = await this.extrasRepository.findOne({
       where: {
         extraId,
@@ -70,7 +70,7 @@ export class ExtrasRepository implements IExtrasRepository {
   async update(request: UpdateExtraDto): Promise<Extra> {
     const { extraId } = request;
 
-    const extra = await this.findOneById(extraId);
+    const extra = await this.findOne(extraId);
 
     Object.assign(extra, request);
 
@@ -78,7 +78,7 @@ export class ExtrasRepository implements IExtrasRepository {
   }
 
   async remove(extraId: string): Promise<DeleteResultResponse> {
-    await this.findOneById(extraId);
+    await this.findOne(extraId);
 
     const result: DeleteResult = await this.extrasRepository.delete(extraId);
 
@@ -123,7 +123,7 @@ export class ExtrasRepository implements IExtrasRepository {
   }
 
   async softDelete(extraId: string): Promise<Extra> {
-    await this.findOneById(extraId);
+    await this.findOne(extraId);
 
     const result: UpdateResult = await this.extrasRepository.update(extraId, {
       status: Status.DELETED,
@@ -134,11 +134,11 @@ export class ExtrasRepository implements IExtrasRepository {
       throw new FailedSoftDeleteException('extra');
     }
 
-    return this.findOneById(extraId);
+    return this.findOne(extraId);
   }
 
   async restore(extraId: string): Promise<Extra> {
-    await this.findOneById(extraId);
+    await this.findOne(extraId);
 
     const result: UpdateResult = await this.extrasRepository.update(extraId, {
       status: Status.ACTIVE,
@@ -149,7 +149,7 @@ export class ExtrasRepository implements IExtrasRepository {
       throw new FailedRestoreException('extra');
     }
 
-    return this.findOneById(extraId);
+    return this.findOne(extraId);
   }
 
   bulkSave(extras: Extra[]): Promise<Extra[]> {
