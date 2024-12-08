@@ -44,7 +44,7 @@ export class RatesRepository implements IRatesRepository {
     });
   }
 
-  async findOneById(rateId: string): Promise<Rate> {
+  async findOne(rateId: string): Promise<Rate> {
     const rate = await this.ratesRepository.findOne({
       where: {
         rateId,
@@ -69,7 +69,7 @@ export class RatesRepository implements IRatesRepository {
   async update(request: UpdateRateDto): Promise<Rate> {
     const { rateId } = request;
 
-    const rate = await this.findOneById(rateId);
+    const rate = await this.findOne(rateId);
 
     Object.assign(rate, request);
 
@@ -77,7 +77,7 @@ export class RatesRepository implements IRatesRepository {
   }
 
   async remove(rateId: string): Promise<DeleteResultResponse> {
-    await this.findOneById(rateId);
+    await this.findOne(rateId);
 
     const result: DeleteResult = await this.ratesRepository.delete(rateId);
 
@@ -122,7 +122,7 @@ export class RatesRepository implements IRatesRepository {
   }
 
   async softDelete(rateId: string): Promise<Rate> {
-    await this.findOneById(rateId);
+    await this.findOne(rateId);
 
     const result: UpdateResult = await this.ratesRepository.update(rateId, {
       status: Status.DELETED,
@@ -133,11 +133,11 @@ export class RatesRepository implements IRatesRepository {
       throw new EntityNotFoundException('rate');
     }
 
-    return this.findOneById(rateId);
+    return this.findOne(rateId);
   }
 
   async restore(rateId: string): Promise<Rate> {
-    await this.findOneById(rateId);
+    await this.findOne(rateId);
 
     const result: UpdateResult = await this.ratesRepository.update(rateId, {
       status: Status.ACTIVE,
@@ -148,7 +148,7 @@ export class RatesRepository implements IRatesRepository {
       throw new FailedRestoreException('rate');
     }
 
-    return this.findOneById(rateId);
+    return this.findOne(rateId);
   }
 
   bulkSave(rates: Rate[]): Promise<Rate[]> {
