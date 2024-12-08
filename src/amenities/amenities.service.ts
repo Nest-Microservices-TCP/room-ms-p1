@@ -20,8 +20,8 @@ export class AmenitiesService {
   }
 
   @HandleRpcExceptions()
-  async findOneById(amenityId: string): Promise<AmenityResponseDto> {
-    const amenity = await this.amenitiesRepository.findOneById(amenityId);
+  async findOne(amenityId: string): Promise<AmenityResponseDto> {
+    const amenity = await this.amenitiesRepository.findOne(amenityId);
 
     return plainToInstance(AmenityResponseDto, amenity, {
       excludeExtraneousValues: true,

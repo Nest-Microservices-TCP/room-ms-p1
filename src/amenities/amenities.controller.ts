@@ -15,10 +15,10 @@ export class AmenitiesController {
   }
 
   @MessagePattern({ cmd: 'find.one.amenity.by.id' })
-  async findOneById(
+  async findOne(
     @Payload('amenityId') amenityId: string,
   ): Promise<AmenityResponseDto> {
-    return this.amenitiesService.findOneById(amenityId);
+    return this.amenitiesService.findOne(amenityId);
   }
 
   @MessagePattern({ cmd: 'find.amenities.by.ids' })
