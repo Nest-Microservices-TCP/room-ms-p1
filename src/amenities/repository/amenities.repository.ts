@@ -43,7 +43,7 @@ export class AmenitiesRepository implements IAmenitiesRepository {
     });
   }
 
-  async findOneById(amenityId: string): Promise<Amenity> {
+  async findOne(amenityId: string): Promise<Amenity> {
     const amenity = await this.amenitiesRepository.findOne({
       where: {
         amenityId,
@@ -68,7 +68,7 @@ export class AmenitiesRepository implements IAmenitiesRepository {
   async update(request: UpdateAmenityDto): Promise<Amenity> {
     const { amenityId } = request;
 
-    const amenity = await this.findOneById(amenityId);
+    const amenity = await this.findOne(amenityId);
 
     Object.assign(amenity, request);
 
@@ -76,7 +76,7 @@ export class AmenitiesRepository implements IAmenitiesRepository {
   }
 
   async remove(amenityId: string): Promise<DeleteResultResponse> {
-    await this.findOneById(amenityId);
+    await this.findOne(amenityId);
 
     const result: DeleteResult =
       await this.amenitiesRepository.delete(amenityId);
@@ -116,7 +116,7 @@ export class AmenitiesRepository implements IAmenitiesRepository {
   }
 
   async softDelete(amenityId: string): Promise<Amenity> {
-    await this.findOneById(amenityId);
+    await this.findOne(amenityId);
 
     const result: UpdateResult = await this.amenitiesRepository.update(
       amenityId,
@@ -130,11 +130,11 @@ export class AmenitiesRepository implements IAmenitiesRepository {
       throw new FailedSoftDeleteException('amenity');
     }
 
-    return this.findOneById(amenityId);
+    return this.findOne(amenityId);
   }
 
   async restore(amenityId: string): Promise<Amenity> {
-    await this.findOneById(amenityId);
+    await this.findOne(amenityId);
 
     const result: UpdateResult = await this.amenitiesRepository.update(
       amenityId,
@@ -148,7 +148,7 @@ export class AmenitiesRepository implements IAmenitiesRepository {
       throw new FailedRestoreException('amenity');
     }
 
-    return this.findOneById(amenityId);
+    return this.findOne(amenityId);
   }
 
   async exists(criteria: FindOptionsWhere<Amenity>): Promise<boolean> {
