@@ -20,8 +20,8 @@ export class RoomsService {
   }
 
   @HandleRpcExceptions()
-  async findOneById(roomId: string): Promise<RoomResponseDto> {
-    const room = await this.roomsRepository.findOneById(roomId);
+  async findOne(roomId: string): Promise<RoomResponseDto> {
+    const room = await this.roomsRepository.findOne(roomId);
 
     return plainToInstance(RoomResponseDto, room, {
       excludeExtraneousValues: true,

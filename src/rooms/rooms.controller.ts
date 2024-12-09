@@ -14,9 +14,9 @@ export class RoomsController {
     return this.roomsService.save(request);
   }
 
-  @MessagePattern({ cmd: 'find.one.room.by.id' })
-  findOnById(@Payload('roomId') roomId: string): Promise<RoomResponseDto> {
-    return this.roomsService.findOneById(roomId);
+  @MessagePattern({ cmd: 'find.one.room' })
+  findOne(@Payload('roomId') roomId: string): Promise<RoomResponseDto> {
+    return this.roomsService.findOne(roomId);
   }
 
   @MessagePattern({ cmd: 'find.rooms.by.ids' })

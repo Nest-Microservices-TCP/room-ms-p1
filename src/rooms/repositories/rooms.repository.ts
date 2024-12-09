@@ -45,7 +45,7 @@ export class RoomsRepository implements IRoomsRepository {
     });
   }
 
-  async findOneById(roomId: string): Promise<Room> {
+  async findOne(roomId: string): Promise<Room> {
     const room = await this.roomsRepository.findOne({ where: { roomId } });
 
     if (!room) {
@@ -66,7 +66,7 @@ export class RoomsRepository implements IRoomsRepository {
   async update(request: UpdateRoomDto): Promise<Room> {
     const { roomId } = request;
 
-    const room = await this.findOneById(roomId);
+    const room = await this.findOne(roomId);
 
     Object.assign(room, request);
 
@@ -74,7 +74,7 @@ export class RoomsRepository implements IRoomsRepository {
   }
 
   async remove(roomId: string): Promise<DeleteResultResponse> {
-    await this.findOneById(roomId);
+    await this.findOne(roomId);
 
     const result: DeleteResult = await this.roomsRepository.delete(roomId);
 
@@ -119,7 +119,7 @@ export class RoomsRepository implements IRoomsRepository {
   }
 
   async softDelete(roomId: string): Promise<Room> {
-    await this.findOneById(roomId);
+    await this.findOne(roomId);
 
     const result: UpdateResult = await this.roomsRepository.update(roomId, {
       status: Status.DELETED,
@@ -130,11 +130,11 @@ export class RoomsRepository implements IRoomsRepository {
       throw new FailedSoftDeleteException('room');
     }
 
-    return this.findOneById(roomId);
+    return this.findOne(roomId);
   }
 
   async restore(roomId: string): Promise<Room> {
-    await this.findOneById(roomId);
+    await this.findOne(roomId);
 
     const result: UpdateResult = await this.roomsRepository.update(roomId, {
       status: Status.ACTIVE,
@@ -145,7 +145,7 @@ export class RoomsRepository implements IRoomsRepository {
       throw new FailedRestoreException('room');
     }
 
-    return this.findOneById(roomId);
+    return this.findOne(roomId);
   }
 
   bulkSave(rooms: Room[]): Promise<Room[]> {
