@@ -43,7 +43,7 @@ export class RentsExtrasRepository implements IRentsExtrasRepository {
     });
   }
 
-  async findOneById(rentExtraId: string): Promise<RentExtra> {
+  async findOne(rentExtraId: string): Promise<RentExtra> {
     const rentExtra = await this.rentsExtrasRepository.findOne({
       where: { rentExtraId },
     });
@@ -66,7 +66,7 @@ export class RentsExtrasRepository implements IRentsExtrasRepository {
   async update(request: UpdateRentExtraDto): Promise<RentExtra> {
     const { rentExtraId } = request;
 
-    const rentExtra = await this.findOneById(rentExtraId);
+    const rentExtra = await this.findOne(rentExtraId);
 
     Object.assign(rentExtra, request);
 
@@ -74,7 +74,7 @@ export class RentsExtrasRepository implements IRentsExtrasRepository {
   }
 
   async remove(rentExtraId: string): Promise<DeleteResultResponse> {
-    await this.findOneById(rentExtraId);
+    await this.findOne(rentExtraId);
 
     const result: DeleteResult =
       await this.rentsExtrasRepository.delete(rentExtraId);
@@ -114,7 +114,7 @@ export class RentsExtrasRepository implements IRentsExtrasRepository {
   }
 
   async softDelete(rentExtraId: string): Promise<RentExtra> {
-    const rentExtra = await this.findOneById(rentExtraId);
+    const rentExtra = await this.findOne(rentExtraId);
 
     const result: UpdateResult = await this.rentsExtrasRepository.update(
       rentExtraId,
@@ -132,7 +132,7 @@ export class RentsExtrasRepository implements IRentsExtrasRepository {
   }
 
   async restore(rentExtraId: string): Promise<RentExtra> {
-    const rentExtra = await this.findOneById(rentExtraId);
+    const rentExtra = await this.findOne(rentExtraId);
 
     const result: UpdateResult = await this.rentsExtrasRepository.update(
       rentExtraId,

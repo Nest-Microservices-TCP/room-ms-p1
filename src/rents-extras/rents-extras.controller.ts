@@ -14,11 +14,11 @@ export class RentsExtrasController {
     return this.rentsExtrasService.findAll();
   }
 
-  @MessagePattern({ cmd: 'find.one.rent.extra.by.id' })
+  @MessagePattern({ cmd: 'find.one.rent.extra' })
   async findOneById(
     @Payload('rentExtraId') rentExtraId: string,
   ): Promise<RentExtraResponseDto> {
-    return this.rentsExtrasService.findOneById(rentExtraId);
+    return this.rentsExtrasService.findOne(rentExtraId);
   }
 
   @MessagePattern({ cmd: 'find.rents.extras.by.ids' })
