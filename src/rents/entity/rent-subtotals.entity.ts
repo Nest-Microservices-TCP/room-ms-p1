@@ -8,7 +8,7 @@ import {
 } from 'typeorm';
 
 @Entity({ name: 'rent_subtotals' })
-export class RentSubtotalsEntity {
+export class RentSubtotals {
   @PrimaryGeneratedColumn('uuid', {
     name: 'rent_subtotals_id',
   })
