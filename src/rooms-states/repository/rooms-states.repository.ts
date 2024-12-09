@@ -39,7 +39,7 @@ export class RoomsStatesRepository implements IRoomsStateRepository {
     }
   }
 
-  async findOneById(roomStateId: string): Promise<RoomState> {
+  async findOne(roomStateId: string): Promise<RoomState> {
     const roomState = await this.roomsStatesRepository.findOne({
       where: { roomStateId },
     });
@@ -84,7 +84,7 @@ export class RoomsStatesRepository implements IRoomsStateRepository {
   async update(request: UpdateRoomStateDto): Promise<RoomState> {
     const { roomStateId } = request;
 
-    const roomState = await this.findOneById(roomStateId);
+    const roomState = await this.findOne(roomStateId);
 
     Object.assign(roomState, request);
 
@@ -92,7 +92,7 @@ export class RoomsStatesRepository implements IRoomsStateRepository {
   }
 
   async remove(roomStateId: string): Promise<DeleteResultResponse> {
-    await this.findOneById(roomStateId);
+    await this.findOne(roomStateId);
 
     const result: DeleteResult =
       await this.roomsStatesRepository.delete(roomStateId);
@@ -138,7 +138,7 @@ export class RoomsStatesRepository implements IRoomsStateRepository {
   }
 
   async softDelete(roomStateId: string): Promise<RoomState> {
-    await this.findOneById(roomStateId);
+    await this.findOne(roomStateId);
 
     const result: UpdateResult = await this.roomsStatesRepository.update(
       roomStateId,
@@ -152,11 +152,11 @@ export class RoomsStatesRepository implements IRoomsStateRepository {
       throw new FailedSoftDeleteException('room-state');
     }
 
-    return this.findOneById(roomStateId);
+    return this.findOne(roomStateId);
   }
 
   async restore(roomStateId: string): Promise<RoomState> {
-    await this.findOneById(roomStateId);
+    await this.findOne(roomStateId);
 
     const result: UpdateResult = await this.roomsStatesRepository.update(
       roomStateId,
@@ -170,7 +170,7 @@ export class RoomsStatesRepository implements IRoomsStateRepository {
       throw new FailedRestoreException('room-state');
     }
 
-    return this.findOneById(roomStateId);
+    return this.findOne(roomStateId);
   }
 
   bulkSave(roomsStates: RoomState[]): Promise<RoomState[]> {

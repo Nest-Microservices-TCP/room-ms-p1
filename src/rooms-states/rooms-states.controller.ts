@@ -21,10 +21,10 @@ export class RoomsStatesController {
   }
 
   @MessagePattern({ cmd: 'find.one.roomState' })
-  async findOneById(
+  async findOne(
     @Payload() request: FindOneRoomStateByIdDto,
   ): Promise<RoomStateResponseDto> {
-    return this.roomsStatesService.findOneById(request);
+    return this.roomsStatesService.findOne(request);
   }
 
   @MessagePattern({ cmd: 'find.rooms.states.by.ids' })
