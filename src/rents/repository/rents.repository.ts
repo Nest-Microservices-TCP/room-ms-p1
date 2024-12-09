@@ -3,7 +3,7 @@ import { DeleteResultResponse } from 'src/common/dto/response';
 import { CreateRentDto, UpdateRentDto } from '../dto/request';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Status } from 'src/common/enums';
-import { RentEntity } from '../entity';
+import { Rent } from '../entity';
 import {
   In,
   Repository,
@@ -20,24 +20,24 @@ import {
 } from 'src/common/exceptions/custom';
 
 export class RentsRepository implements IRentsRepository {
-  private rentsRepository: Repository<RentEntity>;
+  private rentsRepository: Repository<Rent>;
 
   constructor(
-    @InjectRepository(RentEntity)
-    private readonly defaultRepository: Repository<RentEntity>,
+    @InjectRepository(Rent)
+    private readonly defaultRepository: Repository<Rent>,
   ) {
     this.rentsRepository = this.defaultRepository;
   }
 
   setQueryRunner(queryRunner: QueryRunner): void {
     if (queryRunner) {
-      this.rentsRepository = queryRunner.manager.getRepository(RentEntity);
+      this.rentsRepository = queryRunner.manager.getRepository(Rent);
     } else {
       this.rentsRepository = this.defaultRepository;
     }
   }
 
-  findAll(): Promise<RentEntity[]> {
+  findAll(): Promise<Rent[]> {
     return this.rentsRepository.find({
       where: {
         status: Status.ACTIVE,
@@ -45,7 +45,7 @@ export class RentsRepository implements IRentsRepository {
     });
   }
 
-  async findOne(rentId: string): Promise<RentEntity> {
+  async findOne(rentId: string): Promise<Rent> {
     const rent = await this.rentsRepository.findOne({
       where: {
         rentId,
@@ -59,15 +59,15 @@ export class RentsRepository implements IRentsRepository {
     return rent;
   }
 
-  create(request: Partial<RentEntity>): RentEntity {
+  create(request: Partial<Rent>): Rent {
     return this.rentsRepository.create(request);
   }
 
-  save(request: CreateRentDto): Promise<RentEntity> {
+  save(request: CreateRentDto): Promise<Rent> {
     return this.rentsRepository.save(request);
   }
 
-  async update(request: UpdateRentDto): Promise<RentEntity> {
+  async update(request: UpdateRentDto): Promise<Rent> {
     const { rentId } = request;
 
     const rent = await this.findOne(rentId);
@@ -89,7 +89,7 @@ export class RentsRepository implements IRentsRepository {
     return { deleted: true, affected: result.affected };
   }
 
-  findByIds(rentsIds: string[]): Promise<RentEntity[]> {
+  findByIds(rentsIds: string[]): Promise<Rent[]> {
     return this.rentsRepository.find({
       where: {
         rentId: In(rentsIds),
@@ -97,32 +97,32 @@ export class RentsRepository implements IRentsRepository {
     });
   }
 
-  findByCriteria(criteria: FindOptionsWhere<RentEntity>): Promise<RentEntity> {
+  findByCriteria(criteria: FindOptionsWhere<Rent>): Promise<Rent> {
     return this.rentsRepository.findOne({ where: criteria });
   }
 
-  findWithRelations(relations: string[]): Promise<RentEntity[]> {
+  findWithRelations(relations: string[]): Promise<Rent[]> {
     return this.rentsRepository.find({ relations });
   }
 
-  count(criteria: FindOptionsWhere<RentEntity>): Promise<number> {
+  count(criteria: FindOptionsWhere<Rent>): Promise<number> {
     return this.rentsRepository.count({ where: criteria });
   }
 
-  paginate(page: number, limit: number): Promise<[RentEntity[], number]> {
+  paginate(page: number, limit: number): Promise<[Rent[], number]> {
     return this.rentsRepository.findAndCount({
       skip: (page - 1) * limit,
       take: limit,
     });
   }
 
-  async exists(criteria: FindOptionsWhere<RentEntity>): Promise<boolean> {
+  async exists(criteria: FindOptionsWhere<Rent>): Promise<boolean> {
     const count = await this.rentsRepository.count({ where: criteria });
 
     return count > 0;
   }
 
-  async softDelete(rentId: string): Promise<RentEntity> {
+  async softDelete(rentId: string): Promise<Rent> {
     await this.findOne(rentId);
 
     const result: UpdateResult = await this.rentsRepository.update(rentId, {
@@ -137,7 +137,7 @@ export class RentsRepository implements IRentsRepository {
     return this.findOne(rentId);
   }
 
-  async restore(rentId: string): Promise<RentEntity> {
+  async restore(rentId: string): Promise<Rent> {
     await this.findOne(rentId);
 
     const result: UpdateResult = await this.rentsRepository.update(rentId, {
@@ -152,11 +152,11 @@ export class RentsRepository implements IRentsRepository {
     return this.findOne(rentId);
   }
 
-  bulkSave(rents: RentEntity[]): Promise<RentEntity[]> {
+  bulkSave(rents: Rent[]): Promise<Rent[]> {
     return this.rentsRepository.save(rents);
   }
 
-  bulkUpdate(rents: RentEntity[]): Promise<RentEntity[]> {
+  bulkUpdate(rents: Rent[]): Promise<Rent[]> {
     return this.rentsRepository.save(rents);
   }
 

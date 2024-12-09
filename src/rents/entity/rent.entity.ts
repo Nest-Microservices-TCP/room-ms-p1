@@ -14,7 +14,7 @@ import {
 } from 'typeorm';
 
 @Entity({ name: 'rent' })
-export class RentEntity extends BaseEntity {
+export class Rent extends BaseEntity {
   @PrimaryGeneratedColumn('uuid', {
     name: 'rent_id',
     primaryKeyConstraintName: 'PK_rent',
