@@ -22,9 +22,9 @@ export class ReservationsService {
   }
 
   @HandleRpcExceptions()
-  async findOneById(reservationId: string): Promise<ReservationResponseDto> {
+  async findOne(reservationId: string): Promise<ReservationResponseDto> {
     const reservation =
-      await this.reservationsRepository.findOneById(reservationId);
+      await this.reservationsRepository.findOne(reservationId);
 
     return plainToInstance(ReservationResponseDto, reservation, {
       excludeExtraneousValues: true,

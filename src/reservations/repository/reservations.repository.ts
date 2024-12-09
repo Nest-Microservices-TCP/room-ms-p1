@@ -45,7 +45,7 @@ export class ReservationsRepository implements IReservationsRepository {
     });
   }
 
-  async findOneById(reservationId: string): Promise<Reservation> {
+  async findOne(reservationId: string): Promise<Reservation> {
     const reservation = await this.reservationsRepository.findOne({
       where: {
         reservationId,
@@ -70,7 +70,7 @@ export class ReservationsRepository implements IReservationsRepository {
   async update(request: UpdateReservationDto): Promise<Reservation> {
     const { reservationId } = request;
 
-    const reservation = await this.findOneById(reservationId);
+    const reservation = await this.findOne(reservationId);
 
     Object.assign(reservation, request);
 
@@ -78,7 +78,7 @@ export class ReservationsRepository implements IReservationsRepository {
   }
 
   async remove(reservationId: string): Promise<DeleteResultResponse> {
-    await this.findOneById(reservationId);
+    await this.findOne(reservationId);
 
     const result: DeleteResult = await this.reservationsRepository.delete({
       reservationId,
@@ -121,7 +121,7 @@ export class ReservationsRepository implements IReservationsRepository {
   }
 
   async softDelete(reservationId: string): Promise<Reservation> {
-    await this.findOneById(reservationId);
+    await this.findOne(reservationId);
 
     const result: UpdateResult = await this.reservationsRepository.update(
       reservationId,
@@ -135,11 +135,11 @@ export class ReservationsRepository implements IReservationsRepository {
       throw new FailedSoftDeleteException('reservation');
     }
 
-    return this.findOneById(reservationId);
+    return this.findOne(reservationId);
   }
 
   async restore(reservationId: string): Promise<Reservation> {
-    await this.findOneById(reservationId);
+    await this.findOne(reservationId);
 
     const result: UpdateResult = await this.reservationsRepository.update(
       reservationId,
@@ -153,7 +153,7 @@ export class ReservationsRepository implements IReservationsRepository {
       throw new FailedRestoreException('reservation');
     }
 
-    return this.findOneById(reservationId);
+    return this.findOne(reservationId);
   }
 
   async exists(criteria: FindOptionsWhere<Reservation>): Promise<boolean> {

@@ -14,11 +14,11 @@ export class ReservationsController {
     return this.reservationsService.findAll();
   }
 
-  @MessagePattern({ cmd: 'find.one.reservation.by.id' })
-  async findOneById(
+  @MessagePattern({ cmd: 'find.one.reservation' })
+  async findOne(
     @Payload('reservationId') reservationId: string,
   ): Promise<ReservationResponseDto> {
-    return this.reservationsService.findOneById(reservationId);
+    return this.reservationsService.findOne(reservationId);
   }
 
   @MessagePattern({ cmd: 'find.reservations.by.ids' })
