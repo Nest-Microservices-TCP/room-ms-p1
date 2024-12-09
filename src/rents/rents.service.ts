@@ -20,7 +20,7 @@ export class RentsService {
 
   @HandleRpcExceptions()
   async findOneById(rentId: string): Promise<RentResponseDto> {
-    const rent = await this.rentsRepository.findOneById(rentId);
+    const rent = await this.rentsRepository.findOne(rentId);
 
     return plainToInstance(RentResponseDto, rent, {
       excludeExtraneousValues: true,

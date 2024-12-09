@@ -1,13 +1,13 @@
+import { AccommodationType, EntryType } from 'src/rents/enum';
 import {
+  Min,
   IsEnum,
   IsNumber,
-  IsOptional,
-  IsPositive,
   IsString,
   MaxLength,
-  Min,
+  IsOptional,
+  IsPositive,
 } from 'class-validator';
-import { AccommodationType, EntryType } from 'src/rents/enum';
 
 export class CreateRentDto {
   @IsString()

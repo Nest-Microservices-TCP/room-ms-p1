@@ -45,7 +45,7 @@ export class RentsRepository implements IRentsRepository {
     });
   }
 
-  async findOneById(rentId: string): Promise<RentEntity> {
+  async findOne(rentId: string): Promise<RentEntity> {
     const rent = await this.rentsRepository.findOne({
       where: {
         rentId,
@@ -70,7 +70,7 @@ export class RentsRepository implements IRentsRepository {
   async update(request: UpdateRentDto): Promise<RentEntity> {
     const { rentId } = request;
 
-    const rent = await this.findOneById(rentId);
+    const rent = await this.findOne(rentId);
 
     Object.assign(rent, request);
 
@@ -78,7 +78,7 @@ export class RentsRepository implements IRentsRepository {
   }
 
   async remove(rentId: string): Promise<DeleteResultResponse> {
-    await this.findOneById(rentId);
+    await this.findOne(rentId);
 
     const result: DeleteResult = await this.rentsRepository.delete(rentId);
 
@@ -123,7 +123,7 @@ export class RentsRepository implements IRentsRepository {
   }
 
   async softDelete(rentId: string): Promise<RentEntity> {
-    await this.findOneById(rentId);
+    await this.findOne(rentId);
 
     const result: UpdateResult = await this.rentsRepository.update(rentId, {
       status: Status.DELETED,
@@ -134,11 +134,11 @@ export class RentsRepository implements IRentsRepository {
       throw new FailedSoftDeleteException('rent');
     }
 
-    return this.findOneById(rentId);
+    return this.findOne(rentId);
   }
 
   async restore(rentId: string): Promise<RentEntity> {
-    await this.findOneById(rentId);
+    await this.findOne(rentId);
 
     const result: UpdateResult = await this.rentsRepository.update(rentId, {
       status: Status.ACTIVE,
@@ -149,7 +149,7 @@ export class RentsRepository implements IRentsRepository {
       throw new FailedRestoreException('rent');
     }
 
-    return this.findOneById(rentId);
+    return this.findOne(rentId);
   }
 
   bulkSave(rents: RentEntity[]): Promise<RentEntity[]> {
