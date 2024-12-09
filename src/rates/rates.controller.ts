@@ -13,7 +13,7 @@ export class RatesController {
     return this.ratesService.findAll();
   }
 
-  @MessagePattern({ cmd: 'find.one.rate.by.id' })
+  @MessagePattern({ cmd: 'find.one.rate' })
   findOneById(@Payload('rateId') rateId: string): Promise<RateResponseDto> {
     return this.ratesService.findOneById(rateId);
   }

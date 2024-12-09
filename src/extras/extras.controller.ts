@@ -13,7 +13,7 @@ export class ExtrasController {
     return this.extrasService.findAll();
   }
 
-  @MessagePattern({ cmd: 'find.one.extra.by.id' })
+  @MessagePattern({ cmd: 'find.one.extra' })
   findOne(@Payload('extraId') extraId: string): Promise<ExtraResponseDto> {
     return this.extrasService.findOne(extraId);
   }
