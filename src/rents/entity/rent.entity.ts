@@ -1,7 +1,7 @@
 import { AccommodationType, EntryType, PaymentState, RentState } from '../enum';
-import { RentExtraEntity } from 'src/rents-extras/entity/rent-extra.entity';
+import { RentExtra } from 'src/rents-extras/entity/rent-extra.entity';
 import { RentSubtotalsEntity } from './rent-subtotals.entity';
-import { RoomEntity } from 'src/rooms/entity/room.entity';
+import { Room } from 'src/rooms/entity/room.entity';
 import { BaseEntity } from 'src/common/entity';
 import {
   Column,
@@ -111,9 +111,9 @@ export class RentEntity extends BaseEntity {
   })
   rentSubtotals: RentSubtotalsEntity;
 
-  @OneToOne(() => RoomEntity, (room) => room.rent, { nullable: false })
+  @OneToOne(() => Room, (room) => room.rent, { nullable: false })
   @JoinColumn({ name: 'room_id' })
-  room: RoomEntity;
+  room: Room;
 
   //TODO: Eliminar las entidades y columnas que ya no serian necesarias debido a esta relación
   /**
@@ -131,9 +131,9 @@ export class RentEntity extends BaseEntity {
    * en Extra, los cambios se propagaran automáticamente a la tabla
    * intermedia RentsExtras
    */
-  @OneToMany(() => RentExtraEntity, (rentExtra) => rentExtra.rent, {
+  @OneToMany(() => RentExtra, (rentExtra) => rentExtra.rent, {
     cascade: true,
     nullable: false,
   })
-  rentExtras: RentExtraEntity[];
+  rentExtras: RentExtra[];
 }
