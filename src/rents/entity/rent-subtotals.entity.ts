@@ -1,11 +1,11 @@
+import { Rent } from './rent.entity';
 import {
   Column,
   Entity,
-  JoinColumn,
   OneToOne,
+  JoinColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { RentEntity } from './rent.entity';
 
 @Entity({ name: 'rent_subtotals' })
 export class RentSubtotalsEntity {
@@ -74,7 +74,7 @@ export class RentSubtotalsEntity {
    * La entidad que defina el decorador de JoinColumn es la que
    * almacenara la columna con la clave foránea
    */
-  @OneToOne(() => RentEntity, (rent) => rent.rentSubtotals)
+  @OneToOne(() => Rent, (rent) => rent.rentSubtotals)
   @JoinColumn({ name: 'rent_id' })
-  rent: RentEntity;
+  rent: Rent;
 }
