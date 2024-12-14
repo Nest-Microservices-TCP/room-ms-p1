@@ -1,9 +1,10 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity({ name: 'rent_extras' })
+@Entity({ name: 'rents_extras' })
 export class RentsExtras {
   @PrimaryGeneratedColumn('uuid', {
     name: 'rent_extras_id',
+    primaryKeyConstraintName: 'PK_rents_extras',
   })
   rentExtrasId: string;
 
