@@ -1,6 +1,6 @@
 import { AccommodationType, EntryType, PaymentState, RentState } from '../enum';
 import { RentExtra } from 'src/rents-extras/entity/rent-extra.entity';
-import { RentSubtotalsEntity } from './rent-subtotals.entity';
+import { RentSubtotals } from './rent-subtotals.entity';
 import { Room } from 'src/rooms/entity/room.entity';
 import { BaseEntity } from 'src/common/entity';
 import {
@@ -105,11 +105,11 @@ export class Rent extends BaseEntity {
    *
    * Lo mismo ocurre para actualizaciones y eliminaciones
    */
-  @OneToOne(() => RentSubtotalsEntity, (subtotals) => subtotals.rent, {
+  @OneToOne(() => RentSubtotals, (subtotals) => subtotals.rent, {
     cascade: true,
     nullable: false,
   })
-  rentSubtotals: RentSubtotalsEntity;
+  rentSubtotals: RentSubtotals;
 
   @OneToOne(() => Room, (room) => room.rent, { nullable: false })
   @JoinColumn({ name: 'room_id' })
