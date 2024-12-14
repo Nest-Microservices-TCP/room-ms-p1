@@ -6,6 +6,7 @@ import { BaseEntity } from 'src/common/entity';
 export class Extra extends BaseEntity {
   @PrimaryGeneratedColumn('uuid', {
     name: 'extra_id',
+    primaryKeyConstraintName: 'PK_extras',
   })
   extraId: string;
 
@@ -13,6 +14,8 @@ export class Extra extends BaseEntity {
     name: 'name',
     type: 'varchar',
     length: 255,
+    nullable: false,
+    unique: true,
   })
   name: string;
 
