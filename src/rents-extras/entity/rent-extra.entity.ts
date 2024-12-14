@@ -1,7 +1,7 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Extra } from 'src/extras/entity/extra.entity';
 import { BaseEntity } from 'src/common/entity';
-import { RentEntity } from 'src/rents/entity';
+import { Rent } from 'src/rents/entity';
 
 @Entity({ name: 'rents_extras' })
 export class RentExtra extends BaseEntity {
@@ -30,11 +30,11 @@ export class RentExtra extends BaseEntity {
    * Extras, automáticamente se eliminaran o actualizaran los registros
    * correspondientes en esta tabla intermedia RentsExtras
    */
-  @ManyToOne(() => RentEntity, (rent) => rent.rentExtras, {
+  @ManyToOne(() => Rent, (rent) => rent.rentExtras, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
-  rent: RentEntity;
+  rent: Rent;
 
   @ManyToOne(() => Extra, (extra) => extra.rentExtras, {
     onDelete: 'CASCADE',
