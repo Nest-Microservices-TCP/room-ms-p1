@@ -5,12 +5,14 @@ import { BaseEntity } from 'src/common/entity';
 export class RoomState extends BaseEntity {
   @PrimaryGeneratedColumn('uuid', {
     name: 'room_state_id',
+    primaryKeyConstraintName: 'PK_rooms_states',
   })
   roomStateId: string;
 
   @Column({
     name: 'name',
-    type: 'text',
+    type: 'varchar',
+    length: 30,
     nullable: false,
     unique: true,
   })
