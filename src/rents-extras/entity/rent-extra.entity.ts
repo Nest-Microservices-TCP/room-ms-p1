@@ -6,13 +6,15 @@ import { Rent } from 'src/rents/entity';
 @Entity({ name: 'rents_extras' })
 export class RentExtra extends BaseEntity {
   @PrimaryGeneratedColumn('uuid', {
-    name: 'renta_extra_id',
+    name: 'rent_extra_id',
+    primaryKeyConstraintName: 'PK_rents_extras',
   })
   rentExtraId: string;
 
   @Column({
     name: 'quantity',
     type: 'smallint',
+    nullable: false,
   })
   quantity: number;
 
@@ -21,6 +23,7 @@ export class RentExtra extends BaseEntity {
     type: 'decimal',
     scale: 2,
     precision: 9,
+    nullable: false,
   })
   total: number;
 
