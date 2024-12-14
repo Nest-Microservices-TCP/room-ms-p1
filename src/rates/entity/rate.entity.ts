@@ -6,6 +6,7 @@ import { BaseEntity } from 'src/common/entity';
 export class Rate extends BaseEntity {
   @PrimaryGeneratedColumn('uuid', {
     name: 'rate_id',
+    primaryKeyConstraintName: 'PK_rates',
   })
   rateId: string;
 
@@ -20,6 +21,7 @@ export class Rate extends BaseEntity {
   @Column({
     name: 'duration',
     type: 'time',
+    nullable: false,
   })
   duration: string;
 
@@ -28,6 +30,7 @@ export class Rate extends BaseEntity {
     type: 'numeric',
     precision: 9,
     scale: 2,
+    nullable: false,
   })
   accommodationCost: number;
 
@@ -36,6 +39,7 @@ export class Rate extends BaseEntity {
     type: 'numeric',
     precision: 9,
     scale: 2,
+    nullable: false,
   })
   extraAccommodationCost: number;
 
@@ -44,6 +48,7 @@ export class Rate extends BaseEntity {
     type: 'numeric',
     precision: 9,
     scale: 2,
+    nullable: false,
   })
   overtimeCost: number;
 
@@ -52,6 +57,7 @@ export class Rate extends BaseEntity {
     type: 'numeric',
     precision: 9,
     scale: 2,
+    nullable: false,
   })
   extraPeopleCost: number;
 
@@ -60,6 +66,7 @@ export class Rate extends BaseEntity {
     type: 'numeric',
     precision: 9,
     scale: 2,
+    nullable: false,
   })
   earlyCheckinCost: number;
 
@@ -67,18 +74,21 @@ export class Rate extends BaseEntity {
     name: 'accommodation_type',
     type: 'enum',
     enum: AccommodationType,
+    nullable: false,
   })
   accommodationType: AccommodationType;
 
   @Column({
     name: 'checkin_hour',
     type: 'time',
+    nullable: false,
   })
   checkInHour: string;
 
   @Column({
     name: 'checkout_hour',
     type: 'time',
+    nullable: false,
   })
   checkoutHour: string;
 }
