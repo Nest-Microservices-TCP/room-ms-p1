@@ -13,11 +13,11 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-@Entity({ name: 'rent' })
+@Entity({ name: 'rents' })
 export class Rent extends BaseEntity {
   @PrimaryGeneratedColumn('uuid', {
     name: 'rent_id',
-    primaryKeyConstraintName: 'PK_rent',
+    primaryKeyConstraintName: 'PK_rents',
   })
   rentId: string;
 
