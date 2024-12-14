@@ -1,5 +1,5 @@
-import { RentExtraEntity } from 'src/rents-extras/entity/rent-extra.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { RentExtra } from 'src/rents-extras/entity/rent-extra.entity';
 import { BaseEntity } from 'src/common/entity';
 
 @Entity({ name: 'extras' })
@@ -23,8 +23,8 @@ export class Extra extends BaseEntity {
    * en Extra, los cambios se propagaran automáticamente a la tabla
    * intermedia RentsExtras
    */
-  @OneToMany(() => RentExtraEntity, (rentExtra) => rentExtra.extra, {
+  @OneToMany(() => RentExtra, (rentExtra) => rentExtra.extra, {
     cascade: true,
   })
-  rentExtras: RentExtraEntity[];
+  rentExtras: RentExtra[];
 }
