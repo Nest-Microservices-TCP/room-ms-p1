@@ -1,7 +1,8 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity } from 'src/common/entity';
 
 @Entity({ name: 'rooms_types' })
-export class RoomType {
+export class RoomType extends BaseEntity {
   @PrimaryGeneratedColumn('uuid', {
     name: 'room_type_id',
     primaryKeyConstraintName: 'PK_rooms_types',
