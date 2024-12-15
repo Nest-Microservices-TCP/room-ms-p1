@@ -23,8 +23,9 @@ export class RoomsTypesRepository implements IRoomsTypesRepository {
   }
 
   findAll(): Promise<RoomType[]> {
-    throw new Error('Method not implemented.');
+    return this.roomsTypesRepository.find();
   }
+
   findOne(id: string): Promise<RoomType> {
     throw new Error('Method not implemented.');
   }
