@@ -40,8 +40,9 @@ export class RoomsTypesRepository implements IRoomsTypesRepository {
   }
 
   create(request: Partial<RoomType>): RoomType {
-    throw new Error('Method not implemented.');
+    return this.roomsTypesRepository.create(request);
   }
+
   save(request: CreateRoomTypeDto): Promise<RoomType> {
     throw new Error('Method not implemented.');
   }
