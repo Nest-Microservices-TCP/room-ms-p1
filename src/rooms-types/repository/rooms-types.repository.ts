@@ -5,6 +5,7 @@ import { CreateRoomTypeDto, UpdateRoomTypeDto } from '../dto/request';
 import { RoomType } from '../entity/room-type.entity';
 import { IRoomsTypesRepository } from './interfaces/rooms-types.repository.interface';
 import { InjectRepository } from '@nestjs/typeorm';
+import { EntityNotFoundException } from 'src/common/exceptions/custom';
 
 export class RoomsTypesRepository implements IRoomsTypesRepository {
   private roomsTypesRepository: Repository<RoomType>;
@@ -26,9 +27,18 @@ export class RoomsTypesRepository implements IRoomsTypesRepository {
     return this.roomsTypesRepository.find();
   }
 
-  findOne(id: string): Promise<RoomType> {
-    throw new Error('Method not implemented.');
+  async findOne(roomTypeId: string): Promise<RoomType> {
+    const roomType = await this.roomsTypesRepository.findOne({
+      where: { roomTypeId },
+    });
+
+    if (!roomType) {
+      throw new EntityNotFoundException('room-type');
+    }
+
+    return roomType;
   }
+
   create(request: Partial<RoomType>): RoomType {
     throw new Error('Method not implemented.');
   }
