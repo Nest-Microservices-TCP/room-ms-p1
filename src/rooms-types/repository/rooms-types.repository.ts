@@ -15,8 +15,13 @@ export class RoomsTypesRepository implements IRoomsTypesRepository {
   ) {}
 
   setQueryRunner(queryRunner: QueryRunner): void {
-    throw new Error('Method not implemented.');
+    if (queryRunner) {
+      this.roomsTypesRepository = queryRunner.manager.getRepository(RoomType);
+    } else {
+      this.roomsTypesRepository = this.defaultRepository;
+    }
   }
+
   findAll(): Promise<RoomType[]> {
     throw new Error('Method not implemented.');
   }
