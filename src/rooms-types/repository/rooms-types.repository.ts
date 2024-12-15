@@ -96,8 +96,9 @@ export class RoomsTypesRepository implements IRoomsTypesRepository {
   }
 
   count(criteria: FindOptionsWhere<RoomType>): Promise<number> {
-    throw new Error('Method not implemented.');
+    return this.roomsTypesRepository.count({ where: criteria });
   }
+
   paginate(page: number, limit: number): Promise<[RoomType[], number]> {
     throw new Error('Method not implemented.');
   }
