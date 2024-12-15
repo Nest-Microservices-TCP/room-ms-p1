@@ -1,11 +1,19 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { DeleteResultResponse } from 'src/common/dto/response';
-import { QueryRunner, FindOptionsWhere, Repository } from 'typeorm';
+import {
+  QueryRunner,
+  FindOptionsWhere,
+  Repository,
+  DeleteResult,
+} from 'typeorm';
 import { CreateRoomTypeDto, UpdateRoomTypeDto } from '../dto/request';
 import { RoomType } from '../entity/room-type.entity';
 import { IRoomsTypesRepository } from './interfaces/rooms-types.repository.interface';
 import { InjectRepository } from '@nestjs/typeorm';
-import { EntityNotFoundException } from 'src/common/exceptions/custom';
+import {
+  EntityNotFoundException,
+  FailedRemoveException,
+} from 'src/common/exceptions/custom';
 
 export class RoomsTypesRepository implements IRoomsTypesRepository {
   private roomsTypesRepository: Repository<RoomType>;
@@ -57,9 +65,19 @@ export class RoomsTypesRepository implements IRoomsTypesRepository {
     return this.roomsTypesRepository.save(roomType);
   }
 
-  remove(id: string): Promise<DeleteResultResponse> {
-    throw new Error('Method not implemented.');
+  async remove(roomTypeId: string): Promise<DeleteResultResponse> {
+    await this.findOne(roomTypeId);
+
+    const result: DeleteResult =
+      await this.roomsTypesRepository.delete(roomTypeId);
+
+    if (result?.affected === 0) {
+      throw new FailedRemoveException('room-type');
+    }
+
+    return { deleted: true, affected: result.affected };
   }
+
   findByIds(ids: string[]): Promise<RoomType[]> {
     throw new Error('Method not implemented.');
   }
