@@ -6,6 +6,7 @@ import {
   Repository,
   DeleteResult,
   In,
+  UpdateResult,
 } from 'typeorm';
 import { CreateRoomTypeDto, UpdateRoomTypeDto } from '../dto/request';
 import { RoomType } from '../entity/room-type.entity';
@@ -14,7 +15,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import {
   EntityNotFoundException,
   FailedRemoveException,
+  FailedSoftDeleteException,
 } from 'src/common/exceptions/custom';
+import { Status } from 'src/common/enums';
 
 export class RoomsTypesRepository implements IRoomsTypesRepository {
   private roomsTypesRepository: Repository<RoomType>;
@@ -106,9 +109,24 @@ export class RoomsTypesRepository implements IRoomsTypesRepository {
     });
   }
 
-  softDelete(id: string): Promise<RoomType> {
-    throw new Error('Method not implemented.');
+  async softDelete(roomTypeId: string): Promise<RoomType> {
+    await this.findOne(roomTypeId);
+
+    const result: UpdateResult = await this.roomsTypesRepository.update(
+      roomTypeId,
+      {
+        status: Status.DELETED,
+        deletedAt: new Date(),
+      },
+    );
+
+    if (result?.affected === 0) {
+      throw new FailedSoftDeleteException('room-type');
+    }
+
+    return this.findOne(roomTypeId);
   }
+
   restore(id: string): Promise<RoomType> {
     throw new Error('Method not implemented.');
   }
