@@ -100,8 +100,12 @@ export class RoomsTypesRepository implements IRoomsTypesRepository {
   }
 
   paginate(page: number, limit: number): Promise<[RoomType[], number]> {
-    throw new Error('Method not implemented.');
+    return this.roomsTypesRepository.findAndCount({
+      skip: (page - 1) * limit,
+      take: limit,
+    });
   }
+
   softDelete(id: string): Promise<RoomType> {
     throw new Error('Method not implemented.');
   }
