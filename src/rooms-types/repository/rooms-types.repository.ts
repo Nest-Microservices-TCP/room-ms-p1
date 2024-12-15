@@ -1,11 +1,19 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { DeleteResultResponse } from 'src/common/dto/response';
-import { QueryRunner, FindOptionsWhere } from 'typeorm';
+import { QueryRunner, FindOptionsWhere, Repository } from 'typeorm';
 import { CreateRoomTypeDto, UpdateRoomTypeDto } from '../dto/request';
 import { RoomType } from '../entity/room-type.entity';
 import { IRoomsTypesRepository } from './interfaces/rooms-types.repository.interface';
+import { InjectRepository } from '@nestjs/typeorm';
 
 export class RoomsTypesRepository implements IRoomsTypesRepository {
+  private roomsTypesRepository: Repository<RoomType>;
+
+  constructor(
+    @InjectRepository(RoomType)
+    private readonly defaultRepository: Repository<RoomType>,
+  ) {}
+
   setQueryRunner(queryRunner: QueryRunner): void {
     throw new Error('Method not implemented.');
   }
