@@ -92,8 +92,9 @@ export class RoomsTypesRepository implements IRoomsTypesRepository {
   }
 
   findWithRelations(relations: string[]): Promise<RoomType[]> {
-    throw new Error('Method not implemented.');
+    return this.roomsTypesRepository.find({ relations });
   }
+
   count(criteria: FindOptionsWhere<RoomType>): Promise<number> {
     throw new Error('Method not implemented.');
   }
