@@ -5,6 +5,7 @@ import {
   FindOptionsWhere,
   Repository,
   DeleteResult,
+  In,
 } from 'typeorm';
 import { CreateRoomTypeDto, UpdateRoomTypeDto } from '../dto/request';
 import { RoomType } from '../entity/room-type.entity';
@@ -78,9 +79,14 @@ export class RoomsTypesRepository implements IRoomsTypesRepository {
     return { deleted: true, affected: result.affected };
   }
 
-  findByIds(ids: string[]): Promise<RoomType[]> {
-    throw new Error('Method not implemented.');
+  findByIds(roomsTypesIds: string[]): Promise<RoomType[]> {
+    return this.roomsTypesRepository.find({
+      where: {
+        roomTypeId: In(roomsTypesIds),
+      },
+    });
   }
+
   findByCriteria(criteria: FindOptionsWhere<RoomType>): Promise<RoomType> {
     throw new Error('Method not implemented.');
   }
