@@ -1,4 +1,5 @@
 import {
+  Min,
   IsNumber,
   IsString,
   MaxLength,
@@ -22,5 +23,6 @@ export class CreateRoomTypeDto {
   @IsNumber()
   @IsPositive()
   @IsOptional()
+  @Min(1)
   includedPeople?: number;
 }
