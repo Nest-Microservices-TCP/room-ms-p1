@@ -1,24 +1,23 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { DeleteResultResponse } from 'src/common/dto/response';
-import {
-  QueryRunner,
-  FindOptionsWhere,
-  Repository,
-  DeleteResult,
-  In,
-  UpdateResult,
-} from 'typeorm';
-import { CreateRoomTypeDto, UpdateRoomTypeDto } from '../dto/request';
-import { RoomType } from '../entity/room-type.entity';
 import { IRoomsTypesRepository } from './interfaces/rooms-types.repository.interface';
+import { CreateRoomTypeDto, UpdateRoomTypeDto } from '../dto/request';
+import { DeleteResultResponse } from 'src/common/dto/response';
+import { RoomType } from '../entity/room-type.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Status } from 'src/common/enums';
 import {
-  EntityNotFoundException,
+  In,
+  Repository,
+  QueryRunner,
+  UpdateResult,
+  DeleteResult,
+  FindOptionsWhere,
+} from 'typeorm';
+import {
   FailedRemoveException,
   FailedRestoreException,
+  EntityNotFoundException,
   FailedSoftDeleteException,
 } from 'src/common/exceptions/custom';
-import { Status } from 'src/common/enums';
 
 export class RoomsTypesRepository implements IRoomsTypesRepository {
   private roomsTypesRepository: Repository<RoomType>;
