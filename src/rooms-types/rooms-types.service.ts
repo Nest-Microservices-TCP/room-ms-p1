@@ -1,7 +1,19 @@
 import { RoomsTypesRepository } from './repository/rooms-types.repository';
+import { HandleRpcExceptions } from 'src/common/decorators';
+import { RoomTypeResponseDto } from './dto/response';
+import { plainToInstance } from 'class-transformer';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class RoomsTypesService {
   constructor(private readonly roomsTypesRepository: RoomsTypesRepository) {}
+
+  @HandleRpcExceptions()
+  async findAll(): Promise<RoomTypeResponseDto[]> {
+    const roomsTypes = await this.roomsTypesRepository.findAll();
+
+    return plainToInstance(RoomTypeResponseDto, roomsTypes, {
+      excludeExtraneousValues: true,
+    });
+  }
 }
