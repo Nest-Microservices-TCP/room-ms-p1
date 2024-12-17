@@ -146,9 +146,12 @@ export class RoomsTypesRepository implements IRoomsTypesRepository {
     return this.findOne(roomTypeId);
   }
 
-  exists(criteria: FindOptionsWhere<RoomType>): Promise<boolean> {
-    throw new Error('Method not implemented.');
+  async exists(criteria: FindOptionsWhere<RoomType>): Promise<boolean> {
+    const count = await this.roomsTypesRepository.count({ where: criteria });
+
+    return count > 0;
   }
+
   bulkSave(entities: RoomType[]): Promise<RoomType[]> {
     throw new Error('Method not implemented.');
   }
