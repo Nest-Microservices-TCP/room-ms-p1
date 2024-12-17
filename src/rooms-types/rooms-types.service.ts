@@ -2,6 +2,7 @@ import { RoomsTypesRepository } from './repository/rooms-types.repository';
 import { HandleRpcExceptions } from 'src/common/decorators';
 import { RoomTypeResponseDto } from './dto/response';
 import { plainToInstance } from 'class-transformer';
+import { CreateRoomTypeDto } from './dto/request';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
@@ -31,6 +32,15 @@ export class RoomsTypesService {
     const roomsTypes = await this.roomsTypesRepository.findByIds(roomsTypesIds);
 
     return plainToInstance(RoomTypeResponseDto, roomsTypes, {
+      excludeExtraneousValues: true,
+    });
+  }
+
+  @HandleRpcExceptions()
+  async save(request: CreateRoomTypeDto): Promise<RoomTypeResponseDto> {
+    const newRoomType = await this.roomsTypesRepository.save(request);
+
+    return plainToInstance(RoomTypeResponseDto, newRoomType, {
       excludeExtraneousValues: true,
     });
   }
