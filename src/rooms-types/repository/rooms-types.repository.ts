@@ -15,6 +15,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import {
   EntityNotFoundException,
   FailedRemoveException,
+  FailedRestoreException,
   FailedSoftDeleteException,
 } from 'src/common/exceptions/custom';
 import { Status } from 'src/common/enums';
@@ -127,9 +128,24 @@ export class RoomsTypesRepository implements IRoomsTypesRepository {
     return this.findOne(roomTypeId);
   }
 
-  restore(id: string): Promise<RoomType> {
-    throw new Error('Method not implemented.');
+  async restore(roomTypeId: string): Promise<RoomType> {
+    await this.findOne(roomTypeId);
+
+    const result: UpdateResult = await this.roomsTypesRepository.update(
+      roomTypeId,
+      {
+        status: Status.ACTIVE,
+        deletedAt: null,
+      },
+    );
+
+    if (result?.affected === 0) {
+      throw new FailedRestoreException('room-type');
+    }
+
+    return this.findOne(roomTypeId);
   }
+
   exists(criteria: FindOptionsWhere<RoomType>): Promise<boolean> {
     throw new Error('Method not implemented.');
   }
