@@ -16,4 +16,13 @@ export class RoomsTypesService {
       excludeExtraneousValues: true,
     });
   }
+
+  @HandleRpcExceptions()
+  async findOne(roomTypeId: string): Promise<RoomTypeResponseDto> {
+    const roomType = await this.roomsTypesRepository.findOne(roomTypeId);
+
+    return plainToInstance(RoomTypeResponseDto, roomType, {
+      excludeExtraneousValues: true,
+    });
+  }
 }
