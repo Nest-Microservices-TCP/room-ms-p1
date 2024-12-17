@@ -25,4 +25,13 @@ export class RoomsTypesService {
       excludeExtraneousValues: true,
     });
   }
+
+  @HandleRpcExceptions()
+  async findByIds(roomsTypesIds: string[]): Promise<RoomTypeResponseDto[]> {
+    const roomsTypes = await this.roomsTypesRepository.findByIds(roomsTypesIds);
+
+    return plainToInstance(RoomTypeResponseDto, roomsTypes, {
+      excludeExtraneousValues: true,
+    });
+  }
 }
