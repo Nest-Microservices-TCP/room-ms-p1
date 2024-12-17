@@ -161,6 +161,6 @@ export class RoomsTypesRepository implements IRoomsTypesRepository {
   }
 
   customQuery(query: string, params: any[]): Promise<any> {
-    throw new Error('Method not implemented.');
+    return this.roomsTypesRepository.query(query, params);
   }
 }
