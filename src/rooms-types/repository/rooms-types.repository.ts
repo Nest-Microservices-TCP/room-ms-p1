@@ -152,9 +152,10 @@ export class RoomsTypesRepository implements IRoomsTypesRepository {
     return count > 0;
   }
 
-  bulkSave(entities: RoomType[]): Promise<RoomType[]> {
-    throw new Error('Method not implemented.');
+  bulkSave(roomsTypes: RoomType[]): Promise<RoomType[]> {
+    return this.roomsTypesRepository.save(roomsTypes);
   }
+
   bulkUpdate(entities: RoomType[]): Promise<RoomType[]> {
     throw new Error('Method not implemented.');
   }
