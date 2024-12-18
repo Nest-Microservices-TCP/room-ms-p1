@@ -14,12 +14,16 @@ export class RoomsTypesController {
   }
 
   @MessagePattern({ cmd: 'find.one.room.type' })
-  findOne(roomTypeId: string): Promise<RoomTypeResponseDto> {
+  findOne(
+    @Payload('roomTypeId') roomTypeId: string,
+  ): Promise<RoomTypeResponseDto> {
     return this.roomsTypesService.findOne(roomTypeId);
   }
 
   @MessagePattern({ cmd: 'find.rooms.types.by.ids' })
-  findByIds(roomsTypesIds: string[]): Promise<RoomTypeResponseDto[]> {
+  findByIds(
+    @Payload('roomsTypesIds') roomsTypesIds: string[],
+  ): Promise<RoomTypeResponseDto[]> {
     return this.roomsTypesService.findByIds(roomsTypesIds);
   }
 
