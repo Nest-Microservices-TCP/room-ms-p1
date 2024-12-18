@@ -1,8 +1,8 @@
-import { RoomsTypesService } from './rooms-types.service';
+import { CreateRoomTypeDto, UpdateRoomTypeDto } from './dto/request';
 import { MessagePattern, Payload } from '@nestjs/microservices';
+import { RoomsTypesService } from './rooms-types.service';
 import { RoomTypeResponseDto } from './dto/response';
 import { Controller } from '@nestjs/common';
-import { CreateRoomTypeDto } from './dto/request';
 
 @Controller()
 export class RoomsTypesController {
@@ -28,9 +28,12 @@ export class RoomsTypesController {
   }
 
   @MessagePattern({ cmd: 'save.room.type' })
-  async save(
-    @Payload() request: CreateRoomTypeDto,
-  ): Promise<RoomTypeResponseDto> {
+  save(@Payload() request: CreateRoomTypeDto): Promise<RoomTypeResponseDto> {
     return this.roomsTypesService.save(request);
+  }
+
+  @MessagePattern({ cmd: 'update.room.type' })
+  update(@Payload() request: UpdateRoomTypeDto): Promise<RoomTypeResponseDto> {
+    return this.roomsTypesService.update(request);
   }
 }
