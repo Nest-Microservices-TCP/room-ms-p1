@@ -1,8 +1,8 @@
 import { RoomsTypesRepository } from './repository/rooms-types.repository';
+import { CreateRoomTypeDto, UpdateRoomTypeDto } from './dto/request';
 import { HandleRpcExceptions } from 'src/common/decorators';
 import { RoomTypeResponseDto } from './dto/response';
 import { plainToInstance } from 'class-transformer';
-import { CreateRoomTypeDto } from './dto/request';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
@@ -41,6 +41,15 @@ export class RoomsTypesService {
     const newRoomType = await this.roomsTypesRepository.save(request);
 
     return plainToInstance(RoomTypeResponseDto, newRoomType, {
+      excludeExtraneousValues: true,
+    });
+  }
+
+  @HandleRpcExceptions()
+  async update(request: UpdateRoomTypeDto): Promise<RoomTypeResponseDto> {
+    const roomTypeUpdated = await this.roomsTypesRepository.update(request);
+
+    return plainToInstance(RoomTypeResponseDto, roomTypeUpdated, {
       excludeExtraneousValues: true,
     });
   }
