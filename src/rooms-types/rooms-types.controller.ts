@@ -1,7 +1,8 @@
 import { RoomsTypesService } from './rooms-types.service';
-import { MessagePattern } from '@nestjs/microservices';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 import { RoomTypeResponseDto } from './dto/response';
 import { Controller } from '@nestjs/common';
+import { CreateRoomTypeDto } from './dto/request';
 
 @Controller()
 export class RoomsTypesController {
@@ -20,5 +21,12 @@ export class RoomsTypesController {
   @MessagePattern({ cmd: 'find.rooms.types.by.ids' })
   findByIds(roomsTypesIds: string[]): Promise<RoomTypeResponseDto[]> {
     return this.roomsTypesService.findByIds(roomsTypesIds);
+  }
+
+  @MessagePattern({ cmd: 'save.room.type' })
+  async save(
+    @Payload() request: CreateRoomTypeDto,
+  ): Promise<RoomTypeResponseDto> {
+    return this.roomsTypesService.save(request);
   }
 }
