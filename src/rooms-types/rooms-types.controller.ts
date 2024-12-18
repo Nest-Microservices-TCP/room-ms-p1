@@ -11,4 +11,9 @@ export class RoomsTypesController {
   findAll(): Promise<RoomTypeResponseDto[]> {
     return this.roomsTypesService.findAll();
   }
+
+  @MessagePattern({ cmd: 'find.one.room.type' })
+  findOne(roomTypeId: string): Promise<RoomTypeResponseDto> {
+    return this.roomsTypesService.findOne(roomTypeId);
+  }
 }
