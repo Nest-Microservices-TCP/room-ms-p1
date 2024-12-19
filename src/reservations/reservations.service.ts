@@ -12,6 +12,12 @@ export class ReservationsService {
     private readonly reservationsRepository: ReservationsRepository,
   ) {}
 
+  private plainToInstanceDto(data: unknown): any {
+    return plainToInstance(ReservationResponseDto, data, {
+      excludeExtraneousValues: true,
+    });
+  }
+
   @HandleRpcExceptions()
   async findAll(): Promise<ReservationResponseDto[]> {
     const reservations = await this.reservationsRepository.findAll();
