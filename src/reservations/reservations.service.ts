@@ -22,9 +22,7 @@ export class ReservationsService {
   async findAll(): Promise<ReservationResponseDto[]> {
     const reservations = await this.reservationsRepository.findAll();
 
-    return plainToInstance(ReservationResponseDto, reservations, {
-      excludeExtraneousValues: true,
-    });
+    return this.plainToInstanceDto(reservations);
   }
 
   @HandleRpcExceptions()
@@ -32,38 +30,7 @@ export class ReservationsService {
     const reservation =
       await this.reservationsRepository.findOne(reservationId);
 
-    return plainToInstance(ReservationResponseDto, reservation, {
-      excludeExtraneousValues: true,
-    });
-  }
-
-  @HandleRpcExceptions()
-  async save(request: CreateReservationDto): Promise<ReservationResponseDto> {
-    const newReservation = await this.reservationsRepository.save(request);
-
-    return plainToInstance(ReservationResponseDto, newReservation, {
-      excludeExtraneousValues: true,
-    });
-  }
-
-  @HandleRpcExceptions()
-  async update(request: UpdateReservationDto): Promise<ReservationResponseDto> {
-    const reservationUpdated =
-      await this.reservationsRepository.update(request);
-
-    return plainToInstance(ReservationResponseDto, reservationUpdated, {
-      excludeExtraneousValues: true,
-    });
-  }
-
-  @HandleRpcExceptions()
-  async remove(reservationId: string): Promise<DeleteResultResponse> {
-    const deleteResult =
-      await this.reservationsRepository.remove(reservationId);
-
-    return plainToInstance(DeleteResultResponse, deleteResult, {
-      excludeExtraneousValues: true,
-    });
+    return this.plainToInstanceDto(reservation);
   }
 
   @HandleRpcExceptions()
@@ -73,7 +40,30 @@ export class ReservationsService {
     const reservations =
       await this.reservationsRepository.findByIds(reservationsIds);
 
-    return plainToInstance(ReservationResponseDto, reservations, {
+    return this.plainToInstanceDto(reservations);
+  }
+
+  @HandleRpcExceptions()
+  async save(request: CreateReservationDto): Promise<ReservationResponseDto> {
+    const newReservation = await this.reservationsRepository.save(request);
+
+    return this.plainToInstanceDto(newReservation);
+  }
+
+  @HandleRpcExceptions()
+  async update(request: UpdateReservationDto): Promise<ReservationResponseDto> {
+    const reservationUpdated =
+      await this.reservationsRepository.update(request);
+
+    return this.plainToInstanceDto(reservationUpdated);
+  }
+
+  @HandleRpcExceptions()
+  async remove(reservationId: string): Promise<DeleteResultResponse> {
+    const deleteResult =
+      await this.reservationsRepository.remove(reservationId);
+
+    return plainToInstance(DeleteResultResponse, deleteResult, {
       excludeExtraneousValues: true,
     });
   }
