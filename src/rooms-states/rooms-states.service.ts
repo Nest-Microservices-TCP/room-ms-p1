@@ -22,11 +22,9 @@ export class RoomsStatesService {
 
   @HandleRpcExceptions()
   async save(request: CreateRoomStateDto): Promise<RoomStateResponseDto> {
-    const roomState = await this.roomsStatesRepository.save(request);
+    const newRoomState = await this.roomsStatesRepository.save(request);
 
-    return plainToInstance(RoomStateResponseDto, roomState, {
-      excludeExtraneousValues: true,
-    });
+    return this.plainToInstanceDto(newRoomState);
   }
 
   @HandleRpcExceptions()
@@ -36,9 +34,7 @@ export class RoomsStatesService {
     const { roomStateId } = request;
     const roomState = await this.roomsStatesRepository.findOne(roomStateId);
 
-    return plainToInstance(RoomStateResponseDto, roomState, {
-      excludeExtraneousValues: true,
-    });
+    return this.plainToInstanceDto(roomState);
   }
 
   @HandleRpcExceptions()
@@ -46,27 +42,21 @@ export class RoomsStatesService {
     const roomsStates =
       await this.roomsStatesRepository.findByIds(roomsStatesIds);
 
-    return plainToInstance(RoomStateResponseDto, roomsStates, {
-      excludeExtraneousValues: true,
-    });
+    return this.plainToInstanceDto(roomsStates);
   }
 
   @HandleRpcExceptions()
   async findAll(): Promise<RoomStateResponseDto[]> {
     const roomsStates = await this.roomsStatesRepository.findAll();
 
-    return plainToInstance(RoomStateResponseDto, roomsStates, {
-      excludeExtraneousValues: true,
-    });
+    return this.plainToInstanceDto(roomsStates);
   }
 
   @HandleRpcExceptions()
   async update(request: UpdateRoomStateDto): Promise<RoomStateResponseDto> {
-    const deleteResult = await this.roomsStatesRepository.update(request);
+    const roomStateUpdated = await this.roomsStatesRepository.update(request);
 
-    return plainToInstance(RoomStateResponseDto, deleteResult, {
-      excludeExtraneousValues: true,
-    });
+    return this.plainToInstanceDto(roomStateUpdated);
   }
 
   @HandleRpcExceptions()
