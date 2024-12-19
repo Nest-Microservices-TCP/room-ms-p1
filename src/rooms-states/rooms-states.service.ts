@@ -14,6 +14,12 @@ import {
 export class RoomsStatesService {
   constructor(private readonly roomsStatesRepository: RoomsStatesRepository) {}
 
+  private plainToInstanceDto(data: unknown): any {
+    return plainToInstance(RoomStateResponseDto, data, {
+      excludeExtraneousValues: true,
+    });
+  }
+
   @HandleRpcExceptions()
   async save(request: CreateRoomStateDto): Promise<RoomStateResponseDto> {
     const roomState = await this.roomsStatesRepository.save(request);
