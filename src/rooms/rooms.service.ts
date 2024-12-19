@@ -10,6 +10,12 @@ import { Injectable } from '@nestjs/common';
 export class RoomsService {
   constructor(private readonly roomsRepository: RoomsRepository) {}
 
+  private plainToInstanceDto(data: unknown): any {
+    return plainToInstance(RoomResponseDto, data, {
+      excludeExtraneousValues: true,
+    });
+  }
+
   @HandleRpcExceptions()
   async save(request: CreateRoomDto): Promise<RoomResponseDto> {
     const room = await this.roomsRepository.save(request);
