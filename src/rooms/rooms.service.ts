@@ -18,47 +18,37 @@ export class RoomsService {
 
   @HandleRpcExceptions()
   async save(request: CreateRoomDto): Promise<RoomResponseDto> {
-    const room = await this.roomsRepository.save(request);
+    const newRoom = await this.roomsRepository.save(request);
 
-    return plainToInstance(RoomResponseDto, room, {
-      excludeExtraneousValues: true,
-    });
+    return this.plainToInstanceDto(newRoom);
   }
 
   @HandleRpcExceptions()
   async findOne(roomId: string): Promise<RoomResponseDto> {
     const room = await this.roomsRepository.findOne(roomId);
 
-    return plainToInstance(RoomResponseDto, room, {
-      excludeExtraneousValues: true,
-    });
+    return this.plainToInstanceDto(room);
   }
 
   @HandleRpcExceptions()
   async findByIds(roomsIds: string[]): Promise<RoomResponseDto[]> {
     const rooms = await this.roomsRepository.findByIds(roomsIds);
 
-    return plainToInstance(RoomResponseDto, rooms, {
-      excludeExtraneousValues: true,
-    });
+    return this.plainToInstanceDto(rooms);
   }
 
   @HandleRpcExceptions()
   async findAll(): Promise<RoomResponseDto[]> {
     const rooms = await this.roomsRepository.findAll();
 
-    return plainToInstance(RoomResponseDto, rooms, {
-      excludeExtraneousValues: true,
-    });
+    return this.plainToInstanceDto(rooms);
   }
 
   @HandleRpcExceptions()
   async update(request: UpdateRoomDto) {
-    const room = await this.roomsRepository.update(request);
+    const updatedRoom = await this.roomsRepository.update(request);
 
-    return plainToInstance(RoomResponseDto, room, {
-      excludeExtraneousValues: true,
-    });
+    return this.plainToInstanceDto(updatedRoom);
   }
 
   @HandleRpcExceptions()
