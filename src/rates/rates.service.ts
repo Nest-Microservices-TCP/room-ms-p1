@@ -9,6 +9,12 @@ import { Injectable } from '@nestjs/common';
 export class RatesService {
   constructor(private readonly ratesRepository: RatesRepository) {}
 
+  private plainToInstanceDto(data: unknown): any {
+    return plainToInstance(RateResponseDto, data, {
+      excludeExtraneousValues: true,
+    });
+  }
+
   @HandleRpcExceptions()
   async findAll(): Promise<RateResponseDto[]> {
     const rates = await this.ratesRepository.findAll();
