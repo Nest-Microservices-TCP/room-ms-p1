@@ -10,6 +10,12 @@ import { Injectable } from '@nestjs/common';
 export class AmenitiesService {
   constructor(private readonly amenitiesRepository: AmenitiesRepository) {}
 
+  private plainToInstanceDto(data: unknown): any {
+    return plainToInstance(AmenityResponseDto, data, {
+      excludeExtraneousValues: true,
+    });
+  }
+
   @HandleRpcExceptions()
   async findAll(): Promise<AmenityResponseDto[]> {
     const amenities = await this.amenitiesRepository.findAll();
