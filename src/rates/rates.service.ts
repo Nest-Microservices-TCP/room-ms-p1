@@ -19,45 +19,35 @@ export class RatesService {
   async findAll(): Promise<RateResponseDto[]> {
     const rates = await this.ratesRepository.findAll();
 
-    return plainToInstance(RateResponseDto, rates, {
-      excludeExtraneousValues: true,
-    });
+    return this.plainToInstanceDto(rates);
   }
 
   @HandleRpcExceptions()
   async findOne(rateId: string): Promise<RateResponseDto> {
     const rate = await this.ratesRepository.findOne(rateId);
 
-    return plainToInstance(RateResponseDto, rate, {
-      excludeExtraneousValues: true,
-    });
+    return this.plainToInstanceDto(rate);
   }
 
   @HandleRpcExceptions()
   async findByIds(ratesIds: string[]): Promise<RateResponseDto[]> {
     const rates = await this.ratesRepository.findByIds(ratesIds);
 
-    return plainToInstance(RateResponseDto, rates, {
-      excludeExtraneousValues: true,
-    });
+    return this.plainToInstanceDto(rates);
   }
 
   @HandleRpcExceptions()
   async save(request: CreateRateDto): Promise<RateResponseDto> {
-    const rate = await this.ratesRepository.save(request);
+    const newRate = await this.ratesRepository.save(request);
 
-    return plainToInstance(RateResponseDto, rate, {
-      excludeExtraneousValues: true,
-    });
+    return this.plainToInstanceDto(newRate);
   }
 
   @HandleRpcExceptions()
   async update(request: UpdateRateDto): Promise<RateResponseDto> {
-    const rate = await this.ratesRepository.update(request);
+    const updatedRate = await this.ratesRepository.update(request);
 
-    return plainToInstance(RateResponseDto, rate, {
-      excludeExtraneousValues: true,
-    });
+    return this.plainToInstanceDto(updatedRate);
   }
 
   @HandleRpcExceptions()
