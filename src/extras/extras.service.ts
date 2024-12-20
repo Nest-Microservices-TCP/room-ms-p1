@@ -19,45 +19,35 @@ export class ExtrasService {
   async findAll(): Promise<ExtraResponseDto[]> {
     const extras = await this.extrasRepository.findAll();
 
-    return plainToInstance(ExtraResponseDto, extras, {
-      excludeExtraneousValues: true,
-    });
+    return this.plainToInstanceDto(extras);
   }
 
   @HandleRpcExceptions()
   async findOne(extraId: string): Promise<ExtraResponseDto> {
     const extra = await this.extrasRepository.findOne(extraId);
 
-    return plainToInstance(ExtraResponseDto, extra, {
-      excludeExtraneousValues: true,
-    });
+    return this.plainToInstanceDto(extra);
   }
 
   @HandleRpcExceptions()
   async findByIds(extrasIds: string[]): Promise<ExtraResponseDto[]> {
     const extras = await this.extrasRepository.findByIds(extrasIds);
 
-    return plainToInstance(ExtraResponseDto, extras, {
-      excludeExtraneousValues: true,
-    });
+    return this.plainToInstanceDto(extras);
   }
 
   @HandleRpcExceptions()
   async save(request: CreateExtraDto): Promise<ExtraResponseDto> {
-    const extra = await this.extrasRepository.save(request);
+    const newExtra = await this.extrasRepository.save(request);
 
-    return plainToInstance(ExtraResponseDto, extra, {
-      excludeExtraneousValues: true,
-    });
+    return this.plainToInstanceDto(newExtra);
   }
 
   @HandleRpcExceptions()
   async update(request: UpdateExtraDto): Promise<ExtraResponseDto> {
-    const extra = await this.extrasRepository.update(request);
+    const updatedExtra = await this.extrasRepository.update(request);
 
-    return plainToInstance(ExtraResponseDto, extra, {
-      excludeExtraneousValues: true,
-    });
+    return this.plainToInstanceDto(updatedExtra);
   }
 
   @HandleRpcExceptions()
