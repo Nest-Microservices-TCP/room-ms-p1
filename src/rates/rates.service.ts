@@ -19,8 +19,8 @@ export class RatesService {
   }
 
   @HandleRpcExceptions()
-  async findOneById(rateId: string): Promise<RateResponseDto> {
-    const rate = await this.ratesRepository.findOneById(rateId);
+  async findOne(rateId: string): Promise<RateResponseDto> {
+    const rate = await this.ratesRepository.findOne(rateId);
 
     return plainToInstance(RateResponseDto, rate, {
       excludeExtraneousValues: true,
