@@ -14,8 +14,8 @@ export class RatesController {
   }
 
   @MessagePattern({ cmd: 'find.one.rate' })
-  findOneById(@Payload('rateId') rateId: string): Promise<RateResponseDto> {
-    return this.ratesService.findOneById(rateId);
+  findOne(@Payload('rateId') rateId: string): Promise<RateResponseDto> {
+    return this.ratesService.findOne(rateId);
   }
 
   @MessagePattern({ cmd: 'find.rates.by.ids' })
