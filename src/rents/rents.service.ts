@@ -19,45 +19,35 @@ export class RentsService {
   async findAll(): Promise<RentResponseDto[]> {
     const rents = await this.rentsRepository.findAll();
 
-    return plainToInstance(RentResponseDto, rents, {
-      excludeExtraneousValues: true,
-    });
+    return this.plainToInstanceDto(rents);
   }
 
   @HandleRpcExceptions()
   async findOne(rentId: string): Promise<RentResponseDto> {
     const rent = await this.rentsRepository.findOne(rentId);
 
-    return plainToInstance(RentResponseDto, rent, {
-      excludeExtraneousValues: true,
-    });
+    return this.plainToInstanceDto(rent);
   }
 
   @HandleRpcExceptions()
   async findByIds(rentsIds: string[]): Promise<RentResponseDto[]> {
     const rents = await this.rentsRepository.findByIds(rentsIds);
 
-    return plainToInstance(RentResponseDto, rents, {
-      excludeExtraneousValues: true,
-    });
+    return this.plainToInstanceDto(rents);
   }
 
   @HandleRpcExceptions()
   async save(request: CreateRentDto): Promise<RentResponseDto> {
-    const rent = await this.rentsRepository.save(request);
+    const newRent = await this.rentsRepository.save(request);
 
-    return plainToInstance(RentResponseDto, rent, {
-      excludeExtraneousValues: true,
-    });
+    return this.plainToInstanceDto(newRent);
   }
 
   @HandleRpcExceptions()
   async update(request: UpdateRentDto): Promise<RentResponseDto> {
-    const rent = await this.rentsRepository.update(request);
+    const updatedRent = await this.rentsRepository.update(request);
 
-    return plainToInstance(RentResponseDto, rent, {
-      excludeExtraneousValues: true,
-    });
+    return this.plainToInstanceDto(updatedRent);
   }
 
   @HandleRpcExceptions()
