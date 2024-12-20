@@ -20,45 +20,35 @@ export class AmenitiesService {
   async findAll(): Promise<AmenityResponseDto[]> {
     const amenities = await this.amenitiesRepository.findAll();
 
-    return plainToInstance(AmenityResponseDto, amenities, {
-      excludeExtraneousValues: true,
-    });
+    return this.plainToInstanceDto(amenities);
   }
 
   @HandleRpcExceptions()
   async findOne(amenityId: string): Promise<AmenityResponseDto> {
     const amenity = await this.amenitiesRepository.findOne(amenityId);
 
-    return plainToInstance(AmenityResponseDto, amenity, {
-      excludeExtraneousValues: true,
-    });
+    return this.plainToInstanceDto(amenity);
   }
 
   @HandleRpcExceptions()
   async findByIds(amenitiesIds: string[]): Promise<AmenityResponseDto[]> {
     const amenities = await this.amenitiesRepository.findByIds(amenitiesIds);
 
-    return plainToInstance(AmenityResponseDto, amenities, {
-      excludeExtraneousValues: true,
-    });
+    return this.plainToInstanceDto(amenities);
   }
 
   @HandleRpcExceptions()
   async save(request: CreateAmenityDto): Promise<AmenityResponseDto> {
     const newAmenity = await this.amenitiesRepository.save(request);
 
-    return plainToInstance(AmenityResponseDto, newAmenity, {
-      excludeExtraneousValues: true,
-    });
+    return this.plainToInstanceDto(newAmenity);
   }
 
   @HandleRpcExceptions()
   async update(request: UpdateAmenityDto): Promise<AmenityResponseDto> {
-    const amenityUpdated = await this.amenitiesRepository.update(request);
+    const updatedAmenity = await this.amenitiesRepository.update(request);
 
-    return plainToInstance(AmenityResponseDto, amenityUpdated, {
-      excludeExtraneousValues: true,
-    });
+    return this.plainToInstanceDto(updatedAmenity);
   }
 
   @HandleRpcExceptions()
