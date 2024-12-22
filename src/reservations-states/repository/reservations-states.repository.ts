@@ -2,13 +2,21 @@
 import { IReservationsStatesRepository } from './interfaces/reservations-states.repository.interface';
 import { ReservationState } from '../entity/reservation-state.entity';
 import { DeleteResultResponse } from 'src/common/dto/response';
-import { QueryRunner, FindOptionsWhere, Repository } from 'typeorm';
+import {
+  QueryRunner,
+  FindOptionsWhere,
+  Repository,
+  DeleteResult,
+} from 'typeorm';
 import {
   CreateReservationStateDto,
   UpdateReservationStateDto,
 } from '../dto/request';
 import { InjectRepository } from '@nestjs/typeorm';
-import { EntityNotFoundException } from 'src/common/exceptions/custom';
+import {
+  EntityNotFoundException,
+  FailedRemoveException,
+} from 'src/common/exceptions/custom';
 
 export class ReservationsStatesRepository
   implements IReservationsStatesRepository
@@ -63,9 +71,19 @@ export class ReservationsStatesRepository
     return this.reservationsStatesRepository.save(reservationState);
   }
 
-  remove(id: string): Promise<DeleteResultResponse> {
-    throw new Error('Method not implemented.');
+  async remove(reservationStateId: string): Promise<DeleteResultResponse> {
+    await this.findOne(reservationStateId);
+
+    const result: DeleteResult =
+      await this.reservationsStatesRepository.delete(reservationStateId);
+
+    if (result?.affected === 0) {
+      throw new FailedRemoveException('reservation-state');
+    }
+
+    return { deleted: true, affected: result.affected };
   }
+
   findByIds(ids: string[]): Promise<ReservationState[]> {
     throw new Error('Method not implemented.');
   }
