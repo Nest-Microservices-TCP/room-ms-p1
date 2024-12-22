@@ -2,15 +2,23 @@
 import { IReservationsStatesRepository } from './interfaces/reservations-states.repository.interface';
 import { ReservationState } from '../entity/reservation-state.entity';
 import { DeleteResultResponse } from 'src/common/dto/response';
-import { QueryRunner, FindOptionsWhere } from 'typeorm';
+import { QueryRunner, FindOptionsWhere, Repository } from 'typeorm';
 import {
   CreateReservationStateDto,
   UpdateReservationStateDto,
 } from '../dto/request';
+import { InjectRepository } from '@nestjs/typeorm';
 
 export class ReservationsStatesRepository
   implements IReservationsStatesRepository
 {
+  private reservationsStatesRepository: Repository<ReservationState>;
+
+  constructor(
+    @InjectRepository(ReservationState)
+    private readonly defaultRepository: Repository<ReservationState>,
+  ) {}
+
   setQueryRunner(queryRunner: QueryRunner): void {
     throw new Error('Method not implemented.');
   }
