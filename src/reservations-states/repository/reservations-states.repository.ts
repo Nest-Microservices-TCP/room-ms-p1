@@ -53,9 +53,16 @@ export class ReservationsStatesRepository
     return this.reservationsStatesRepository.save(request);
   }
 
-  update(request: UpdateReservationStateDto): Promise<ReservationState> {
-    throw new Error('Method not implemented.');
+  async update(request: UpdateReservationStateDto): Promise<ReservationState> {
+    const { reservationStateId } = request;
+
+    const reservationState = await this.findOne(reservationStateId);
+
+    Object.assign(reservationState, request);
+
+    return this.reservationsStatesRepository.save(reservationState);
   }
+
   remove(id: string): Promise<DeleteResultResponse> {
     throw new Error('Method not implemented.');
   }
