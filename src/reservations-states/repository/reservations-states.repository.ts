@@ -29,8 +29,9 @@ export class ReservationsStatesRepository
   }
 
   findAll(): Promise<ReservationState[]> {
-    throw new Error('Method not implemented.');
+    return this.reservationsStatesRepository.find();
   }
+
   findOne(id: string): Promise<ReservationState> {
     throw new Error('Method not implemented.');
   }
