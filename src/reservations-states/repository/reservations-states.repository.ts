@@ -8,6 +8,7 @@ import {
   UpdateReservationStateDto,
 } from '../dto/request';
 import { InjectRepository } from '@nestjs/typeorm';
+import { EntityNotFoundException } from 'src/common/exceptions/custom';
 
 export class ReservationsStatesRepository
   implements IReservationsStatesRepository
@@ -32,9 +33,18 @@ export class ReservationsStatesRepository
     return this.reservationsStatesRepository.find();
   }
 
-  findOne(id: string): Promise<ReservationState> {
-    throw new Error('Method not implemented.');
+  async findOne(reservationStateId: string): Promise<ReservationState> {
+    const reservationState = await this.reservationsStatesRepository.findOne({
+      where: { reservationStateId },
+    });
+
+    if (!reservationState) {
+      throw new EntityNotFoundException('reservation-state');
+    }
+
+    return reservationState;
   }
+
   create(request: Partial<ReservationState>): ReservationState {
     throw new Error('Method not implemented.');
   }
