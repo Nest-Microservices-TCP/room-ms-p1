@@ -20,8 +20,14 @@ export class ReservationsStatesRepository
   ) {}
 
   setQueryRunner(queryRunner: QueryRunner): void {
-    throw new Error('Method not implemented.');
+    if (queryRunner) {
+      this.reservationsStatesRepository =
+        queryRunner.manager.getRepository(ReservationState);
+    } else {
+      this.reservationsStatesRepository = this.defaultRepository;
+    }
   }
+
   findAll(): Promise<ReservationState[]> {
     throw new Error('Method not implemented.');
   }
