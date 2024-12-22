@@ -50,8 +50,9 @@ export class ReservationsStatesRepository
   }
 
   save(request: CreateReservationStateDto): Promise<ReservationState> {
-    throw new Error('Method not implemented.');
+    return this.reservationsStatesRepository.save(request);
   }
+
   update(request: UpdateReservationStateDto): Promise<ReservationState> {
     throw new Error('Method not implemented.');
   }
