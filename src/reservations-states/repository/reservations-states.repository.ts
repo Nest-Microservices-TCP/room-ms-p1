@@ -102,8 +102,9 @@ export class ReservationsStatesRepository
   }
 
   count(criteria: FindOptionsWhere<ReservationState>): Promise<number> {
-    throw new Error('Method not implemented.');
+    return this.reservationsStatesRepository.count({ where: criteria });
   }
+
   paginate(page: number, limit: number): Promise<[ReservationState[], number]> {
     throw new Error('Method not implemented.');
   }
