@@ -94,8 +94,9 @@ export class ReservationsStatesRepository
   findByCriteria(
     criteria: FindOptionsWhere<ReservationState>,
   ): Promise<ReservationState> {
-    throw new Error('Method not implemented.');
+    return this.reservationsStatesRepository.findOne({ where: criteria });
   }
+
   findWithRelations(relations: string[]): Promise<ReservationState[]> {
     throw new Error('Method not implemented.');
   }
