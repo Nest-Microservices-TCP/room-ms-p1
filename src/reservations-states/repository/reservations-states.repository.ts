@@ -106,8 +106,12 @@ export class ReservationsStatesRepository
   }
 
   paginate(page: number, limit: number): Promise<[ReservationState[], number]> {
-    throw new Error('Method not implemented.');
+    return this.reservationsStatesRepository.findAndCount({
+      skip: (page - 1) * limit,
+      take: limit,
+    });
   }
+
   softDelete(id: string): Promise<ReservationState> {
     throw new Error('Method not implemented.');
   }
