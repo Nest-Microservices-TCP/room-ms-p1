@@ -160,9 +160,12 @@ export class ReservationsStatesRepository
     return count > 0;
   }
 
-  bulkSave(entities: ReservationState[]): Promise<ReservationState[]> {
-    throw new Error('Method not implemented.');
+  bulkSave(
+    reservationsStates: ReservationState[],
+  ): Promise<ReservationState[]> {
+    return this.reservationsStatesRepository.save(reservationsStates);
   }
+
   bulkUpdate(entities: ReservationState[]): Promise<ReservationState[]> {
     throw new Error('Method not implemented.');
   }
