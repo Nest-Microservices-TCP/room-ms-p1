@@ -8,6 +8,7 @@ import {
   Repository,
   DeleteResult,
   In,
+  UpdateResult,
 } from 'typeorm';
 import {
   CreateReservationStateDto,
@@ -17,7 +18,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import {
   EntityNotFoundException,
   FailedRemoveException,
+  FailedSoftDeleteException,
 } from 'src/common/exceptions/custom';
+import { Status } from 'src/common/enums';
 
 export class ReservationsStatesRepository
   implements IReservationsStatesRepository
@@ -112,9 +115,24 @@ export class ReservationsStatesRepository
     });
   }
 
-  softDelete(id: string): Promise<ReservationState> {
-    throw new Error('Method not implemented.');
+  async softDelete(reservationStateId: string): Promise<ReservationState> {
+    await this.findOne(reservationStateId);
+
+    const result: UpdateResult = await this.reservationsStatesRepository.update(
+      reservationStateId,
+      {
+        status: Status.DELETED,
+        deletedAt: new Date(),
+      },
+    );
+
+    if (result?.affected === 0) {
+      throw new FailedSoftDeleteException('reservation-state');
+    }
+
+    return this.findOne(reservationStateId);
   }
+
   restore(id: string): Promise<ReservationState> {
     throw new Error('Method not implemented.');
   }
