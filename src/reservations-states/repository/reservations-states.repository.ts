@@ -98,8 +98,9 @@ export class ReservationsStatesRepository
   }
 
   findWithRelations(relations: string[]): Promise<ReservationState[]> {
-    throw new Error('Method not implemented.');
+    return this.reservationsStatesRepository.find({ relations });
   }
+
   count(criteria: FindOptionsWhere<ReservationState>): Promise<number> {
     throw new Error('Method not implemented.');
   }
