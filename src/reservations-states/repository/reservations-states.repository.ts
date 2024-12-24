@@ -7,6 +7,7 @@ import {
   FindOptionsWhere,
   Repository,
   DeleteResult,
+  In,
 } from 'typeorm';
 import {
   CreateReservationStateDto,
@@ -84,9 +85,12 @@ export class ReservationsStatesRepository
     return { deleted: true, affected: result.affected };
   }
 
-  findByIds(ids: string[]): Promise<ReservationState[]> {
-    throw new Error('Method not implemented.');
+  findByIds(reservationsStatesIds: string[]): Promise<ReservationState[]> {
+    return this.reservationsStatesRepository.find({
+      where: { reservationStateId: In(reservationsStatesIds) },
+    });
   }
+
   findByCriteria(
     criteria: FindOptionsWhere<ReservationState>,
   ): Promise<ReservationState> {
