@@ -22,4 +22,14 @@ export class ReservationsStatesService {
 
     return this.plainToInstanceDto(reservations);
   }
+
+  @HandleRpcExceptions()
+  async findOne(
+    reservationStateId: string,
+  ): Promise<ReservationStateResponseDto> {
+    const reservationState =
+      await this.reservationsStatesRepository.findOne(reservationStateId);
+
+    return this.plainToInstanceDto(reservationState);
+  }
 }
