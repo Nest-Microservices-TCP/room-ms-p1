@@ -1,3 +1,4 @@
+import { ReservationsStatesModule } from './reservations-states/reservations-states.module';
 import { PostgresConfigModule } from './database/postgres.config.module';
 import { ReservationsModule } from './reservations/reservations.module';
 import { RentsExtrasModule } from './rents-extras/rents-extras.module';
@@ -22,6 +23,7 @@ import { Module } from '@nestjs/common';
     RoomsStatesModule,
     ReservationsModule,
     PostgresConfigModule,
+    ReservationsStatesModule,
   ],
   controllers: [],
   providers: [],
