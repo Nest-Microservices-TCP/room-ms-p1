@@ -32,4 +32,14 @@ export class ReservationsStatesService {
 
     return this.plainToInstanceDto(reservationState);
   }
+
+  @HandleRpcExceptions()
+  async findByIds(
+    reservationsStatesIds: string[],
+  ): Promise<ReservationStateResponseDto[]> {
+    const reservationsStates =
+      await this.reservationsStatesRepository.findByIds(reservationsStatesIds);
+
+    return this.plainToInstanceDto(reservationsStates);
+  }
 }
