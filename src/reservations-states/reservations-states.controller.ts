@@ -1,6 +1,6 @@
 import { ReservationsStatesService } from './reservations-states.service';
-import { ReservationStateResponseDto } from './dto/response';
 import { MessagePattern, Payload } from '@nestjs/microservices';
+import { ReservationStateResponseDto } from './dto/response';
 import { Controller } from '@nestjs/common';
 
 @Controller()
@@ -19,5 +19,12 @@ export class ReservationsStatesController {
     @Payload('reservationStateId') reservationStateId: string,
   ): Promise<ReservationStateResponseDto> {
     return this.reservationsStatesService.findOne(reservationStateId);
+  }
+
+  @MessagePattern({ cmd: 'find.reservations.states.by.ids' })
+  findByIds(
+    reservationsStatesIds: string[],
+  ): Promise<ReservationStateResponseDto[]> {
+    return this.reservationsStatesService.findByIds(reservationsStatesIds);
   }
 }
