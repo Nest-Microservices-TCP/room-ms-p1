@@ -173,6 +173,6 @@ export class ReservationsStatesRepository
   }
 
   customQuery(query: string, params: any[]): Promise<any> {
-    throw new Error('Method not implemented.');
+    return this.reservationsStatesRepository.query(query, params);
   }
 }
