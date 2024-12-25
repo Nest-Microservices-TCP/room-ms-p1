@@ -1,8 +1,11 @@
 import { ReservationsStatesService } from './reservations-states.service';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { ReservationStateResponseDto } from './dto/response';
-import { CreateReservationStateDto } from './dto/request';
 import { Controller } from '@nestjs/common';
+import {
+  CreateReservationStateDto,
+  UpdateReservationStateDto,
+} from './dto/request';
 
 @Controller()
 export class ReservationsStatesController {
@@ -34,5 +37,12 @@ export class ReservationsStatesController {
     @Payload() request: CreateReservationStateDto,
   ): Promise<ReservationStateResponseDto> {
     return this.reservationsStatesService.save(request);
+  }
+
+  @MessagePattern({ cmd: 'update.reservation.state' })
+  update(
+    @Payload() request: UpdateReservationStateDto,
+  ): Promise<ReservationStateResponseDto> {
+    return this.reservationsStatesService.update(request);
   }
 }
