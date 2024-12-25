@@ -1,5 +1,6 @@
 import { ReservationsStatesService } from './reservations-states.service';
 import { MessagePattern, Payload } from '@nestjs/microservices';
+import { DeleteResultResponse } from 'src/common/dto/response';
 import { ReservationStateResponseDto } from './dto/response';
 import { Controller } from '@nestjs/common';
 import {
@@ -44,5 +45,12 @@ export class ReservationsStatesController {
     @Payload() request: UpdateReservationStateDto,
   ): Promise<ReservationStateResponseDto> {
     return this.reservationsStatesService.update(request);
+  }
+
+  @MessagePattern({ cmd: 'remove.reservation.state' })
+  remove(
+    @Payload('reservationStateId') reservationStateId: string,
+  ): Promise<DeleteResultResponse> {
+    return this.reservationsStatesService.remove(reservationStateId);
   }
 }
