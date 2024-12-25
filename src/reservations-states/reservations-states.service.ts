@@ -1,7 +1,10 @@
 import { ReservationsStatesRepository } from './repository/reservations-states.repository';
 import { ReservationStateResponseDto } from './dto/response';
 import { HandleRpcExceptions } from 'src/common/decorators';
-import { CreateReservationStateDto } from './dto/request';
+import {
+  CreateReservationStateDto,
+  UpdateReservationStateDto,
+} from './dto/request';
 import { plainToInstance } from 'class-transformer';
 import { Injectable } from '@nestjs/common';
 
@@ -52,5 +55,15 @@ export class ReservationsStatesService {
       await this.reservationsStatesRepository.save(request);
 
     return this.plainToInstanceDto(newReservationState);
+  }
+
+  @HandleRpcExceptions()
+  async update(
+    request: UpdateReservationStateDto,
+  ): Promise<ReservationStateResponseDto> {
+    const updatedReservationState =
+      await this.reservationsStatesRepository.update(request);
+
+    return this.plainToInstanceDto(updatedReservationState);
   }
 }
