@@ -7,6 +7,7 @@ import {
 } from './dto/request';
 import { plainToInstance } from 'class-transformer';
 import { Injectable } from '@nestjs/common';
+import { DeleteResultResponse } from 'src/common/dto/response';
 
 @Injectable()
 export class ReservationsStatesService {
@@ -65,5 +66,15 @@ export class ReservationsStatesService {
       await this.reservationsStatesRepository.update(request);
 
     return this.plainToInstanceDto(updatedReservationState);
+  }
+
+  @HandleRpcExceptions()
+  async remove(reservationStateId: string): Promise<DeleteResultResponse> {
+    const deleteResult =
+      await this.reservationsStatesRepository.remove(reservationStateId);
+
+    return plainToInstance(DeleteResultResponse, deleteResult, {
+      excludeExtraneousValues: true,
+    });
   }
 }
