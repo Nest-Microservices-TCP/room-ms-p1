@@ -1,1 +1,73 @@
-export class ReservationsOriginsRepository {}
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { IReservationsOriginsRepository } from './interfaces/reservations-origins.repository.interface';
+import { ReservationOrigin } from '../entity/reservation-origin.entity';
+import { DeleteResultResponse } from 'src/common/dto/response';
+import { QueryRunner, FindOptionsWhere } from 'typeorm';
+import {
+  CreateReservationOriginDto,
+  UpdateReservationOriginDto,
+} from '../dto/request';
+
+export class ReservationsOriginsRepository
+  implements IReservationsOriginsRepository
+{
+  setQueryRunner(queryRunner: QueryRunner): void {
+    throw new Error('Method not implemented.');
+  }
+  findAll(): Promise<ReservationOrigin[]> {
+    throw new Error('Method not implemented.');
+  }
+  findOne(id: string): Promise<ReservationOrigin> {
+    throw new Error('Method not implemented.');
+  }
+  create(request: Partial<ReservationOrigin>): ReservationOrigin {
+    throw new Error('Method not implemented.');
+  }
+  save(request: CreateReservationOriginDto): Promise<ReservationOrigin> {
+    throw new Error('Method not implemented.');
+  }
+  update(request: UpdateReservationOriginDto): Promise<ReservationOrigin> {
+    throw new Error('Method not implemented.');
+  }
+  remove(id: string): Promise<DeleteResultResponse> {
+    throw new Error('Method not implemented.');
+  }
+  findByIds(ids: string[]): Promise<ReservationOrigin[]> {
+    throw new Error('Method not implemented.');
+  }
+  findByCriteria(
+    criteria: FindOptionsWhere<ReservationOrigin>,
+  ): Promise<ReservationOrigin> {
+    throw new Error('Method not implemented.');
+  }
+  findWithRelations(relations: string[]): Promise<ReservationOrigin[]> {
+    throw new Error('Method not implemented.');
+  }
+  count(criteria: FindOptionsWhere<ReservationOrigin>): Promise<number> {
+    throw new Error('Method not implemented.');
+  }
+  paginate(
+    page: number,
+    limit: number,
+  ): Promise<[ReservationOrigin[], number]> {
+    throw new Error('Method not implemented.');
+  }
+  softDelete(id: string): Promise<ReservationOrigin> {
+    throw new Error('Method not implemented.');
+  }
+  restore(id: string): Promise<ReservationOrigin> {
+    throw new Error('Method not implemented.');
+  }
+  exists(criteria: FindOptionsWhere<ReservationOrigin>): Promise<boolean> {
+    throw new Error('Method not implemented.');
+  }
+  bulkSave(entities: ReservationOrigin[]): Promise<ReservationOrigin[]> {
+    throw new Error('Method not implemented.');
+  }
+  bulkUpdate(entities: ReservationOrigin[]): Promise<ReservationOrigin[]> {
+    throw new Error('Method not implemented.');
+  }
+  customQuery(query: string, params: any[]): Promise<any> {
+    throw new Error('Method not implemented.');
+  }
+}
