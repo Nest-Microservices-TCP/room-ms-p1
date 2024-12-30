@@ -2,15 +2,23 @@
 import { IReservationsOriginsRepository } from './interfaces/reservations-origins.repository.interface';
 import { ReservationOrigin } from '../entity/reservation-origin.entity';
 import { DeleteResultResponse } from 'src/common/dto/response';
-import { QueryRunner, FindOptionsWhere } from 'typeorm';
+import { QueryRunner, FindOptionsWhere, Repository } from 'typeorm';
 import {
   CreateReservationOriginDto,
   UpdateReservationOriginDto,
 } from '../dto/request';
+import { InjectRepository } from '@nestjs/typeorm';
 
 export class ReservationsOriginsRepository
   implements IReservationsOriginsRepository
 {
+  private readonly reservationsOriginsRepository: Repository<ReservationOrigin>;
+
+  constructor(
+    @InjectRepository(ReservationOrigin)
+    private readonly defaultRepository: Repository<ReservationOrigin>,
+  ) {}
+
   setQueryRunner(queryRunner: QueryRunner): void {
     throw new Error('Method not implemented.');
   }
