@@ -8,6 +8,7 @@ import {
   Repository,
   UpdateResult,
   DeleteResult,
+  In,
 } from 'typeorm';
 import {
   CreateReservationOriginDto,
@@ -88,9 +89,14 @@ export class ReservationsOriginsRepository
     return { deleted: true, affected: result.affected };
   }
 
-  findByIds(ids: string[]): Promise<ReservationOrigin[]> {
-    throw new Error('Method not implemented.');
+  findByIds(reservationsOriginsIds: string[]): Promise<ReservationOrigin[]> {
+    return this.reservationsOriginsRepository.find({
+      where: {
+        reservationOriginId: In(reservationsOriginsIds),
+      },
+    });
   }
+
   findByCriteria(
     criteria: FindOptionsWhere<ReservationOrigin>,
   ): Promise<ReservationOrigin> {
