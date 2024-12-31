@@ -2,7 +2,12 @@
 import { IReservationsOriginsRepository } from './interfaces/reservations-origins.repository.interface';
 import { ReservationOrigin } from '../entity/reservation-origin.entity';
 import { DeleteResultResponse } from 'src/common/dto/response';
-import { QueryRunner, FindOptionsWhere, Repository } from 'typeorm';
+import {
+  QueryRunner,
+  FindOptionsWhere,
+  Repository,
+  UpdateResult,
+} from 'typeorm';
 import {
   CreateReservationOriginDto,
   UpdateReservationOriginDto,
@@ -54,9 +59,18 @@ export class ReservationsOriginsRepository
     return this.reservationsOriginsRepository.save(request);
   }
 
-  update(request: UpdateReservationOriginDto): Promise<ReservationOrigin> {
-    throw new Error('Method not implemented.');
+  async update(
+    request: UpdateReservationOriginDto,
+  ): Promise<ReservationOrigin> {
+    const { reservationOriginId } = request;
+
+    const reservationOrigin = await this.findOne(reservationOriginId);
+
+    Object.assign(reservationOrigin, request);
+
+    return this.reservationsOriginsRepository.save(reservationOrigin);
   }
+
   remove(id: string): Promise<DeleteResultResponse> {
     throw new Error('Method not implemented.');
   }
