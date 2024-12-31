@@ -108,8 +108,9 @@ export class ReservationsOriginsRepository
   }
 
   count(criteria: FindOptionsWhere<ReservationOrigin>): Promise<number> {
-    throw new Error('Method not implemented.');
+    return this.reservationsOriginsRepository.count({ where: criteria });
   }
+
   paginate(
     page: number,
     limit: number,
