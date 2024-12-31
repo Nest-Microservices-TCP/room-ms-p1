@@ -18,6 +18,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import {
   EntityNotFoundException,
   FailedRemoveException,
+  FailedRestoreException,
   FailedSoftDeleteException,
 } from 'src/common/exceptions/custom';
 import { Status } from 'src/common/enums';
@@ -139,12 +140,26 @@ export class ReservationsOriginsRepository
     return this.findOne(reservationOriginId);
   }
 
-  restore(id: string): Promise<ReservationOrigin> {
-    throw new Error('Method not implemented.');
+  async restore(reservationOriginId: string): Promise<ReservationOrigin> {
+    await this.findOne(reservationOriginId);
+
+    const result: UpdateResult =
+      await this.reservationsOriginsRepository.update(reservationOriginId, {
+        status: Status.ACTIVE,
+        deletedAt: null,
+      });
+
+    if (result?.affected === 0) {
+      throw new FailedRestoreException('reservation-origin');
+    }
+
+    return this.findOne(reservationOriginId);
   }
+
   exists(criteria: FindOptionsWhere<ReservationOrigin>): Promise<boolean> {
     throw new Error('Method not implemented.');
   }
+
   bulkSave(entities: ReservationOrigin[]): Promise<ReservationOrigin[]> {
     throw new Error('Method not implemented.');
   }
