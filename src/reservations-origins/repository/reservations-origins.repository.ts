@@ -100,8 +100,9 @@ export class ReservationsOriginsRepository
   findByCriteria(
     criteria: FindOptionsWhere<ReservationOrigin>,
   ): Promise<ReservationOrigin> {
-    throw new Error('Method not implemented.');
+    return this.reservationsOriginsRepository.findOne({ where: criteria });
   }
+
   findWithRelations(relations: string[]): Promise<ReservationOrigin[]> {
     throw new Error('Method not implemented.');
   }
