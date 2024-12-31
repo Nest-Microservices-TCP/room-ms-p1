@@ -104,8 +104,9 @@ export class ReservationsOriginsRepository
   }
 
   findWithRelations(relations: string[]): Promise<ReservationOrigin[]> {
-    throw new Error('Method not implemented.');
+    return this.reservationsOriginsRepository.find({ relations });
   }
+
   count(criteria: FindOptionsWhere<ReservationOrigin>): Promise<number> {
     throw new Error('Method not implemented.');
   }
