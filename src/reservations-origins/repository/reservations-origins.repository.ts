@@ -18,7 +18,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import {
   EntityNotFoundException,
   FailedRemoveException,
+  FailedSoftDeleteException,
 } from 'src/common/exceptions/custom';
+import { Status } from 'src/common/enums';
 
 export class ReservationsOriginsRepository
   implements IReservationsOriginsRepository
@@ -121,9 +123,22 @@ export class ReservationsOriginsRepository
     });
   }
 
-  softDelete(id: string): Promise<ReservationOrigin> {
-    throw new Error('Method not implemented.');
+  async softDelete(reservationOriginId: string): Promise<ReservationOrigin> {
+    await this.findOne(reservationOriginId);
+
+    const result: UpdateResult =
+      await this.reservationsOriginsRepository.update(reservationOriginId, {
+        status: Status.DELETED,
+        deletedAt: new Date(),
+      });
+
+    if (result?.affected === 0) {
+      throw new FailedSoftDeleteException('reservation-origin');
+    }
+
+    return this.findOne(reservationOriginId);
   }
+
   restore(id: string): Promise<ReservationOrigin> {
     throw new Error('Method not implemented.');
   }
