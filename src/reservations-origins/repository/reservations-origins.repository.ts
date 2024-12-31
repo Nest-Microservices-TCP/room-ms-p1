@@ -179,6 +179,6 @@ export class ReservationsOriginsRepository
   }
 
   customQuery(query: string, params: any[]): Promise<any> {
-    throw new Error('Method not implemented.');
+    return this.reservationsOriginsRepository.query(query, params);
   }
 }
