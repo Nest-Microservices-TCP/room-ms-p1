@@ -29,8 +29,9 @@ export class ReservationsOriginsRepository
   }
 
   findAll(): Promise<ReservationOrigin[]> {
-    throw new Error('Method not implemented.');
+    return this.reservationsOriginsRepository.find();
   }
+
   findOne(id: string): Promise<ReservationOrigin> {
     throw new Error('Method not implemented.');
   }
