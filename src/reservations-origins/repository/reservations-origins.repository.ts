@@ -51,8 +51,9 @@ export class ReservationsOriginsRepository
   }
 
   save(request: CreateReservationOriginDto): Promise<ReservationOrigin> {
-    throw new Error('Method not implemented.');
+    return this.reservationsOriginsRepository.save(request);
   }
+
   update(request: UpdateReservationOriginDto): Promise<ReservationOrigin> {
     throw new Error('Method not implemented.');
   }
