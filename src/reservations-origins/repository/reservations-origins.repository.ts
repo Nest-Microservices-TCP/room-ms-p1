@@ -12,7 +12,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 export class ReservationsOriginsRepository
   implements IReservationsOriginsRepository
 {
-  private readonly reservationsOriginsRepository: Repository<ReservationOrigin>;
+  private reservationsOriginsRepository: Repository<ReservationOrigin>;
 
   constructor(
     @InjectRepository(ReservationOrigin)
@@ -20,8 +20,14 @@ export class ReservationsOriginsRepository
   ) {}
 
   setQueryRunner(queryRunner: QueryRunner): void {
-    throw new Error('Method not implemented.');
+    if (queryRunner) {
+      this.reservationsOriginsRepository =
+        queryRunner.manager.getRepository(ReservationOrigin);
+    } else {
+      this.reservationsOriginsRepository = this.defaultRepository;
+    }
   }
+
   findAll(): Promise<ReservationOrigin[]> {
     throw new Error('Method not implemented.');
   }
