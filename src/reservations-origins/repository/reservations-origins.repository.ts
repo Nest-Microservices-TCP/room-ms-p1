@@ -166,9 +166,12 @@ export class ReservationsOriginsRepository
     return count > 0;
   }
 
-  bulkSave(entities: ReservationOrigin[]): Promise<ReservationOrigin[]> {
-    throw new Error('Method not implemented.');
+  bulkSave(
+    reservationsOrigins: ReservationOrigin[],
+  ): Promise<ReservationOrigin[]> {
+    return this.reservationsOriginsRepository.save(reservationsOrigins);
   }
+
   bulkUpdate(entities: ReservationOrigin[]): Promise<ReservationOrigin[]> {
     throw new Error('Method not implemented.');
   }
