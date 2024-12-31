@@ -7,13 +7,17 @@ import {
   FindOptionsWhere,
   Repository,
   UpdateResult,
+  DeleteResult,
 } from 'typeorm';
 import {
   CreateReservationOriginDto,
   UpdateReservationOriginDto,
 } from '../dto/request';
 import { InjectRepository } from '@nestjs/typeorm';
-import { EntityNotFoundException } from 'src/common/exceptions/custom';
+import {
+  EntityNotFoundException,
+  FailedRemoveException,
+} from 'src/common/exceptions/custom';
 
 export class ReservationsOriginsRepository
   implements IReservationsOriginsRepository
@@ -71,9 +75,19 @@ export class ReservationsOriginsRepository
     return this.reservationsOriginsRepository.save(reservationOrigin);
   }
 
-  remove(id: string): Promise<DeleteResultResponse> {
-    throw new Error('Method not implemented.');
+  async remove(reservationOriginId: string): Promise<DeleteResultResponse> {
+    await this.findOne(reservationOriginId);
+
+    const result: DeleteResult =
+      await this.reservationsOriginsRepository.delete(reservationOriginId);
+
+    if (result?.affected === 0) {
+      throw new FailedRemoveException('reservation-origin');
+    }
+
+    return { deleted: true, affected: result.affected };
   }
+
   findByIds(ids: string[]): Promise<ReservationOrigin[]> {
     throw new Error('Method not implemented.');
   }
