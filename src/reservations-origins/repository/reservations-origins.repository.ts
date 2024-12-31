@@ -47,8 +47,9 @@ export class ReservationsOriginsRepository
   }
 
   create(request: Partial<ReservationOrigin>): ReservationOrigin {
-    throw new Error('Method not implemented.');
+    return this.reservationsOriginsRepository.create(request);
   }
+
   save(request: CreateReservationOriginDto): Promise<ReservationOrigin> {
     throw new Error('Method not implemented.');
   }
