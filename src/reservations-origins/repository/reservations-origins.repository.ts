@@ -115,8 +115,12 @@ export class ReservationsOriginsRepository
     page: number,
     limit: number,
   ): Promise<[ReservationOrigin[], number]> {
-    throw new Error('Method not implemented.');
+    return this.reservationsOriginsRepository.findAndCount({
+      skip: (page - 1) * limit,
+      take: limit,
+    });
   }
+
   softDelete(id: string): Promise<ReservationOrigin> {
     throw new Error('Method not implemented.');
   }
