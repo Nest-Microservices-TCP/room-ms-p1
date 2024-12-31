@@ -156,8 +156,14 @@ export class ReservationsOriginsRepository
     return this.findOne(reservationOriginId);
   }
 
-  exists(criteria: FindOptionsWhere<ReservationOrigin>): Promise<boolean> {
-    throw new Error('Method not implemented.');
+  async exists(
+    criteria: FindOptionsWhere<ReservationOrigin>,
+  ): Promise<boolean> {
+    const count = await this.reservationsOriginsRepository.count({
+      where: criteria,
+    });
+
+    return count > 0;
   }
 
   bulkSave(entities: ReservationOrigin[]): Promise<ReservationOrigin[]> {
