@@ -8,6 +8,7 @@ import {
   UpdateReservationOriginDto,
 } from '../dto/request';
 import { InjectRepository } from '@nestjs/typeorm';
+import { EntityNotFoundException } from 'src/common/exceptions/custom';
 
 export class ReservationsOriginsRepository
   implements IReservationsOriginsRepository
@@ -32,9 +33,19 @@ export class ReservationsOriginsRepository
     return this.reservationsOriginsRepository.find();
   }
 
-  findOne(id: string): Promise<ReservationOrigin> {
-    throw new Error('Method not implemented.');
+  async findOne(reservationOriginId: string): Promise<ReservationOrigin> {
+    const reservationOrigin =
+      await this.reservationsOriginsRepository.findOneBy({
+        reservationOriginId,
+      });
+
+    if (!reservationOrigin) {
+      throw new EntityNotFoundException('reservation-origin');
+    }
+
+    return reservationOrigin;
   }
+
   create(request: Partial<ReservationOrigin>): ReservationOrigin {
     throw new Error('Method not implemented.');
   }
