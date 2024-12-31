@@ -1,27 +1,26 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { IReservationsOriginsRepository } from './interfaces/reservations-origins.repository.interface';
 import { ReservationOrigin } from '../entity/reservation-origin.entity';
 import { DeleteResultResponse } from 'src/common/dto/response';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Status } from 'src/common/enums';
 import {
-  QueryRunner,
-  FindOptionsWhere,
+  In,
   Repository,
+  QueryRunner,
   UpdateResult,
   DeleteResult,
-  In,
+  FindOptionsWhere,
 } from 'typeorm';
 import {
   CreateReservationOriginDto,
   UpdateReservationOriginDto,
 } from '../dto/request';
-import { InjectRepository } from '@nestjs/typeorm';
 import {
-  EntityNotFoundException,
   FailedRemoveException,
   FailedRestoreException,
+  EntityNotFoundException,
   FailedSoftDeleteException,
 } from 'src/common/exceptions/custom';
-import { Status } from 'src/common/enums';
 
 export class ReservationsOriginsRepository
   implements IReservationsOriginsRepository
