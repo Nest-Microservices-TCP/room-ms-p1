@@ -1,7 +1,10 @@
 import { ReservationsOriginsRepository } from './repository/reservations-origins.repository';
 import { ReservationOriginResponseDto } from './dto/response';
 import { HandleRpcExceptions } from 'src/common/decorators';
-import { CreateReservationOriginDto } from './dto/request';
+import {
+  CreateReservationOriginDto,
+  UpdateReservationOriginDto,
+} from './dto/request';
 import { plainToInstance } from 'class-transformer';
 import { Injectable } from '@nestjs/common';
 
@@ -55,5 +58,15 @@ export class ReservationsOriginsService {
       await this.reservationsOriginsRepository.save(request);
 
     return this.plainToInstanceDto(newReservationOrigin);
+  }
+
+  @HandleRpcExceptions()
+  async update(
+    request: UpdateReservationOriginDto,
+  ): Promise<ReservationOriginResponseDto> {
+    const updatedReservationOrigin =
+      await this.reservationsOriginsRepository.update(request);
+
+    return this.plainToInstanceDto(updatedReservationOrigin);
   }
 }
