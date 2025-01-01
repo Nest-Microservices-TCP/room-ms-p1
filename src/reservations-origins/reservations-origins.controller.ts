@@ -20,4 +20,11 @@ export class ReservationsOriginsController {
   ): Promise<ReservationOriginResponseDto> {
     return this.reservationsOriginsService.findOne(reservationOriginId);
   }
+
+  @MessagePattern({ cmd: 'find.reservations.origins.bt.ids' })
+  async findByIds(
+    reservationsOriginsIds: string[],
+  ): Promise<ReservationOriginResponseDto[]> {
+    return this.reservationsOriginsService.findByIds(reservationsOriginsIds);
+  }
 }
