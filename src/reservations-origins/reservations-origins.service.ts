@@ -1,8 +1,8 @@
 import { ReservationsOriginsRepository } from './repository/reservations-origins.repository';
 import { ReservationOriginResponseDto } from './dto/response';
+import { HandleRpcExceptions } from 'src/common/decorators';
 import { plainToInstance } from 'class-transformer';
 import { Injectable } from '@nestjs/common';
-import { HandleRpcExceptions } from 'src/common/decorators';
 
 @Injectable()
 export class ReservationsOriginsService {
@@ -32,5 +32,17 @@ export class ReservationsOriginsService {
       await this.reservationsOriginsRepository.findOne(reservationOriginId);
 
     return this.plainToInstanceDto(reservationOrigin);
+  }
+
+  @HandleRpcExceptions()
+  async findByIds(
+    reservationsOriginsIds: string[],
+  ): Promise<ReservationOriginResponseDto[]> {
+    const reservationsOrigins =
+      await this.reservationsOriginsRepository.findByIds(
+        reservationsOriginsIds,
+      );
+
+    return this.plainToInstanceDto(reservationsOrigins);
   }
 }
