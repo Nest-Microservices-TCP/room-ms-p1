@@ -14,4 +14,11 @@ export class ReservationsOriginsService {
       excludeExtraneousValues: true,
     });
   }
+
+  async findAll(): Promise<ReservationOriginResponseDto[]> {
+    const reservationsOrigins =
+      await this.reservationsOriginsRepository.findAll();
+
+    return this.plainToInstanceDto(reservationsOrigins);
+  }
 }
