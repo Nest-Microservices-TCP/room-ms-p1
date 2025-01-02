@@ -1,8 +1,11 @@
 import { ReservationsOriginsService } from './reservations-origins.service';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { ReservationOriginResponseDto } from './dto/response';
-import { CreateReservationOriginDto } from './dto/request';
 import { Controller } from '@nestjs/common';
+import {
+  CreateReservationOriginDto,
+  UpdateReservationOriginDto,
+} from './dto/request';
 
 @Controller()
 export class ReservationsOriginsController {
@@ -34,5 +37,12 @@ export class ReservationsOriginsController {
     @Payload() request: CreateReservationOriginDto,
   ): Promise<ReservationOriginResponseDto> {
     return this.reservationsOriginsService.save(request);
+  }
+
+  @MessagePattern({ cmd: 'update.reservation.origin' })
+  async update(
+    request: UpdateReservationOriginDto,
+  ): Promise<ReservationOriginResponseDto> {
+    return this.reservationsOriginsService.update(request);
   }
 }
