@@ -1,8 +1,8 @@
 import { ReservationsOriginsService } from './reservations-origins.service';
-import { ReservationOriginResponseDto } from './dto/response';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import { Controller } from '@nestjs/common';
+import { ReservationOriginResponseDto } from './dto/response';
 import { CreateReservationOriginDto } from './dto/request';
+import { Controller } from '@nestjs/common';
 
 @Controller()
 export class ReservationsOriginsController {
@@ -17,14 +17,14 @@ export class ReservationsOriginsController {
 
   @MessagePattern({ cmd: 'find.one.reservation.origin' })
   async findOne(
-    reservationOriginId: string,
+    @Payload('reservationOriginId') reservationOriginId: string,
   ): Promise<ReservationOriginResponseDto> {
     return this.reservationsOriginsService.findOne(reservationOriginId);
   }
 
   @MessagePattern({ cmd: 'find.reservations.origins.bt.ids' })
   async findByIds(
-    reservationsOriginsIds: string[],
+    @Payload('reservationsOriginsIds') reservationsOriginsIds: string[],
   ): Promise<ReservationOriginResponseDto[]> {
     return this.reservationsOriginsService.findByIds(reservationsOriginsIds);
   }
