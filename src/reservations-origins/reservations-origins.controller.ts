@@ -1,5 +1,6 @@
 import { ReservationsOriginsService } from './reservations-origins.service';
 import { MessagePattern, Payload } from '@nestjs/microservices';
+import { DeleteResultResponse } from 'src/common/dto/response';
 import { ReservationOriginResponseDto } from './dto/response';
 import { Controller } from '@nestjs/common';
 import {
@@ -44,5 +45,10 @@ export class ReservationsOriginsController {
     request: UpdateReservationOriginDto,
   ): Promise<ReservationOriginResponseDto> {
     return this.reservationsOriginsService.update(request);
+  }
+
+  @MessagePattern({ cmd: 'remove.reservation.origin' })
+  async remove(reservationOriginId: string): Promise<DeleteResultResponse> {
+    return this.reservationsOriginsService.remove(reservationOriginId);
   }
 }
