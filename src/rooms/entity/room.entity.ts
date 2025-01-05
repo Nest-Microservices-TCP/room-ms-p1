@@ -1,6 +1,7 @@
 import { BaseEntity } from 'src/common/entity';
 import { Rent } from 'src/rents/entity/rent.entity';
 import { RoomState } from 'src/rooms-states/entity/room-state.entity';
+import { RoomType } from 'src/rooms-types/entity/room-type.entity';
 
 import {
   Column,
@@ -36,7 +37,10 @@ export class Room extends BaseEntity {
      *
      * @referencesColumnName Define el nombre de la columna sobre la
      * cual se hará la referencia de la clave foránea de la otra tabla
-     * de la relación
+     * de la relación. Si no se define por defecto typeorm toma la
+     * clave primaria de la tabla referenciada como la referencia para
+     * la clave foránea. Esta es mas común usarla cuando se quiere usar
+     * otra columna diferente al ID como clave foránea
      *
      * @foreignKeyConstraintName Define el nombre de la constraint que
      * se genera para la clave foránea, si no se define, TypeORM genera
@@ -47,8 +51,15 @@ export class Room extends BaseEntity {
      * ! @ManyToMany ambas tablas tienen el @JoinColumn
      */
     name: 'room_state_id',
-    referencedColumnName: 'room_state_id',
+    // referencedColumnName: 'room_state_id',
     foreignKeyConstraintName: 'FK_Room_RoomState',
   })
   roomState: RoomState;
+
+  @OneToOne(() => RoomType, (roomType) => roomType.room)
+  @JoinColumn({
+    name: 'room_type_id',
+    foreignKeyConstraintName: 'FK_Room_RoomType',
+  })
+  roomType: RoomType;
 }
