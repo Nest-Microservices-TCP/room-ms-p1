@@ -1,7 +1,13 @@
 import { Amenity } from 'src/amenities/entity/amenity.entity';
 import { RoomType } from 'src/rooms-types/entity/room-type.entity';
 
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity({ name: 'rooms_types_amenities' })
 export class RoomTypeAmenity {
@@ -19,6 +25,14 @@ export class RoomTypeAmenity {
   })
   amenityQuantity: number;
 
+  @ManyToOne(() => RoomType, (roomType) => roomType.roomsTypesAmenities, {
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({
+    name: 'room_type_id',
+    foreignKeyConstraintName: 'FK_RoomsTypesAmenities_RoomType',
+  })
   roomType: RoomType;
+
   amenity: Amenity;
 }
