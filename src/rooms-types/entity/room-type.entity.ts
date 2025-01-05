@@ -1,7 +1,14 @@
 import { BaseEntity } from 'src/common/entity';
+import { RoomTypeAmenity } from 'src/rooms-types-amenities/entity/room-type-amenity.entity';
 import { Room } from 'src/rooms/entity/room.entity';
 
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity({ name: 'rooms_types' })
 export class RoomType extends BaseEntity {
@@ -36,4 +43,10 @@ export class RoomType extends BaseEntity {
 
   @OneToOne(() => Room, (room) => room.roomType)
   room: Room;
+
+  @OneToMany(
+    () => RoomTypeAmenity,
+    (roomTypeAmenity) => roomTypeAmenity.roomType,
+  )
+  roomsTypesAmenities: RoomTypeAmenity[];
 }
