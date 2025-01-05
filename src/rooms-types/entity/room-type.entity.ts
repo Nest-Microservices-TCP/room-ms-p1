@@ -1,5 +1,7 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { BaseEntity } from 'src/common/entity';
+import { Room } from 'src/rooms/entity/room.entity';
+
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'rooms_types' })
 export class RoomType extends BaseEntity {
@@ -31,4 +33,7 @@ export class RoomType extends BaseEntity {
     nullable: true,
   })
   includedPeople: number;
+
+  @OneToOne(() => Room, (room) => room.roomType)
+  room: Room;
 }
