@@ -1,5 +1,7 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { BaseEntity } from 'src/common/entity';
+import { RoomTypeAmenity } from 'src/rooms-types-amenities/entity/room-type-amenity.entity';
+
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 @Entity({ name: 'amenities' })
 export class Amenity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid', {
@@ -30,4 +32,10 @@ export class Amenity extends BaseEntity {
     nullable: true,
   })
   description: string;
+
+  @OneToMany(
+    () => RoomTypeAmenity,
+    (roomTypeAmenity) => roomTypeAmenity.amenity,
+  )
+  roomsTypesAmenities: [];
 }
