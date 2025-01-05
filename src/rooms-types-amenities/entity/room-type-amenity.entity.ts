@@ -59,5 +59,12 @@ export class RoomTypeAmenity {
   })
   roomType: RoomType;
 
+  @ManyToOne(() => Amenity, (amenity) => amenity.roomsTypesAmenities, {
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({
+    name: 'amenity_id',
+    foreignKeyConstraintName: 'FK_RoomsTypesAmenities_Amenity',
+  })
   amenity: Amenity;
 }
