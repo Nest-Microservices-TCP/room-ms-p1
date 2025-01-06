@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { InjectRepository } from '@nestjs/typeorm';
 import { QueryRunner, Repository } from 'typeorm';
 
 import {
@@ -10,10 +11,9 @@ import { DeleteResultResponse } from 'src/common/dto/response';
 import { IRoomsTypesAmenities } from './interfaces/rooms-types-amenities.repository.interface';
 
 import { RoomTypeAmenity } from '../entity/room-type-amenity.entity';
-import { InjectRepository } from '@nestjs/typeorm';
 
 export class RoomsTypesAmenitiesRepository implements IRoomsTypesAmenities {
-  private readonly roomsTypesAmenitiesRepository: Repository<RoomTypeAmenity>;
+  private roomsTypesAmenitiesRepository: Repository<RoomTypeAmenity>;
 
   constructor(
     @InjectRepository(RoomTypeAmenity)
@@ -21,7 +21,12 @@ export class RoomsTypesAmenitiesRepository implements IRoomsTypesAmenities {
   ) {}
 
   setQueryRunner(queryRunner: QueryRunner): void {
-    throw new Error('Method not implemented.');
+    if (queryRunner) {
+      this.roomsTypesAmenitiesRepository =
+        queryRunner.manager.getRepository(RoomTypeAmenity);
+    } else {
+      this.roomsTypesAmenitiesRepository = this.defaultRepository;
+    }
   }
 
   findAll(): Promise<RoomTypeAmenity[]> {
