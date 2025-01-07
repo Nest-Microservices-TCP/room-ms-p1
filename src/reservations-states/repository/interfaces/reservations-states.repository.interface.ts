@@ -1,12 +1,12 @@
-import { ReservationState } from 'src/reservations-states/entity/reservation-state.entity';
-import { IBaseRepository } from 'src/common/interfaces';
+import { IRepository } from 'src/common/repository';
 import {
-  UpdateReservationStateDto,
   CreateReservationStateDto,
+  UpdateReservationStateDto,
 } from 'src/reservations-states/dto/request';
+import { ReservationState } from 'src/reservations-states/entity/reservation-state.entity';
 
 export interface IReservationsStatesRepository
-  extends IBaseRepository<
+  extends IRepository<
     ReservationState,
     CreateReservationStateDto,
     UpdateReservationStateDto
