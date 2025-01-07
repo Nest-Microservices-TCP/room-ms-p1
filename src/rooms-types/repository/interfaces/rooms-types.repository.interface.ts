@@ -1,9 +1,9 @@
-import { RoomType } from 'src/rooms-types/entity/room-type.entity';
-import { IBaseRepository } from 'src/common/interfaces';
+import { IRepository } from 'src/common/repository';
 import {
   CreateRoomTypeDto,
   UpdateRoomTypeDto,
 } from 'src/rooms-types/dto/request';
+import { RoomType } from 'src/rooms-types/entity/room-type.entity';
 
 export interface IRoomsTypesRepository
-  extends IBaseRepository<RoomType, CreateRoomTypeDto, UpdateRoomTypeDto> {}
+  extends IRepository<RoomType, CreateRoomTypeDto, UpdateRoomTypeDto> {}
