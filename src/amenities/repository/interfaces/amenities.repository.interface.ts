@@ -1,6 +1,6 @@
 import { CreateAmenityDto, UpdateAmenityDto } from 'src/amenities/dto/request';
 import { Amenity } from 'src/amenities/entity/amenity.entity';
-import { IBaseRepository } from 'src/common/interfaces';
+import { IRepository } from 'src/common/repository';
 
 export interface IAmenitiesRepository
-  extends IBaseRepository<Amenity, CreateAmenityDto, UpdateAmenityDto> {}
+  extends IRepository<Amenity, CreateAmenityDto, UpdateAmenityDto> {}
