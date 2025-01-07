@@ -1,9 +1,9 @@
-import { RentExtra } from 'src/rents-extras/entity/rent-extra.entity';
-import { IBaseRepository } from 'src/common/interfaces';
+import { IRepository } from 'src/common/repository';
 import {
   CreateRentExtraDto,
   UpdateRentExtraDto,
 } from 'src/rents-extras/dto/request';
+import { RentExtra } from 'src/rents-extras/entity/rent-extra.entity';
 
 export interface IRentsExtrasRepository
-  extends IBaseRepository<RentExtra, CreateRentExtraDto, UpdateRentExtraDto> {}
+  extends IRepository<RentExtra, CreateRentExtraDto, UpdateRentExtraDto> {}
