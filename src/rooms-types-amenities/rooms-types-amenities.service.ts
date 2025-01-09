@@ -26,4 +26,14 @@ export class RoomsTypesAmenitiesService {
 
     return this.plainToInstanceDto(roomsTypesAmenities);
   }
+
+  @HandleRpcExceptions()
+  async findOne(
+    roomTypeAmenityId: string,
+  ): Promise<RoomTypeAmenityResponseDto> {
+    const roomTypeAmenity =
+      await this.roomsTypesAmenitiesRepository.findOne(roomTypeAmenityId);
+
+    return this.plainToInstanceDto(roomTypeAmenity);
+  }
 }
