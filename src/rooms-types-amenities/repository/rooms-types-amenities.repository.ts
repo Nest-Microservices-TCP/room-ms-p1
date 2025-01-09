@@ -1,17 +1,19 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { InjectRepository } from '@nestjs/typeorm';
-import { QueryRunner, Repository } from 'typeorm';
+import { DeleteResult, QueryRunner, Repository } from 'typeorm';
 
+import {
+  EntityNotFoundException,
+  FailedRemoveException,
+} from 'src/common/exceptions/custom';
+
+import { DeleteResultResponse } from 'src/common/dto/response';
 import {
   CreateRoomTypeAmenityDto,
   UpdateRoomTypeAmenityDto,
 } from '../dto/request';
 
-import { DeleteResultResponse } from 'src/common/dto/response';
-import { IRoomsTypesAmenities } from './interfaces/rooms-types-amenities.repository.interface';
-
 import { RoomTypeAmenity } from '../entity/room-type-amenity.entity';
-import { EntityNotFoundException } from 'src/common/exceptions/custom';
+import { IRoomsTypesAmenities } from './interfaces/rooms-types-amenities.repository.interface';
 
 export class RoomsTypesAmenitiesRepository implements IRoomsTypesAmenities {
   private roomsTypesAmenitiesRepository: Repository<RoomTypeAmenity>;
@@ -64,7 +66,16 @@ export class RoomsTypesAmenitiesRepository implements IRoomsTypesAmenities {
     return this.roomsTypesAmenitiesRepository.save(roomTypeAmenity);
   }
 
-  remove(id: string): Promise<DeleteResultResponse> {
-    throw new Error('Method not implemented.');
+  async remove(roomTypeAmenityId: string): Promise<DeleteResultResponse> {
+    await this.findOne(roomTypeAmenityId);
+
+    const result: DeleteResult =
+      await this.roomsTypesAmenitiesRepository.delete(roomTypeAmenityId);
+
+    if (result?.affected === 0) {
+      throw new FailedRemoveException('room-type-amenity');
+    }
+
+    return { deleted: true, affected: result.affected };
   }
 }
