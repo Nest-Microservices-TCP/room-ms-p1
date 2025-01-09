@@ -51,8 +51,9 @@ export class RoomsTypesAmenitiesRepository implements IRoomsTypesAmenities {
   }
 
   save(request: CreateRoomTypeAmenityDto): Promise<RoomTypeAmenity> {
-    throw new Error('Method not implemented.');
+    return this.roomsTypesAmenitiesRepository.save(request);
   }
+
   update(request: UpdateRoomTypeAmenityDto): Promise<RoomTypeAmenity> {
     throw new Error('Method not implemented.');
   }
