@@ -54,9 +54,16 @@ export class RoomsTypesAmenitiesRepository implements IRoomsTypesAmenities {
     return this.roomsTypesAmenitiesRepository.save(request);
   }
 
-  update(request: UpdateRoomTypeAmenityDto): Promise<RoomTypeAmenity> {
-    throw new Error('Method not implemented.');
+  async update(request: UpdateRoomTypeAmenityDto): Promise<RoomTypeAmenity> {
+    const { roomTypeAmenityId } = request;
+
+    const roomTypeAmenity = await this.findOne(roomTypeAmenityId);
+
+    Object.assign(roomTypeAmenity, request);
+
+    return this.roomsTypesAmenitiesRepository.save(roomTypeAmenity);
   }
+
   remove(id: string): Promise<DeleteResultResponse> {
     throw new Error('Method not implemented.');
   }
