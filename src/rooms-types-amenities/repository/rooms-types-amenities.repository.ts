@@ -11,6 +11,7 @@ import { DeleteResultResponse } from 'src/common/dto/response';
 import { IRoomsTypesAmenities } from './interfaces/rooms-types-amenities.repository.interface';
 
 import { RoomTypeAmenity } from '../entity/room-type-amenity.entity';
+import { EntityNotFoundException } from 'src/common/exceptions/custom';
 
 export class RoomsTypesAmenitiesRepository implements IRoomsTypesAmenities {
   private roomsTypesAmenitiesRepository: Repository<RoomTypeAmenity>;
@@ -33,8 +34,16 @@ export class RoomsTypesAmenitiesRepository implements IRoomsTypesAmenities {
     return this.roomsTypesAmenitiesRepository.find();
   }
 
-  findOne(id: string): Promise<RoomTypeAmenity> {
-    throw new Error('Method not implemented.');
+  async findOne(roomTypeAmenityId: string): Promise<RoomTypeAmenity> {
+    const roomTypeAmenity = await this.roomsTypesAmenitiesRepository.findOne({
+      where: { roomTypeAmenityId },
+    });
+
+    if (!roomTypeAmenity) {
+      throw new EntityNotFoundException('room-type-amenity');
+    }
+
+    return roomTypeAmenity;
   }
   create(request: Partial<RoomTypeAmenity>): RoomTypeAmenity {
     throw new Error('Method not implemented.');
