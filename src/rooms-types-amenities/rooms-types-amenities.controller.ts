@@ -3,8 +3,11 @@ import { MessagePattern, Payload } from '@nestjs/microservices';
 
 import { RoomsTypesAmenitiesService } from './rooms-types-amenities.service';
 
+import {
+  CreateRoomTypeAmenityDto,
+  UpdateRoomTypeAmenityDto,
+} from './dto/request';
 import { RoomTypeAmenityResponseDto } from './dto/response/room-type-amenity.response.dto';
-import { CreateRoomTypeAmenityDto } from './dto/request';
 
 @Controller()
 export class RoomsTypesAmenitiesController {
@@ -29,5 +32,12 @@ export class RoomsTypesAmenitiesController {
     @Payload() request: CreateRoomTypeAmenityDto,
   ): Promise<RoomTypeAmenityResponseDto> {
     return this.roomsTypesAmenitiesService.save(request);
+  }
+
+  @MessagePattern({ cmd: 'update.room.type.amenity' })
+  async update(
+    @Payload() request: UpdateRoomTypeAmenityDto,
+  ): Promise<RoomTypeAmenityResponseDto> {
+    return this.roomsTypesAmenitiesService.update(request);
   }
 }
