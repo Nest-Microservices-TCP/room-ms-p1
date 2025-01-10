@@ -4,6 +4,7 @@ import { MessagePattern, Payload } from '@nestjs/microservices';
 import { RoomsTypesAmenitiesService } from './rooms-types-amenities.service';
 
 import { RoomTypeAmenityResponseDto } from './dto/response/room-type-amenity.response.dto';
+import { CreateRoomTypeAmenityDto } from './dto/request';
 
 @Controller()
 export class RoomsTypesAmenitiesController {
@@ -21,5 +22,12 @@ export class RoomsTypesAmenitiesController {
     @Payload('roomTypeAmenityId') roomTypeAmenityId: string,
   ): Promise<RoomTypeAmenityResponseDto> {
     return this.roomsTypesAmenitiesService.findOne(roomTypeAmenityId);
+  }
+
+  @MessagePattern({ cmd: 'save.room.type.amenity' })
+  async save(
+    @Payload() request: CreateRoomTypeAmenityDto,
+  ): Promise<RoomTypeAmenityResponseDto> {
+    return this.roomsTypesAmenitiesService.save(request);
   }
 }
