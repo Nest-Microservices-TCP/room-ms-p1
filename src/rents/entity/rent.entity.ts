@@ -68,6 +68,9 @@ export class Rent extends BaseEntity {
   })
   rentState: RentState;
 
+  /**
+   * TODO: Revisar que campos deben removerse o cambiarse a otra entidad
+   */
   @Column({
     name: 'payment_state',
     type: 'enum',
