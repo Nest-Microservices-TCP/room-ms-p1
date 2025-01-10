@@ -5,7 +5,10 @@ import { HandleRpcExceptions } from 'src/common/decorators';
 
 import { RoomsTypesAmenitiesRepository } from './repository/rooms-types-amenities.repository';
 
-import { CreateRoomTypeAmenityDto } from './dto/request';
+import {
+  CreateRoomTypeAmenityDto,
+  UpdateRoomTypeAmenityDto,
+} from './dto/request';
 import { RoomTypeAmenityResponseDto } from './dto/response/room-type-amenity.response.dto';
 
 @Injectable()
@@ -46,5 +49,15 @@ export class RoomsTypesAmenitiesService {
       await this.roomsTypesAmenitiesRepository.save(request);
 
     return this.plainToInstanceDto(newRoomTypeAmenity);
+  }
+
+  @HandleRpcExceptions()
+  async update(
+    request: UpdateRoomTypeAmenityDto,
+  ): Promise<RoomTypeAmenityResponseDto> {
+    const updatedRoomTypeAmenity =
+      await this.roomsTypesAmenitiesRepository.update(request);
+
+    return this.plainToInstanceDto(updatedRoomTypeAmenity);
   }
 }
