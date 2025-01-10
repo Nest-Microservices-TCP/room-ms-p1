@@ -5,6 +5,7 @@ import { HandleRpcExceptions } from 'src/common/decorators';
 
 import { RoomsTypesAmenitiesRepository } from './repository/rooms-types-amenities.repository';
 
+import { DeleteResultResponse } from 'src/common/dto/response';
 import {
   CreateRoomTypeAmenityDto,
   UpdateRoomTypeAmenityDto,
@@ -59,5 +60,15 @@ export class RoomsTypesAmenitiesService {
       await this.roomsTypesAmenitiesRepository.update(request);
 
     return this.plainToInstanceDto(updatedRoomTypeAmenity);
+  }
+
+  @HandleRpcExceptions()
+  async remove(roomTypeAmenityId: string): Promise<DeleteResultResponse> {
+    const deleteResult =
+      await this.roomsTypesAmenitiesRepository.remove(roomTypeAmenityId);
+
+    return plainToInstance(DeleteResultResponse, deleteResult, {
+      excludeExtraneousValues: true,
+    });
   }
 }
