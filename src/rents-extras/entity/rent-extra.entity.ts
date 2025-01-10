@@ -1,6 +1,13 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { Extra } from 'src/extras/entity/extra.entity';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+
 import { BaseEntity } from 'src/common/entity';
+import { Extra } from 'src/extras/entity/extra.entity';
 import { Rent } from 'src/rents/entity';
 
 @Entity({ name: 'rents_extras' })
@@ -42,6 +49,10 @@ export class RentExtra extends BaseEntity {
   @ManyToOne(() => Extra, (extra) => extra.rentExtras, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
+  })
+  @JoinColumn({
+    name: 'extra_id',
+    foreignKeyConstraintName: 'FK_RentsExtras_Extra',
   })
   extra: Extra;
 }
