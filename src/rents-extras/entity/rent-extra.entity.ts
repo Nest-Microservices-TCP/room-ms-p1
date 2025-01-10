@@ -44,6 +44,10 @@ export class RentExtra extends BaseEntity {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
+  @JoinColumn({
+    name: 'rent_id',
+    foreignKeyConstraintName: 'FK_RentsExtras_Rent',
+  })
   rent: Rent;
 
   @ManyToOne(() => Extra, (extra) => extra.rentExtras, {
