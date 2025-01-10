@@ -3,6 +3,7 @@ import { MessagePattern, Payload } from '@nestjs/microservices';
 
 import { RoomsTypesAmenitiesService } from './rooms-types-amenities.service';
 
+import { DeleteResultResponse } from 'src/common/dto/response';
 import {
   CreateRoomTypeAmenityDto,
   UpdateRoomTypeAmenityDto,
@@ -39,5 +40,12 @@ export class RoomsTypesAmenitiesController {
     @Payload() request: UpdateRoomTypeAmenityDto,
   ): Promise<RoomTypeAmenityResponseDto> {
     return this.roomsTypesAmenitiesService.update(request);
+  }
+
+  @MessagePattern({ cdm: 'remove.room.type.amenity' })
+  async remove(
+    @Payload('roomTypeAmenityId') roomTypeAmenityId: string,
+  ): Promise<DeleteResultResponse> {
+    return this.roomsTypesAmenitiesService.remove(roomTypeAmenityId);
   }
 }
