@@ -1,9 +1,11 @@
-import { CreateAmenityDto, UpdateAmenityDto } from './dto/request';
-import { MessagePattern, Payload } from '@nestjs/microservices';
-import { DeleteResultResponse } from 'src/common/dto/response';
-import { AmenitiesService } from './amenities.service';
-import { AmenityResponseDto } from './dto/response';
 import { Controller } from '@nestjs/common';
+import { MessagePattern, Payload } from '@nestjs/microservices';
+
+import { AmenitiesService } from './amenities.service';
+
+import { DeleteResultResponse } from 'src/common/dto/response';
+import { CreateAmenityDto, UpdateAmenityDto } from './dto/request';
+import { AmenityResponseDto } from './dto/response';
 
 @Controller()
 export class AmenitiesController {
