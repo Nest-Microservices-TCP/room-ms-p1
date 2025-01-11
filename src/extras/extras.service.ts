@@ -1,9 +1,11 @@
-import { ExtrasRepository } from './repository/extras.repository';
-import { CreateExtraDto, UpdateExtraDto } from './dto/request';
-import { HandleRpcExceptions } from 'src/common/decorators';
-import { plainToInstance } from 'class-transformer';
-import { ExtraResponseDto } from './dto/response';
 import { Injectable } from '@nestjs/common';
+import { plainToInstance } from 'class-transformer';
+
+import { ExtrasRepository } from './repository/extras.repository';
+
+import { HandleRpcExceptions } from 'src/common/decorators';
+import { CreateExtraDto, UpdateExtraDto } from './dto/request';
+import { ExtraResponseDto } from './dto/response';
 
 @Injectable()
 export class ExtrasService {
@@ -45,7 +47,9 @@ export class ExtrasService {
 
   @HandleRpcExceptions()
   async update(request: UpdateExtraDto): Promise<ExtraResponseDto> {
-    const updatedExtra = await this.extrasRepository.update(request);
+    const { extraId, ...rest } = request;
+
+    const updatedExtra = await this.extrasRepository.update({ extraId }, rest);
 
     return this.plainToInstanceDto(updatedExtra);
   }
