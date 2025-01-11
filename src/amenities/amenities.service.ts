@@ -1,10 +1,13 @@
-import { AmenitiesRepository } from './repository/amenities.repository';
-import { CreateAmenityDto, UpdateAmenityDto } from './dto/request';
-import { DeleteResultResponse } from 'src/common/dto/response';
-import { HandleRpcExceptions } from 'src/common/decorators';
-import { AmenityResponseDto } from './dto/response';
-import { plainToInstance } from 'class-transformer';
 import { Injectable } from '@nestjs/common';
+import { plainToInstance } from 'class-transformer';
+
+import { HandleRpcExceptions } from 'src/common/decorators';
+
+import { AmenitiesRepository } from './repository/amenities.repository';
+
+import { DeleteResultResponse } from 'src/common/dto/response';
+import { CreateAmenityDto, UpdateAmenityDto } from './dto/request';
+import { AmenityResponseDto } from './dto/response';
 
 @Injectable()
 export class AmenitiesService {
@@ -46,7 +49,12 @@ export class AmenitiesService {
 
   @HandleRpcExceptions()
   async update(request: UpdateAmenityDto): Promise<AmenityResponseDto> {
-    const updatedAmenity = await this.amenitiesRepository.update(request);
+    const { amenityId, ...rest } = request;
+
+    const updatedAmenity = await this.amenitiesRepository.update(
+      { amenityId },
+      rest,
+    );
 
     return this.plainToInstanceDto(updatedAmenity);
   }
