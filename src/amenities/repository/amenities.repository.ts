@@ -72,9 +72,7 @@ export class AmenitiesRepository implements IAmenitiesRepository {
     conditions: FindOptionsWhere<Amenity>,
     request: Partial<Amenity>,
   ) {
-    const amenity = await this.amenitiesRepository.findOne({
-      where: conditions,
-    });
+    const amenity = await this.findByCriteria(conditions);
 
     Object.assign(amenity, request);
 
@@ -102,8 +100,14 @@ export class AmenitiesRepository implements IAmenitiesRepository {
     });
   }
 
-  findByCriteria(criteria: FindOptionsWhere<Amenity>): Promise<Amenity> {
-    return this.amenitiesRepository.findOne({ where: criteria });
+  async findByCriteria(criteria: FindOptionsWhere<Amenity>): Promise<Amenity> {
+    const amenity = this.amenitiesRepository.findOne({ where: criteria });
+
+    if (!amenity) {
+      throw new EntityNotFoundException('amenity');
+    }
+
+    return amenity;
   }
 
   findWithRelations(relations: string[]): Promise<Amenity[]> {
