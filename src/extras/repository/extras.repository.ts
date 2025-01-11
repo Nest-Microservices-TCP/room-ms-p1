@@ -101,8 +101,14 @@ export class ExtrasRepository implements IExtrasRepository {
     });
   }
 
-  findByCriteria(criteria: FindOptionsWhere<Extra>): Promise<Extra> {
-    return this.extrasRepository.findOne({ where: criteria });
+  async findByCriteria(criteria: FindOptionsWhere<Extra>): Promise<Extra> {
+    const extra = this.extrasRepository.findOne({ where: criteria });
+
+    if (!extra) {
+      throw new EntityNotFoundException('extra');
+    }
+
+    return extra;
   }
 
   findWithRelations(relations: string[]): Promise<Extra[]> {
