@@ -1,23 +1,26 @@
-import { IAmenitiesRepository } from './interfaces/amenities.repository.interface';
-import { CreateAmenityDto, UpdateAmenityDto } from '../dto/request';
-import { DeleteResultResponse } from 'src/common/dto/response';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Amenity } from '../entity/amenity.entity';
-import { Status } from 'src/common/enums';
 import {
-  In,
-  Repository,
-  QueryRunner,
-  DeleteResult,
-  UpdateResult,
-  FindOptionsWhere,
-} from 'typeorm';
-import {
+  EntityNotFoundException,
   FailedRemoveException,
   FailedRestoreException,
-  EntityNotFoundException,
   FailedSoftDeleteException,
 } from 'src/common/exceptions/custom';
+import {
+  DeleteResult,
+  FindOptionsWhere,
+  In,
+  QueryRunner,
+  Repository,
+  UpdateResult,
+} from 'typeorm';
+
+import { Status } from 'src/common/enums';
+
+import { Amenity } from '../entity/amenity.entity';
+import { IAmenitiesRepository } from './interfaces/amenities.repository.interface';
+
+import { DeleteResultResponse } from 'src/common/dto/response';
+import { CreateAmenityDto } from '../dto/request';
 
 export class AmenitiesRepository implements IAmenitiesRepository {
   private amenitiesRepository: Repository<Amenity>;
@@ -65,10 +68,13 @@ export class AmenitiesRepository implements IAmenitiesRepository {
     return this.amenitiesRepository.save(request);
   }
 
-  async update(request: UpdateAmenityDto): Promise<Amenity> {
-    const { amenityId } = request;
-
-    const amenity = await this.findOne(amenityId);
+  async update(
+    conditions: FindOptionsWhere<Amenity>,
+    request: Partial<Amenity>,
+  ) {
+    const amenity = await this.amenitiesRepository.findOne({
+      where: conditions,
+    });
 
     Object.assign(amenity, request);
 
