@@ -1,23 +1,26 @@
-import { IExtrasRepository } from './interfaces/extras.repository.interface';
-import { CreateExtraDto, UpdateExtraDto } from '../dto/request';
-import { DeleteResultResponse } from 'src/common/dto/response';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Extra } from '../entity/extra.entity';
-import { Status } from 'src/common/enums';
 import {
-  In,
-  Repository,
-  QueryRunner,
-  UpdateResult,
-  DeleteResult,
-  FindOptionsWhere,
-} from 'typeorm';
-import {
+  EntityNotFoundException,
   FailedRemoveException,
   FailedRestoreException,
-  EntityNotFoundException,
   FailedSoftDeleteException,
 } from 'src/common/exceptions/custom';
+import {
+  DeleteResult,
+  FindOptionsWhere,
+  In,
+  QueryRunner,
+  Repository,
+  UpdateResult,
+} from 'typeorm';
+
+import { Extra } from '../entity/extra.entity';
+import { IExtrasRepository } from './interfaces/extras.repository.interface';
+
+import { Status } from 'src/common/enums';
+
+import { DeleteResultResponse } from 'src/common/dto/response';
+import { CreateExtraDto } from '../dto/request';
 
 export class ExtrasRepository implements IExtrasRepository {
   private extrasRepository: Repository<Extra>;
@@ -67,10 +70,11 @@ export class ExtrasRepository implements IExtrasRepository {
     return this.extrasRepository.save(request);
   }
 
-  async update(request: UpdateExtraDto): Promise<Extra> {
-    const { extraId } = request;
-
-    const extra = await this.findOne(extraId);
+  async update(
+    conditions: FindOptionsWhere<Extra>,
+    request: Partial<Extra>,
+  ): Promise<Extra> {
+    const extra = await this.findByCriteria(conditions);
 
     Object.assign(extra, request);
 
