@@ -29,7 +29,7 @@ export class UpdateRateDto {
     message: 'The checkout hour must be in the format HH:mm',
   })
   @IsString({ message: 'The rate duration must be a string' })
-  duration: number;
+  duration: string;
 
   @IsOptional()
   @IsNumber()
