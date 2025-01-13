@@ -20,7 +20,6 @@ import { DeleteResultResponse } from 'src/common/dto/response';
 import { CreateRentDto } from '../dto/request';
 
 import { Status } from 'src/common/enums';
-import { Rate } from 'src/rates/entity/rate.entity';
 import { Rent } from '../entity';
 
 export class RentsRepository implements IRentsRepository {
@@ -72,8 +71,8 @@ export class RentsRepository implements IRentsRepository {
   }
 
   async update(
-    conditions: FindOptionsWhere<Rate>,
-    request: Partial<Rate>,
+    conditions: FindOptionsWhere<Rent>,
+    request: Partial<Rent>,
   ): Promise<Rent> {
     const rent = await this.findByCriteria(conditions);
 
