@@ -1,9 +1,12 @@
-import { RentsRepository } from './repository/rents.repository';
-import { CreateRentDto, UpdateRentDto } from './dto/request';
-import { HandleRpcExceptions } from 'src/common/decorators';
-import { plainToInstance } from 'class-transformer';
-import { RentResponseDto } from './dto/response';
 import { Injectable } from '@nestjs/common';
+import { plainToInstance } from 'class-transformer';
+
+import { HandleRpcExceptions } from 'src/common/decorators';
+
+import { RentsRepository } from './repository/rents.repository';
+
+import { CreateRentDto, UpdateRentDto } from './dto/request';
+import { RentResponseDto } from './dto/response';
 
 @Injectable()
 export class RentsService {
@@ -45,7 +48,9 @@ export class RentsService {
 
   @HandleRpcExceptions()
   async update(request: UpdateRentDto): Promise<RentResponseDto> {
-    const updatedRent = await this.rentsRepository.update(request);
+    const { rentId, ...rest } = request;
+
+    const updatedRent = await this.rentsRepository.update({ rentId }, rest);
 
     return this.plainToInstanceDto(updatedRent);
   }
