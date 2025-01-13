@@ -1,9 +1,11 @@
-import { RatesRepository } from './repository/rates.repository';
-import { RatesController } from './rates.controller';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { RatesService } from './rates.service';
-import { Rate } from './entity/rate.entity';
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+
+import { Rate } from './entity/rate.entity';
+
+import { RatesController } from './rates.controller';
+import { RatesService } from './rates.service';
+import { RatesRepository } from './repository/rates.repository';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Rate])],

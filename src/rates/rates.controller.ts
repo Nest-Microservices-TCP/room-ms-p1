@@ -1,8 +1,10 @@
+import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
+
+import { RatesService } from './rates.service';
+
 import { CreateRateDto, UpdateRateDto } from './dto/request';
 import { RateResponseDto } from './dto/response';
-import { RatesService } from './rates.service';
-import { Controller } from '@nestjs/common';
 
 @Controller()
 export class RatesController {
