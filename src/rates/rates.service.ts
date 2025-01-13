@@ -1,9 +1,11 @@
-import { RatesRepository } from './repository/rates.repository';
-import { CreateRateDto, UpdateRateDto } from './dto/request';
-import { HandleRpcExceptions } from 'src/common/decorators';
-import { plainToInstance } from 'class-transformer';
-import { RateResponseDto } from './dto/response';
 import { Injectable } from '@nestjs/common';
+import { plainToInstance } from 'class-transformer';
+
+import { RatesRepository } from './repository/rates.repository';
+
+import { HandleRpcExceptions } from 'src/common/decorators';
+import { CreateRateDto, UpdateRateDto } from './dto/request';
+import { RateResponseDto } from './dto/response';
 
 @Injectable()
 export class RatesService {
@@ -45,7 +47,9 @@ export class RatesService {
 
   @HandleRpcExceptions()
   async update(request: UpdateRateDto): Promise<RateResponseDto> {
-    const updatedRate = await this.ratesRepository.update(request);
+    const { rateId, ...rest } = request;
+
+    const updatedRate = await this.ratesRepository.update({ rateId }, rest);
 
     return this.plainToInstanceDto(updatedRate);
   }
