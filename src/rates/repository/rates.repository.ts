@@ -100,8 +100,14 @@ export class RatesRepository implements IRatesRepository {
     });
   }
 
-  findByCriteria(criteria: FindOptionsWhere<Rate>): Promise<Rate> {
-    return this.ratesRepository.findOne({ where: criteria });
+  async findByCriteria(criteria: FindOptionsWhere<Rate>): Promise<Rate> {
+    const rate = this.ratesRepository.findOne({ where: criteria });
+
+    if (!rate) {
+      throw new EntityNotFoundException('rate');
+    }
+
+    return rate;
   }
 
   findWithRelations(relations: string[]): Promise<Rate[]> {
