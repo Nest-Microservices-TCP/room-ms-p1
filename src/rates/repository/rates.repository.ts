@@ -1,22 +1,25 @@
-import { IRatesRepository } from './interfaces/rates.repository.interface';
-import { DeleteResultResponse } from 'src/common/dto/response';
-import { CreateRateDto, UpdateRateDto } from '../dto/request';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Rate } from '../entity/rate.entity';
-import { Status } from 'src/common/enums';
 import {
-  In,
-  Repository,
-  QueryRunner,
-  UpdateResult,
-  DeleteResult,
-  FindOptionsWhere,
-} from 'typeorm';
-import {
+  EntityNotFoundException,
   FailedRemoveException,
   FailedRestoreException,
-  EntityNotFoundException,
 } from 'src/common/exceptions/custom';
+import {
+  DeleteResult,
+  FindOptionsWhere,
+  In,
+  QueryRunner,
+  Repository,
+  UpdateResult,
+} from 'typeorm';
+
+import { IRatesRepository } from './interfaces/rates.repository.interface';
+
+import { DeleteResultResponse } from 'src/common/dto/response';
+import { CreateRateDto } from '../dto/request';
+
+import { Status } from 'src/common/enums';
+import { Rate } from '../entity/rate.entity';
 
 export class RatesRepository implements IRatesRepository {
   private ratesRepository: Repository<Rate>;
@@ -66,10 +69,11 @@ export class RatesRepository implements IRatesRepository {
     return this.ratesRepository.save(request);
   }
 
-  async update(request: UpdateRateDto): Promise<Rate> {
-    const { rateId } = request;
-
-    const rate = await this.findOne(rateId);
+  async update(
+    conditions: FindOptionsWhere<Rate>,
+    request: Partial<Rate>,
+  ): Promise<Rate> {
+    const rate = await this.findByCriteria(conditions);
 
     Object.assign(rate, request);
 
