@@ -102,8 +102,14 @@ export class RentsRepository implements IRentsRepository {
     });
   }
 
-  findByCriteria(criteria: FindOptionsWhere<Rent>): Promise<Rent> {
-    return this.rentsRepository.findOne({ where: criteria });
+  async findByCriteria(criteria: FindOptionsWhere<Rent>): Promise<Rent> {
+    const rent = await this.rentsRepository.findOne({ where: criteria });
+
+    if (!rent) {
+      throw new EntityNotFoundException('rent');
+    }
+
+    return rent;
   }
 
   findWithRelations(relations: string[]): Promise<Rent[]> {
