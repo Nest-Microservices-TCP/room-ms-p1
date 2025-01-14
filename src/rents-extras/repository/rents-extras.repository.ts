@@ -98,8 +98,18 @@ export class RentsExtrasRepository implements IRentsExtrasRepository {
     });
   }
 
-  findByCriteria(criteria: FindOptionsWhere<RentExtra>): Promise<RentExtra> {
-    return this.rentsExtrasRepository.findOne({ where: criteria });
+  async findByCriteria(
+    criteria: FindOptionsWhere<RentExtra>,
+  ): Promise<RentExtra> {
+    const rentExtra = await this.rentsExtrasRepository.findOne({
+      where: criteria,
+    });
+
+    if (!rentExtra) {
+      throw new EntityNotFoundException('rent-extra');
+    }
+
+    return rentExtra;
   }
 
   findWithRelations(relations: string[]): Promise<RentExtra[]> {
