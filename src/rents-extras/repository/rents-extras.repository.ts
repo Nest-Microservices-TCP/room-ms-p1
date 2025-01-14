@@ -1,23 +1,26 @@
-import { IRentsExtrasRepository } from './interfaces/rents-extras.repository.interface';
-import { CreateRentExtraDto, UpdateRentExtraDto } from '../dto/request';
-import { DeleteResultResponse } from 'src/common/dto/response';
-import { RentExtra } from '../entity/rent-extra.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Status } from 'src/common/enums';
 import {
-  In,
-  Repository,
-  QueryRunner,
-  UpdateResult,
-  DeleteResult,
-  FindOptionsWhere,
-} from 'typeorm';
-import {
+  EntityNotFoundException,
   FailedRemoveException,
   FailedRestoreException,
-  EntityNotFoundException,
   FailedSoftDeleteException,
 } from 'src/common/exceptions/custom';
+import {
+  DeleteResult,
+  FindOptionsWhere,
+  In,
+  QueryRunner,
+  Repository,
+  UpdateResult,
+} from 'typeorm';
+
+import { IRentsExtrasRepository } from './interfaces/rents-extras.repository.interface';
+
+import { Status } from 'src/common/enums';
+import { RentExtra } from '../entity/rent-extra.entity';
+
+import { DeleteResultResponse } from 'src/common/dto/response';
+import { CreateRentExtraDto } from '../dto/request';
 
 export class RentsExtrasRepository implements IRentsExtrasRepository {
   private rentsExtrasRepository: Repository<RentExtra>;
@@ -63,10 +66,11 @@ export class RentsExtrasRepository implements IRentsExtrasRepository {
     return this.rentsExtrasRepository.save(request);
   }
 
-  async update(request: UpdateRentExtraDto): Promise<RentExtra> {
-    const { rentExtraId } = request;
-
-    const rentExtra = await this.findOne(rentExtraId);
+  async update(
+    conditions: FindOptionsWhere<RentExtra>,
+    request: Partial<RentExtra>,
+  ): Promise<RentExtra> {
+    const rentExtra = await this.findByCriteria(conditions);
 
     Object.assign(rentExtra, request);
 
