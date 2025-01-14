@@ -1,10 +1,13 @@
-import { ReservationsRepository } from './repository/reservations.repository';
-import { CreateReservationDto, UpdateReservationDto } from './dto/request';
-import { DeleteResultResponse } from 'src/common/dto/response';
-import { HandleRpcExceptions } from 'src/common/decorators';
-import { ReservationResponseDto } from './dto/response';
-import { plainToInstance } from 'class-transformer';
 import { Injectable } from '@nestjs/common';
+import { plainToInstance } from 'class-transformer';
+
+import { HandleRpcExceptions } from 'src/common/decorators';
+import { DeleteResultResponse } from 'src/common/dto/response';
+
+import { CreateReservationDto, UpdateReservationDto } from './dto/request';
+import { ReservationResponseDto } from './dto/response';
+
+import { ReservationsRepository } from './repository/reservations.repository';
 
 @Injectable()
 export class ReservationsService {
@@ -52,8 +55,12 @@ export class ReservationsService {
 
   @HandleRpcExceptions()
   async update(request: UpdateReservationDto): Promise<ReservationResponseDto> {
-    const reservationUpdated =
-      await this.reservationsRepository.update(request);
+    const { reservationId, ...rest } = request;
+
+    const reservationUpdated = await this.reservationsRepository.update(
+      { reservationId },
+      rest,
+    );
 
     return this.plainToInstanceDto(reservationUpdated);
   }
