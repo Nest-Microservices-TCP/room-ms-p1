@@ -1,23 +1,26 @@
-import { IReservationsRepository } from './interfaces/reservations.repository.interface';
-import { CreateReservationDto, UpdateReservationDto } from '../dto/request';
-import { DeleteResultResponse } from 'src/common/dto/response';
-import { Reservation } from '../entity/reservation.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Status } from 'src/common/enums';
 import {
-  In,
-  Repository,
-  QueryRunner,
-  DeleteResult,
-  UpdateResult,
-  FindOptionsWhere,
-} from 'typeorm';
-import {
+  EntityNotFoundException,
   FailedRemoveException,
   FailedRestoreException,
-  EntityNotFoundException,
   FailedSoftDeleteException,
 } from 'src/common/exceptions/custom';
+import {
+  DeleteResult,
+  FindOptionsWhere,
+  In,
+  QueryRunner,
+  Repository,
+  UpdateResult,
+} from 'typeorm';
+
+import { Status } from 'src/common/enums';
+import { Reservation } from '../entity/reservation.entity';
+
+import { DeleteResultResponse } from 'src/common/dto/response';
+import { CreateReservationDto } from '../dto/request';
+
+import { IReservationsRepository } from './interfaces/reservations.repository.interface';
 
 export class ReservationsRepository implements IReservationsRepository {
   private reservationsRepository: Repository<Reservation>;
@@ -67,10 +70,11 @@ export class ReservationsRepository implements IReservationsRepository {
     return this.reservationsRepository.save(request);
   }
 
-  async update(request: UpdateReservationDto): Promise<Reservation> {
-    const { reservationId } = request;
-
-    const reservation = await this.findOne(reservationId);
+  async update(
+    conditions: FindOptionsWhere<Reservation>,
+    request: Partial<Reservation>,
+  ): Promise<Reservation> {
+    const reservation = await this.findByCriteria(conditions);
 
     Object.assign(reservation, request);
 
