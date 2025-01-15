@@ -1,6 +1,7 @@
 import { IReservationsStatesRepository } from './interfaces/reservations-states.repository.interface';
 import { ReservationState } from '../entity/reservation-state.entity';
 import { DeleteResultResponse } from 'src/common/dto/response';
+import { CreateReservationStateDto } from '../dto/request';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Status } from 'src/common/enums';
 import {
@@ -11,10 +12,6 @@ import {
   UpdateResult,
   FindOptionsWhere,
 } from 'typeorm';
-import {
-  CreateReservationStateDto,
-  UpdateReservationStateDto,
-} from '../dto/request';
 import {
   FailedRemoveException,
   FailedRestoreException,
@@ -65,10 +62,11 @@ export class ReservationsStatesRepository
     return this.reservationsStatesRepository.save(request);
   }
 
-  async update(request: UpdateReservationStateDto): Promise<ReservationState> {
-    const { reservationStateId } = request;
-
-    const reservationState = await this.findOne(reservationStateId);
+  async update(
+    conditions: FindOptionsWhere<ReservationState>,
+    request: Partial<ReservationState>,
+  ): Promise<ReservationState> {
+    const reservationState = await this.findByCriteria(conditions);
 
     Object.assign(reservationState, request);
 
