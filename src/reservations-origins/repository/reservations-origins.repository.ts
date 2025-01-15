@@ -95,10 +95,18 @@ export class ReservationsOriginsRepository
     });
   }
 
-  findByCriteria(
+  async findByCriteria(
     criteria: FindOptionsWhere<ReservationOrigin>,
   ): Promise<ReservationOrigin> {
-    return this.reservationsOriginsRepository.findOne({ where: criteria });
+    const reservationOrigin = await this.reservationsOriginsRepository.findOne({
+      where: criteria,
+    });
+
+    if (!reservationOrigin) {
+      throw new EntityNotFoundException('reservation-origin');
+    }
+
+    return reservationOrigin;
   }
 
   findWithRelations(relations: string[]): Promise<ReservationOrigin[]> {
