@@ -92,10 +92,18 @@ export class ReservationsStatesRepository
     });
   }
 
-  findByCriteria(
+  async findByCriteria(
     criteria: FindOptionsWhere<ReservationState>,
   ): Promise<ReservationState> {
-    return this.reservationsStatesRepository.findOne({ where: criteria });
+    const reservationState = await this.reservationsStatesRepository.findOne({
+      where: criteria,
+    });
+
+    if (!reservationState) {
+      throw new EntityNotFoundException('reservation-state');
+    }
+
+    return reservationState;
   }
 
   findWithRelations(relations: string[]): Promise<ReservationState[]> {
