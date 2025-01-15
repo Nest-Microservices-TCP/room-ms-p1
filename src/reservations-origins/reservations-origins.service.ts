@@ -65,8 +65,13 @@ export class ReservationsOriginsService {
   async update(
     request: UpdateReservationOriginDto,
   ): Promise<ReservationOriginResponseDto> {
+    const { reservationOriginId, ...rest } = request;
+
     const updatedReservationOrigin =
-      await this.reservationsOriginsRepository.update(request);
+      await this.reservationsOriginsRepository.update(
+        { reservationOriginId },
+        rest,
+      );
 
     return this.plainToInstanceDto(updatedReservationOrigin);
   }
