@@ -1,23 +1,26 @@
-import { EntityNotFoundException } from 'src/common/exceptions/custom/entity-not-found.exception';
-import { IRoomsRepository } from './interfaces/rooms.repository.interface';
-import { DeleteResultResponse } from 'src/common/dto/response';
-import { CreateRoomDto } from '../dto/request';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Room } from '../entity/room.entity';
-import { Status } from 'src/common/enums';
 import {
-  In,
-  Repository,
-  QueryRunner,
-  UpdateResult,
-  DeleteResult,
-  FindOptionsWhere,
-} from 'typeorm';
-import {
+  EntityNotFoundException,
   FailedRemoveException,
   FailedRestoreException,
   FailedSoftDeleteException,
 } from 'src/common/exceptions/custom';
+import {
+  DeleteResult,
+  FindOptionsWhere,
+  In,
+  QueryRunner,
+  Repository,
+  UpdateResult,
+} from 'typeorm';
+
+import { Status } from 'src/common/enums';
+import { Room } from '../entity/room.entity';
+
+import { DeleteResultResponse } from 'src/common/dto/response';
+import { CreateRoomDto } from '../dto/request';
+
+import { IRoomsRepository } from './interfaces/rooms.repository.interface';
 
 export class RoomsRepository implements IRoomsRepository {
   private roomsRepository: Repository<Room>;
