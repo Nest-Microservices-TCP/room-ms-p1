@@ -62,8 +62,13 @@ export class ReservationsStatesService {
   async update(
     request: UpdateReservationStateDto,
   ): Promise<ReservationStateResponseDto> {
+    const { reservationStateId, ...rest } = request;
+
     const updatedReservationState =
-      await this.reservationsStatesRepository.update(request);
+      await this.reservationsStatesRepository.update(
+        { reservationStateId },
+        rest,
+      );
 
     return this.plainToInstanceDto(updatedReservationState);
   }
