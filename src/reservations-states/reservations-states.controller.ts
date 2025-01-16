@@ -1,12 +1,14 @@
-import { ReservationsStatesService } from './reservations-states.service';
-import { MessagePattern, Payload } from '@nestjs/microservices';
-import { DeleteResultResponse } from 'src/common/dto/response';
-import { ReservationStateResponseDto } from './dto/response';
 import { Controller } from '@nestjs/common';
+import { MessagePattern, Payload } from '@nestjs/microservices';
+
+import { DeleteResultResponse } from 'src/common/dto/response';
 import {
   CreateReservationStateDto,
   UpdateReservationStateDto,
 } from './dto/request';
+import { ReservationStateResponseDto } from './dto/response';
+
+import { ReservationsStatesService } from './reservations-states.service';
 
 @Controller()
 export class ReservationsStatesController {
