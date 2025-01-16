@@ -46,7 +46,9 @@ export class RoomsService {
 
   @HandleRpcExceptions()
   async update(request: UpdateRoomDto) {
-    const updatedRoom = await this.roomsRepository.update(request);
+    const { roomId, ...rest } = request;
+
+    const updatedRoom = await this.roomsRepository.update({ roomId }, rest);
 
     return this.plainToInstanceDto(updatedRoom);
   }
