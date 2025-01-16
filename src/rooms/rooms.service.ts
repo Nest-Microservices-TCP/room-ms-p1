@@ -1,10 +1,13 @@
-import { RoomsRepository } from './repositories/rooms.repository';
+import { Injectable } from '@nestjs/common';
+import { plainToInstance } from 'class-transformer';
+
+import { HandleRpcExceptions } from 'src/common/decorators';
+
 import { DeleteResultResponse } from 'src/common/dto/response';
 import { CreateRoomDto, UpdateRoomDto } from './dto/request';
-import { HandleRpcExceptions } from 'src/common/decorators';
-import { plainToInstance } from 'class-transformer';
 import { RoomResponseDto } from './dto/response';
-import { Injectable } from '@nestjs/common';
+
+import { RoomsRepository } from './repositories/rooms.repository';
 
 @Injectable()
 export class RoomsService {
