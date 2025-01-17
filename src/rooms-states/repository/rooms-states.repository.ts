@@ -113,8 +113,18 @@ export class RoomsStatesRepository implements IRoomsStateRepository {
     });
   }
 
-  findByCriteria(criteria: FindOptionsWhere<RoomState>): Promise<RoomState> {
-    return this.roomsStatesRepository.findOne({ where: criteria });
+  async findByCriteria(
+    criteria: FindOptionsWhere<RoomState>,
+  ): Promise<RoomState> {
+    const roomState = await this.roomsStatesRepository.findOne({
+      where: criteria,
+    });
+
+    if (!roomState) {
+      throw new EntityNotFoundException('room-state');
+    }
+
+    return roomState;
   }
 
   findWithRelations(relations: string[]): Promise<RoomState[]> {
