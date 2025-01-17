@@ -1,14 +1,17 @@
-import { RoomsStatesRepository } from './repository/rooms-states.repository';
-import { DeleteResultResponse } from 'src/common/dto/response';
-import { HandleRpcExceptions } from 'src/common/decorators';
-import { RoomStateResponseDto } from './dto/response';
-import { plainToInstance } from 'class-transformer';
 import { Injectable } from '@nestjs/common';
+import { plainToInstance } from 'class-transformer';
+
+import { HandleRpcExceptions } from 'src/common/decorators';
+
+import { DeleteResultResponse } from 'src/common/dto/response';
 import {
-  UpdateRoomStateDto,
   CreateRoomStateDto,
   FindOneRoomStateByIdDto,
+  UpdateRoomStateDto,
 } from './dto/request';
+import { RoomStateResponseDto } from './dto/response';
+
+import { RoomsStatesRepository } from './repository/rooms-states.repository';
 
 @Injectable()
 export class RoomsStatesService {
