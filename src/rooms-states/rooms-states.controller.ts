@@ -1,13 +1,15 @@
-import { MessagePattern, Payload } from '@nestjs/microservices';
-import { DeleteResultResponse } from 'src/common/dto/response';
-import { RoomsStatesService } from './rooms-states.service';
-import { RoomStateResponseDto } from './dto/response';
 import { Controller } from '@nestjs/common';
+import { MessagePattern, Payload } from '@nestjs/microservices';
+
+import { DeleteResultResponse } from 'src/common/dto/response';
 import {
   CreateRoomStateDto,
-  UpdateRoomStateDto,
   FindOneRoomStateByIdDto,
+  UpdateRoomStateDto,
 } from './dto/request';
+import { RoomStateResponseDto } from './dto/response';
+
+import { RoomsStatesService } from './rooms-states.service';
 
 @Controller()
 export class RoomsStatesController {
