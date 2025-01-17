@@ -1,9 +1,11 @@
+import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
+
 import { DeleteResultResponse } from 'src/common/dto/response';
 import { CreateRoomDto, UpdateRoomDto } from './dto/request';
 import { RoomResponseDto } from './dto/response';
+
 import { RoomsService } from './rooms.service';
-import { Controller } from '@nestjs/common';
 
 @Controller()
 export class RoomsController {
