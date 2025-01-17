@@ -54,7 +54,12 @@ export class RoomsStatesService {
 
   @HandleRpcExceptions()
   async update(request: UpdateRoomStateDto): Promise<RoomStateResponseDto> {
-    const roomStateUpdated = await this.roomsStatesRepository.update(request);
+    const { roomStateId, ...rest } = request;
+
+    const roomStateUpdated = await this.roomsStatesRepository.update(
+      { roomStateId },
+      rest,
+    );
 
     return this.plainToInstanceDto(roomStateUpdated);
   }
