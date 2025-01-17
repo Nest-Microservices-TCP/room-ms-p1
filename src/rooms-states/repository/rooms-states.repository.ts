@@ -1,6 +1,6 @@
 import { EntityNotFoundException } from 'src/common/exceptions/custom/entity-not-found.exception';
 import { IRoomsStateRepository } from './interfaces/rooms-states.repository.interface';
-import { UpdateRoomStateDto, CreateRoomStateDto } from '../dto/request';
+import { CreateRoomStateDto } from '../dto/request';
 import { DeleteResultResponse } from 'src/common/dto/response';
 import { ConflictException, Injectable } from '@nestjs/common';
 import { RoomState } from '../entity/room-state.entity';
@@ -81,10 +81,11 @@ export class RoomsStatesRepository implements IRoomsStateRepository {
     return this.roomsStatesRepository.save(request);
   }
 
-  async update(request: UpdateRoomStateDto): Promise<RoomState> {
-    const { roomStateId } = request;
-
-    const roomState = await this.findOne(roomStateId);
+  async update(
+    conditions: FindOptionsWhere<RoomState>,
+    request: Partial<RoomState>,
+  ): Promise<RoomState> {
+    const roomState = await this.findByCriteria(conditions);
 
     Object.assign(roomState, request);
 
