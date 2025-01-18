@@ -56,8 +56,13 @@ export class RoomsTypesAmenitiesService {
   async update(
     request: UpdateRoomTypeAmenityDto,
   ): Promise<RoomTypeAmenityResponseDto> {
+    const { roomTypeAmenityId, ...rest } = request;
+
     const updatedRoomTypeAmenity =
-      await this.roomsTypesAmenitiesRepository.update(request);
+      await this.roomsTypesAmenitiesRepository.update(
+        { roomTypeAmenityId },
+        rest,
+      );
 
     return this.plainToInstanceDto(updatedRoomTypeAmenity);
   }
