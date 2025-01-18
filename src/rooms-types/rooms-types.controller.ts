@@ -1,9 +1,11 @@
-import { CreateRoomTypeDto, UpdateRoomTypeDto } from './dto/request';
-import { MessagePattern, Payload } from '@nestjs/microservices';
-import { DeleteResultResponse } from 'src/common/dto/response';
-import { RoomsTypesService } from './rooms-types.service';
-import { RoomTypeResponseDto } from './dto/response';
 import { Controller } from '@nestjs/common';
+import { MessagePattern, Payload } from '@nestjs/microservices';
+
+import { DeleteResultResponse } from 'src/common/dto/response';
+import { CreateRoomTypeDto, UpdateRoomTypeDto } from './dto/request';
+import { RoomTypeResponseDto } from './dto/response';
+
+import { RoomsTypesService } from './rooms-types.service';
 
 @Controller()
 export class RoomsTypesController {
