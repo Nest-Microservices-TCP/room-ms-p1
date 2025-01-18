@@ -1,5 +1,10 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, QueryRunner, Repository } from 'typeorm';
+import {
+  DeleteResult,
+  FindOptionsWhere,
+  QueryRunner,
+  Repository,
+} from 'typeorm';
 
 import {
   EntityNotFoundException,
@@ -7,10 +12,7 @@ import {
 } from 'src/common/exceptions/custom';
 
 import { DeleteResultResponse } from 'src/common/dto/response';
-import {
-  CreateRoomTypeAmenityDto,
-  UpdateRoomTypeAmenityDto,
-} from '../dto/request';
+import { CreateRoomTypeAmenityDto } from '../dto/request';
 
 import { RoomTypeAmenity } from '../entity/room-type-amenity.entity';
 import { IRoomsTypesAmenities } from './interfaces/rooms-types-amenities.repository.interface';
@@ -56,10 +58,13 @@ export class RoomsTypesAmenitiesRepository implements IRoomsTypesAmenities {
     return this.roomsTypesAmenitiesRepository.save(request);
   }
 
-  async update(request: UpdateRoomTypeAmenityDto): Promise<RoomTypeAmenity> {
-    const { roomTypeAmenityId } = request;
-
-    const roomTypeAmenity = await this.findOne(roomTypeAmenityId);
+  async update(
+    conditions: FindOptionsWhere<RoomTypeAmenity>,
+    request: Partial<RoomTypeAmenity>,
+  ): Promise<RoomTypeAmenity> {
+    const roomTypeAmenity = await this.roomsTypesAmenitiesRepository.findOne({
+      where: conditions,
+    });
 
     Object.assign(roomTypeAmenity, request);
 
