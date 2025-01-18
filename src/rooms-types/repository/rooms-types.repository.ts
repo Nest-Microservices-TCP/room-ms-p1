@@ -1,5 +1,5 @@
 import { IRoomsTypesRepository } from './interfaces/rooms-types.repository.interface';
-import { CreateRoomTypeDto, UpdateRoomTypeDto } from '../dto/request';
+import { CreateRoomTypeDto } from '../dto/request';
 import { DeleteResultResponse } from 'src/common/dto/response';
 import { RoomType } from '../entity/room-type.entity';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -59,10 +59,11 @@ export class RoomsTypesRepository implements IRoomsTypesRepository {
     return this.roomsTypesRepository.save(request);
   }
 
-  async update(request: UpdateRoomTypeDto): Promise<RoomType> {
-    const { roomTypeId } = request;
-
-    const roomType = await this.findOne(roomTypeId);
+  async update(
+    conditions: FindOptionsWhere<RoomType>,
+    request: Partial<RoomType>,
+  ): Promise<RoomType> {
+    const roomType = await this.findByCriteria(conditions);
 
     Object.assign(roomType, request);
 
