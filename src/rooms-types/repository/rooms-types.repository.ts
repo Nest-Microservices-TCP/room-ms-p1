@@ -91,8 +91,18 @@ export class RoomsTypesRepository implements IRoomsTypesRepository {
     });
   }
 
-  findByCriteria(criteria: FindOptionsWhere<RoomType>): Promise<RoomType> {
-    return this.roomsTypesRepository.findOne({ where: criteria });
+  async findByCriteria(
+    criteria: FindOptionsWhere<RoomType>,
+  ): Promise<RoomType> {
+    const roomType = await this.roomsTypesRepository.findOne({
+      where: criteria,
+    });
+
+    if (!roomType) {
+      throw new EntityNotFoundException('room-type');
+    }
+
+    return roomType;
   }
 
   findWithRelations(relations: string[]): Promise<RoomType[]> {
