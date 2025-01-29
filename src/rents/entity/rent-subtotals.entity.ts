@@ -1,18 +1,22 @@
-import { Rent } from './rent.entity';
 import {
   Column,
   Entity,
-  OneToOne,
   JoinColumn,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-@Entity({ name: 'rent_subtotals' })
-export class RentSubtotals {
+import { BaseEntity } from 'src/common/entity';
+
+import { Rent } from './rent.entity';
+
+@Entity({ name: 'rents_subtotals' })
+export class RentSubtotals extends BaseEntity {
   @PrimaryGeneratedColumn('uuid', {
-    name: 'rent_subtotals_id',
+    primaryKeyConstraintName: 'PK_RentsSubtotals',
+    name: 'rent_subtotal_id',
   })
-  rentSubtotalsId: string;
+  rentSubtotalId: string;
 
   @Column({
     name: 'room_total',
@@ -25,7 +29,7 @@ export class RentSubtotals {
   roomTotal: number;
 
   @Column({
-    name: 'room_total',
+    name: 'overtime_total',
     type: 'numeric',
     precision: 9,
     scale: 2,
@@ -35,7 +39,7 @@ export class RentSubtotals {
   overtimeTotal: number;
 
   @Column({
-    name: 'room_total',
+    name: 'early_check_in_total',
     type: 'numeric',
     precision: 9,
     scale: 2,
@@ -45,7 +49,7 @@ export class RentSubtotals {
   earlyCheckinTotal: number;
 
   @Column({
-    name: 'room_total',
+    name: 'extra_people_total',
     type: 'numeric',
     precision: 9,
     scale: 2,
@@ -55,7 +59,7 @@ export class RentSubtotals {
   extraPeopleTotal: number;
 
   @Column({
-    name: 'room_total',
+    name: 'extra_accommodations_total',
     type: 'numeric',
     precision: 9,
     scale: 2,
@@ -75,6 +79,10 @@ export class RentSubtotals {
    * almacenara la columna con la clave foránea
    */
   @OneToOne(() => Rent, (rent) => rent.rentSubtotals)
-  @JoinColumn({ name: 'rent_id' })
+  @JoinColumn({
+    name: 'rent_id',
+    referencedColumnName: 'rentId',
+    foreignKeyConstraintName: 'FK_Rent_Subtotals',
+  })
   rent: Rent;
 }
