@@ -1,6 +1,6 @@
 import { IsNumber, IsOptional, IsPositive, Min } from 'class-validator';
 import { Extra } from 'src/extras/entity/extra.entity';
-import { RentEntity } from 'src/rents/entity';
+import { Rent } from 'src/rents/entity';
 
 export class CreateRentExtraDto {
   @Min(1)
@@ -15,6 +15,6 @@ export class CreateRentExtraDto {
   @IsOptional()
   total: number;
 
-  rent: RentEntity;
+  rent: Rent;
   extra: Extra;
 }
