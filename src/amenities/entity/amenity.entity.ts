@@ -1,12 +1,14 @@
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+
 import { BaseEntity } from 'src/common/entity';
+
 import { RoomTypeAmenity } from 'src/rooms-types-amenities/entity/room-type-amenity.entity';
 
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 @Entity({ name: 'amenities' })
 export class Amenity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid', {
+    primaryKeyConstraintName: 'PK_Amenities',
     name: 'amenity_id',
-    primaryKeyConstraintName: 'PK_amenities',
   })
   amenityId: string;
 
