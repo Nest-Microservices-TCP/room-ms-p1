@@ -1,12 +1,14 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { RentExtra } from 'src/rents-extras/entity/rent-extra.entity';
+
 import { BaseEntity } from 'src/common/entity';
+
+import { RentExtra } from 'src/rents-extras/entity/rent-extra.entity';
 
 @Entity({ name: 'extras' })
 export class Extra extends BaseEntity {
   @PrimaryGeneratedColumn('uuid', {
+    primaryKeyConstraintName: 'PK_Extras',
     name: 'extra_id',
-    primaryKeyConstraintName: 'PK_extras',
   })
   extraId: string;
 
