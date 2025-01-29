@@ -1,12 +1,14 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { AccommodationType } from 'src/rents/enum';
+
 import { BaseEntity } from 'src/common/entity';
+
+import { AccommodationType } from 'src/rents/enum';
 
 @Entity({ name: 'rates' })
 export class Rate extends BaseEntity {
   @PrimaryGeneratedColumn('uuid', {
+    primaryKeyConstraintName: 'PK_Rates',
     name: 'rate_id',
-    primaryKeyConstraintName: 'PK_rates',
   })
   rateId: string;
 
@@ -62,7 +64,7 @@ export class Rate extends BaseEntity {
   extraPeopleCost: number;
 
   @Column({
-    name: 'early_checkin_cost',
+    name: 'early_check_in_cost',
     type: 'numeric',
     precision: 9,
     scale: 2,
@@ -79,7 +81,7 @@ export class Rate extends BaseEntity {
   accommodationType: AccommodationType;
 
   @Column({
-    name: 'checkin_hour',
+    name: 'check_in_hour',
     type: 'time',
     nullable: false,
   })
