@@ -1,23 +1,26 @@
-import { AccommodationType, EntryType, PaymentState, RentState } from '../enum';
-import { RentExtra } from 'src/rents-extras/entity/rent-extra.entity';
-import { RentSubtotals } from './rent-subtotals.entity';
-import { Room } from 'src/rooms/entity/room.entity';
-import { BaseEntity } from 'src/common/entity';
 import {
   Column,
   Entity,
-  OneToOne,
   Generated,
-  OneToMany,
   JoinColumn,
+  OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+
+import { BaseEntity } from 'src/common/entity';
+
+import { AccommodationType, EntryType, PaymentState, RentState } from '../enum';
+
+import { RentExtra } from 'src/rents-extras/entity/rent-extra.entity';
+import { Room } from 'src/rooms/entity/room.entity';
+import { RentSubtotals } from './rent-subtotals.entity';
 
 @Entity({ name: 'rents' })
 export class Rent extends BaseEntity {
   @PrimaryGeneratedColumn('uuid', {
+    primaryKeyConstraintName: 'PK_Rents',
     name: 'rent_id',
-    primaryKeyConstraintName: 'PK_rents',
   })
   rentId: string;
 
@@ -68,9 +71,6 @@ export class Rent extends BaseEntity {
   })
   rentState: RentState;
 
-  /**
-   * TODO: Revisar que campos deben removerse o cambiarse a otra entidad
-   */
   @Column({
     name: 'payment_state',
     type: 'enum',
@@ -114,11 +114,6 @@ export class Rent extends BaseEntity {
   })
   rentSubtotals: RentSubtotals;
 
-  @OneToOne(() => Room, (room) => room.rent, { nullable: false })
-  @JoinColumn({ name: 'room_id' })
-  room: Room;
-
-  //TODO: Eliminar las entidades y columnas que ya no serian necesarias debido a esta relación
   /**
    * * Relación ManyToMany a traves de una tabla intermedia/pivote.
    *
@@ -139,4 +134,12 @@ export class Rent extends BaseEntity {
     nullable: false,
   })
   rentExtras: RentExtra[];
+
+  @OneToOne(() => Room, (room) => room.rent, { nullable: false })
+  @JoinColumn({
+    name: 'room_id',
+    referencedColumnName: 'roomId',
+    foreignKeyConstraintName: 'FK_Rent_Room',
+  })
+  room: Room;
 }
