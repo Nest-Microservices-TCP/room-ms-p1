@@ -1,5 +1,5 @@
 import { Extra } from 'src/extras/entity/extra.entity';
-import { RentEntity } from 'src/rents/entity';
+import { Rent } from 'src/rents/entity';
 import { Expose } from 'class-transformer';
 
 export class RentExtraResponseDto {
@@ -13,7 +13,7 @@ export class RentExtraResponseDto {
   total: number;
 
   @Expose()
-  rent: RentEntity;
+  rent: Rent;
 
   @Expose()
   extra: Extra;
