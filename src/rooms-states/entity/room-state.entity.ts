@@ -1,13 +1,14 @@
-import { BaseEntity } from 'src/common/entity';
-import { Room } from 'src/rooms/entity/room.entity';
-
 import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+
+import { BaseEntity } from 'src/common/entity';
+
+import { Room } from 'src/rooms/entity/room.entity';
 
 @Entity({ name: 'rooms_states' })
 export class RoomState extends BaseEntity {
   @PrimaryGeneratedColumn('uuid', {
+    primaryKeyConstraintName: 'PK_RoomsStates',
     name: 'room_state_id',
-    primaryKeyConstraintName: 'PK_rooms_states',
   })
   roomStateId: string;
 
