@@ -1,7 +1,3 @@
-import { BaseEntity } from 'src/common/entity';
-import { RoomTypeAmenity } from 'src/rooms-types-amenities/entity/room-type-amenity.entity';
-import { Room } from 'src/rooms/entity/room.entity';
-
 import {
   Column,
   Entity,
@@ -10,11 +6,16 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
+import { BaseEntity } from 'src/common/entity';
+
+import { RoomTypeAmenity } from 'src/rooms-types-amenities/entity/room-type-amenity.entity';
+import { Room } from 'src/rooms/entity/room.entity';
+
 @Entity({ name: 'rooms_types' })
 export class RoomType extends BaseEntity {
   @PrimaryGeneratedColumn('uuid', {
+    primaryKeyConstraintName: 'PK_RoomsTypes',
     name: 'room_type_id',
-    primaryKeyConstraintName: 'PK_rooms_types',
   })
   roomTypeId: string;
 
