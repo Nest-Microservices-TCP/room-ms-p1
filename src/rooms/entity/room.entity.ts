@@ -1,8 +1,3 @@
-import { BaseEntity } from 'src/common/entity';
-import { Rent } from 'src/rents/entity/rent.entity';
-import { RoomState } from 'src/rooms-states/entity/room-state.entity';
-import { RoomType } from 'src/rooms-types/entity/room-type.entity';
-
 import {
   Column,
   Entity,
@@ -11,9 +6,16 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
+import { BaseEntity } from 'src/common/entity';
+
+import { Rent } from 'src/rents/entity/rent.entity';
+import { RoomState } from 'src/rooms-states/entity/room-state.entity';
+import { RoomType } from 'src/rooms-types/entity/room-type.entity';
+
 @Entity({ name: 'rooms' })
 export class Room extends BaseEntity {
   @PrimaryGeneratedColumn('uuid', {
+    primaryKeyConstraintName: 'PK_Rooms',
     name: 'room_id',
   })
   roomId: string;
@@ -35,12 +37,15 @@ export class Room extends BaseEntity {
      * @name Establece el nombre que tendrá la columna que almacenara
      * la clave foránea de la relación
      *
-     * @referencesColumnName Define el nombre de la columna sobre la
+     * @referencedColumnName Define el nombre de la columna sobre la
      * cual se hará la referencia de la clave foránea de la otra tabla
      * de la relación. Si no se define por defecto typeorm toma la
      * clave primaria de la tabla referenciada como la referencia para
      * la clave foránea. Esta es mas común usarla cuando se quiere usar
      * otra columna diferente al ID como clave foránea
+     *
+     * Esta propiedad es de la clase con TypeScript que representa a la
+     * columna en la base de datos
      *
      * @foreignKeyConstraintName Define el nombre de la constraint que
      * se genera para la clave foránea, si no se define, TypeORM genera
@@ -51,7 +56,7 @@ export class Room extends BaseEntity {
      * ! @ManyToMany ambas tablas tienen el @JoinColumn
      */
     name: 'room_state_id',
-    // referencedColumnName: 'room_state_id',
+    referencedColumnName: 'roomStateId',
     foreignKeyConstraintName: 'FK_Room_RoomState',
   })
   roomState: RoomState;
