@@ -7,14 +7,15 @@ import {
 } from 'typeorm';
 
 import { BaseEntity } from 'src/common/entity';
+
 import { Extra } from 'src/extras/entity/extra.entity';
 import { Rent } from 'src/rents/entity';
 
 @Entity({ name: 'rents_extras' })
 export class RentExtra extends BaseEntity {
   @PrimaryGeneratedColumn('uuid', {
+    primaryKeyConstraintName: 'PK_RentsExtras',
     name: 'rent_extra_id',
-    primaryKeyConstraintName: 'PK_rents_extras',
   })
   rentExtraId: string;
 
@@ -46,6 +47,7 @@ export class RentExtra extends BaseEntity {
   })
   @JoinColumn({
     name: 'rent_id',
+    referencedColumnName: 'rentId',
     foreignKeyConstraintName: 'FK_RentsExtras_Rent',
   })
   rent: Rent;
@@ -56,6 +58,7 @@ export class RentExtra extends BaseEntity {
   })
   @JoinColumn({
     name: 'extra_id',
+    referencedColumnName: 'extraId',
     foreignKeyConstraintName: 'FK_RentsExtras_Extra',
   })
   extra: Extra;
