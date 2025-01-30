@@ -1,6 +1,3 @@
-import { Amenity } from 'src/amenities/entity/amenity.entity';
-import { RoomType } from 'src/rooms-types/entity/room-type.entity';
-
 import {
   Column,
   Entity,
@@ -8,6 +5,9 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+
+import { Amenity } from 'src/amenities/entity/amenity.entity';
+import { RoomType } from 'src/rooms-types/entity/room-type.entity';
 
 /**
  * Cuando una tabla intermedia contiene otros campos a parte de las
@@ -55,6 +55,7 @@ export class RoomTypeAmenity {
   })
   @JoinColumn({
     name: 'room_type_id',
+    referencedColumnName: 'roomTypeId',
     foreignKeyConstraintName: 'FK_RoomsTypesAmenities_RoomType',
   })
   roomType: RoomType;
@@ -64,6 +65,7 @@ export class RoomTypeAmenity {
   })
   @JoinColumn({
     name: 'amenity_id',
+    referencedColumnName: 'amenityId',
     foreignKeyConstraintName: 'FK_RoomsTypesAmenities_Amenity',
   })
   amenity: Amenity;
