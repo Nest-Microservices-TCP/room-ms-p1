@@ -1,10 +1,11 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+
 import { BaseEntity } from 'src/common/entity';
 
-@Entity({ name: 'reservations-states' })
+@Entity({ name: 'reservations_states' })
 export class ReservationState extends BaseEntity {
   @PrimaryGeneratedColumn('uuid', {
-    primaryKeyConstraintName: 'PK_reservation_state_id',
+    primaryKeyConstraintName: 'PK_ReservationStates',
     name: 'reservation_state_id',
   })
   reservationStateId: string;
