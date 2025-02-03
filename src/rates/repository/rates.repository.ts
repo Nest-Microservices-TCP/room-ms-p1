@@ -31,6 +31,14 @@ export class RatesRepository implements IRatesRepository {
     this.ratesRepository = defaultRepository;
   }
 
+  private formatInterval(interval: any): string {
+    if (typeof interval === 'object' && interval.hours !== undefined) {
+      return `${interval.hours}h`;
+    }
+
+    return interval;
+  }
+
   setQueryRunner(queryRunner: QueryRunner): void {
     if (queryRunner) {
       this.ratesRepository = queryRunner.manager.getRepository(Rate);
@@ -39,12 +47,13 @@ export class RatesRepository implements IRatesRepository {
     }
   }
 
-  findAll(): Promise<Rate[]> {
-    return this.ratesRepository.find({
-      where: {
-        status: Status.ACTIVE,
-      },
-    });
+  async findAll(): Promise<Rate[]> {
+    const rates = await this.ratesRepository.find();
+
+    return rates.map((rate) => ({
+      ...rate,
+      duration: this.formatInterval(rate.duration),
+    }));
   }
 
   async findOne(rateId: string): Promise<Rate> {
