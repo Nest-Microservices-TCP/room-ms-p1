@@ -22,7 +22,7 @@ export class Rate extends BaseEntity {
 
   @Column({
     name: 'duration',
-    type: 'time',
+    type: 'interval',
     nullable: false,
   })
   duration: string;
