@@ -10,6 +10,10 @@ interface EnvVars {
   DB_USERNAME: string;
   DB_PASSWORD: string;
   DB_NAME: string;
+
+  KAFKA_BROKER: string;
+  KAFKA_CLIENT_ID: string;
+  KAFKA_GROUP_ID: string;
 }
 
 const envSchema = joi
@@ -22,6 +26,10 @@ const envSchema = joi
     DB_USERNAME: joi.string().required(),
     DB_PASSWORD: joi.string().required(),
     DB_NAME: joi.string().required(),
+
+    KAFKA_BROKER: joi.string().required(),
+    KAFKA_CLIENT_ID: joi.string().required(),
+    KAFKA_GROUP_ID: joi.string().required(),
   })
   .unknown(true);
 
@@ -42,4 +50,8 @@ export const envs = {
   dbUsername: envVars.DB_USERNAME,
   dbPassword: envVars.DB_PASSWORD,
   dbName: envVars.DB_NAME,
+
+  kafkaBroker: envVars.KAFKA_BROKER,
+  kafkaClientId: envVars.KAFKA_CLIENT_ID,
+  kafkaGroupId: envVars.KAFKA_GROUP_ID,
 };
