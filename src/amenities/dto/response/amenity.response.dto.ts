@@ -8,8 +8,5 @@ export class AmenityResponseDto {
   name: string;
 
   @Expose()
-  quantity: number;
-
-  @Expose()
   description: string;
 }
