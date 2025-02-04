@@ -21,13 +21,6 @@ export class Amenity extends BaseEntity {
   name: string;
 
   @Column({
-    name: 'quantity',
-    type: 'smallint',
-    nullable: false,
-  })
-  quantity: number;
-
-  @Column({
     name: 'description',
     type: 'varchar',
     length: 255,
