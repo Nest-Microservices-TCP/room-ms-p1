@@ -1,0 +1,20 @@
+INSERT INTO amenities ("name")
+VALUES 
+('Agua'),
+('Burbujas'),
+('Caja de Pañuelos Desechable'),
+('Crema Corporal'),
+('Esponja'),
+('Gel'),
+('Gorra de Baño'),
+('Jabón'),
+('Kit Dental'),
+('Sandalias'),
+('Pastillas de Menta'),
+('Peine'),
+('Preservativo'),
+('Lubricante'),
+('Toallas húmedas'),
+('Cama King Size'),
+('Cama Presidential King'),
+('Cama Matrimonial');
