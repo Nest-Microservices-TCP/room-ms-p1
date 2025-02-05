@@ -68,6 +68,7 @@ export class Rent extends BaseEntity {
     type: 'enum',
     enum: RentState,
     nullable: false,
+    default: RentState.ACTIVE,
   })
   rentState: RentState;
 
