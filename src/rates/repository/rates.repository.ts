@@ -67,7 +67,7 @@ export class RatesRepository implements IRatesRepository {
       throw new EntityNotFoundException('rate');
     }
 
-    return rate;
+    return { ...rate, duration: this.formatInterval(rate.duration) };
   }
 
   create(request: Partial<Rate>): Rate {
