@@ -11,5 +11,6 @@ import { RatesRepository } from './repository/rates.repository';
   imports: [TypeOrmModule.forFeature([Rate])],
   controllers: [RatesController],
   providers: [RatesRepository, RatesService],
+  exports: [RatesService],
 })
 export class RatesModule {}
