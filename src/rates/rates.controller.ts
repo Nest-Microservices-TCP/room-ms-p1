@@ -4,6 +4,7 @@ import { plainToInstance } from 'class-transformer';
 
 import { RatesService } from './rates.service';
 
+import { CreateRateDto } from './dto/request';
 import { RateResponseDto } from './dto/response';
 
 @Controller()
@@ -23,5 +24,10 @@ export class RatesController {
     return JSON.stringify(
       plainToInstance(RateResponseDto, rate, { excludeExtraneousValues: true }),
     );
+  }
+
+  @MessagePattern('rooms.save.rate')
+  async save(@Payload() request: CreateRateDto): Promise<RateResponseDto> {
+    return this.ratesService.save(request);
   }
 }
