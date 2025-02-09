@@ -4,7 +4,7 @@ import { plainToInstance } from 'class-transformer';
 
 import { RatesService } from './rates.service';
 
-import { CreateRateDto } from './dto/request';
+import { CreateRateDto, UpdateRateDto } from './dto/request';
 import { RateResponseDto } from './dto/response';
 
 @Controller()
@@ -29,5 +29,10 @@ export class RatesController {
   @MessagePattern('rooms.save.rate')
   async save(@Payload() request: CreateRateDto): Promise<RateResponseDto> {
     return this.ratesService.save(request);
+  }
+
+  @MessagePattern('rooms.update.rate')
+  async update(@Payload() request: UpdateRateDto): Promise<RateResponseDto> {
+    return this.ratesService.update(request);
   }
 }
