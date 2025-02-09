@@ -4,6 +4,7 @@ import { plainToInstance } from 'class-transformer';
 import { RatesRepository } from './repository/rates.repository';
 
 import { HandleRpcExceptions } from 'src/common/decorators';
+import { DeleteResultResponse } from 'src/common/dto/response';
 import { CreateRateDto, UpdateRateDto } from './dto/request';
 import { RateResponseDto } from './dto/response';
 
@@ -55,10 +56,10 @@ export class RatesService {
   }
 
   @HandleRpcExceptions()
-  async remove(rateId: string): Promise<RateResponseDto> {
-    const rate = await this.ratesRepository.remove(rateId);
+  async remove(rateId: string): Promise<DeleteResultResponse> {
+    const deleteResult = await this.ratesRepository.remove(rateId);
 
-    return plainToInstance(RateResponseDto, rate, {
+    return plainToInstance(DeleteResultResponse, deleteResult, {
       excludeExtraneousValues: true,
     });
   }
