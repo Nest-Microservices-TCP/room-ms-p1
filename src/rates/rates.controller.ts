@@ -1,5 +1,6 @@
 import { Controller } from '@nestjs/common';
-import { MessagePattern } from '@nestjs/microservices';
+import { MessagePattern, Payload } from '@nestjs/microservices';
+import { plainToInstance } from 'class-transformer';
 
 import { RatesService } from './rates.service';
 
@@ -12,5 +13,15 @@ export class RatesController {
   @MessagePattern('rooms.find.all.rates')
   async findAll(): Promise<RateResponseDto[]> {
     return this.ratesService.findAll();
+  }
+
+  @MessagePattern('rooms.find.one.rate')
+  async findOne(@Payload('rateId') rateId: string): Promise<any> {
+    //TODO: Se esta serializando mal el dto, hay que revisar que esta fallando
+    const rate = await this.ratesService.findOne(rateId);
+
+    return JSON.stringify(
+      plainToInstance(RateResponseDto, rate, { excludeExtraneousValues: true }),
+    );
   }
 }
