@@ -4,6 +4,7 @@ import { plainToInstance } from 'class-transformer';
 
 import { RatesService } from './rates.service';
 
+import { DeleteResultResponse } from 'src/common/dto/response';
 import { CreateRateDto, UpdateRateDto } from './dto/request';
 import { RateResponseDto } from './dto/response';
 
@@ -34,5 +35,12 @@ export class RatesController {
   @MessagePattern('rooms.update.rate')
   async update(@Payload() request: UpdateRateDto): Promise<RateResponseDto> {
     return this.ratesService.update(request);
+  }
+
+  @MessagePattern('rooms.remove.rate')
+  async remove(
+    @Payload('rateId') rateId: string,
+  ): Promise<DeleteResultResponse> {
+    return this.ratesService.remove(rateId);
   }
 }
