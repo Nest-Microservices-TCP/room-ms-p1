@@ -22,7 +22,7 @@ export class RoomsStatesController {
     return this.roomsStatesService.save(request);
   }
 
-  @MessagePattern({ cmd: 'find.one.roomState' })
+  @MessagePattern('rooms.find.one.roomState')
   async findOne(
     @Payload() request: FindOneRoomStateByIdDto,
   ): Promise<RoomStateResponseDto> {
