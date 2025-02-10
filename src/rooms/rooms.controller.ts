@@ -3,9 +3,9 @@ import { MessagePattern, Payload } from '@nestjs/microservices';
 
 import { RoomResponseDto } from './dto/response';
 
-import { RoomsService } from './rooms.service';
-import { CreateRoomDto, UpdateRoomDto } from './dto/request';
 import { DeleteResultResponse } from 'src/common/dto/response';
+import { CreateRoomDto, UpdateRoomDto } from './dto/request';
+import { RoomsService } from './rooms.service';
 
 @Controller()
 export class RoomsController {
