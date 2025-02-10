@@ -41,7 +41,7 @@ export class RoomsStatesController {
     return this.roomsStatesService.findAll();
   }
 
-  @MessagePattern({ cmd: 'update.roomState' })
+  @MessagePattern('rooms.update.roomState')
   async update(
     @Payload() request: UpdateRoomStateDto,
   ): Promise<RoomStateResponseDto> {
