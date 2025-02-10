@@ -5,6 +5,7 @@ import { RoomResponseDto } from './dto/response';
 
 import { RoomsService } from './rooms.service';
 import { CreateRoomDto, UpdateRoomDto } from './dto/request';
+import { DeleteResultResponse } from 'src/common/dto/response';
 
 @Controller()
 export class RoomsController {
@@ -28,5 +29,12 @@ export class RoomsController {
   @MessagePattern('rooms.update.room')
   async update(@Payload() request: UpdateRoomDto): Promise<RoomResponseDto> {
     return this.roomsService.update(request);
+  }
+
+  @MessagePattern('rooms.remove.room')
+  async remove(
+    @Payload('roomId') roomId: string,
+  ): Promise<DeleteResultResponse> {
+    return this.roomsService.remove(roomId);
   }
 }
