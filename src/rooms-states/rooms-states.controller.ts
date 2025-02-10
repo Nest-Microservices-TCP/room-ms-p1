@@ -15,7 +15,7 @@ import { RoomsStatesService } from './rooms-states.service';
 export class RoomsStatesController {
   constructor(private readonly roomsStatesService: RoomsStatesService) {}
 
-  @MessagePattern({ cmd: 'save.roomState' })
+  @MessagePattern('rooms.save.roomState')
   async save(
     @Payload() request: CreateRoomStateDto,
   ): Promise<RoomStateResponseDto> {
