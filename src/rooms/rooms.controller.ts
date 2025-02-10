@@ -9,8 +9,13 @@ import { RoomsService } from './rooms.service';
 export class RoomsController {
   constructor(private readonly roomsService: RoomsService) {}
 
+  @MessagePattern('rooms.find.all.rooms')
+  async findAll(): Promise<RoomResponseDto[]> {
+    return this.roomsService.findAll();
+  }
+
   @MessagePattern('rooms.find.one.room')
-  findOne(@Payload('roomId') roomId: string): Promise<RoomResponseDto> {
+  async findOne(@Payload('roomId') roomId: string): Promise<RoomResponseDto> {
     return this.roomsService.findOne(roomId);
   }
 }
