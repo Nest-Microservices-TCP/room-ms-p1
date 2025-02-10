@@ -29,7 +29,7 @@ export class RoomsStatesController {
     return this.roomsStatesService.findOne(request);
   }
 
-  @MessagePattern({ cmd: 'find.rooms.states.by.ids' })
+  @MessagePattern('rooms.find.roomsStates.by.ids')
   async findByIds(
     @Payload('roomsStatesIds') roomsStatesIds: string[],
   ): Promise<RoomStateResponseDto[]> {
