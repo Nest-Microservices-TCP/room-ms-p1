@@ -4,7 +4,7 @@ import { MessagePattern, Payload } from '@nestjs/microservices';
 import { RoomResponseDto } from './dto/response';
 
 import { RoomsService } from './rooms.service';
-import { CreateRoomDto } from './dto/request';
+import { CreateRoomDto, UpdateRoomDto } from './dto/request';
 
 @Controller()
 export class RoomsController {
@@ -23,5 +23,10 @@ export class RoomsController {
   @MessagePattern('rooms.save.room')
   async save(@Payload() request: CreateRoomDto): Promise<RoomResponseDto> {
     return this.roomsService.save(request);
+  }
+
+  @MessagePattern('rooms.update.room')
+  async update(@Payload() request: UpdateRoomDto): Promise<RoomResponseDto> {
+    return this.roomsService.update(request);
   }
 }
