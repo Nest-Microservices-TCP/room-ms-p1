@@ -36,7 +36,7 @@ export class RoomsStatesController {
     return this.roomsStatesService.findByIds(roomsStatesIds);
   }
 
-  @MessagePattern({ cmd: 'find.all.roomsStates' })
+  @MessagePattern('rooms.find.all.roomsStates')
   async findAll(): Promise<RoomStateResponseDto[]> {
     return this.roomsStatesService.findAll();
   }
