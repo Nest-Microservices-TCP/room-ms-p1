@@ -23,7 +23,7 @@ export class AmenitiesController {
     return this.amenitiesService.findOne(amenityId);
   }
 
-  @MessagePattern({ cmd: 'find.amenities.by.ids' })
+  @MessagePattern('rooms.find.amenities.by.ids')
   async findByIds(
     @Payload('amenitiesIds') amenitiesIds: string[],
   ): Promise<AmenityResponseDto[]> {
