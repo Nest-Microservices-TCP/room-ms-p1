@@ -10,7 +10,7 @@ import { ExtraResponseDto } from './dto/response';
 export class ExtrasController {
   constructor(private readonly extrasService: ExtrasService) {}
 
-  @MessagePattern({ cmd: 'find.all.extras' })
+  @MessagePattern('rooms.find.all.extras')
   findAll(): Promise<ExtraResponseDto[]> {
     return this.extrasService.findAll();
   }
