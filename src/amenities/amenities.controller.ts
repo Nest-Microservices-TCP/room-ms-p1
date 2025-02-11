@@ -11,7 +11,7 @@ import { AmenityResponseDto } from './dto/response';
 export class AmenitiesController {
   constructor(private readonly amenitiesService: AmenitiesService) {}
 
-  @MessagePattern({ cmd: 'find.all.amenities' })
+  @MessagePattern('rooms.find.all.amenities')
   async findAll(): Promise<AmenityResponseDto[]> {
     return this.amenitiesService.findAll();
   }
