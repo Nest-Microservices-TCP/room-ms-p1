@@ -25,7 +25,7 @@ export class ExtrasController {
     return this.extrasService.findByIds(extrasIds);
   }
 
-  @MessagePattern({ cmd: 'save.extra' })
+  @MessagePattern('rooms.save.extra')
   save(@Payload() request: CreateExtraDto): Promise<ExtraResponseDto> {
     return this.extrasService.save(request);
   }
