@@ -20,7 +20,7 @@ export class ExtrasController {
     return this.extrasService.findOne(extraId);
   }
 
-  @MessagePattern({ cmd: 'find.extras.by.ids' })
+  @MessagePattern('rooms.find.extras.by.ids')
   findByIds(@Payload() extrasIds: string[]): Promise<ExtraResponseDto[]> {
     return this.extrasService.findByIds(extrasIds);
   }
