@@ -30,7 +30,7 @@ export class ExtrasController {
     return this.extrasService.save(request);
   }
 
-  @MessagePattern({ cmd: 'update.extra' })
+  @MessagePattern('rooms.update.extra')
   update(@Payload() request: UpdateExtraDto): Promise<ExtraResponseDto> {
     return this.extrasService.update(request);
   }
