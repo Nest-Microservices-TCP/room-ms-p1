@@ -16,7 +16,7 @@ export class AmenitiesController {
     return this.amenitiesService.findAll();
   }
 
-  @MessagePattern({ cmd: 'find.one.amenity' })
+  @MessagePattern('rooms.find.one.amenity')
   async findOne(
     @Payload('amenityId') amenityId: string,
   ): Promise<AmenityResponseDto> {
