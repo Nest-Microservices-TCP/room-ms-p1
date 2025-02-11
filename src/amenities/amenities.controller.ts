@@ -30,7 +30,7 @@ export class AmenitiesController {
     return this.amenitiesService.findByIds(amenitiesIds);
   }
 
-  @MessagePattern({ cmd: 'save.amenity' })
+  @MessagePattern('rooms.save.amenity')
   async save(
     @Payload() request: CreateAmenityDto,
   ): Promise<AmenityResponseDto> {
