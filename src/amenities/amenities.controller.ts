@@ -44,7 +44,7 @@ export class AmenitiesController {
     return this.amenitiesService.update(request);
   }
 
-  @MessagePattern({ cmd: 'remove.amenity.by.id' })
+  @MessagePattern('rooms.remove.amenity')
   async remove(@Payload() amenityId: string): Promise<DeleteResultResponse> {
     return this.amenitiesService.remove(amenityId);
   }
