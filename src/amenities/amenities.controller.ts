@@ -37,7 +37,7 @@ export class AmenitiesController {
     return this.amenitiesService.save(request);
   }
 
-  @MessagePattern({ cmd: 'update.amenity' })
+  @MessagePattern('rooms.update.amenity')
   async update(
     @Payload() request: UpdateAmenityDto,
   ): Promise<AmenityResponseDto> {
