@@ -16,8 +16,8 @@ export class RentsExtrasController {
     return this.rentsExtrasService.findAll();
   }
 
-  @MessagePattern({ cmd: 'find.one.rent.extra' })
-  async findOneById(
+  @MessagePattern('rooms.find.one.rent.extra')
+  async findOne(
     @Payload('rentExtraId') rentExtraId: string,
   ): Promise<RentExtraResponseDto> {
     return this.rentsExtrasService.findOne(rentExtraId);
