@@ -11,7 +11,7 @@ import { RentsExtrasService } from './rents-extras.service';
 export class RentsExtrasController {
   constructor(private readonly rentsExtrasService: RentsExtrasService) {}
 
-  @MessagePattern({ cmd: 'find.all.rents.extras' })
+  @MessagePattern('rooms.find.all.rents.extras')
   async findAll(): Promise<RentExtraResponseDto[]> {
     return this.rentsExtrasService.findAll();
   }
