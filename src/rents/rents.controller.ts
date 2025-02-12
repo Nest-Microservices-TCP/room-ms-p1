@@ -18,7 +18,7 @@ export class RentsController {
     return this.rentsService.findOne(rentId);
   }
 
-  @MessagePattern({ cmd: 'find.rents.by.ids' })
+  @MessagePattern('rooms.find.rents.by.ids')
   async findByIds(@Payload() rentsIds: string[]): Promise<RentResponseDto[]> {
     return this.rentsService.findByIds(rentsIds);
   }
