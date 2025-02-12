@@ -13,7 +13,7 @@ export class RentsController {
     return this.rentsService.findAll();
   }
 
-  @MessagePattern({ cmd: 'find.one.rent' })
+  @MessagePattern('rooms.find.one.rent')
   async findOne(@Payload('rentId') rentId: string): Promise<RentResponseDto> {
     return this.rentsService.findOne(rentId);
   }
