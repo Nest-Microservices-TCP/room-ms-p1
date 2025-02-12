@@ -35,7 +35,7 @@ export class ExtrasController {
     return this.extrasService.update(request);
   }
 
-  @MessagePattern({ cmd: 'remove.extra.by.id' })
+  @MessagePattern('rooms.remove.extra')
   remove(@Payload('extraId') extraId: string): Promise<ExtraResponseDto> {
     return this.extrasService.remove(extraId);
   }
