@@ -8,7 +8,7 @@ import { Controller } from '@nestjs/common';
 export class RentsController {
   constructor(private readonly rentsService: RentsService) {}
 
-  @MessagePattern({ cmd: 'find.all.rents' })
+  @MessagePattern('rooms.find.all.rents')
   async findAll(): Promise<RentResponseDto[]> {
     return this.rentsService.findAll();
   }
