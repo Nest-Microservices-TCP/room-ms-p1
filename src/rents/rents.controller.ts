@@ -33,7 +33,7 @@ export class RentsController {
     return this.rentsService.update(request);
   }
 
-  @MessagePattern({ cmd: 'remove.rent.by.id' })
+  @MessagePattern('rooms.remove.rent')
   async remove(@Payload('rentId') rentId: string): Promise<RentResponseDto> {
     return this.rentsService.remove(rentId);
   }
