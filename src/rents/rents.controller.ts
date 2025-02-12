@@ -28,7 +28,7 @@ export class RentsController {
     return this.rentsService.save(request);
   }
 
-  @MessagePattern({ cmd: 'update.rent' })
+  @MessagePattern('rooms.update.rent')
   async update(@Payload() request: UpdateRentDto): Promise<RentResponseDto> {
     return this.rentsService.update(request);
   }
