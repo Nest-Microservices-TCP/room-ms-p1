@@ -23,7 +23,7 @@ export class RentsController {
     return this.rentsService.findByIds(rentsIds);
   }
 
-  @MessagePattern({ cmd: 'save.rent' })
+  @MessagePattern('rooms.save.rent')
   async save(@Payload() request: CreateRentDto): Promise<RentResponseDto> {
     return this.rentsService.save(request);
   }
