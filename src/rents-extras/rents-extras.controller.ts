@@ -44,7 +44,7 @@ export class RentsExtrasController {
     return this.rentsExtrasService.update(request);
   }
 
-  @MessagePattern({ cmd: 'remove.rent.extra.by.id' })
+  @MessagePattern('rooms.remove.rentExtra')
   async remove(
     @Payload('rentExtraId') rentExtraId: string,
   ): Promise<DeleteResultResponse> {
