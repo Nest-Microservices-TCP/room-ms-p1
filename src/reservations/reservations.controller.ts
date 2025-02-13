@@ -37,7 +37,7 @@ export class ReservationsController {
     return this.reservationsService.save(request);
   }
 
-  @MessagePattern({ cmd: 'update.reservation' })
+  @MessagePattern('rooms.update.reservation')
   async update(
     @Payload() request: UpdateReservationDto,
   ): Promise<ReservationResponseDto> {
