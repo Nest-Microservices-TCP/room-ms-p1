@@ -11,19 +11,19 @@ import { RentsExtrasService } from './rents-extras.service';
 export class RentsExtrasController {
   constructor(private readonly rentsExtrasService: RentsExtrasService) {}
 
-  @MessagePattern('rooms.find.all.rents.extras')
+  @MessagePattern('rooms.find.all.rentsExtras')
   async findAll(): Promise<RentExtraResponseDto[]> {
     return this.rentsExtrasService.findAll();
   }
 
-  @MessagePattern('rooms.find.one.rent.extra')
+  @MessagePattern('rooms.find.one.rentExtra')
   async findOne(
     @Payload('rentExtraId') rentExtraId: string,
   ): Promise<RentExtraResponseDto> {
     return this.rentsExtrasService.findOne(rentExtraId);
   }
 
-  @MessagePattern('rooms.find.rents.extras.by.ids')
+  @MessagePattern('rooms.find.rentsExtras.by.ids')
   async findByIds(
     @Payload('rentsExtrasIds') rentsExtrasIds: string[],
   ): Promise<RentExtraResponseDto[]> {
