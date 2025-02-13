@@ -11,7 +11,7 @@ import { ReservationsService } from './reservations.service';
 export class ReservationsController {
   constructor(private readonly reservationsService: ReservationsService) {}
 
-  @MessagePattern({ cmd: 'find.all.reservations' })
+  @MessagePattern('rooms.find.all.reservations')
   async findAll(): Promise<ReservationResponseDto[]> {
     return this.reservationsService.findAll();
   }
