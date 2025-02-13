@@ -44,7 +44,7 @@ export class ReservationsController {
     return this.reservationsService.update(request);
   }
 
-  @MessagePattern({ cmd: 'remove.reservation.by.id' })
+  @MessagePattern('rooms.remove.reservation')
   async remove(
     @Payload('reservationId') reservationId: string,
   ): Promise<DeleteResultResponse> {
