@@ -23,7 +23,7 @@ export class ReservationsController {
     return this.reservationsService.findOne(reservationId);
   }
 
-  @MessagePattern({ cmd: 'find.reservations.by.ids' })
+  @MessagePattern('rooms.find.reservations.by.ids')
   async findByIds(
     @Payload('reservationsIds') reservationsIds: string[],
   ): Promise<ReservationResponseDto[]> {
