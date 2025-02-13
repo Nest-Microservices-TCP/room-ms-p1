@@ -16,7 +16,7 @@ export class ReservationsController {
     return this.reservationsService.findAll();
   }
 
-  @MessagePattern({ cmd: 'find.one.reservation' })
+  @MessagePattern('rooms.find.one.reservation')
   async findOne(
     @Payload('reservationId') reservationId: string,
   ): Promise<ReservationResponseDto> {
