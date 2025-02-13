@@ -30,7 +30,7 @@ export class RentsExtrasController {
     return this.rentsExtrasService.findByIds(rentsExtrasIds);
   }
 
-  @MessagePattern({ cmd: 'save.rent.extra' })
+  @MessagePattern('rooms.save.rentExtra')
   async save(
     @Payload() request: CreateRentExtraDto,
   ): Promise<RentExtraResponseDto> {
