@@ -16,7 +16,7 @@ export class ReservationsOriginsController {
     private readonly reservationsOriginsService: ReservationsOriginsService,
   ) {}
 
-  @MessagePattern({ cmd: 'find.all.reservations.origins' })
+  @MessagePattern('rooms.find.all.reservationsOrigins')
   async findAll(): Promise<ReservationOriginResponseDto[]> {
     return this.reservationsOriginsService.findAll();
   }
