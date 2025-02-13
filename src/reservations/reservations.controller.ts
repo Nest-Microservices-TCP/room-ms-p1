@@ -30,7 +30,7 @@ export class ReservationsController {
     return this.reservationsService.findByIds(reservationsIds);
   }
 
-  @MessagePattern({ cmd: 'save.reservation' })
+  @MessagePattern('rooms.save.reservation')
   async save(
     @Payload() request: CreateReservationDto,
   ): Promise<ReservationResponseDto> {
