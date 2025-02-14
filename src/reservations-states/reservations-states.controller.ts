@@ -42,7 +42,7 @@ export class ReservationsStatesController {
     return this.reservationsStatesService.save(request);
   }
 
-  @MessagePattern({ cmd: 'update.reservation.state' })
+  @MessagePattern('rooms.update.reservationState')
   update(
     @Payload() request: UpdateReservationStateDto,
   ): Promise<ReservationStateResponseDto> {
