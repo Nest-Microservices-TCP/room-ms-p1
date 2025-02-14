@@ -28,7 +28,7 @@ export class ReservationsOriginsController {
     return this.reservationsOriginsService.findOne(reservationOriginId);
   }
 
-  @MessagePattern({ cmd: 'find.reservations.origins.bt.ids' })
+  @MessagePattern('rooms.find.reservationsOrigins.by.ids')
   async findByIds(
     @Payload('reservationsOriginsIds') reservationsOriginsIds: string[],
   ): Promise<ReservationOriginResponseDto[]> {
