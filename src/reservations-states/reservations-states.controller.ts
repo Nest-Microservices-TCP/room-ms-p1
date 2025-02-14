@@ -35,7 +35,7 @@ export class ReservationsStatesController {
     return this.reservationsStatesService.findByIds(reservationsStatesIds);
   }
 
-  @MessagePattern({ cmd: 'save.reservation.state' })
+  @MessagePattern('rooms.save.reservationState')
   save(
     @Payload() request: CreateReservationStateDto,
   ): Promise<ReservationStateResponseDto> {
