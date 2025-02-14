@@ -42,7 +42,7 @@ export class ReservationsOriginsController {
     return this.reservationsOriginsService.save(request);
   }
 
-  @MessagePattern({ cmd: 'update.reservation.origin' })
+  @MessagePattern('rooms.update.reservationOrigin')
   async update(
     request: UpdateReservationOriginDto,
   ): Promise<ReservationOriginResponseDto> {
