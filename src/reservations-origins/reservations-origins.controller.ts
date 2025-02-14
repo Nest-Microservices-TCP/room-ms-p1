@@ -35,7 +35,7 @@ export class ReservationsOriginsController {
     return this.reservationsOriginsService.findByIds(reservationsOriginsIds);
   }
 
-  @MessagePattern({ cmd: 'save.reservation.origin' })
+  @MessagePattern('rooms.save.reservationOrigin')
   async save(
     @Payload() request: CreateReservationOriginDto,
   ): Promise<ReservationOriginResponseDto> {
