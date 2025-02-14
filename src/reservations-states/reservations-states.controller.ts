@@ -28,7 +28,7 @@ export class ReservationsStatesController {
     return this.reservationsStatesService.findOne(reservationStateId);
   }
 
-  @MessagePattern({ cmd: 'find.reservations.states.by.ids' })
+  @MessagePattern('rooms.find.reservationsStates.by.ids')
   findByIds(
     reservationsStatesIds: string[],
   ): Promise<ReservationStateResponseDto[]> {
