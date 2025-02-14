@@ -49,7 +49,7 @@ export class ReservationsOriginsController {
     return this.reservationsOriginsService.update(request);
   }
 
-  @MessagePattern({ cmd: 'remove.reservation.origin' })
+  @MessagePattern('rooms.remove.reservationOrigin')
   async remove(reservationOriginId: string): Promise<DeleteResultResponse> {
     return this.reservationsOriginsService.remove(reservationOriginId);
   }
