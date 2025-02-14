@@ -16,7 +16,7 @@ export class ReservationsStatesController {
     private readonly reservationsStatesService: ReservationsStatesService,
   ) {}
 
-  @MessagePattern({ cmd: 'find.all.reservations.states' })
+  @MessagePattern('rooms.find.all.reservationsStates')
   findAll(): Promise<ReservationStateResponseDto[]> {
     return this.reservationsStatesService.findAll();
   }
