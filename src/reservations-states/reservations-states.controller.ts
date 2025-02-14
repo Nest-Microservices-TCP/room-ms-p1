@@ -49,7 +49,7 @@ export class ReservationsStatesController {
     return this.reservationsStatesService.update(request);
   }
 
-  @MessagePattern({ cmd: 'remove.reservation.state' })
+  @MessagePattern('rooms.remove.reservationState')
   remove(
     @Payload('reservationStateId') reservationStateId: string,
   ): Promise<DeleteResultResponse> {
