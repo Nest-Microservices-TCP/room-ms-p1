@@ -23,7 +23,7 @@ export class RoomsTypesController {
     return this.roomsTypesService.findOne(roomTypeId);
   }
 
-  @MessagePattern({ cmd: 'find.rooms.types.by.ids' })
+  @MessagePattern('rooms.find.roomsTypes.by.ids')
   findByIds(
     @Payload('roomsTypesIds') roomsTypesIds: string[],
   ): Promise<RoomTypeResponseDto[]> {
