@@ -11,7 +11,7 @@ import { RoomsTypesService } from './rooms-types.service';
 export class RoomsTypesController {
   constructor(private readonly roomsTypesService: RoomsTypesService) {}
 
-  @MessagePattern({ cmd: 'find.all.rooms.types' })
+  @MessagePattern('rooms.find.all.rooms.types')
   findAll(): Promise<RoomTypeResponseDto[]> {
     return this.roomsTypesService.findAll();
   }
