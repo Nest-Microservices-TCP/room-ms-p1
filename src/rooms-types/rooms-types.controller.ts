@@ -35,7 +35,7 @@ export class RoomsTypesController {
     return this.roomsTypesService.save(request);
   }
 
-  @MessagePattern({ cmd: 'update.room.type' })
+  @MessagePattern('rooms.update.roomType')
   update(@Payload() request: UpdateRoomTypeDto): Promise<RoomTypeResponseDto> {
     return this.roomsTypesService.update(request);
   }
