@@ -16,7 +16,7 @@ export class RoomsTypesAmenitiesController {
     private readonly roomsTypesAmenitiesService: RoomsTypesAmenitiesService,
   ) {}
 
-  @MessagePattern({ cdm: 'find.all.rooms.types.amenities' })
+  @MessagePattern('rooms.find.all.roomsTypesAmenities')
   async findAll(): Promise<RoomTypeAmenityResponseDto[]> {
     return this.roomsTypesAmenitiesService.findAll();
   }
