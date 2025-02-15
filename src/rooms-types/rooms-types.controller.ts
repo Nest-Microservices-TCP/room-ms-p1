@@ -40,7 +40,7 @@ export class RoomsTypesController {
     return this.roomsTypesService.update(request);
   }
 
-  @MessagePattern({ cmd: 'remove.room.type' })
+  @MessagePattern('rooms.remove.roomType')
   remove(
     @Payload('roomTypeId') roomTypeId: string,
   ): Promise<DeleteResultResponse> {
