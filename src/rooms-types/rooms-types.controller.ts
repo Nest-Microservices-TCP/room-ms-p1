@@ -11,12 +11,12 @@ import { RoomsTypesService } from './rooms-types.service';
 export class RoomsTypesController {
   constructor(private readonly roomsTypesService: RoomsTypesService) {}
 
-  @MessagePattern('rooms.find.all.rooms.types')
+  @MessagePattern('rooms.find.all.roomsTypes')
   findAll(): Promise<RoomTypeResponseDto[]> {
     return this.roomsTypesService.findAll();
   }
 
-  @MessagePattern({ cmd: 'find.one.room.type' })
+  @MessagePattern('rooms.find.one.roomType')
   findOne(
     @Payload('roomTypeId') roomTypeId: string,
   ): Promise<RoomTypeResponseDto> {
