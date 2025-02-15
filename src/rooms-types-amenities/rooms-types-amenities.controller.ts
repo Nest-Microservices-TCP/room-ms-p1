@@ -28,7 +28,7 @@ export class RoomsTypesAmenitiesController {
     return this.roomsTypesAmenitiesService.findOne(roomTypeAmenityId);
   }
 
-  @MessagePattern({ cmd: 'save.room.type.amenity' })
+  @MessagePattern('rooms.save.roomTypeAmenity')
   async save(
     @Payload() request: CreateRoomTypeAmenityDto,
   ): Promise<RoomTypeAmenityResponseDto> {
