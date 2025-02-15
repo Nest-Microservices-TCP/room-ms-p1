@@ -42,7 +42,7 @@ export class RoomsTypesAmenitiesController {
     return this.roomsTypesAmenitiesService.update(request);
   }
 
-  @MessagePattern({ cdm: 'remove.room.type.amenity' })
+  @MessagePattern('rooms.remove.roomTypeAmenity')
   async remove(
     @Payload('roomTypeAmenityId') roomTypeAmenityId: string,
   ): Promise<DeleteResultResponse> {
