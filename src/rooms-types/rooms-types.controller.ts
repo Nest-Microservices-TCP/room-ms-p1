@@ -30,7 +30,7 @@ export class RoomsTypesController {
     return this.roomsTypesService.findByIds(roomsTypesIds);
   }
 
-  @MessagePattern({ cmd: 'save.room.type' })
+  @MessagePattern('rooms.save.roomType')
   save(@Payload() request: CreateRoomTypeDto): Promise<RoomTypeResponseDto> {
     return this.roomsTypesService.save(request);
   }
