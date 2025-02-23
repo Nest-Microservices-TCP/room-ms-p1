@@ -11,40 +11,40 @@ import { ReservationsService } from './reservations.service';
 export class ReservationsController {
   constructor(private readonly reservationsService: ReservationsService) {}
 
-  @MessagePattern('rooms.find.all.reservations')
+  @MessagePattern('reservations.find.all')
   async findAll(): Promise<ReservationResponseDto[]> {
     return this.reservationsService.findAll();
   }
 
-  @MessagePattern('rooms.find.one.reservation')
+  @MessagePattern('reservations.find.one')
   async findOne(
     @Payload('reservationId') reservationId: string,
   ): Promise<ReservationResponseDto> {
     return this.reservationsService.findOne(reservationId);
   }
 
-  @MessagePattern('rooms.find.reservations.by.ids')
+  @MessagePattern('reservations.find.by.ids')
   async findByIds(
     @Payload('reservationsIds') reservationsIds: string[],
   ): Promise<ReservationResponseDto[]> {
     return this.reservationsService.findByIds(reservationsIds);
   }
 
-  @MessagePattern('rooms.save.reservation')
+  @MessagePattern('reservations.save')
   async save(
     @Payload() request: CreateReservationDto,
   ): Promise<ReservationResponseDto> {
     return this.reservationsService.save(request);
   }
 
-  @MessagePattern('rooms.update.reservation')
+  @MessagePattern('reservations.update')
   async update(
     @Payload() request: UpdateReservationDto,
   ): Promise<ReservationResponseDto> {
     return this.reservationsService.update(request);
   }
 
-  @MessagePattern('rooms.remove.reservation')
+  @MessagePattern('reservations.remove')
   async remove(
     @Payload('reservationId') reservationId: string,
   ): Promise<DeleteResultResponse> {
