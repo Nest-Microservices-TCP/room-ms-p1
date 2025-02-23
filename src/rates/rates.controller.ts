@@ -12,12 +12,12 @@ import { RateResponseDto } from './dto/response';
 export class RatesController {
   constructor(private readonly ratesService: RatesService) {}
 
-  @MessagePattern('rooms.find.all.rates')
+  @MessagePattern('rates.find.all')
   async findAll(): Promise<RateResponseDto[]> {
     return this.ratesService.findAll();
   }
 
-  @MessagePattern('rooms.find.one.rate')
+  @MessagePattern('rates.find.one')
   async findOne(@Payload('rateId') rateId: string): Promise<any> {
     //TODO: Se esta serializando mal el dto, hay que revisar que esta fallando
     const rate = await this.ratesService.findOne(rateId);
@@ -27,17 +27,17 @@ export class RatesController {
     );
   }
 
-  @MessagePattern('rooms.save.rate')
+  @MessagePattern('rates.save')
   async save(@Payload() request: CreateRateDto): Promise<RateResponseDto> {
     return this.ratesService.save(request);
   }
 
-  @MessagePattern('rooms.update.rate')
+  @MessagePattern('rates.update')
   async update(@Payload() request: UpdateRateDto): Promise<RateResponseDto> {
     return this.ratesService.update(request);
   }
 
-  @MessagePattern('rooms.remove.rate')
+  @MessagePattern('rates.remove')
   async remove(
     @Payload('rateId') rateId: string,
   ): Promise<DeleteResultResponse> {
