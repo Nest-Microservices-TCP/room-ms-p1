@@ -10,33 +10,35 @@ import { ExtraResponseDto } from './dto/response';
 export class ExtrasController {
   constructor(private readonly extrasService: ExtrasService) {}
 
-  @MessagePattern('rooms.find.all.extras')
-  findAll(): Promise<ExtraResponseDto[]> {
+  @MessagePattern('extras.find.all')
+  async findAll(): Promise<ExtraResponseDto[]> {
     return this.extrasService.findAll();
   }
 
-  @MessagePattern('rooms.find.one.extra')
-  findOne(@Payload('extraId') extraId: string): Promise<ExtraResponseDto> {
+  @MessagePattern('extras.find.one')
+  async findOne(
+    @Payload('extraId') extraId: string,
+  ): Promise<ExtraResponseDto> {
     return this.extrasService.findOne(extraId);
   }
 
-  @MessagePattern('rooms.find.extras.by.ids')
-  findByIds(@Payload() extrasIds: string[]): Promise<ExtraResponseDto[]> {
+  @MessagePattern('extras.find.by.ids')
+  async findByIds(@Payload() extrasIds: string[]): Promise<ExtraResponseDto[]> {
     return this.extrasService.findByIds(extrasIds);
   }
 
-  @MessagePattern('rooms.save.extra')
-  save(@Payload() request: CreateExtraDto): Promise<ExtraResponseDto> {
+  @MessagePattern('extras.save')
+  async save(@Payload() request: CreateExtraDto): Promise<ExtraResponseDto> {
     return this.extrasService.save(request);
   }
 
-  @MessagePattern('rooms.update.extra')
-  update(@Payload() request: UpdateExtraDto): Promise<ExtraResponseDto> {
+  @MessagePattern('extras.update')
+  async update(@Payload() request: UpdateExtraDto): Promise<ExtraResponseDto> {
     return this.extrasService.update(request);
   }
 
-  @MessagePattern('rooms.remove.extra')
-  remove(@Payload('extraId') extraId: string): Promise<ExtraResponseDto> {
+  @MessagePattern('extras.remove')
+  async remove(@Payload('extraId') extraId: string): Promise<ExtraResponseDto> {
     return this.extrasService.remove(extraId);
   }
 }
