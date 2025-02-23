@@ -16,33 +16,33 @@ export class RoomsTypesAmenitiesController {
     private readonly roomsTypesAmenitiesService: RoomsTypesAmenitiesService,
   ) {}
 
-  @MessagePattern('rooms.find.all.roomsTypesAmenities')
+  @MessagePattern('roomsTypesAmenities.find.all')
   async findAll(): Promise<RoomTypeAmenityResponseDto[]> {
     return this.roomsTypesAmenitiesService.findAll();
   }
 
-  @MessagePattern('rooms.find.one.roomTypeAmenity')
+  @MessagePattern('roomsTypesAmenities.find.one')
   async findOne(
     @Payload('roomTypeAmenityId') roomTypeAmenityId: string,
   ): Promise<RoomTypeAmenityResponseDto> {
     return this.roomsTypesAmenitiesService.findOne(roomTypeAmenityId);
   }
 
-  @MessagePattern('rooms.save.roomTypeAmenity')
+  @MessagePattern('roomsTypesAmenities.save')
   async save(
     @Payload() request: CreateRoomTypeAmenityDto,
   ): Promise<RoomTypeAmenityResponseDto> {
     return this.roomsTypesAmenitiesService.save(request);
   }
 
-  @MessagePattern('rooms.update.roomTypeAmenity')
+  @MessagePattern('roomsTypesAmenities.update')
   async update(
     @Payload() request: UpdateRoomTypeAmenityDto,
   ): Promise<RoomTypeAmenityResponseDto> {
     return this.roomsTypesAmenitiesService.update(request);
   }
 
-  @MessagePattern('rooms.remove.roomTypeAmenity')
+  @MessagePattern('roomsTypesAmenities.remove')
   async remove(
     @Payload('roomTypeAmenityId') roomTypeAmenityId: string,
   ): Promise<DeleteResultResponse> {
