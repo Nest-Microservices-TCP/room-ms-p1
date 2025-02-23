@@ -11,40 +11,40 @@ import { RentsExtrasService } from './rents-extras.service';
 export class RentsExtrasController {
   constructor(private readonly rentsExtrasService: RentsExtrasService) {}
 
-  @MessagePattern('rooms.find.all.rentsExtras')
+  @MessagePattern('rentsExtras.find.all')
   async findAll(): Promise<RentExtraResponseDto[]> {
     return this.rentsExtrasService.findAll();
   }
 
-  @MessagePattern('rooms.find.one.rentExtra')
+  @MessagePattern('rentsExtras.find.one')
   async findOne(
     @Payload('rentExtraId') rentExtraId: string,
   ): Promise<RentExtraResponseDto> {
     return this.rentsExtrasService.findOne(rentExtraId);
   }
 
-  @MessagePattern('rooms.find.rentsExtras.by.ids')
+  @MessagePattern('rentsExtras.find.by.ids')
   async findByIds(
     @Payload('rentsExtrasIds') rentsExtrasIds: string[],
   ): Promise<RentExtraResponseDto[]> {
     return this.rentsExtrasService.findByIds(rentsExtrasIds);
   }
 
-  @MessagePattern('rooms.save.rentExtra')
+  @MessagePattern('rentsExtras.save')
   async save(
     @Payload() request: CreateRentExtraDto,
   ): Promise<RentExtraResponseDto> {
     return this.rentsExtrasService.save(request);
   }
 
-  @MessagePattern('rooms.update.rentExtra')
+  @MessagePattern('rentsExtras.update')
   async update(
     @Payload() request: UpdateRentExtraDto,
   ): Promise<RentExtraResponseDto> {
     return this.rentsExtrasService.update(request);
   }
 
-  @MessagePattern('rooms.remove.rentExtra')
+  @MessagePattern('rentsExtras.remove')
   async remove(
     @Payload('rentExtraId') rentExtraId: string,
   ): Promise<DeleteResultResponse> {
