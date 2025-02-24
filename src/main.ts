@@ -9,22 +9,31 @@ import { envs } from './config';
 async function bootstrap() {
   const logger = new Logger('Rooms-MS');
 
-  // const app = await NestFactory.createMicroservice<MicroserviceOptions>(
-  //   AppModule,
-  //   {
-  //     transport: Transport.TCP,
-  //     options: {
-  //       host: envs.host,
-  //       port: envs.port,
-  //     },
-  //   },
-  // );
+  // Iniciar el microservicio con TCP
+  const tcpApp = await NestFactory.createMicroservice<MicroserviceOptions>(
+    AppModule,
+    {
+      transport: Transport.TCP,
+      options: {
+        host: envs.host,
+        port: envs.port,
+      },
+    },
+  );
+
+  tcpApp.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+    }),
+  );
 
   /**
    * Configuración para comunicación a traves de Apache Kafka
    * En este caso esta es la configuración como producer (productor de mensajes)
    */
-  const app = await NestFactory.createMicroservice<MicroserviceOptions>(
+  // Iniciar el microservicio con Kafka
+  const kafkaApp = await NestFactory.createMicroservice<MicroserviceOptions>(
     AppModule,
     {
       transport: Transport.KAFKA,
@@ -56,16 +65,10 @@ async function bootstrap() {
     },
   );
 
-  app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: true,
-      forbidNonWhitelisted: true,
-    }),
-  );
+  await tcpApp.listen();
+  logger.log(`Rooms Microservice listen on port ${envs.port}`);
 
-  await app.listen();
-
-  // logger.log(`Rooms Microservice listen on port ${envs.port}`);
+  await kafkaApp.listen();
   logger.log(`Rooms Microservice connected to Kafka`);
 }
 bootstrap();
