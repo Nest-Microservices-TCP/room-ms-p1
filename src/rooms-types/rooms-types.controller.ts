@@ -11,37 +11,41 @@ import { RoomsTypesService } from './rooms-types.service';
 export class RoomsTypesController {
   constructor(private readonly roomsTypesService: RoomsTypesService) {}
 
-  @MessagePattern('rooms.find.all.roomsTypes')
-  findAll(): Promise<RoomTypeResponseDto[]> {
+  @MessagePattern('roomsTypes.find.all')
+  async findAll(): Promise<RoomTypeResponseDto[]> {
     return this.roomsTypesService.findAll();
   }
 
-  @MessagePattern('rooms.find.one.roomType')
-  findOne(
+  @MessagePattern('roomsTypes.find.one')
+  async findOne(
     @Payload('roomTypeId') roomTypeId: string,
   ): Promise<RoomTypeResponseDto> {
     return this.roomsTypesService.findOne(roomTypeId);
   }
 
-  @MessagePattern('rooms.find.roomsTypes.by.ids')
-  findByIds(
+  @MessagePattern('roomsTypes.find.by.ids')
+  async findByIds(
     @Payload('roomsTypesIds') roomsTypesIds: string[],
   ): Promise<RoomTypeResponseDto[]> {
     return this.roomsTypesService.findByIds(roomsTypesIds);
   }
 
-  @MessagePattern('rooms.save.roomType')
-  save(@Payload() request: CreateRoomTypeDto): Promise<RoomTypeResponseDto> {
+  @MessagePattern('roomsTypes.save')
+  async save(
+    @Payload() request: CreateRoomTypeDto,
+  ): Promise<RoomTypeResponseDto> {
     return this.roomsTypesService.save(request);
   }
 
-  @MessagePattern('rooms.update.roomType')
-  update(@Payload() request: UpdateRoomTypeDto): Promise<RoomTypeResponseDto> {
+  @MessagePattern('roomsTypes.update')
+  async update(
+    @Payload() request: UpdateRoomTypeDto,
+  ): Promise<RoomTypeResponseDto> {
     return this.roomsTypesService.update(request);
   }
 
-  @MessagePattern('rooms.remove.roomType')
-  remove(
+  @MessagePattern('roomsTypes.remove')
+  async remove(
     @Payload('roomTypeId') roomTypeId: string,
   ): Promise<DeleteResultResponse> {
     return this.roomsTypesService.remove(roomTypeId);
