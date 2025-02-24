@@ -16,6 +16,7 @@ import { RoomsModule } from './rooms/rooms.module';
 
 @Module({
   imports: [
+    PostgresConfigModule,
     RoomsModule,
     RentsModule,
     RatesModule,
@@ -25,7 +26,6 @@ import { RoomsModule } from './rooms/rooms.module';
     RentsExtrasModule,
     RoomsStatesModule,
     ReservationsModule,
-    PostgresConfigModule,
     ReservationsStatesModule,
     ReservationsOriginsModule,
   ],
