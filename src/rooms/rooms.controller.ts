@@ -11,27 +11,27 @@ import { RoomsService } from './rooms.service';
 export class RoomsController {
   constructor(private readonly roomsService: RoomsService) {}
 
-  @MessagePattern('rooms.find.all.rooms')
+  @MessagePattern('rooms.find.all')
   async findAll(): Promise<RoomResponseDto[]> {
     return this.roomsService.findAll();
   }
 
-  @MessagePattern('rooms.find.one.room')
+  @MessagePattern('rooms.find.one')
   async findOne(@Payload('roomId') roomId: string): Promise<RoomResponseDto> {
     return this.roomsService.findOne(roomId);
   }
 
-  @MessagePattern('rooms.save.room')
+  @MessagePattern('rooms.save')
   async save(@Payload() request: CreateRoomDto): Promise<RoomResponseDto> {
     return this.roomsService.save(request);
   }
 
-  @MessagePattern('rooms.update.room')
+  @MessagePattern('rooms.update')
   async update(@Payload() request: UpdateRoomDto): Promise<RoomResponseDto> {
     return this.roomsService.update(request);
   }
 
-  @MessagePattern('rooms.remove.room')
+  @MessagePattern('rooms.remove')
   async remove(
     @Payload('roomId') roomId: string,
   ): Promise<DeleteResultResponse> {
