@@ -16,40 +16,40 @@ export class ReservationsOriginsController {
     private readonly reservationsOriginsService: ReservationsOriginsService,
   ) {}
 
-  @MessagePattern('rooms.find.all.reservationsOrigins')
+  @MessagePattern('reservationsOrigins.find.all')
   async findAll(): Promise<ReservationOriginResponseDto[]> {
     return this.reservationsOriginsService.findAll();
   }
 
-  @MessagePattern('rooms.find.one.reservationOrigin')
+  @MessagePattern('reservationsOrigins.find.one')
   async findOne(
     @Payload('reservationOriginId') reservationOriginId: string,
   ): Promise<ReservationOriginResponseDto> {
     return this.reservationsOriginsService.findOne(reservationOriginId);
   }
 
-  @MessagePattern('rooms.find.reservationsOrigins.by.ids')
+  @MessagePattern('reservationsOrigins.find.by.ids')
   async findByIds(
     @Payload('reservationsOriginsIds') reservationsOriginsIds: string[],
   ): Promise<ReservationOriginResponseDto[]> {
     return this.reservationsOriginsService.findByIds(reservationsOriginsIds);
   }
 
-  @MessagePattern('rooms.save.reservationOrigin')
+  @MessagePattern('reservationsOrigins.save')
   async save(
     @Payload() request: CreateReservationOriginDto,
   ): Promise<ReservationOriginResponseDto> {
     return this.reservationsOriginsService.save(request);
   }
 
-  @MessagePattern('rooms.update.reservationOrigin')
+  @MessagePattern('reservationsOrigins.update')
   async update(
     request: UpdateReservationOriginDto,
   ): Promise<ReservationOriginResponseDto> {
     return this.reservationsOriginsService.update(request);
   }
 
-  @MessagePattern('rooms.remove.reservationOrigin')
+  @MessagePattern('reservationsOrigins.remove')
   async remove(reservationOriginId: string): Promise<DeleteResultResponse> {
     return this.reservationsOriginsService.remove(reservationOriginId);
   }
