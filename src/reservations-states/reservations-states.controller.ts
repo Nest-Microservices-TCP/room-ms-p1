@@ -16,41 +16,41 @@ export class ReservationsStatesController {
     private readonly reservationsStatesService: ReservationsStatesService,
   ) {}
 
-  @MessagePattern('rooms.find.all.reservationsStates')
-  findAll(): Promise<ReservationStateResponseDto[]> {
+  @MessagePattern('reservationsStates.find.all')
+  async findAll(): Promise<ReservationStateResponseDto[]> {
     return this.reservationsStatesService.findAll();
   }
 
-  @MessagePattern({ cmd: 'find.one.reservation.state' })
-  findOne(
+  @MessagePattern('reservationsStates.find.one')
+  async findOne(
     @Payload('reservationStateId') reservationStateId: string,
   ): Promise<ReservationStateResponseDto> {
     return this.reservationsStatesService.findOne(reservationStateId);
   }
 
-  @MessagePattern('rooms.find.reservationsStates.by.ids')
-  findByIds(
+  @MessagePattern('reservationsStates.find.by.ids')
+  async findByIds(
     reservationsStatesIds: string[],
   ): Promise<ReservationStateResponseDto[]> {
     return this.reservationsStatesService.findByIds(reservationsStatesIds);
   }
 
-  @MessagePattern('rooms.save.reservationState')
-  save(
+  @MessagePattern('reservationsStates.save')
+  async save(
     @Payload() request: CreateReservationStateDto,
   ): Promise<ReservationStateResponseDto> {
     return this.reservationsStatesService.save(request);
   }
 
-  @MessagePattern('rooms.update.reservationState')
-  update(
+  @MessagePattern('reservationsStates.update')
+  async update(
     @Payload() request: UpdateReservationStateDto,
   ): Promise<ReservationStateResponseDto> {
     return this.reservationsStatesService.update(request);
   }
 
-  @MessagePattern('rooms.remove.reservationState')
-  remove(
+  @MessagePattern('reservationsStates.remove')
+  async remove(
     @Payload('reservationStateId') reservationStateId: string,
   ): Promise<DeleteResultResponse> {
     return this.reservationsStatesService.remove(reservationStateId);
