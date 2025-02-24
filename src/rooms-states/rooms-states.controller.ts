@@ -15,40 +15,40 @@ import { RoomsStatesService } from './rooms-states.service';
 export class RoomsStatesController {
   constructor(private readonly roomsStatesService: RoomsStatesService) {}
 
-  @MessagePattern('rooms.save.roomState')
+  @MessagePattern('roomsStates.save')
   async save(
     @Payload() request: CreateRoomStateDto,
   ): Promise<RoomStateResponseDto> {
     return this.roomsStatesService.save(request);
   }
 
-  @MessagePattern('rooms.find.one.roomState')
+  @MessagePattern('roomsStates.find.one')
   async findOne(
     @Payload() request: FindOneRoomStateByIdDto,
   ): Promise<RoomStateResponseDto> {
     return this.roomsStatesService.findOne(request);
   }
 
-  @MessagePattern('rooms.find.roomsStates.by.ids')
+  @MessagePattern('roomsStates.find.by.ids')
   async findByIds(
     @Payload('roomsStatesIds') roomsStatesIds: string[],
   ): Promise<RoomStateResponseDto[]> {
     return this.roomsStatesService.findByIds(roomsStatesIds);
   }
 
-  @MessagePattern('rooms.find.all.roomsStates')
+  @MessagePattern('roomsStates.find.all')
   async findAll(): Promise<RoomStateResponseDto[]> {
     return this.roomsStatesService.findAll();
   }
 
-  @MessagePattern('rooms.update.roomState')
+  @MessagePattern('roomsStates.update')
   async update(
     @Payload() request: UpdateRoomStateDto,
   ): Promise<RoomStateResponseDto> {
     return this.roomsStatesService.update(request);
   }
 
-  @MessagePattern({ cmd: 'remove.roomState.by.id' })
+  @MessagePattern('roomsStates.remove')
   async remove(
     @Payload('roomStateId') roomStateId: string,
   ): Promise<DeleteResultResponse> {
