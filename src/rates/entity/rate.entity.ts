@@ -2,18 +2,17 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 import { BaseEntity } from 'src/common/entity';
 
-import { AccommodationType } from 'src/rents/enum';
+import { AccommodationType } from 'src/grpc/rooms/rates/rates-enums.pb';
+import { Rate as IRate } from 'src/grpc/rooms/rates/rates-response.pb';
 
 @Entity({ name: 'rates' })
-export class Rate extends BaseEntity {
+export class Rate extends BaseEntity implements IRate {
   @PrimaryGeneratedColumn('uuid', {
     primaryKeyConstraintName: 'PK_Rates',
-    name: 'rate_id',
   })
-  rateId: string;
+  rate_id: string;
 
   @Column({
-    name: 'name',
     type: 'varchar',
     length: 255,
     unique: true,
@@ -21,76 +20,67 @@ export class Rate extends BaseEntity {
   name: string;
 
   @Column({
-    name: 'duration',
     type: 'interval',
     nullable: false,
   })
   duration: string;
 
   @Column({
-    name: 'accommodation_cost',
     type: 'numeric',
     precision: 9,
     scale: 2,
     nullable: false,
   })
-  accommodationCost: number;
+  accommodation_cost: number;
 
   @Column({
-    name: 'extra_accommodation_cost',
     type: 'numeric',
     precision: 9,
     scale: 2,
     nullable: false,
   })
-  extraAccommodationCost: number;
+  extra_accommodation_cost: number;
 
   @Column({
-    name: 'overtime_cost',
     type: 'numeric',
     precision: 9,
     scale: 2,
     nullable: false,
   })
-  overtimeCost: number;
+  overtime_cost: number;
 
   @Column({
-    name: 'extra_people_cost',
     type: 'numeric',
     precision: 9,
     scale: 2,
     nullable: false,
   })
-  extraPeopleCost: number;
+  extra_people_cost: number;
 
   @Column({
-    name: 'early_check_in_cost',
     type: 'numeric',
     precision: 9,
     scale: 2,
     nullable: false,
   })
-  earlyCheckinCost: number;
+  early_check_in_cost: number;
 
   @Column({
-    name: 'accommodation_type',
     type: 'enum',
     enum: AccommodationType,
     nullable: false,
   })
-  accommodationType: AccommodationType;
+  accommodation_type: AccommodationType;
 
   @Column({
-    name: 'check_in_hour',
     type: 'time',
     nullable: false,
   })
-  checkInHour: string;
+  check_in_hour: string;
 
   @Column({
-    name: 'checkout_hour',
     type: 'time',
     nullable: false,
   })
-  checkoutHour: string;
+  checkout_hour: string;
 }
