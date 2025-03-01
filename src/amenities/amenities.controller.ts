@@ -8,7 +8,7 @@ import {
   ListAmenitiesResponse,
   AmenitiesServiceController,
   AmenitiesServiceControllerMethods,
-} from 'src/grpc/rooms/amenities.pb';
+} from 'src/grpc/proto/rooms/amenities.pb';
 
 import { AmenitiesService } from './amenities.service';
 
