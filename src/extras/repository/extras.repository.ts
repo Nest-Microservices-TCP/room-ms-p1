@@ -1,26 +1,28 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import {
-  EntityNotFoundException,
-  FailedRemoveException,
-  FailedRestoreException,
-  FailedSoftDeleteException,
-} from 'src/common/exceptions/custom';
-import {
+  In,
+  Repository,
+  QueryRunner,
+  UpdateResult,
   DeleteResult,
   FindOptionsWhere,
-  In,
-  QueryRunner,
-  Repository,
-  UpdateResult,
 } from 'typeorm';
 
-import { Extra } from '../entity/extra.entity';
+import {
+  FailedRemoveException,
+  FailedRestoreException,
+  EntityNotFoundException,
+  FailedSoftDeleteException,
+} from 'src/common/exceptions/custom';
+
+import { CreateExtraRequest } from 'src/grpc/proto/rooms/extras.pb';
+
 import { IExtrasRepository } from './interfaces/extras.repository.interface';
 
+import { Extra } from '../entity/extra.entity';
 import { Status } from 'src/common/enums';
 
 import { DeleteResultResponse } from 'src/common/dto/response';
-import { CreateExtraDto } from '../dto/request';
 
 export class ExtrasRepository implements IExtrasRepository {
   private extrasRepository: Repository<Extra>;
@@ -48,10 +50,10 @@ export class ExtrasRepository implements IExtrasRepository {
     });
   }
 
-  async findOne(extraId: string): Promise<Extra> {
+  async findOne(extra_id: string): Promise<Extra> {
     const extra = await this.extrasRepository.findOne({
       where: {
-        extraId,
+        extra_id,
       },
     });
 
@@ -66,7 +68,7 @@ export class ExtrasRepository implements IExtrasRepository {
     return this.extrasRepository.create(request);
   }
 
-  save(request: CreateExtraDto): Promise<Extra> {
+  save(request: CreateExtraRequest): Promise<Extra> {
     return this.extrasRepository.save(request);
   }
 
@@ -93,10 +95,10 @@ export class ExtrasRepository implements IExtrasRepository {
     return { deleted: true, affected: result.affected };
   }
 
-  findByIds(extrasIds: string[]): Promise<Extra[]> {
+  findByIds(extras_ids: string[]): Promise<Extra[]> {
     return this.extrasRepository.find({
       where: {
-        extraId: In(extrasIds),
+        extra_id: In(extras_ids),
       },
     });
   }

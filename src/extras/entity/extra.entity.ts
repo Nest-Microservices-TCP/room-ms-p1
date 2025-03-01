@@ -1,19 +1,17 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Extra as IExtra } from 'src/grpc/proto/rooms/extras.pb';
 
 import { BaseEntity } from 'src/common/entity';
-
 import { RentExtra } from 'src/rents-extras/entity/rent-extra.entity';
 
 @Entity({ name: 'extras' })
-export class Extra extends BaseEntity {
+export class Extra extends BaseEntity implements IExtra {
   @PrimaryGeneratedColumn('uuid', {
     primaryKeyConstraintName: 'PK_Extras',
-    name: 'extra_id',
   })
-  extraId: string;
+  extra_id: string;
 
   @Column({
-    name: 'name',
     type: 'varchar',
     length: 255,
     nullable: false,

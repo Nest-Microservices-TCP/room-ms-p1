@@ -1,44 +1,34 @@
+import { Observable } from 'rxjs';
 import { Controller } from '@nestjs/common';
-import { MessagePattern, Payload } from '@nestjs/microservices';
+
+import {
+  Extra,
+  GetExtraRequest,
+  CreateExtraRequest,
+  ListExtrasResponse,
+  ExtrasServiceController,
+  ExtrasServiceControllerMethods,
+} from 'src/grpc/proto/rooms/extras.pb';
 
 import { ExtrasService } from './extras.service';
 
-import { CreateExtraDto, UpdateExtraDto } from './dto/request';
-import { ExtraResponseDto } from './dto/response';
-
 @Controller()
-export class ExtrasController {
+@ExtrasServiceControllerMethods()
+export class ExtrasController implements ExtrasServiceController {
   constructor(private readonly extrasService: ExtrasService) {}
 
-  @MessagePattern('extras.find.all')
-  async findAll(): Promise<ExtraResponseDto[]> {
+  createExtra(request: CreateExtraRequest): void {
+    this.extrasService.save(request);
+  }
+  getExtra(
+    request: GetExtraRequest,
+  ): Promise<Extra> | Observable<Extra> | Extra {
+    return this.extrasService.findOne(request);
+  }
+  listExtras():
+    | Promise<ListExtrasResponse>
+    | Observable<ListExtrasResponse>
+    | ListExtrasResponse {
     return this.extrasService.findAll();
-  }
-
-  @MessagePattern('extras.find.one')
-  async findOne(
-    @Payload('extraId') extraId: string,
-  ): Promise<ExtraResponseDto> {
-    return this.extrasService.findOne(extraId);
-  }
-
-  @MessagePattern('extras.find.by.ids')
-  async findByIds(@Payload() extrasIds: string[]): Promise<ExtraResponseDto[]> {
-    return this.extrasService.findByIds(extrasIds);
-  }
-
-  @MessagePattern('extras.save')
-  async save(@Payload() request: CreateExtraDto): Promise<ExtraResponseDto> {
-    return this.extrasService.save(request);
-  }
-
-  @MessagePattern('extras.update')
-  async update(@Payload() request: UpdateExtraDto): Promise<ExtraResponseDto> {
-    return this.extrasService.update(request);
-  }
-
-  @MessagePattern('extras.remove')
-  async remove(@Payload('extraId') extraId: string): Promise<ExtraResponseDto> {
-    return this.extrasService.remove(extraId);
   }
 }
