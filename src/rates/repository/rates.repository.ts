@@ -1,25 +1,27 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import {
-  EntityNotFoundException,
-  FailedRemoveException,
-  FailedRestoreException,
-} from 'src/common/exceptions/custom';
-import {
+  In,
+  Repository,
+  QueryRunner,
+  UpdateResult,
   DeleteResult,
   FindOptionsWhere,
-  In,
-  QueryRunner,
-  Repository,
-  UpdateResult,
 } from 'typeorm';
+
+import {
+  FailedRemoveException,
+  FailedRestoreException,
+  EntityNotFoundException,
+} from 'src/common/exceptions/custom';
+
+import { CreateRateRequest } from 'src/grpc/proto/rooms/rates.pb';
 
 import { IRatesRepository } from './interfaces/rates.repository.interface';
 
-import { DeleteResultResponse } from 'src/common/dto/response';
-import { CreateRateDto } from '../dto/request';
-
 import { Status } from 'src/common/enums';
 import { Rate } from '../entity/rate.entity';
+
+import { DeleteResultResponse } from 'src/common/dto/response';
 
 export class RatesRepository implements IRatesRepository {
   private ratesRepository: Repository<Rate>;
@@ -56,10 +58,10 @@ export class RatesRepository implements IRatesRepository {
     }));
   }
 
-  async findOne(rateId: string): Promise<Rate> {
+  async findOne(rate_id: string): Promise<Rate> {
     const rate = await this.ratesRepository.findOne({
       where: {
-        rateId,
+        rate_id,
       },
     });
 
@@ -74,7 +76,7 @@ export class RatesRepository implements IRatesRepository {
     return this.ratesRepository.create(request);
   }
 
-  save(request: CreateRateDto): Promise<Rate> {
+  save(request: CreateRateRequest): Promise<Rate> {
     return this.ratesRepository.save(request);
   }
 
@@ -104,7 +106,7 @@ export class RatesRepository implements IRatesRepository {
   findByIds(ratesIds: string[]): Promise<Rate[]> {
     return this.ratesRepository.find({
       where: {
-        rateId: In(ratesIds),
+        rate_id: In(ratesIds),
       },
     });
   }

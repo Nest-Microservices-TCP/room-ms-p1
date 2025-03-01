@@ -1,23 +1,32 @@
-import { Controller } from '@nestjs/common';
 import { Observable } from 'rxjs';
+import { Controller } from '@nestjs/common';
 
-import { RatesService } from './rates.service';
-
-import { FindOneRateRequest } from 'src/grpc/rooms/rates/rates-request.pb';
-import { Rate } from 'src/grpc/rooms/rates/rates-response.pb';
 import {
+  Rate,
+  GetRateRequest,
+  CreateRateRequest,
+  ListRatesResponse,
   RatesServiceController,
   RatesServiceControllerMethods,
-} from 'src/grpc/rooms/rates/rates.pb';
+} from 'src/grpc/proto/rooms/rates.pb';
+
+import { RatesService } from './rates.service';
 
 @Controller()
 @RatesServiceControllerMethods()
 export class RatesController implements RatesServiceController {
   constructor(private readonly ratesService: RatesService) {}
 
-  findOne(
-    request: FindOneRateRequest,
-  ): Promise<Rate> | Observable<Rate> | Rate {
-    return this.ratesService.findOne(request);
+  createRate(request: CreateRateRequest): void {
+    this.ratesService.createRate(request);
+  }
+  getRate(request: GetRateRequest): Promise<Rate> | Observable<Rate> | Rate {
+    return this.ratesService.getRate(request);
+  }
+  listRates():
+    | Promise<ListRatesResponse>
+    | Observable<ListRatesResponse>
+    | ListRatesResponse {
+    return this.ratesService.listRates();
   }
 }

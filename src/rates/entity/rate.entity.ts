@@ -1,9 +1,9 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-
+import {
+  Rate as IRate,
+  AccommodationType,
+} from 'src/grpc/proto/rooms/rates.pb';
 import { BaseEntity } from 'src/common/entity';
-
-import { AccommodationType } from 'src/grpc/rooms/rates/rates-enums.pb';
-import { Rate as IRate } from 'src/grpc/rooms/rates/rates-response.pb';
 
 @Entity({ name: 'rates' })
 export class Rate extends BaseEntity implements IRate {
