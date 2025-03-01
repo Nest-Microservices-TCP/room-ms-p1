@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Amenity as IAmenity } from 'src/grpc/rooms/amenities.pb';
+import { Amenity as IAmenity } from 'src/grpc/proto/rooms/amenities.pb';
 
 import { BaseEntity } from 'src/common/entity';
 import { RoomTypeAmenity } from 'src/rooms-types-amenities/entity/room-type-amenity.entity';
@@ -8,12 +8,10 @@ import { RoomTypeAmenity } from 'src/rooms-types-amenities/entity/room-type-amen
 export class Amenity extends BaseEntity implements IAmenity {
   @PrimaryGeneratedColumn('uuid', {
     primaryKeyConstraintName: 'PK_Amenities',
-    name: 'amenity_id',
   })
   amenity_id: string;
 
   @Column({
-    name: 'name',
     type: 'varchar',
     length: 100,
     nullable: false,
@@ -21,7 +19,6 @@ export class Amenity extends BaseEntity implements IAmenity {
   name: string;
 
   @Column({
-    name: 'description',
     type: 'varchar',
     length: 255,
     nullable: true,
