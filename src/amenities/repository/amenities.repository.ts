@@ -1,26 +1,28 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import {
-  EntityNotFoundException,
-  FailedRemoveException,
-  FailedRestoreException,
-  FailedSoftDeleteException,
-} from 'src/common/exceptions/custom';
-import {
+  In,
+  Repository,
+  QueryRunner,
+  UpdateResult,
   DeleteResult,
   FindOptionsWhere,
-  In,
-  QueryRunner,
-  Repository,
-  UpdateResult,
 } from 'typeorm';
 
-import { Status } from 'src/common/enums';
+import {
+  FailedRemoveException,
+  FailedRestoreException,
+  EntityNotFoundException,
+  FailedSoftDeleteException,
+} from 'src/common/exceptions/custom';
 
-import { Amenity } from '../entity/amenity.entity';
+import { CreateAmenityRequest } from 'src/grpc/proto/rooms/amenities.pb';
+
 import { IAmenitiesRepository } from './interfaces/amenities.repository.interface';
 
+import { Status } from 'src/common/enums';
+import { Amenity } from '../entity/amenity.entity';
+
 import { DeleteResultResponse } from 'src/common/dto/response';
-import { CreateAmenityDto } from '../dto/request';
 
 export class AmenitiesRepository implements IAmenitiesRepository {
   private amenitiesRepository: Repository<Amenity>;
@@ -46,10 +48,10 @@ export class AmenitiesRepository implements IAmenitiesRepository {
     });
   }
 
-  async findOne(amenityId: string): Promise<Amenity> {
+  async findOne(amenity_id: string): Promise<Amenity> {
     const amenity = await this.amenitiesRepository.findOne({
       where: {
-        amenityId,
+        amenity_id,
       },
     });
 
@@ -64,7 +66,7 @@ export class AmenitiesRepository implements IAmenitiesRepository {
     return this.amenitiesRepository.create(request);
   }
 
-  save(request: CreateAmenityDto): Promise<Amenity> {
+  save(request: CreateAmenityRequest): Promise<Amenity> {
     return this.amenitiesRepository.save(request);
   }
 
@@ -92,10 +94,10 @@ export class AmenitiesRepository implements IAmenitiesRepository {
     return { deleted: true, affected: result.affected };
   }
 
-  findByIds(amenitiesIds: string[]): Promise<Amenity[]> {
+  findByIds(amenities_ids: string[]): Promise<Amenity[]> {
     return this.amenitiesRepository.find({
       where: {
-        amenityId: In(amenitiesIds),
+        amenity_id: In(amenities_ids),
       },
     });
   }
