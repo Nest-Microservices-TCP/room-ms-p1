@@ -1,11 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { plainToInstance } from 'class-transformer';
 
 import { HandleRpcExceptions } from 'src/common/decorators';
 
-import { DeleteResultResponse } from 'src/common/dto/response';
-import { CreateRoomDto, UpdateRoomDto } from './dto/request';
-import { RoomResponseDto } from './dto/response';
+import {
+  GetRoomRequest,
+  ListRoomsResponse,
+  CreateRoomRequest,
+} from 'src/grpc/proto/rooms/rooms.pb';
+
+import { Room } from './entity/room.entity';
 
 import { RoomsRepository } from './repositories/rooms.repository';
 
@@ -13,55 +16,22 @@ import { RoomsRepository } from './repositories/rooms.repository';
 export class RoomsService {
   constructor(private readonly roomsRepository: RoomsRepository) {}
 
-  private plainToInstanceDto(data: unknown): any {
-    return plainToInstance(RoomResponseDto, data, {
-      excludeExtraneousValues: true,
-    });
+  @HandleRpcExceptions()
+  createRoom(request: CreateRoomRequest): void {
+    this.roomsRepository.save(request);
   }
 
   @HandleRpcExceptions()
-  async save(request: CreateRoomDto): Promise<RoomResponseDto> {
-    const newRoom = await this.roomsRepository.save(request);
+  async getRoom(request: GetRoomRequest): Promise<Room> {
+    const { room_id } = request;
 
-    return this.plainToInstanceDto(newRoom);
+    return this.roomsRepository.findOne(room_id);
   }
 
   @HandleRpcExceptions()
-  async findOne(roomId: string): Promise<RoomResponseDto> {
-    const room = await this.roomsRepository.findOne(roomId);
-
-    return this.plainToInstanceDto(room);
-  }
-
-  @HandleRpcExceptions()
-  async findByIds(roomsIds: string[]): Promise<RoomResponseDto[]> {
-    const rooms = await this.roomsRepository.findByIds(roomsIds);
-
-    return this.plainToInstanceDto(rooms);
-  }
-
-  @HandleRpcExceptions()
-  async findAll(): Promise<RoomResponseDto[]> {
+  async listRooms(): Promise<ListRoomsResponse> {
     const rooms = await this.roomsRepository.findAll();
 
-    return this.plainToInstanceDto(rooms);
-  }
-
-  @HandleRpcExceptions()
-  async update(request: UpdateRoomDto) {
-    const { roomId, ...rest } = request;
-
-    const updatedRoom = await this.roomsRepository.update({ roomId }, rest);
-
-    return this.plainToInstanceDto(updatedRoom);
-  }
-
-  @HandleRpcExceptions()
-  async remove(roomId: string): Promise<DeleteResultResponse> {
-    const deleteResult = await this.roomsRepository.remove(roomId);
-
-    return plainToInstance(DeleteResultResponse, deleteResult, {
-      excludeExtraneousValues: true,
-    });
+    return { rooms };
   }
 }

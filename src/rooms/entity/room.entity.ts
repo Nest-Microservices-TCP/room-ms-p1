@@ -6,6 +6,8 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
+import { Room as IRoom } from 'src/grpc/proto/rooms/rooms.pb';
+
 import { BaseEntity } from 'src/common/entity';
 
 import { Rent } from 'src/rents/entity/rent.entity';
@@ -13,15 +15,13 @@ import { RoomState } from 'src/rooms-states/entity/room-state.entity';
 import { RoomType } from 'src/rooms-types/entity/room-type.entity';
 
 @Entity({ name: 'rooms' })
-export class Room extends BaseEntity {
+export class Room extends BaseEntity implements IRoom {
   @PrimaryGeneratedColumn('uuid', {
     primaryKeyConstraintName: 'PK_Rooms',
-    name: 'room_id',
   })
-  roomId: string;
+  room_id: string;
 
   @Column({
-    name: 'number',
     type: 'int',
     nullable: false,
     unique: true,
@@ -56,7 +56,7 @@ export class Room extends BaseEntity {
      * ! @ManyToMany ambas tablas tienen el @JoinColumn
      */
     name: 'room_state_id',
-    referencedColumnName: 'roomStateId',
+    referencedColumnName: 'room_state_id',
     foreignKeyConstraintName: 'FK_Room_RoomState',
   })
   roomState: RoomState;

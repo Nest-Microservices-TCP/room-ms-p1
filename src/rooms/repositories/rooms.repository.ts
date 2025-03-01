@@ -1,26 +1,28 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import {
-  EntityNotFoundException,
-  FailedRemoveException,
-  FailedRestoreException,
-  FailedSoftDeleteException,
-} from 'src/common/exceptions/custom';
-import {
+  In,
+  Repository,
+  QueryRunner,
+  UpdateResult,
   DeleteResult,
   FindOptionsWhere,
-  In,
-  QueryRunner,
-  Repository,
-  UpdateResult,
 } from 'typeorm';
+
+import {
+  FailedRemoveException,
+  FailedRestoreException,
+  EntityNotFoundException,
+  FailedSoftDeleteException,
+} from 'src/common/exceptions/custom';
+
+import { CreateRoomRequest } from 'src/grpc/proto/rooms/rooms.pb';
+
+import { IRoomsRepository } from './interfaces/rooms.repository.interface';
 
 import { Status } from 'src/common/enums';
 import { Room } from '../entity/room.entity';
 
 import { DeleteResultResponse } from 'src/common/dto/response';
-import { CreateRoomDto } from '../dto/request';
-
-import { IRoomsRepository } from './interfaces/rooms.repository.interface';
 
 export class RoomsRepository implements IRoomsRepository {
   private roomsRepository: Repository<Room>;
@@ -48,8 +50,8 @@ export class RoomsRepository implements IRoomsRepository {
     });
   }
 
-  async findOne(roomId: string): Promise<Room> {
-    const room = await this.roomsRepository.findOne({ where: { roomId } });
+  async findOne(room_id: string): Promise<Room> {
+    const room = await this.roomsRepository.findOne({ where: { room_id } });
 
     if (!room) {
       throw new EntityNotFoundException('room');
@@ -62,7 +64,7 @@ export class RoomsRepository implements IRoomsRepository {
     return this.roomsRepository.create(request);
   }
 
-  async save(request: CreateRoomDto): Promise<Room> {
+  async save(request: CreateRoomRequest): Promise<Room> {
     return this.roomsRepository.save(request);
   }
 
@@ -89,10 +91,10 @@ export class RoomsRepository implements IRoomsRepository {
     return { deleted: true, affected: result.affected };
   }
 
-  findByIds(roomsIds: string[]): Promise<Room[]> {
+  findByIds(rooms_ids: string[]): Promise<Room[]> {
     return this.roomsRepository.find({
       where: {
-        roomId: In(roomsIds),
+        room_id: In(rooms_ids),
       },
     });
   }

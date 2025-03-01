@@ -1,40 +1,32 @@
+import { Observable } from 'rxjs';
 import { Controller } from '@nestjs/common';
-import { MessagePattern, Payload } from '@nestjs/microservices';
 
-import { RoomResponseDto } from './dto/response';
+import {
+  Room,
+  GetRoomRequest,
+  CreateRoomRequest,
+  ListRoomsResponse,
+  RoomsServiceController,
+  RoomsServiceControllerMethods,
+} from 'src/grpc/proto/rooms/rooms.pb';
 
-import { DeleteResultResponse } from 'src/common/dto/response';
-import { CreateRoomDto, UpdateRoomDto } from './dto/request';
 import { RoomsService } from './rooms.service';
 
 @Controller()
-export class RoomsController {
+@RoomsServiceControllerMethods()
+export class RoomsController implements RoomsServiceController {
   constructor(private readonly roomsService: RoomsService) {}
 
-  @MessagePattern('rooms.find.all')
-  async findAll(): Promise<RoomResponseDto[]> {
-    return this.roomsService.findAll();
+  createRoom(request: CreateRoomRequest): void {
+    this.roomsService.createRoom(request);
   }
-
-  @MessagePattern('rooms.find.one')
-  async findOne(@Payload('roomId') roomId: string): Promise<RoomResponseDto> {
-    return this.roomsService.findOne(roomId);
+  getRoom(request: GetRoomRequest): Promise<Room> | Observable<Room> | Room {
+    return this.roomsService.getRoom(request);
   }
-
-  @MessagePattern('rooms.save')
-  async save(@Payload() request: CreateRoomDto): Promise<RoomResponseDto> {
-    return this.roomsService.save(request);
-  }
-
-  @MessagePattern('rooms.update')
-  async update(@Payload() request: UpdateRoomDto): Promise<RoomResponseDto> {
-    return this.roomsService.update(request);
-  }
-
-  @MessagePattern('rooms.remove')
-  async remove(
-    @Payload('roomId') roomId: string,
-  ): Promise<DeleteResultResponse> {
-    return this.roomsService.remove(roomId);
+  listRooms():
+    | Promise<ListRoomsResponse>
+    | Observable<ListRoomsResponse>
+    | ListRoomsResponse {
+    return this.roomsService.listRooms();
   }
 }
