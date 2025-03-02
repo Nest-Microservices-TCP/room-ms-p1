@@ -1,27 +1,28 @@
-import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { ConflictException, Injectable } from '@nestjs/common';
 import {
-  EntityNotFoundException,
+  In,
+  Repository,
+  QueryRunner,
+  DeleteResult,
+  UpdateResult,
+  FindOptionsWhere,
+} from 'typeorm';
+
+import {
   FailedRemoveException,
   FailedRestoreException,
+  EntityNotFoundException,
   FailedSoftDeleteException,
 } from 'src/common/exceptions/custom';
-import {
-  DeleteResult,
-  FindOptionsWhere,
-  In,
-  QueryRunner,
-  Repository,
-  UpdateResult,
-} from 'typeorm';
+
+import { CreateRoomStateRequest } from 'src/grpc/proto/rooms/rooms_states.pb';
+import { IRoomsStateRepository } from './interfaces/rooms-states.repository.interface';
 
 import { Status } from 'src/common/enums';
 import { RoomState } from '../entity/room-state.entity';
 
 import { DeleteResultResponse } from 'src/common/dto/response';
-import { CreateRoomStateDto } from '../dto/request';
-
-import { IRoomsStateRepository } from './interfaces/rooms-states.repository.interface';
 
 @Injectable()
 export class RoomsStatesRepository implements IRoomsStateRepository {
@@ -42,9 +43,9 @@ export class RoomsStatesRepository implements IRoomsStateRepository {
     }
   }
 
-  async findOne(roomStateId: string): Promise<RoomState> {
+  async findOne(room_state_id: string): Promise<RoomState> {
     const roomState = await this.roomsStatesRepository.findOne({
-      where: { roomStateId },
+      where: { room_state_id },
     });
 
     if (!roomState) {
@@ -66,7 +67,7 @@ export class RoomsStatesRepository implements IRoomsStateRepository {
     return this.roomsStatesRepository.create(request);
   }
 
-  async save(request: CreateRoomStateDto): Promise<RoomState> {
+  async save(request: CreateRoomStateRequest): Promise<RoomState> {
     const { name } = request;
 
     const roomState = await this.roomsStatesRepository.findOne({
@@ -108,10 +109,10 @@ export class RoomsStatesRepository implements IRoomsStateRepository {
     return { deleted: true, affected: result.affected };
   }
 
-  findByIds(roomsStatesIds: string[]): Promise<RoomState[]> {
+  findByIds(rooms_states_ids: string[]): Promise<RoomState[]> {
     return this.roomsStatesRepository.find({
       where: {
-        roomStateId: In(roomsStatesIds),
+        room_state_id: In(rooms_states_ids),
       },
     });
   }

@@ -65,7 +65,7 @@ export class RoomTypeAmenity {
   })
   @JoinColumn({
     name: 'amenity_id',
-    referencedColumnName: 'amenityId',
+    referencedColumnName: 'amenity_id',
     foreignKeyConstraintName: 'FK_RoomsTypesAmenities_Amenity',
   })
   amenity: Amenity;

@@ -1,19 +1,17 @@
 import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { RoomState as IRoomState } from 'src/grpc/proto/rooms/rooms_states.pb';
 
 import { BaseEntity } from 'src/common/entity';
-
 import { Room } from 'src/rooms/entity/room.entity';
 
 @Entity({ name: 'rooms_states' })
-export class RoomState extends BaseEntity {
+export class RoomState extends BaseEntity implements IRoomState {
   @PrimaryGeneratedColumn('uuid', {
     primaryKeyConstraintName: 'PK_RoomsStates',
-    name: 'room_state_id',
   })
-  roomStateId: string;
+  room_state_id: string;
 
   @Column({
-    name: 'name',
     type: 'varchar',
     length: 30,
     nullable: false,
@@ -22,7 +20,6 @@ export class RoomState extends BaseEntity {
   name: string;
 
   @Column({
-    name: 'description',
     type: 'text',
     nullable: true,
   })

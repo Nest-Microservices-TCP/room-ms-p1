@@ -1,6 +1,6 @@
 import { IRepository } from 'src/common/repository';
-import { CreateRoomStateDto } from 'src/rooms-states/dto/request';
+import { CreateRoomStateRequest } from 'src/grpc/proto/rooms/rooms_states.pb';
 import { RoomState } from 'src/rooms-states/entity/room-state.entity';
 
 export interface IRoomsStateRepository
-  extends IRepository<RoomState, CreateRoomStateDto> {}
+  extends IRepository<RoomState, CreateRoomStateRequest> {}

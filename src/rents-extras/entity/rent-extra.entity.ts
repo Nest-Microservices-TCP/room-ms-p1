@@ -58,7 +58,7 @@ export class RentExtra extends BaseEntity {
   })
   @JoinColumn({
     name: 'extra_id',
-    referencedColumnName: 'extraId',
+    referencedColumnName: 'extra_id',
     foreignKeyConstraintName: 'FK_RentsExtras_Extra',
   })
   extra: Extra;
