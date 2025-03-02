@@ -11,7 +11,7 @@ INSERT INTO public.rates (
 	checkout_hour
 )
 VALUES
-('Junior Suite', INTERVAL '8 hours', 2200, 2200, 400, 350, 2200, 'hotel', TIME '03:00', TIME '10:00'),
-('Handicap', INTERVAL '8 hours', 1050, 1050, 400, 350, 1050, 'hotel', TIME '03:00', TIME '10:00'),
-('Pool & Spa Suite', INTERVAL '8 hours', 3500, 3500, 600, 500, 3500, 'hotel', TIME '03:00', TIME '10:00'),
-('Master Suite', INTERVAL '21 hours', 1900, 1900, 0, 350, 1900, 'hotel', TIME '03:00', TIME '10:00');
+('Junior Suite', INTERVAL '8 hours', 2200, 2200, 400, 350, 2200, 'HOTEL', TIME '03:00', TIME '10:00'),
+('Handicap', INTERVAL '8 hours', 1050, 1050, 400, 350, 1050, 'HOTEL', TIME '03:00', TIME '10:00'),
+('Pool & Spa Suite', INTERVAL '8 hours', 3500, 3500, 600, 500, 3500, 'HOTEL', TIME '03:00', TIME '10:00'),
+('Master Suite', INTERVAL '21 hours', 1900, 1900, 0, 350, 1900, 'HOTEL', TIME '03:00', TIME '10:00');
