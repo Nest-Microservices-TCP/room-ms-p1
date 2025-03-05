@@ -3,9 +3,9 @@ import { Controller } from '@nestjs/common';
 
 import {
   Amenity,
-  GetAmenityRequest,
   CreateAmenityRequest,
-  ListAmenitiesResponse,
+  FindAmenitiesResponse,
+  FindOneAmenityRequest,
   AmenitiesServiceController,
   AmenitiesServiceControllerMethods,
 } from 'src/grpc/proto/rooms/amenities.pb';
@@ -16,19 +16,18 @@ import { AmenitiesService } from './amenities.service';
 @AmenitiesServiceControllerMethods()
 export class AmenitiesController implements AmenitiesServiceController {
   constructor(private readonly amenitiesService: AmenitiesService) {}
-
-  createAmenity(request: CreateAmenityRequest): void {
-    this.amenitiesService.createAmenity(request);
+  save(request: CreateAmenityRequest): void {
+    this.amenitiesService.save(request);
   }
-  getAmenity(
-    request: GetAmenityRequest,
+  findOne(
+    request: FindOneAmenityRequest,
   ): Promise<Amenity> | Observable<Amenity> | Amenity {
-    return this.amenitiesService.getAmenity(request);
+    return this.amenitiesService.findOne(request);
   }
-  listAmenities():
-    | Promise<ListAmenitiesResponse>
-    | Observable<ListAmenitiesResponse>
-    | ListAmenitiesResponse {
-    return this.amenitiesService.listAmenities();
+  find():
+    | Promise<FindAmenitiesResponse>
+    | Observable<FindAmenitiesResponse>
+    | FindAmenitiesResponse {
+    return this.amenitiesService.find();
   }
 }
