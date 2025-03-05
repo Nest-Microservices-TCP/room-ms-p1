@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { HandleRpcExceptions } from 'src/common/decorators';
 
 import {
-  GetExtraRequest,
-  ListExtrasResponse,
+  FindExtrasResponse,
   CreateExtraRequest,
+  FindOneExtraRequest,
 } from 'src/grpc/proto/rooms/extras.pb';
 
 import { ExtrasRepository } from './repository/extras.repository';
@@ -21,14 +21,14 @@ export class ExtrasService {
   }
 
   @HandleRpcExceptions()
-  async findAll(): Promise<ListExtrasResponse> {
+  async find(): Promise<FindExtrasResponse> {
     const extras = await this.extrasRepository.findAll();
 
     return { extras };
   }
 
   @HandleRpcExceptions()
-  async findOne(request: GetExtraRequest): Promise<Extra> {
+  async findOne(request: FindOneExtraRequest): Promise<Extra> {
     const { extra_id } = request;
 
     return this.extrasRepository.findOne(extra_id);
