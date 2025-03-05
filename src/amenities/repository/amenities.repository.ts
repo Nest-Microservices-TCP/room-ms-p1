@@ -1,4 +1,3 @@
-import { InjectRepository } from '@nestjs/typeorm';
 import {
   In,
   Repository,
@@ -7,6 +6,7 @@ import {
   DeleteResult,
   FindOptionsWhere,
 } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 
 import {
   FailedRemoveException,
@@ -30,7 +30,9 @@ export class AmenitiesRepository implements IAmenitiesRepository {
   constructor(
     @InjectRepository(Amenity)
     private readonly defaultRepository: Repository<Amenity>,
-  ) {}
+  ) {
+    this.amenitiesRepository = defaultRepository;
+  }
 
   setQueryRunner(queryRunner: QueryRunner): void {
     if (queryRunner) {
