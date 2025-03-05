@@ -3,9 +3,9 @@ import { Controller } from '@nestjs/common';
 
 import {
   Extra,
-  GetExtraRequest,
   CreateExtraRequest,
-  ListExtrasResponse,
+  FindExtrasResponse,
+  FindOneExtraRequest,
   ExtrasServiceController,
   ExtrasServiceControllerMethods,
 } from 'src/grpc/proto/rooms/extras.pb';
@@ -16,19 +16,18 @@ import { ExtrasService } from './extras.service';
 @ExtrasServiceControllerMethods()
 export class ExtrasController implements ExtrasServiceController {
   constructor(private readonly extrasService: ExtrasService) {}
-
-  createExtra(request: CreateExtraRequest): void {
+  save(request: CreateExtraRequest): void {
     this.extrasService.save(request);
   }
-  getExtra(
-    request: GetExtraRequest,
+  findOne(
+    request: FindOneExtraRequest,
   ): Promise<Extra> | Observable<Extra> | Extra {
     return this.extrasService.findOne(request);
   }
-  listExtras():
-    | Promise<ListExtrasResponse>
-    | Observable<ListExtrasResponse>
-    | ListExtrasResponse {
-    return this.extrasService.findAll();
+  find():
+    | Promise<FindExtrasResponse>
+    | Observable<FindExtrasResponse>
+    | FindExtrasResponse {
+    return this.extrasService.find();
   }
 }
