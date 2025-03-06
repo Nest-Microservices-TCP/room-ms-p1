@@ -1,4 +1,3 @@
-import { InjectRepository } from '@nestjs/typeorm';
 import {
   In,
   Repository,
@@ -7,6 +6,7 @@ import {
   DeleteResult,
   FindOptionsWhere,
 } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 
 import {
   FailedRemoveException,
