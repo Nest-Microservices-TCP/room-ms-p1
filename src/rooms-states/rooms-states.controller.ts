@@ -5,6 +5,7 @@ import {
   RoomState,
   CreateRoomStateRequest,
   FindOneRoomStateRequest,
+  FindRoomsStatesResponse,
   RoomsStatesServiceController,
   RoomsStatesServiceControllerMethods,
 } from 'src/grpc/proto/rooms/rooms_states.pb';
@@ -16,12 +17,18 @@ import { RoomsStatesService } from './rooms-states.service';
 export class RoomsStatesController implements RoomsStatesServiceController {
   constructor(private readonly roomsStatesService: RoomsStatesService) {}
 
-  createRoomState(request: CreateRoomStateRequest): void {
+  save(request: CreateRoomStateRequest): void {
     this.roomsStatesService.save(request);
   }
-  getRoomState(
+  findOne(
     request: FindOneRoomStateRequest,
   ): Promise<RoomState> | Observable<RoomState> | RoomState {
     return this.roomsStatesService.findOne(request);
+  }
+  find():
+    | Promise<FindRoomsStatesResponse>
+    | Observable<FindRoomsStatesResponse>
+    | FindRoomsStatesResponse {
+    return this.roomsStatesService.find();
   }
 }
