@@ -3,8 +3,8 @@ import { Controller } from '@nestjs/common';
 
 import {
   RoomState,
-  GetRoomStateRequest,
   CreateRoomStateRequest,
+  FindOneRoomStateRequest,
   RoomsStatesServiceController,
   RoomsStatesServiceControllerMethods,
 } from 'src/grpc/proto/rooms/rooms_states.pb';
@@ -20,7 +20,7 @@ export class RoomsStatesController implements RoomsStatesServiceController {
     this.roomsStatesService.save(request);
   }
   getRoomState(
-    request: GetRoomStateRequest,
+    request: FindOneRoomStateRequest,
   ): Promise<RoomState> | Observable<RoomState> | RoomState {
     return this.roomsStatesService.findOne(request);
   }
