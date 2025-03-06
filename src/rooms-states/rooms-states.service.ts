@@ -5,6 +5,7 @@ import { HandleRpcExceptions } from 'src/common/decorators';
 import {
   CreateRoomStateRequest,
   FindOneRoomStateRequest,
+  FindRoomsStatesResponse,
 } from 'src/grpc/proto/rooms/rooms_states.pb';
 
 import { RoomsStatesRepository } from './repository/rooms-states.repository';
@@ -25,5 +26,12 @@ export class RoomsStatesService {
     const { room_state_id } = request;
 
     return this.roomsStatesRepository.findOne(room_state_id);
+  }
+
+  @HandleRpcExceptions()
+  async find(): Promise<FindRoomsStatesResponse> {
+    const rooms_states = await this.roomsStatesRepository.findAll();
+
+    return { rooms_states };
   }
 }
