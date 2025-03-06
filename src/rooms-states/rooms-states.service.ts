@@ -3,8 +3,8 @@ import { Injectable } from '@nestjs/common';
 import { HandleRpcExceptions } from 'src/common/decorators';
 
 import {
-  GetRoomStateRequest,
   CreateRoomStateRequest,
+  FindOneRoomStateRequest,
 } from 'src/grpc/proto/rooms/rooms_states.pb';
 
 import { RoomsStatesRepository } from './repository/rooms-states.repository';
@@ -21,7 +21,7 @@ export class RoomsStatesService {
   }
 
   @HandleRpcExceptions()
-  async findOne(request: GetRoomStateRequest): Promise<RoomState> {
+  async findOne(request: FindOneRoomStateRequest): Promise<RoomState> {
     const { room_state_id } = request;
 
     return this.roomsStatesRepository.findOne(room_state_id);
