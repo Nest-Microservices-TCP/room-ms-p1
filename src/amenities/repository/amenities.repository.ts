@@ -42,7 +42,7 @@ export class AmenitiesRepository implements IAmenitiesRepository {
     }
   }
 
-  findAll(): Promise<Amenity[]> {
+  find(): Promise<Amenity[]> {
     return this.amenitiesRepository.find({
       where: {
         status: Status.ACTIVE,
