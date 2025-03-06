@@ -4,7 +4,7 @@ import { DeleteResultResponse } from '../dto/response';
 export interface IBaseRepository<T, CreateDto> {
   setQueryRunner(queryRunner: QueryRunner): void;
 
-  findAll(): Promise<T[]>;
+  find(): Promise<T[]>;
   findOne(id: string): Promise<T>;
   create(request: Partial<T>): T;
   save(request: CreateDto): Promise<T>;
