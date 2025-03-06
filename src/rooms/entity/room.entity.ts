@@ -1,8 +1,8 @@
 import {
   Column,
   Entity,
-  JoinColumn,
   OneToOne,
+  JoinColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -11,8 +11,8 @@ import { Room as IRoom } from 'src/grpc/proto/rooms/rooms.pb';
 import { BaseEntity } from 'src/common/entity';
 
 import { Rent } from 'src/rents/entity/rent.entity';
-import { RoomState } from 'src/rooms-states/entity/room-state.entity';
 import { RoomType } from 'src/rooms-types/entity/room-type.entity';
+import { RoomState } from 'src/rooms-states/entity/room-state.entity';
 
 @Entity({ name: 'rooms' })
 export class Room extends BaseEntity implements IRoom {
