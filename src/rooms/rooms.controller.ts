@@ -3,9 +3,9 @@ import { Controller } from '@nestjs/common';
 
 import {
   Room,
-  GetRoomRequest,
+  FindRoomsResponse,
   CreateRoomRequest,
-  ListRoomsResponse,
+  FindOneRoomRequest,
   RoomsServiceController,
   RoomsServiceControllerMethods,
 } from 'src/grpc/proto/rooms/rooms.pb';
@@ -17,16 +17,18 @@ import { RoomsService } from './rooms.service';
 export class RoomsController implements RoomsServiceController {
   constructor(private readonly roomsService: RoomsService) {}
 
-  createRoom(request: CreateRoomRequest): void {
-    this.roomsService.createRoom(request);
+  save(request: CreateRoomRequest): void {
+    this.roomsService.save(request);
   }
-  getRoom(request: GetRoomRequest): Promise<Room> | Observable<Room> | Room {
-    return this.roomsService.getRoom(request);
+  findOne(
+    request: FindOneRoomRequest,
+  ): Promise<Room> | Observable<Room> | Room {
+    return this.roomsService.findOne(request);
   }
-  listRooms():
-    | Promise<ListRoomsResponse>
-    | Observable<ListRoomsResponse>
-    | ListRoomsResponse {
-    return this.roomsService.listRooms();
+  find():
+    | Promise<FindRoomsResponse>
+    | Observable<FindRoomsResponse>
+    | FindRoomsResponse {
+    return this.roomsService.find();
   }
 }
