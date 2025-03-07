@@ -1,26 +1,28 @@
-import { InjectRepository } from '@nestjs/typeorm';
 import {
+  In,
+  Repository,
+  QueryRunner,
+  UpdateResult,
   DeleteResult,
   FindOptionsWhere,
-  In,
-  QueryRunner,
-  Repository,
-  UpdateResult,
 } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+
 import {
-  EntityNotFoundException,
   FailedRemoveException,
   FailedRestoreException,
+  EntityNotFoundException,
   FailedSoftDeleteException,
 } from 'src/common/exceptions/custom';
 
-import { DeleteResultResponse } from 'src/common/dto/response';
-import { CreateReservationOriginDto } from '../dto/request';
+import { CreateReservationStateRequest } from 'src/grpc/proto/rooms/reservations_states.pb';
+
+import { IReservationsOriginsRepository } from './interfaces/reservations-origins.repository.interface';
 
 import { Status } from 'src/common/enums';
 import { ReservationOrigin } from '../entity/reservation-origin.entity';
 
-import { IReservationsOriginsRepository } from './interfaces/reservations-origins.repository.interface';
+import { DeleteResultResponse } from 'src/common/dto/response';
 
 export class ReservationsOriginsRepository
   implements IReservationsOriginsRepository
@@ -41,14 +43,14 @@ export class ReservationsOriginsRepository
     }
   }
 
-  findAll(): Promise<ReservationOrigin[]> {
+  find(): Promise<ReservationOrigin[]> {
     return this.reservationsOriginsRepository.find();
   }
 
-  async findOne(reservationOriginId: string): Promise<ReservationOrigin> {
+  async findOne(reservation_origin_id: string): Promise<ReservationOrigin> {
     const reservationOrigin =
       await this.reservationsOriginsRepository.findOneBy({
-        reservationOriginId,
+        reservation_origin_id,
       });
 
     if (!reservationOrigin) {
@@ -62,7 +64,7 @@ export class ReservationsOriginsRepository
     return this.reservationsOriginsRepository.create(request);
   }
 
-  save(request: CreateReservationOriginDto): Promise<ReservationOrigin> {
+  save(request: CreateReservationStateRequest): Promise<ReservationOrigin> {
     return this.reservationsOriginsRepository.save(request);
   }
 
@@ -77,11 +79,13 @@ export class ReservationsOriginsRepository
     return this.reservationsOriginsRepository.save(reservationOrigin);
   }
 
-  async remove(reservationOriginId: string): Promise<DeleteResultResponse> {
-    await this.findOne(reservationOriginId);
+  async remove(
+    reservations_origins_ids: string,
+  ): Promise<DeleteResultResponse> {
+    await this.findOne(reservations_origins_ids);
 
     const result: DeleteResult =
-      await this.reservationsOriginsRepository.delete(reservationOriginId);
+      await this.reservationsOriginsRepository.delete(reservations_origins_ids);
 
     if (result?.affected === 0) {
       throw new FailedRemoveException('reservation-origin');
@@ -93,7 +97,7 @@ export class ReservationsOriginsRepository
   findByIds(reservationsOriginsIds: string[]): Promise<ReservationOrigin[]> {
     return this.reservationsOriginsRepository.find({
       where: {
-        reservationOriginId: In(reservationsOriginsIds),
+        reservation_origin_id: In(reservationsOriginsIds),
       },
     });
   }
