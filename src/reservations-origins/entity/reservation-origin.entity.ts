@@ -1,17 +1,18 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-
+import { ReservationOrigin as IReservationOrigin } from 'src/grpc/proto/rooms/reservations_origins.pb';
 import { BaseEntity } from 'src/common/entity';
 
 @Entity({ name: 'reservations_origins' })
-export class ReservationOrigin extends BaseEntity {
+export class ReservationOrigin
+  extends BaseEntity
+  implements IReservationOrigin
+{
   @PrimaryGeneratedColumn('uuid', {
     primaryKeyConstraintName: 'PK_ReservationsOrigins',
-    name: 'reservation_origin_id',
   })
-  reservationOriginId: string;
+  reservation_origin_id: string;
 
   @Column({
-    name: 'name',
     type: 'varchar',
     length: 100,
     nullable: false,
@@ -20,7 +21,6 @@ export class ReservationOrigin extends BaseEntity {
   name: string;
 
   @Column({
-    name: 'description',
     type: 'text',
     nullable: true,
   })
