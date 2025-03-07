@@ -1,6 +1,6 @@
 import { IRepository } from 'src/common/repository';
-import { CreateReservationOriginDto } from 'src/reservations-origins/dto/request';
+import { CreateReservationOriginRequest } from 'src/grpc/proto/rooms/reservations_origins.pb';
 import { ReservationOrigin } from 'src/reservations-origins/entity/reservation-origin.entity';
 
 export interface IReservationsOriginsRepository
-  extends IRepository<ReservationOrigin, CreateReservationOriginDto> {}
+  extends IRepository<ReservationOrigin, CreateReservationOriginRequest> {}
