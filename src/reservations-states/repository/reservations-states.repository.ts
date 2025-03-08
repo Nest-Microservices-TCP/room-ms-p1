@@ -1,26 +1,28 @@
-import { InjectRepository } from '@nestjs/typeorm';
 import {
-  EntityNotFoundException,
-  FailedRemoveException,
-  FailedRestoreException,
-  FailedSoftDeleteException,
-} from 'src/common/exceptions/custom';
-import {
+  In,
+  Repository,
+  QueryRunner,
+  UpdateResult,
   DeleteResult,
   FindOptionsWhere,
-  In,
-  QueryRunner,
-  Repository,
-  UpdateResult,
 } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 
-import { DeleteResultResponse } from 'src/common/dto/response';
-import { CreateReservationStateDto } from '../dto/request';
+import {
+  FailedRemoveException,
+  FailedRestoreException,
+  EntityNotFoundException,
+  FailedSoftDeleteException,
+} from 'src/common/exceptions/custom';
+
+import { CreateReservationStateRequest } from 'src/grpc/proto/rooms/reservations_states.pb';
+
+import { IReservationsStatesRepository } from './interfaces/reservations-states.repository.interface';
 
 import { Status } from 'src/common/enums';
 import { ReservationState } from '../entity/reservation-state.entity';
 
-import { IReservationsStatesRepository } from './interfaces/reservations-states.repository.interface';
+import { DeleteResultResponse } from 'src/common/dto/response';
 
 export class ReservationsStatesRepository
   implements IReservationsStatesRepository
@@ -41,13 +43,13 @@ export class ReservationsStatesRepository
     }
   }
 
-  findAll(): Promise<ReservationState[]> {
+  find(): Promise<ReservationState[]> {
     return this.reservationsStatesRepository.find();
   }
 
-  async findOne(reservationStateId: string): Promise<ReservationState> {
+  async findOne(reservation_state_id: string): Promise<ReservationState> {
     const reservationState = await this.reservationsStatesRepository.findOne({
-      where: { reservationStateId },
+      where: { reservation_state_id },
     });
 
     if (!reservationState) {
@@ -61,7 +63,7 @@ export class ReservationsStatesRepository
     return this.reservationsStatesRepository.create(request);
   }
 
-  save(request: CreateReservationStateDto): Promise<ReservationState> {
+  save(request: CreateReservationStateRequest): Promise<ReservationState> {
     return this.reservationsStatesRepository.save(request);
   }
 
@@ -89,9 +91,9 @@ export class ReservationsStatesRepository
     return { deleted: true, affected: result.affected };
   }
 
-  findByIds(reservationsStatesIds: string[]): Promise<ReservationState[]> {
+  findByIds(reservations_states_ids: string[]): Promise<ReservationState[]> {
     return this.reservationsStatesRepository.find({
-      where: { reservationStateId: In(reservationsStatesIds) },
+      where: { reservation_state_id: In(reservations_states_ids) },
     });
   }
 
