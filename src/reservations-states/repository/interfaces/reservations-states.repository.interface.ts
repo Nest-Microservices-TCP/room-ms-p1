@@ -1,6 +1,6 @@
 import { IRepository } from 'src/common/repository';
-import { CreateReservationStateDto } from 'src/reservations-states/dto/request';
+import { CreateReservationStateRequest } from 'src/grpc/proto/rooms/reservations_states.pb';
 import { ReservationState } from 'src/reservations-states/entity/reservation-state.entity';
 
 export interface IReservationsStatesRepository
-  extends IRepository<ReservationState, CreateReservationStateDto> {}
+  extends IRepository<ReservationState, CreateReservationStateRequest> {}
