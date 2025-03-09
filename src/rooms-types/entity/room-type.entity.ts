@@ -1,23 +1,25 @@
 import {
   Column,
   Entity,
-  OneToMany,
   OneToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
+import { RoomType as IRoomType } from 'src/grpc/proto/rooms/rooms_types.pb';
+
 import { BaseEntity } from 'src/common/entity';
 
-import { RoomTypeAmenity } from 'src/rooms-types-amenities/entity/room-type-amenity.entity';
 import { Room } from 'src/rooms/entity/room.entity';
+import { RoomTypeAmenity } from 'src/rooms-types-amenities/entity/room-type-amenity.entity';
 
 @Entity({ name: 'rooms_types' })
-export class RoomType extends BaseEntity {
+export class RoomType extends BaseEntity implements IRoomType {
   @PrimaryGeneratedColumn('uuid', {
     primaryKeyConstraintName: 'PK_RoomsTypes',
     name: 'room_type_id',
   })
-  roomTypeId: string;
+  room_type_id: string;
 
   @Column({
     name: 'name',
