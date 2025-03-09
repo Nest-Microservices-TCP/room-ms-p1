@@ -1,26 +1,28 @@
-import { InjectRepository } from '@nestjs/typeorm';
 import {
-  EntityNotFoundException,
-  FailedRemoveException,
-  FailedRestoreException,
-  FailedSoftDeleteException,
-} from 'src/common/exceptions/custom';
-import {
+  In,
+  Repository,
+  QueryRunner,
+  UpdateResult,
   DeleteResult,
   FindOptionsWhere,
-  In,
-  QueryRunner,
-  Repository,
-  UpdateResult,
 } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+
+import {
+  FailedRemoveException,
+  FailedRestoreException,
+  EntityNotFoundException,
+  FailedSoftDeleteException,
+} from 'src/common/exceptions/custom';
+
+import { CreateRoomTypeRequest } from 'src/grpc/proto/rooms/rooms_types.pb';
+
+import { IRoomsTypesRepository } from './interfaces/rooms-types.repository.interface';
 
 import { Status } from 'src/common/enums';
 import { RoomType } from '../entity/room-type.entity';
 
 import { DeleteResultResponse } from 'src/common/dto/response';
-import { CreateRoomTypeDto } from '../dto/request';
-
-import { IRoomsTypesRepository } from './interfaces/rooms-types.repository.interface';
 
 export class RoomsTypesRepository implements IRoomsTypesRepository {
   private roomsTypesRepository: Repository<RoomType>;
@@ -38,13 +40,13 @@ export class RoomsTypesRepository implements IRoomsTypesRepository {
     }
   }
 
-  findAll(): Promise<RoomType[]> {
+  find(): Promise<RoomType[]> {
     return this.roomsTypesRepository.find();
   }
 
-  async findOne(roomTypeId: string): Promise<RoomType> {
+  async findOne(room_type_id: string): Promise<RoomType> {
     const roomType = await this.roomsTypesRepository.findOne({
-      where: { roomTypeId },
+      where: { room_type_id },
     });
 
     if (!roomType) {
@@ -58,7 +60,7 @@ export class RoomsTypesRepository implements IRoomsTypesRepository {
     return this.roomsTypesRepository.create(request);
   }
 
-  save(request: CreateRoomTypeDto): Promise<RoomType> {
+  save(request: CreateRoomTypeRequest): Promise<RoomType> {
     return this.roomsTypesRepository.save(request);
   }
 
@@ -86,10 +88,10 @@ export class RoomsTypesRepository implements IRoomsTypesRepository {
     return { deleted: true, affected: result.affected };
   }
 
-  findByIds(roomsTypesIds: string[]): Promise<RoomType[]> {
+  findByIds(rooms_types_ids: string[]): Promise<RoomType[]> {
     return this.roomsTypesRepository.find({
       where: {
-        roomTypeId: In(roomsTypesIds),
+        room_type_id: In(rooms_types_ids),
       },
     });
   }
