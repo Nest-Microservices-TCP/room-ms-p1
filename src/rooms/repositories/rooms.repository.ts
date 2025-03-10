@@ -42,7 +42,7 @@ export class RoomsRepository implements IRoomsRepository {
     }
   }
 
-  findAll(): Promise<Room[]> {
+  find(): Promise<Room[]> {
     return this.roomsRepository.find({
       where: {
         status: Status.ACTIVE,
