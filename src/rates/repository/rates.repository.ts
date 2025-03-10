@@ -49,7 +49,7 @@ export class RatesRepository implements IRatesRepository {
     }
   }
 
-  async findAll(): Promise<Rate[]> {
+  async find(): Promise<Rate[]> {
     const rates = await this.ratesRepository.find();
 
     return rates.map((rate) => ({
