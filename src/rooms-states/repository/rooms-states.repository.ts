@@ -55,7 +55,7 @@ export class RoomsStatesRepository implements IRoomsStateRepository {
     return roomState;
   }
 
-  findAll(): Promise<RoomState[]> {
+  find(): Promise<RoomState[]> {
     return this.roomsStatesRepository.find({
       where: {
         status: Status.ACTIVE,
