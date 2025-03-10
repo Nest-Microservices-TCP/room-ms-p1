@@ -42,8 +42,8 @@ async function bootstrap() {
       options: {
         url: `${envs.host}:${envs.port}`,
         package: [
-          ROOMS_RATES_PACKAGE_NAME,
           ROOMS_ROOMS_PACKAGE_NAME,
+          ROOMS_RATES_PACKAGE_NAME,
           ROOMS_EXTRAS_PACKAGE_NAME,
           ROOMS_AMENITIES_PACKAGE_NAME,
           ROOMS_ROOMS_STATES_PACKAGE_NAME,
@@ -55,6 +55,11 @@ async function bootstrap() {
           './proto/rooms/amenities.proto',
           './proto/rooms/rooms_states.proto',
         ],
+        loader: {
+          keepCase: true,
+          enums: String,
+          arrays: true,
+        },
       },
     },
   );
