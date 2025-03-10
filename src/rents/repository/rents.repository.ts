@@ -17,10 +17,11 @@ import {
 import { IRentsRepository } from './interfaces/rents.repository.interface';
 
 import { DeleteResultResponse } from 'src/common/dto/response';
-import { CreateRentDto } from '../dto/request';
+// import { CreateRentDto } from '../dto/request';
 
 import { Status } from 'src/common/enums';
 import { Rent } from '../entity';
+import { NotImplementedException } from '@nestjs/common';
 
 export class RentsRepository implements IRentsRepository {
   private rentsRepository: Repository<Rent>;
@@ -40,7 +41,7 @@ export class RentsRepository implements IRentsRepository {
     }
   }
 
-  findAll(): Promise<Rent[]> {
+  find(): Promise<Rent[]> {
     return this.rentsRepository.find({
       where: {
         status: Status.ACTIVE,
@@ -66,8 +67,9 @@ export class RentsRepository implements IRentsRepository {
     return this.rentsRepository.create(request);
   }
 
-  save(request: CreateRentDto): Promise<Rent> {
-    return this.rentsRepository.save(request);
+  save(): Promise<Rent> {
+    // return this.rentsRepository.save(request);
+    throw new NotImplementedException();
   }
 
   async update(
