@@ -39,7 +39,7 @@ export class ReservationsRepository implements IReservationsRepository {
     }
   }
 
-  findAll(): Promise<Reservation[]> {
+  find(): Promise<Reservation[]> {
     // TODO: Agregar un dto que permita enviar filtros
     return this.reservationsRepository.find({
       where: {
