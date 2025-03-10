@@ -34,7 +34,7 @@ export class RoomsTypesAmenitiesRepository implements IRoomsTypesAmenities {
     }
   }
 
-  findAll(): Promise<RoomTypeAmenity[]> {
+  find(): Promise<RoomTypeAmenity[]> {
     return this.roomsTypesAmenitiesRepository.find();
   }
 
