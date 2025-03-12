@@ -1,10 +1,10 @@
 import {
   Column,
   Entity,
+  OneToOne,
+  OneToMany,
   Generated,
   JoinColumn,
-  OneToMany,
-  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -12,9 +12,9 @@ import { BaseEntity } from 'src/common/entity';
 
 import { AccommodationType, EntryType, PaymentState, RentState } from '../enum';
 
-import { RentExtra } from 'src/rents-extras/entity/rent-extra.entity';
 import { Room } from 'src/rooms/entity/room.entity';
 import { RentSubtotals } from './rent-subtotals.entity';
+import { RentExtra } from 'src/rents-extras/entity/rent-extra.entity';
 
 @Entity({ name: 'rents' })
 export class Rent extends BaseEntity {
@@ -139,7 +139,7 @@ export class Rent extends BaseEntity {
   @OneToOne(() => Room, (room) => room.rent, { nullable: false })
   @JoinColumn({
     name: 'room_id',
-    referencedColumnName: 'roomId',
+    referencedColumnName: 'room_id',
     foreignKeyConstraintName: 'FK_Rent_Room',
   })
   room: Room;
