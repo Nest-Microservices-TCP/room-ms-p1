@@ -42,7 +42,7 @@ export class ExtrasRepository implements IExtrasRepository {
     }
   }
 
-  findAll(): Promise<Extra[]> {
+  find(): Promise<Extra[]> {
     return this.extrasRepository.find({
       where: {
         status: Status.ACTIVE,

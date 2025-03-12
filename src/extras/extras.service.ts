@@ -22,7 +22,7 @@ export class ExtrasService {
 
   @HandleRpcExceptions()
   async find(): Promise<FindExtrasResponse> {
-    const extras = await this.extrasRepository.findAll();
+    const extras = await this.extrasRepository.find();
 
     return { extras };
   }
