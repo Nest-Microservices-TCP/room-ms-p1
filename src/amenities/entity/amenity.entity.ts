@@ -29,5 +29,5 @@ export class Amenity extends BaseEntity implements IAmenity {
     () => RoomTypeAmenity,
     (roomTypeAmenity) => roomTypeAmenity.amenity,
   )
-  roomsTypesAmenities: [];
+  roomsTypesAmenities: RoomTypeAmenity[];
 }
