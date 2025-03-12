@@ -13,7 +13,7 @@ export class ReservationsController {
 
   @MessagePattern('reservations.find.all')
   async findAll(): Promise<ReservationResponseDto[]> {
-    return this.reservationsService.findAll();
+    return this.reservationsService.find();
   }
 
   @MessagePattern('reservations.find.one')

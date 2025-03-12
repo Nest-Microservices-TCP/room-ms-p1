@@ -22,8 +22,8 @@ export class ReservationsService {
   }
 
   @HandleRpcExceptions()
-  async findAll(): Promise<ReservationResponseDto[]> {
-    const reservations = await this.reservationsRepository.findAll();
+  async find(): Promise<ReservationResponseDto[]> {
+    const reservations = await this.reservationsRepository.find();
 
     return this.plainToInstanceDto(reservations);
   }
