@@ -30,7 +30,7 @@ export class RoomsService {
 
   @HandleRpcExceptions()
   async find(): Promise<FindRoomsResponse> {
-    const rooms = await this.roomsRepository.findAll();
+    const rooms = await this.roomsRepository.find();
 
     return { rooms };
   }
