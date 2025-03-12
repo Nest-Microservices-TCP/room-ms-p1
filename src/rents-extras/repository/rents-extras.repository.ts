@@ -38,7 +38,7 @@ export class RentsExtrasRepository implements IRentsExtrasRepository {
     }
   }
 
-  findAll(): Promise<RentExtra[]> {
+  find(): Promise<RentExtra[]> {
     return this.rentsExtrasRepository.find({
       where: {
         status: Status.ACTIVE,

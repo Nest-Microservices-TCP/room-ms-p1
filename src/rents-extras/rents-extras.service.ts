@@ -20,8 +20,8 @@ export class RentsExtrasService {
   }
 
   @HandleRpcExceptions()
-  async findAll(): Promise<RentExtraResponseDto[]> {
-    const rentsExtras = await this.rentsExtrasRepository.findAll();
+  async find(): Promise<RentExtraResponseDto[]> {
+    const rentsExtras = await this.rentsExtrasRepository.find();
 
     return this.plainToInstanceDto(rentsExtras);
   }

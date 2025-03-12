@@ -12,8 +12,8 @@ export class RentsExtrasController {
   constructor(private readonly rentsExtrasService: RentsExtrasService) {}
 
   @MessagePattern('rentsExtras.find.all')
-  async findAll(): Promise<RentExtraResponseDto[]> {
-    return this.rentsExtrasService.findAll();
+  async find(): Promise<RentExtraResponseDto[]> {
+    return this.rentsExtrasService.find();
   }
 
   @MessagePattern('rentsExtras.find.one')
