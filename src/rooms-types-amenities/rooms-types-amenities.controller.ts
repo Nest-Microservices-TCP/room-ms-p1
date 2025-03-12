@@ -17,8 +17,8 @@ export class RoomsTypesAmenitiesController {
   ) {}
 
   @MessagePattern('roomsTypesAmenities.find.all')
-  async findAll(): Promise<RoomTypeAmenityResponseDto[]> {
-    return this.roomsTypesAmenitiesService.findAll();
+  async find(): Promise<RoomTypeAmenityResponseDto[]> {
+    return this.roomsTypesAmenitiesService.find();
   }
 
   @MessagePattern('roomsTypesAmenities.find.one')

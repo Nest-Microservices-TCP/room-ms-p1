@@ -25,9 +25,8 @@ export class RoomsTypesAmenitiesService {
   }
 
   @HandleRpcExceptions()
-  async findAll(): Promise<RoomTypeAmenityResponseDto[]> {
-    const roomsTypesAmenities =
-      await this.roomsTypesAmenitiesRepository.findAll();
+  async find(): Promise<RoomTypeAmenityResponseDto[]> {
+    const roomsTypesAmenities = await this.roomsTypesAmenitiesRepository.find();
 
     return this.plainToInstanceDto(roomsTypesAmenities);
   }
