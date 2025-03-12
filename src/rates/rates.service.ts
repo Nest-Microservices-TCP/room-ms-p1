@@ -29,7 +29,7 @@ export class RatesService {
 
   @HandleRpcExceptions()
   async find(): Promise<FindRatesResponse> {
-    const rates = await this.ratesRepository.findAll();
+    const rates = await this.ratesRepository.find();
 
     return { rates };
   }
