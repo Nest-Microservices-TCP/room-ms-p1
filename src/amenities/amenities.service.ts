@@ -23,7 +23,7 @@ export class AmenitiesService {
 
   @HandleRpcExceptions()
   async find(): Promise<FindAmenitiesResponse> {
-    const amenities = await this.amenitiesRepository.findAll();
+    const amenities = await this.amenitiesRepository.find();
 
     return { amenities };
   }

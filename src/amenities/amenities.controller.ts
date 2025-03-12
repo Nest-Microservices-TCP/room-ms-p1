@@ -16,6 +16,7 @@ import { AmenitiesService } from './amenities.service';
 @AmenitiesServiceControllerMethods()
 export class AmenitiesController implements AmenitiesServiceController {
   constructor(private readonly amenitiesService: AmenitiesService) {}
+
   save(request: CreateAmenityRequest): void {
     this.amenitiesService.save(request);
   }
