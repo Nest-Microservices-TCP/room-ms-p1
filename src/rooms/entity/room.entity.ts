@@ -2,6 +2,7 @@ import {
   Column,
   Entity,
   OneToOne,
+  ManyToOne,
   JoinColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -31,7 +32,8 @@ export class Room extends BaseEntity implements IRoom {
   @OneToOne(() => Rent, (rent) => rent.room)
   rent: Rent;
 
-  @OneToOne(() => RoomState, (roomState) => roomState.room)
+  // Muchas habitaciones pueden estar relacionadas al mismo room_state
+  @ManyToOne(() => RoomState, (roomState) => roomState.rooms)
   @JoinColumn({
     /**
      * @name Establece el nombre que tendrá la columna que almacenara
@@ -61,7 +63,8 @@ export class Room extends BaseEntity implements IRoom {
   })
   roomState: RoomState;
 
-  @OneToOne(() => RoomType, (roomType) => roomType.room)
+  // Muchas habitaciones pueden estar relacionadas a un mismo room_type
+  @ManyToOne(() => RoomType, (roomType) => roomType.rooms)
   @JoinColumn({
     name: 'room_type_id',
     foreignKeyConstraintName: 'FK_Room_RoomType',
