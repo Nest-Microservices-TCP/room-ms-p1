@@ -1,10 +1,4 @@
-import {
-  Column,
-  Entity,
-  OneToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 import { RoomType as IRoomType } from 'src/grpc/proto/rooms/rooms_types.pb';
 
@@ -44,8 +38,9 @@ export class RoomType extends BaseEntity implements IRoomType {
   })
   includedPeople: number;
 
-  @OneToOne(() => Room, (room) => room.roomType)
-  room: Room;
+  // Un mismo room_type puede estar asociado a muchas habitaciones
+  @OneToMany(() => Room, (room) => room.roomType)
+  rooms: Room[];
 
   @OneToMany(
     () => RoomTypeAmenity,
