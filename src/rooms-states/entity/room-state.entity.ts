@@ -1,4 +1,4 @@
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { RoomState as IRoomState } from 'src/grpc/proto/rooms/rooms_states.pb';
 
 import { BaseEntity } from 'src/common/entity';
@@ -25,6 +25,7 @@ export class RoomState extends BaseEntity implements IRoomState {
   })
   description: string;
 
-  @OneToOne(() => Room, (room) => room.roomState)
-  room: Room;
+  // Un room_state puede estar asociado a muchas habitaciones
+  @OneToMany(() => Room, (room) => room.roomState)
+  rooms: Room[];
 }
