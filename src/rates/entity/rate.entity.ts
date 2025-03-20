@@ -1,9 +1,10 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import {
   Rate as IRate,
   AccommodationType,
 } from 'src/grpc/proto/rooms/rates.pb';
 import { BaseEntity } from 'src/common/entity';
+import { RateExtra } from 'src/rates-extras/entity/rate-extra.entity';
 
 @Entity({ name: 'rates' })
 export class Rate extends BaseEntity implements IRate {
@@ -83,4 +84,10 @@ export class Rate extends BaseEntity implements IRate {
     nullable: false,
   })
   checkout_hour: string;
+
+  @OneToMany(() => RateExtra, (rateExtra) => rateExtra.rate, {
+    nullable: false,
+    cascade: true,
+  })
+  rateExtras: RateExtra[];
 }
