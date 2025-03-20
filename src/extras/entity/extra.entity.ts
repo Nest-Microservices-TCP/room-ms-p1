@@ -3,6 +3,7 @@ import { Extra as IExtra } from 'src/grpc/proto/rooms/extras.pb';
 
 import { BaseEntity } from 'src/common/entity';
 import { RentExtra } from 'src/rents-extras/entity/rent-extra.entity';
+import { RateExtra } from 'src/rates-extras/entity/rate-extra.entity';
 
 @Entity({ name: 'extras' })
 export class Extra extends BaseEntity implements IExtra {
@@ -30,4 +31,10 @@ export class Extra extends BaseEntity implements IExtra {
     cascade: true,
   })
   rentExtras: RentExtra[];
+
+  @OneToMany(() => RateExtra, (rateExtra) => rateExtra.extra, {
+    nullable: false,
+    cascade: true,
+  })
+  rateExtras: RateExtra[];
 }
