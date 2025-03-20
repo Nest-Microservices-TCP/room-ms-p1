@@ -15,25 +15,6 @@ import { ROOMS_ROOMS_STATES_PACKAGE_NAME } from './grpc/proto/rooms/rooms_states
 async function bootstrap() {
   const logger = new Logger('Rooms-MS');
 
-  // Iniciar el microservicio con TCP
-  // const tcpApp = await NestFactory.createMicroservice<MicroserviceOptions>(
-  //   AppModule,
-  //   {
-  //     transport: Transport.TCP,
-  //     options: {
-  //       host: envs.host,
-  //       port: envs.port,
-  //     },
-  //   },
-  // );
-
-  // tcpApp.useGlobalPipes(
-  //   new ValidationPipe({
-  //     whitelist: true,
-  //     forbidNonWhitelisted: true,
-  //   }),
-  // );
-
   // Iniciar la comunicación con gRPC
   const grpcApp = await NestFactory.createMicroservice<MicroserviceOptions>(
     AppModule,
@@ -64,52 +45,28 @@ async function bootstrap() {
     },
   );
 
-  /**
-   * Configuración para comunicación a traves de Apache Kafka
-   * En este caso esta es la configuración como producer (productor de mensajes)
-   */
-  // Iniciar el microservicio con Kafka
-  const kafkaApp = await NestFactory.createMicroservice<MicroserviceOptions>(
+  const rmqApp = await NestFactory.createMicroservice<MicroserviceOptions>(
     AppModule,
     {
-      transport: Transport.KAFKA,
+      transport: Transport.RMQ,
       options: {
-        client: {
-          /**
-           * @clientId
-           * Un identificador único para este microservicio
-           */
-          clientId: envs.kafkaClientId,
-          /**
-           * @brokers
-           * Aquí se definen las direcciones de los servidores Kafka. En
-           * este ejemplo, se esta usando kafka:9093, que es el broker
-           * Kafka expuesto a traves de Docker
-           */
-          brokers: [envs.kafkaBroker],
-        },
-        consumer: {
-          /**
-           * @groupId
-           * Kafka organiza los consumidores en grupos. Los mensajes se
-           * distribuyen entre los consumidores del mismo grupo
-           */
-          groupId: envs.kafkaGroupId,
-          allowAutoTopicCreation: true,
+        urls: [`amqp://${envs.rabbitMqHost}:${envs.rabbitMqPort}`], // URL de RabbitMQ
+        queue: 'rents-events-queue', // Nombre de la cola de mensajes
+        queueOptions: {
+          durable: true, // Si la cola deber ser durable (opcional)
         },
       },
     },
   );
-
-  // await tcpApp.listen();
-  // logger.log(`Rooms Microservice listen on port ${envs.port}`);
 
   await grpcApp.listen();
   logger.log(
     `Rooms Microservice running with gRPC on ${envs.host}:${envs.port}`,
   );
 
-  await kafkaApp.listen();
-  logger.log(`Rooms Microservice connected to Kafka`);
+  await rmqApp.listen();
+  logger.log(
+    `Rooms Microservice connected to RabbitMQ on ${envs.rabbitMqHost}:${envs.rabbitMqPort}`,
+  );
 }
 bootstrap();
