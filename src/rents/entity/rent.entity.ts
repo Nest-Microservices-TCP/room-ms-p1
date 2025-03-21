@@ -76,6 +76,7 @@ export class Rent extends BaseEntity {
     name: 'payment_state',
     type: 'enum',
     enum: PaymentState,
+    default: PaymentState.PENDING_PAYMENT,
     nullable: false,
   })
   paymentSate: PaymentState;
