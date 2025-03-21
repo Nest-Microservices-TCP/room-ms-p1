@@ -2,7 +2,7 @@ import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 
 import { DeleteResultResponse } from 'src/common/dto/response';
-import { CreateRentExtraDto, UpdateRentExtraDto } from './dto/request';
+import { UpdateRentExtraDto } from './dto/request';
 import { RentExtraResponseDto } from './dto/response';
 
 import { RentsExtrasService } from './rents-extras.service';
@@ -28,13 +28,6 @@ export class RentsExtrasController {
     @Payload('rentsExtrasIds') rentsExtrasIds: string[],
   ): Promise<RentExtraResponseDto[]> {
     return this.rentsExtrasService.findByIds(rentsExtrasIds);
-  }
-
-  @MessagePattern('rentsExtras.save')
-  async save(
-    @Payload() request: CreateRentExtraDto,
-  ): Promise<RentExtraResponseDto> {
-    return this.rentsExtrasService.save(request);
   }
 
   @MessagePattern('rentsExtras.update')
