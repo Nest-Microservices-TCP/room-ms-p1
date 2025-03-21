@@ -20,7 +20,7 @@ import { Status } from 'src/common/enums';
 import { RentExtra } from '../entity/rent-extra.entity';
 
 import { DeleteResultResponse } from 'src/common/dto/response';
-import { CreateRentExtraDto } from '../dto/request';
+import { SaveManyRentsExtrasDto } from '../dto/request';
 
 export class RentsExtrasRepository implements IRentsExtrasRepository {
   private rentsExtrasRepository: Repository<RentExtra>;
@@ -62,7 +62,7 @@ export class RentsExtrasRepository implements IRentsExtrasRepository {
     return this.rentsExtrasRepository.create(request);
   }
 
-  save(request: CreateRentExtraDto): Promise<RentExtra> {
+  save(request: any): Promise<RentExtra> {
     return this.rentsExtrasRepository.save(request);
   }
 
@@ -169,8 +169,10 @@ export class RentsExtrasRepository implements IRentsExtrasRepository {
     return count > 0;
   }
 
-  bulkSave(rentsExtras: RentExtra[]): Promise<RentExtra[]> {
-    return this.rentsExtrasRepository.save(rentsExtras);
+  bulkSave(request: SaveManyRentsExtrasDto): Promise<RentExtra[]> {
+    const { rents_extras } = request;
+
+    return this.rentsExtrasRepository.save(rents_extras);
   }
 
   bulkUpdate(rentsExtras: RentExtra[]): Promise<RentExtra[]> {
