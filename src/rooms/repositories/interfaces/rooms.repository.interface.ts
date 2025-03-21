@@ -1,6 +1,6 @@
-import { IRepository } from 'src/common/repository';
+import { IBaseRepository } from 'src/common/repository';
 import { CreateRoomRequest } from 'src/grpc/proto/rooms/rooms.pb';
 import { Room } from 'src/rooms/entity/room.entity';
 
 export interface IRoomsRepository
-  extends IRepository<Room, CreateRoomRequest> {}
+  extends IBaseRepository<Room, CreateRoomRequest> {}
