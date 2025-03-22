@@ -2,8 +2,8 @@ import {
   In,
   Repository,
   QueryRunner,
-  UpdateResult,
   DeleteResult,
+  UpdateResult,
   FindOptionsWhere,
 } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -19,10 +19,10 @@ import { CreateAmenityRequest } from 'src/grpc/proto/rooms/amenities.pb';
 
 import { IAmenitiesRepository } from './interfaces/amenities.repository.interface';
 
-import { Status } from 'src/common/enums';
 import { Amenity } from '../entity/amenity.entity';
 
 import { DeleteResultResponse } from 'src/common/dto/response';
+import { Status } from 'src/common/enums';
 
 export class AmenitiesRepository implements IAmenitiesRepository {
   private amenitiesRepository: Repository<Amenity>;
@@ -43,11 +43,7 @@ export class AmenitiesRepository implements IAmenitiesRepository {
   }
 
   find(): Promise<Amenity[]> {
-    return this.amenitiesRepository.find({
-      where: {
-        status: Status.ACTIVE,
-      },
-    });
+    return this.amenitiesRepository.find();
   }
 
   async findOne(amenity_id: string): Promise<Amenity> {
