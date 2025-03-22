@@ -1,6 +1,6 @@
 import { FindOptionsWhere } from 'typeorm';
 
-export interface IExtendedRepository<T> {
+export interface IExtendedRepository<T, SaveManyDto> {
   findByIds(ids: string[]): Promise<T[]>;
   findByCriteria(criteria: FindOptionsWhere<T>): Promise<T>;
   findWithRelations(relations: string[]): Promise<T[]>;
@@ -9,7 +9,7 @@ export interface IExtendedRepository<T> {
   softDelete(id: string): Promise<T>;
   restore(id: string): Promise<T>;
   exists(criteria: FindOptionsWhere<T>): Promise<boolean>;
-  bulkSave(entities: T[]): Promise<T[]>;
+  bulkSave(request: SaveManyDto): Promise<T[]>;
   bulkUpdate(entities: T[]): Promise<T[]>;
   customQuery(query: string, params: any[]): Promise<any>;
 }
