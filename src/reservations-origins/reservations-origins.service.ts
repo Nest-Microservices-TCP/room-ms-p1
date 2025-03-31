@@ -4,6 +4,7 @@ import { HandleRpcExceptions } from 'src/common/decorators';
 import {
   CreateReservationOriginRequest,
   FindOneReservationOriginRequest,
+  FindReservationsOriginsResponse,
 } from 'src/grpc/proto/rooms/reservations_origins.pb';
 
 import { ReservationsOriginsRepository } from './repository/reservations-origins.repository';
@@ -27,5 +28,13 @@ export class ReservationsOriginsService {
     const { reservation_origin_id } = request;
 
     return this.reservationsOriginsRepository.findOne(reservation_origin_id);
+  }
+
+  @HandleRpcExceptions()
+  async find(): Promise<FindReservationsOriginsResponse> {
+    const reservations_origins =
+      await this.reservationsOriginsRepository.find();
+
+    return { reservations_origins };
   }
 }
