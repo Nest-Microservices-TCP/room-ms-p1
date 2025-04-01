@@ -5,6 +5,7 @@ import {
   ReservationOrigin,
   CreateReservationOriginRequest,
   FindOneReservationOriginRequest,
+  FindReservationsOriginsResponse,
   ReservationsOriginsServiceController,
   ReservationsOriginsServiceControllerMethods,
 } from 'src/grpc/proto/rooms/reservations_origins.pb';
@@ -31,5 +32,12 @@ export class ReservationsOriginsController
     | Observable<ReservationOrigin>
     | ReservationOrigin {
     return this.reservationsOriginsService.findOne(request);
+  }
+
+  find():
+    | Promise<FindReservationsOriginsResponse>
+    | Observable<FindReservationsOriginsResponse>
+    | FindReservationsOriginsResponse {
+    return this.reservationsOriginsService.find();
   }
 }
