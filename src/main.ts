@@ -1,8 +1,7 @@
 import { Logger } from '@nestjs/common';
+import { AppModule } from './app.module';
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
-
-import { AppModule } from './app.module';
 
 import { envs } from './config';
 
@@ -45,15 +44,18 @@ async function bootstrap() {
     },
   );
 
+  // Iniciar la comunicación con RabbitMQ
   const rmqApp = await NestFactory.createMicroservice<MicroserviceOptions>(
     AppModule,
     {
       transport: Transport.RMQ,
       options: {
-        urls: [`amqp://${envs.rabbitMqHost}:${envs.rabbitMqPort}`], // URL de RabbitMQ
+        urls: [
+          `amqp://${envs.rabbitMqUser}:${envs.rabbitMqPassword}@${envs.rabbitMqHost}:${envs.rabbitMqPort}`,
+        ], // URL de RabbitMQ
         queue: 'rents-events-queue', // Nombre de la cola de mensajes
         queueOptions: {
-          durable: true, // Si la cola deber ser durable (opcional)
+          durable: true,
         },
       },
     },
