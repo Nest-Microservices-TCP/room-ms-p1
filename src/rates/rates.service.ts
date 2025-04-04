@@ -7,7 +7,7 @@ import {
   FindRatesResponse,
   CreateRateRequest,
   FindOneRateRequest,
-} from 'src/grpc/proto/rooms/rates.pb';
+} from 'src/grpc/proto-files/rooms/rates.pb';
 
 import { Rate } from './entity/rate.entity';
 

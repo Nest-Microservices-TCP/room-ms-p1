@@ -6,7 +6,7 @@ import {
   CreateRoomStateRequest,
   FindOneRoomStateRequest,
   FindRoomsStatesResponse,
-} from 'src/grpc/proto/rooms/rooms_states.pb';
+} from 'src/grpc/proto-files/rooms/rooms_states.pb';
 
 import { RoomsStatesRepository } from './repository/rooms-states.repository';
 

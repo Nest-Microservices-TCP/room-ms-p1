@@ -7,7 +7,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-import { Room as IRoom } from 'src/grpc/proto/rooms/rooms.pb';
+import { Room as IRoom } from 'src/grpc/proto-files/rooms/rooms.pb';
 
 import { BaseEntity } from 'src/common/entity';
 

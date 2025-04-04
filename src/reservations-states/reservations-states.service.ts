@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { HandleRpcExceptions } from 'src/common/decorators';
 
-import { CreateReservationStateRequest } from 'src/grpc/proto/rooms/reservations_states.pb';
+import { CreateReservationStateRequest } from 'src/grpc/proto-files/rooms/reservations_states.pb';
 
 import { ReservationsStatesRepository } from './repository/reservations-states.repository';
 

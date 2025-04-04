@@ -8,7 +8,7 @@ import {
   FindOneAmenityRequest,
   AmenitiesServiceController,
   AmenitiesServiceControllerMethods,
-} from 'src/grpc/proto/rooms/amenities.pb';
+} from 'src/grpc/proto-files/rooms/amenities.pb';
 
 import { AmenitiesService } from './amenities.service';
 

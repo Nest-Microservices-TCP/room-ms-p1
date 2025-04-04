@@ -15,7 +15,7 @@ import {
   FailedSoftDeleteException,
 } from 'src/common/exceptions/custom';
 
-import { CreateExtraRequest } from 'src/grpc/proto/rooms/extras.pb';
+import { CreateExtraRequest } from 'src/grpc/proto-files/rooms/extras.pb';
 
 import { IExtrasRepository } from './interfaces/extras.repository.interface';
 

@@ -1,6 +1,6 @@
 import { Extra } from 'src/extras/entity/extra.entity';
-import { Extra as IExtra } from 'src/grpc/proto/rooms/extras.pb';
-import { Rate as IRate } from 'src/grpc/proto/rooms/rates.pb';
+import { Extra as IExtra } from 'src/grpc/proto-files/rooms/extras.pb';
+import { Rate as IRate } from 'src/grpc/proto-files/rooms/rates.pb';
 import { Rate } from 'src/rates/entity/rate.entity';
 import {
   Column,

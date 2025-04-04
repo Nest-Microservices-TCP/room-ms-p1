@@ -6,7 +6,7 @@ import {
   FindRoomsResponse,
   CreateRoomRequest,
   FindOneRoomRequest,
-} from 'src/grpc/proto/rooms/rooms.pb';
+} from 'src/grpc/proto-files/rooms/rooms.pb';
 
 import { RoomsRepository } from './repositories/rooms.repository';
 

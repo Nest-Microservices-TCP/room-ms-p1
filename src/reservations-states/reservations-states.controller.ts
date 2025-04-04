@@ -4,7 +4,7 @@ import {
   CreateReservationStateRequest,
   ReservationsStatesServiceController,
   ReservationsStatesServiceControllerMethods,
-} from 'src/grpc/proto/rooms/reservations_states.pb';
+} from 'src/grpc/proto-files/rooms/reservations_states.pb';
 
 import { ReservationsStatesService } from './reservations-states.service';
 

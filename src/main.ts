@@ -5,11 +5,11 @@ import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 
 import { envs } from './config';
 
-import { ROOMS_ROOMS_PACKAGE_NAME } from './grpc/proto/rooms/rooms.pb';
-import { ROOMS_RATES_PACKAGE_NAME } from './grpc/proto/rooms/rates.pb';
-import { ROOMS_EXTRAS_PACKAGE_NAME } from './grpc/proto/rooms/extras.pb';
-import { ROOMS_AMENITIES_PACKAGE_NAME } from './grpc/proto/rooms/amenities.pb';
-import { ROOMS_ROOMS_STATES_PACKAGE_NAME } from './grpc/proto/rooms/rooms_states.pb';
+import { ROOMS_ROOMS_PACKAGE_NAME } from './grpc/proto-files/rooms/rooms.pb';
+import { ROOMS_RATES_PACKAGE_NAME } from './grpc/proto-files/rooms/rates.pb';
+import { ROOMS_EXTRAS_PACKAGE_NAME } from './grpc/proto-files/rooms/extras.pb';
+import { ROOMS_AMENITIES_PACKAGE_NAME } from './grpc/proto-files/rooms/amenities.pb';
+import { ROOMS_ROOMS_STATES_PACKAGE_NAME } from './grpc/proto-files/rooms/rooms_states.pb';
 
 async function bootstrap() {
   const logger = new Logger('Rooms-MS');
@@ -52,8 +52,8 @@ async function bootstrap() {
       options: {
         urls: [
           `amqp://${envs.rabbitMqUser}:${envs.rabbitMqPassword}@${envs.rabbitMqHost}:${envs.rabbitMqPort}`,
-        ], // URL de RabbitMQ
-        queue: 'rents-events-queue', // Nombre de la cola de mensajes
+        ],
+        queue: envs.rmqRentsQueue, // Nombre de la cola de mensajes
         queueOptions: {
           durable: true,
         },

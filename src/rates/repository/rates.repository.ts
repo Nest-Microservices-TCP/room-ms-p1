@@ -14,7 +14,7 @@ import {
   EntityNotFoundException,
 } from 'src/common/exceptions/custom';
 
-import { CreateRateRequest } from 'src/grpc/proto/rooms/rates.pb';
+import { CreateRateRequest } from 'src/grpc/proto-files/rooms/rates.pb';
 
 import { IRatesRepository } from './interfaces/rates.repository.interface';
 

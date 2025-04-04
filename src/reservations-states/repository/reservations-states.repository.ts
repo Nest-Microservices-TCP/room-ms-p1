@@ -15,7 +15,7 @@ import {
   FailedSoftDeleteException,
 } from 'src/common/exceptions/custom';
 
-import { CreateReservationStateRequest } from 'src/grpc/proto/rooms/reservations_states.pb';
+import { CreateReservationStateRequest } from 'src/grpc/proto-files/rooms/reservations_states.pb';
 
 import { IReservationsStatesRepository } from './interfaces/reservations-states.repository.interface';
 

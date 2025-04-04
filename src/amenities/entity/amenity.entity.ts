@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Amenity as IAmenity } from 'src/grpc/proto/rooms/amenities.pb';
+import { Amenity as IAmenity } from 'src/grpc/proto-files/rooms/amenities.pb';
 
 import { BaseEntity } from 'src/common/entity';
 import { RoomTypeAmenity } from 'src/rooms-types-amenities/entity/room-type-amenity.entity';

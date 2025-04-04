@@ -8,7 +8,7 @@ import {
   FindRoomsStatesResponse,
   RoomsStatesServiceController,
   RoomsStatesServiceControllerMethods,
-} from 'src/grpc/proto/rooms/rooms_states.pb';
+} from 'src/grpc/proto-files/rooms/rooms_states.pb';
 
 import { RoomsStatesService } from './rooms-states.service';
 

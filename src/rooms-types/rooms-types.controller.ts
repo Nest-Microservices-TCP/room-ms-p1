@@ -4,7 +4,7 @@ import {
   CreateRoomTypeRequest,
   RoomsTypesServiceController,
   RoomsTypesServiceControllerMethods,
-} from 'src/grpc/proto/rooms/rooms_types.pb';
+} from 'src/grpc/proto-files/rooms/rooms_types.pb';
 
 import { RoomsTypesService } from './rooms-types.service';
 

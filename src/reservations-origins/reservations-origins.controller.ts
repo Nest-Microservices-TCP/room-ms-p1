@@ -8,7 +8,7 @@ import {
   FindReservationsOriginsResponse,
   ReservationsOriginsServiceController,
   ReservationsOriginsServiceControllerMethods,
-} from 'src/grpc/proto/rooms/reservations_origins.pb';
+} from 'src/grpc/proto-files/rooms/reservations_origins.pb';
 
 import { ReservationsOriginsService } from './reservations-origins.service';
 

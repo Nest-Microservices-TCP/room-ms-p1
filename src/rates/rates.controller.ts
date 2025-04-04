@@ -8,7 +8,7 @@ import {
   FindOneRateRequest,
   RatesServiceController,
   RatesServiceControllerMethods,
-} from 'src/grpc/proto/rooms/rates.pb';
+} from 'src/grpc/proto-files/rooms/rates.pb';
 
 import { RatesService } from './rates.service';
 

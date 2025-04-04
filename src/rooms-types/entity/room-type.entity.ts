@@ -1,6 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
-import { RoomType as IRoomType } from 'src/grpc/proto/rooms/rooms_types.pb';
+import { RoomType as IRoomType } from 'src/grpc/proto-files/rooms/rooms_types.pb';
 
 import { BaseEntity } from 'src/common/entity';
 

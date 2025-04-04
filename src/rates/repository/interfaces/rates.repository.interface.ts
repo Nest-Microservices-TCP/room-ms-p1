@@ -1,5 +1,5 @@
 import { IBaseRepository } from 'src/common/repository';
-import { CreateRateRequest } from 'src/grpc/proto/rooms/rates.pb';
+import { CreateRateRequest } from 'src/grpc/proto-files/rooms/rates.pb';
 import { Rate } from 'src/rates/entity/rate.entity';
 
 export interface IRatesRepository

@@ -8,7 +8,7 @@ import {
   FindOneExtraRequest,
   ExtrasServiceController,
   ExtrasServiceControllerMethods,
-} from 'src/grpc/proto/rooms/extras.pb';
+} from 'src/grpc/proto-files/rooms/extras.pb';
 
 import { ExtrasService } from './extras.service';
 

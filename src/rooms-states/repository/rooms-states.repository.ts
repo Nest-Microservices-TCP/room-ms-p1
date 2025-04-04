@@ -16,7 +16,7 @@ import {
   FailedSoftDeleteException,
 } from 'src/common/exceptions/custom';
 
-import { CreateRoomStateRequest } from 'src/grpc/proto/rooms/rooms_states.pb';
+import { CreateRoomStateRequest } from 'src/grpc/proto-files/rooms/rooms_states.pb';
 import { IRoomsStateRepository } from './interfaces/rooms-states.repository.interface';
 
 import { Status } from 'src/common/enums';

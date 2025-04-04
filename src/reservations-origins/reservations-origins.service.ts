@@ -5,7 +5,7 @@ import {
   CreateReservationOriginRequest,
   FindOneReservationOriginRequest,
   FindReservationsOriginsResponse,
-} from 'src/grpc/proto/rooms/reservations_origins.pb';
+} from 'src/grpc/proto-files/rooms/reservations_origins.pb';
 
 import { ReservationsOriginsRepository } from './repository/reservations-origins.repository';
 import { ReservationOrigin } from './entity/reservation-origin.entity';

@@ -15,7 +15,7 @@ import {
   FailedSoftDeleteException,
 } from 'src/common/exceptions/custom';
 
-import { CreateAmenityRequest } from 'src/grpc/proto/rooms/amenities.pb';
+import { CreateAmenityRequest } from 'src/grpc/proto-files/rooms/amenities.pb';
 
 import { IAmenitiesRepository } from './interfaces/amenities.repository.interface';
 

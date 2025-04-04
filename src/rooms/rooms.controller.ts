@@ -8,7 +8,7 @@ import {
   FindOneRoomRequest,
   RoomsServiceController,
   RoomsServiceControllerMethods,
-} from 'src/grpc/proto/rooms/rooms.pb';
+} from 'src/grpc/proto-files/rooms/rooms.pb';
 
 import { RoomsService } from './rooms.service';
 

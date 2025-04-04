@@ -6,7 +6,7 @@ import {
   CreateAmenityRequest,
   FindAmenitiesResponse,
   FindOneAmenityRequest,
-} from 'src/grpc/proto/rooms/amenities.pb';
+} from 'src/grpc/proto-files/rooms/amenities.pb';
 
 import { AmenitiesRepository } from './repository/amenities.repository';
 
