@@ -29,11 +29,11 @@ async function bootstrap() {
           ROOMS_ROOMS_STATES_PACKAGE_NAME,
         ],
         protoPath: [
-          './proto/rooms/rooms.proto',
-          './proto/rooms/rates.proto',
-          './proto/rooms/extras.proto',
-          './proto/rooms/amenities.proto',
-          './proto/rooms/rooms_states.proto',
+          './proto-files/rooms/rooms.proto',
+          './proto-files/rooms/rates.proto',
+          './proto-files/rooms/extras.proto',
+          './proto-files/rooms/amenities.proto',
+          './proto-files/rooms/rooms_states.proto',
         ],
         loader: {
           keepCase: true,
