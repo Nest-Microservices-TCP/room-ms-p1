@@ -6,6 +6,7 @@ import {
   CreateAmenityRequest,
   FindAmenitiesResponse,
   FindOneAmenityRequest,
+  FindAmenitiesByIdsRequest,
   AmenitiesServiceController,
   AmenitiesServiceControllerMethods,
 } from 'src/grpc/proto-files/rooms/amenities.pb';
@@ -30,5 +31,13 @@ export class AmenitiesController implements AmenitiesServiceController {
     | Observable<FindAmenitiesResponse>
     | FindAmenitiesResponse {
     return this.amenitiesService.find();
+  }
+  findByIds(
+    request: FindAmenitiesByIdsRequest,
+  ):
+    | Promise<FindAmenitiesResponse>
+    | Observable<FindAmenitiesResponse>
+    | FindAmenitiesResponse {
+    return this.amenitiesService.findByIds(request);
   }
 }
