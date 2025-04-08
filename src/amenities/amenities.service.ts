@@ -4,12 +4,12 @@ import { HandleRpcExceptions } from 'src/common/decorators';
 
 import {
   CreateAmenityRequest,
-  FindAmenitiesResponse,
   FindOneAmenityRequest,
+  FindAmenitiesResponse,
+  FindAmenitiesByIdsRequest,
 } from 'src/grpc/proto-files/rooms/amenities.pb';
 
 import { AmenitiesRepository } from './repository/amenities.repository';
-
 import { Amenity } from './entity/amenity.entity';
 
 @Injectable()
@@ -33,5 +33,16 @@ export class AmenitiesService {
     const { amenity_id } = request;
 
     return this.amenitiesRepository.findOne(amenity_id);
+  }
+
+  @HandleRpcExceptions()
+  async findByIds(
+    request: FindAmenitiesByIdsRequest,
+  ): Promise<FindAmenitiesResponse> {
+    const { amenities_ids } = request;
+
+    const amenities = await this.amenitiesRepository.findByIds(amenities_ids);
+
+    return { amenities };
   }
 }
