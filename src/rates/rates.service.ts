@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { HandleRpcExceptions } from 'src/common/decorators';
 
-import { RatesRepository } from './repository/rates.repository';
-
 import {
   FindRatesResponse,
   CreateRateRequest,
   FindOneRateRequest,
+  FindRatesByIdsRequest,
 } from 'src/grpc/proto-files/rooms/rates.pb';
 
+import { RatesRepository } from './repository/rates.repository';
 import { Rate } from './entity/rate.entity';
 
 @Injectable()
@@ -30,6 +30,15 @@ export class RatesService {
   @HandleRpcExceptions()
   async find(): Promise<FindRatesResponse> {
     const rates = await this.ratesRepository.find();
+
+    return { rates };
+  }
+
+  @HandleRpcExceptions()
+  async findByIds(request: FindRatesByIdsRequest): Promise<FindRatesResponse> {
+    const { rates_ids } = request;
+
+    const rates = await this.ratesRepository.findByIds(rates_ids);
 
     return { rates };
   }
