@@ -6,6 +6,7 @@ import {
   CreateRateRequest,
   FindRatesResponse,
   FindOneRateRequest,
+  FindRatesByIdsRequest,
   RatesServiceController,
   RatesServiceControllerMethods,
 } from 'src/grpc/proto-files/rooms/rates.pb';
@@ -16,6 +17,7 @@ import { RatesService } from './rates.service';
 @RatesServiceControllerMethods()
 export class RatesController implements RatesServiceController {
   constructor(private readonly ratesService: RatesService) {}
+
   save(request: CreateRateRequest): void {
     this.ratesService.save(request);
   }
@@ -29,5 +31,13 @@ export class RatesController implements RatesServiceController {
     | Observable<FindRatesResponse>
     | FindRatesResponse {
     return this.ratesService.find();
+  }
+  findByIds(
+    request: FindRatesByIdsRequest,
+  ):
+    | Promise<FindRatesResponse>
+    | Observable<FindRatesResponse>
+    | FindRatesResponse {
+    return this.ratesService.findByIds(request);
   }
 }
