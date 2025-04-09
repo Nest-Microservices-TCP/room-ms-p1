@@ -5,10 +5,10 @@ import {
   FindExtrasResponse,
   CreateExtraRequest,
   FindOneExtraRequest,
+  FindExtrasByIdsRequest,
 } from 'src/grpc/proto-files/rooms/extras.pb';
 
 import { ExtrasRepository } from './repository/extras.repository';
-
 import { Extra } from './entity/extra.entity';
 
 @Injectable()
@@ -32,5 +32,16 @@ export class ExtrasService {
     const { extra_id } = request;
 
     return this.extrasRepository.findOne(extra_id);
+  }
+
+  @HandleRpcExceptions()
+  async findByIds(
+    request: FindExtrasByIdsRequest,
+  ): Promise<FindExtrasResponse> {
+    const { extras_ids } = request;
+
+    const extras = await this.extrasRepository.findByIds(extras_ids);
+
+    return { extras };
   }
 }
