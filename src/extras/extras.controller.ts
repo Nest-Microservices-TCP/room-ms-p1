@@ -6,6 +6,7 @@ import {
   CreateExtraRequest,
   FindExtrasResponse,
   FindOneExtraRequest,
+  FindExtrasByIdsRequest,
   ExtrasServiceController,
   ExtrasServiceControllerMethods,
 } from 'src/grpc/proto-files/rooms/extras.pb';
@@ -16,6 +17,7 @@ import { ExtrasService } from './extras.service';
 @ExtrasServiceControllerMethods()
 export class ExtrasController implements ExtrasServiceController {
   constructor(private readonly extrasService: ExtrasService) {}
+
   save(request: CreateExtraRequest): void {
     this.extrasService.save(request);
   }
@@ -29,5 +31,13 @@ export class ExtrasController implements ExtrasServiceController {
     | Observable<FindExtrasResponse>
     | FindExtrasResponse {
     return this.extrasService.find();
+  }
+  findByIds(
+    request: FindExtrasByIdsRequest,
+  ):
+    | Promise<FindExtrasResponse>
+    | Observable<FindExtrasResponse>
+    | FindExtrasResponse {
+    return this.extrasService.findByIds(request);
   }
 }
