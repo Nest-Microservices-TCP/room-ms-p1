@@ -1,15 +1,15 @@
 import {
   Column,
   Entity,
-  JoinColumn,
   ManyToOne,
+  JoinColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
 import { BaseEntity } from 'src/common/entity';
 
-import { Extra } from 'src/extras/entity/extra.entity';
 import { Rent } from 'src/rents/entity';
+import { Extra } from 'src/extras/entity/extra.entity';
 
 @Entity({ name: 'rents_extras' })
 export class RentExtra extends BaseEntity {
