@@ -6,6 +6,7 @@ import {
   CreateRoomStateRequest,
   FindOneRoomStateRequest,
   FindRoomsStatesResponse,
+  FindRoomsStatesByIdsRequest,
   RoomsStatesServiceController,
   RoomsStatesServiceControllerMethods,
 } from 'src/grpc/proto-files/rooms/rooms_states.pb';
@@ -30,5 +31,13 @@ export class RoomsStatesController implements RoomsStatesServiceController {
     | Observable<FindRoomsStatesResponse>
     | FindRoomsStatesResponse {
     return this.roomsStatesService.find();
+  }
+  findByIds(
+    request: FindRoomsStatesByIdsRequest,
+  ):
+    | Promise<FindRoomsStatesResponse>
+    | Observable<FindRoomsStatesResponse>
+    | FindRoomsStatesResponse {
+    return this.roomsStatesService.findByIds(request);
   }
 }
