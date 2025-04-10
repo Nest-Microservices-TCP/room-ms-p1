@@ -6,6 +6,7 @@ import {
   FindRoomsResponse,
   CreateRoomRequest,
   FindOneRoomRequest,
+  FindRoomsByIdsRequest,
   RoomsServiceController,
   RoomsServiceControllerMethods,
 } from 'src/grpc/proto-files/rooms/rooms.pb';
@@ -30,5 +31,13 @@ export class RoomsController implements RoomsServiceController {
     | Observable<FindRoomsResponse>
     | FindRoomsResponse {
     return this.roomsService.find();
+  }
+  findByIds(
+    request: FindRoomsByIdsRequest,
+  ):
+    | Promise<FindRoomsResponse>
+    | Observable<FindRoomsResponse>
+    | FindRoomsResponse {
+    return this.roomsService.findByIds(request);
   }
 }
