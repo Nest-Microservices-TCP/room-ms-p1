@@ -1,7 +1,10 @@
+import { Observable } from 'rxjs';
 import { Controller } from '@nestjs/common';
 
 import {
+  RoomType,
   CreateRoomTypeRequest,
+  FindOneRoomTypeRequest,
   RoomsTypesServiceController,
   RoomsTypesServiceControllerMethods,
 } from 'src/grpc/proto-files/rooms/rooms_types.pb';
@@ -15,5 +18,11 @@ export class RoomsTypesController implements RoomsTypesServiceController {
 
   save(request: CreateRoomTypeRequest): void {
     this.roomsTypesService.save(request);
+  }
+
+  findOne(
+    request: FindOneRoomTypeRequest,
+  ): Promise<RoomType> | Observable<RoomType> | RoomType {
+    return this.roomsTypesService.findOne(request);
   }
 }
