@@ -1,7 +1,10 @@
+import { Observable } from 'rxjs';
 import { Controller } from '@nestjs/common';
 
 import {
+  ReservationState,
   CreateReservationStateRequest,
+  FindOneReservationStateRequest,
   ReservationsStatesServiceController,
   ReservationsStatesServiceControllerMethods,
 } from 'src/grpc/proto-files/rooms/reservations_states.pb';
@@ -19,5 +22,13 @@ export class ReservationsStatesController
 
   save(request: CreateReservationStateRequest): void {
     this.reservationsStatesService.save(request);
+  }
+  findOne(
+    request: FindOneReservationStateRequest,
+  ):
+    | Promise<ReservationState>
+    | Observable<ReservationState>
+    | ReservationState {
+    return this.reservationsStatesService.findOne(request);
   }
 }
