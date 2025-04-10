@@ -6,6 +6,7 @@ import {
   FindRoomsResponse,
   CreateRoomRequest,
   FindOneRoomRequest,
+  FindRoomsByIdsRequest,
 } from 'src/grpc/proto-files/rooms/rooms.pb';
 
 import { RoomsRepository } from './repositories/rooms.repository';
@@ -31,6 +32,15 @@ export class RoomsService {
   @HandleRpcExceptions()
   async find(): Promise<FindRoomsResponse> {
     const rooms = await this.roomsRepository.find();
+
+    return { rooms };
+  }
+
+  @HandleRpcExceptions()
+  async findByIds(request: FindRoomsByIdsRequest): Promise<FindRoomsResponse> {
+    const { rooms_ids } = request;
+
+    const rooms = await this.roomsRepository.findByIds(rooms_ids);
 
     return { rooms };
   }
