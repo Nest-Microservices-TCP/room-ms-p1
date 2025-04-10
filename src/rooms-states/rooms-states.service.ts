@@ -6,10 +6,10 @@ import {
   CreateRoomStateRequest,
   FindOneRoomStateRequest,
   FindRoomsStatesResponse,
+  FindRoomsStatesByIdsRequest,
 } from 'src/grpc/proto-files/rooms/rooms_states.pb';
 
 import { RoomsStatesRepository } from './repository/rooms-states.repository';
-
 import { RoomState } from './entity/room-state.entity';
 
 @Injectable()
@@ -31,6 +31,18 @@ export class RoomsStatesService {
   @HandleRpcExceptions()
   async find(): Promise<FindRoomsStatesResponse> {
     const rooms_states = await this.roomsStatesRepository.find();
+
+    return { rooms_states };
+  }
+
+  @HandleRpcExceptions()
+  async findByIds(
+    request: FindRoomsStatesByIdsRequest,
+  ): Promise<FindRoomsStatesResponse> {
+    const { rooms_states_ids } = request;
+
+    const rooms_states =
+      await this.roomsStatesRepository.findByIds(rooms_states_ids);
 
     return { rooms_states };
   }
