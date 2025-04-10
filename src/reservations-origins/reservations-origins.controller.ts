@@ -6,6 +6,7 @@ import {
   CreateReservationOriginRequest,
   FindOneReservationOriginRequest,
   FindReservationsOriginsResponse,
+  FindReservationsOriginsByIdsRequest,
   ReservationsOriginsServiceController,
   ReservationsOriginsServiceControllerMethods,
 } from 'src/grpc/proto-files/rooms/reservations_origins.pb';
@@ -24,7 +25,6 @@ export class ReservationsOriginsController
   save(request: CreateReservationOriginRequest): void {
     this.reservationsOriginsService.save(request);
   }
-
   findOne(
     request: FindOneReservationOriginRequest,
   ):
@@ -33,11 +33,18 @@ export class ReservationsOriginsController
     | ReservationOrigin {
     return this.reservationsOriginsService.findOne(request);
   }
-
   find():
     | Promise<FindReservationsOriginsResponse>
     | Observable<FindReservationsOriginsResponse>
     | FindReservationsOriginsResponse {
     return this.reservationsOriginsService.find();
+  }
+  findByIds(
+    request: FindReservationsOriginsByIdsRequest,
+  ):
+    | Promise<FindReservationsOriginsResponse>
+    | Observable<FindReservationsOriginsResponse>
+    | FindReservationsOriginsResponse {
+    return this.reservationsOriginsService.findByIds(request);
   }
 }
