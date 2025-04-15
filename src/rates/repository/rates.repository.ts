@@ -1,4 +1,3 @@
-import { InjectRepository } from '@nestjs/typeorm';
 import {
   In,
   Repository,
@@ -7,6 +6,7 @@ import {
   DeleteResult,
   FindOptionsWhere,
 } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 
 import {
   FailedRemoveException,
@@ -14,7 +14,7 @@ import {
   EntityNotFoundException,
 } from 'src/common/exceptions/custom';
 
-import { CreateRateRequest } from 'src/grpc/proto-files/rooms/rates.pb';
+import { CreateRateRequest } from 'src/grpc/rooms/rates.pb';
 
 import { IRatesRepository } from './interfaces/rates.repository.interface';
 

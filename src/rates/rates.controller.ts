@@ -9,7 +9,7 @@ import {
   FindRatesByIdsRequest,
   RatesServiceController,
   RatesServiceControllerMethods,
-} from 'src/grpc/proto-files/rooms/rates.pb';
+} from 'src/grpc/rooms/rates.pb';
 
 import { RatesService } from './rates.service';
 

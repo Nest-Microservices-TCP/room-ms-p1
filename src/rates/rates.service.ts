@@ -6,9 +6,10 @@ import {
   CreateRateRequest,
   FindOneRateRequest,
   FindRatesByIdsRequest,
-} from 'src/grpc/proto-files/rooms/rates.pb';
+} from 'src/grpc/rooms/rates.pb';
 
 import { RatesRepository } from './repository/rates.repository';
+
 import { Rate } from './entity/rate.entity';
 
 @Injectable()

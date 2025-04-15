@@ -1,8 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import {
-  Rate as IRate,
-  AccommodationType,
-} from 'src/grpc/proto-files/rooms/rates.pb';
+import { Rate as IRate, AccommodationType } from 'src/grpc/rooms/rates.pb';
+
 import { BaseEntity } from 'src/common/entity';
 import { RateExtra } from 'src/rates-extras/entity/rate-extra.entity';
 
