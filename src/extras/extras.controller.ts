@@ -9,7 +9,7 @@ import {
   FindExtrasByIdsRequest,
   ExtrasServiceController,
   ExtrasServiceControllerMethods,
-} from 'src/grpc/proto-files/rooms/extras.pb';
+} from 'src/grpc/rooms/extras.pb';
 
 import { ExtrasService } from './extras.service';
 

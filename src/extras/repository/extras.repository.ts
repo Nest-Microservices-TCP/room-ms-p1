@@ -1,4 +1,3 @@
-import { InjectRepository } from '@nestjs/typeorm';
 import {
   In,
   Repository,
@@ -7,6 +6,7 @@ import {
   DeleteResult,
   FindOptionsWhere,
 } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 
 import {
   FailedRemoveException,
@@ -15,12 +15,12 @@ import {
   FailedSoftDeleteException,
 } from 'src/common/exceptions/custom';
 
-import { CreateExtraRequest } from 'src/grpc/proto-files/rooms/extras.pb';
+import { CreateExtraRequest } from 'src/grpc/rooms/extras.pb';
 
 import { IExtrasRepository } from './interfaces/extras.repository.interface';
 
-import { Extra } from '../entity/extra.entity';
 import { Status } from 'src/common/enums';
+import { Extra } from '../entity/extra.entity';
 
 import { DeleteResultResponse } from 'src/common/dto/response';
 

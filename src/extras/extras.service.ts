@@ -6,9 +6,10 @@ import {
   CreateExtraRequest,
   FindOneExtraRequest,
   FindExtrasByIdsRequest,
-} from 'src/grpc/proto-files/rooms/extras.pb';
+} from 'src/grpc/rooms/extras.pb';
 
 import { ExtrasRepository } from './repository/extras.repository';
+
 import { Extra } from './entity/extra.entity';
 
 @Injectable()

@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Extra as IExtra } from 'src/grpc/proto-files/rooms/extras.pb';
+import { Extra as IExtra } from 'src/grpc/rooms/extras.pb';
 
 import { BaseEntity } from 'src/common/entity';
 import { RentExtra } from 'src/rents-extras/entity/rent-extra.entity';
