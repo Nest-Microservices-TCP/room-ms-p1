@@ -1,5 +1,6 @@
 import { HttpStatus } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
+import { QueryFailedError } from 'typeorm';
 
 /**
  * Este decorador es para métodos de servicio y manejara las excepciones rpc
@@ -42,10 +43,15 @@ export function HandleRpcExceptions() {
          */
         return await originalMethod.apply(this, args);
       } catch (error) {
-        throw new RpcException({
-          status: HttpStatus.INTERNAL_SERVER_ERROR,
-          message: `Error to ${propertyKey}: ${error.message || error}`,
-        });
+        let status = HttpStatus.INTERNAL_SERVER_ERROR;
+        let message = `Error in ${propertyKey}: ${error.message || error}`;
+
+        if (error instanceof QueryFailedError) {
+          status = HttpStatus.BAD_REQUEST;
+          message = `Database error: ${error.message || error}`;
+        }
+
+        throw new RpcException({ status, message });
       }
     };
 
