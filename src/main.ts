@@ -3,13 +3,17 @@ import { AppModule } from './app.module';
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 
+import { join } from 'path';
 import { envs } from './config';
 
-import { ROOMS_ROOMS_PACKAGE_NAME } from './grpc/proto-files/rooms/rooms.pb';
-import { ROOMS_RATES_PACKAGE_NAME } from './grpc/proto-files/rooms/rates.pb';
-import { ROOMS_EXTRAS_PACKAGE_NAME } from './grpc/proto-files/rooms/extras.pb';
-import { ROOMS_AMENITIES_PACKAGE_NAME } from './grpc/proto-files/rooms/amenities.pb';
-import { ROOMS_ROOMS_STATES_PACKAGE_NAME } from './grpc/proto-files/rooms/rooms_states.pb';
+import { ROOMS_ROOMS_PACKAGE_NAME } from './grpc/rooms/rooms.pb';
+import { ROOMS_RATES_PACKAGE_NAME } from './grpc/rooms/rates.pb';
+import { ROOMS_RENTS_PACKAGE_NAME } from './grpc/rooms/rents.pb';
+import { ROOMS_EXTRAS_PACKAGE_NAME } from './grpc/rooms/extras.pb';
+import { ROOMS_AMENITIES_PACKAGE_NAME } from './grpc/rooms/amenities.pb';
+import { ROOMS_ROOMS_TYPES_PACKAGE_NAME } from './grpc/rooms/rooms_types.pb';
+import { ROOMS_ROOMS_STATES_PACKAGE_NAME } from './grpc/rooms/rooms_states.pb';
+import { ROOMS_RENTS_EXTRAS_PACKAGE_NAME } from './grpc/rooms/rents_extras.pb';
 
 async function bootstrap() {
   const logger = new Logger('Rooms-MS');
@@ -24,18 +28,25 @@ async function bootstrap() {
         package: [
           ROOMS_ROOMS_PACKAGE_NAME,
           ROOMS_RATES_PACKAGE_NAME,
+          ROOMS_RENTS_PACKAGE_NAME,
           ROOMS_EXTRAS_PACKAGE_NAME,
           ROOMS_AMENITIES_PACKAGE_NAME,
+          ROOMS_ROOMS_TYPES_PACKAGE_NAME,
           ROOMS_ROOMS_STATES_PACKAGE_NAME,
+          ROOMS_RENTS_EXTRAS_PACKAGE_NAME,
         ],
         protoPath: [
-          './proto-files/rooms/rooms.proto',
-          './proto-files/rooms/rates.proto',
-          './proto-files/rooms/extras.proto',
-          './proto-files/rooms/amenities.proto',
-          './proto-files/rooms/rooms_states.proto',
+          join(__dirname, '../proto-files/rooms/rooms.proto'),
+          join(__dirname, '../proto-files/rooms/rents.proto'),
+          join(__dirname, '../proto-files/rooms/rates.proto'),
+          join(__dirname, '../proto-files/rooms/extras.proto'),
+          join(__dirname, '../proto-files/rooms/amenities.proto'),
+          join(__dirname, '../proto-files/rooms/rooms_states.proto'),
+          join(__dirname, '../proto-files/rooms/rents_extras.proto'),
+          join(__dirname, '../proto-files/rooms/rooms_types.proto'),
         ],
         loader: {
+          includeDirs: [join(__dirname, '../proto-files')],
           keepCase: true,
           enums: String,
           arrays: true,
