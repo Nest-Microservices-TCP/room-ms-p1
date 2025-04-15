@@ -9,7 +9,7 @@ import {
   FindAmenitiesByIdsRequest,
   AmenitiesServiceController,
   AmenitiesServiceControllerMethods,
-} from 'src/grpc/proto-files/rooms/amenities.pb';
+} from 'src/grpc/rooms/amenities.pb';
 
 import { AmenitiesService } from './amenities.service';
 

@@ -15,14 +15,14 @@ import {
   FailedSoftDeleteException,
 } from 'src/common/exceptions/custom';
 
-import { CreateAmenityRequest } from 'src/grpc/proto-files/rooms/amenities.pb';
+import { CreateAmenityRequest } from 'src/grpc/rooms/amenities.pb';
 
 import { IAmenitiesRepository } from './interfaces/amenities.repository.interface';
 
+import { Status } from 'src/common/enums';
 import { Amenity } from '../entity/amenity.entity';
 
 import { DeleteResultResponse } from 'src/common/dto/response';
-import { Status } from 'src/common/enums';
 
 export class AmenitiesRepository implements IAmenitiesRepository {
   private amenitiesRepository: Repository<Amenity>;

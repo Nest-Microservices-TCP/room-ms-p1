@@ -7,9 +7,10 @@ import {
   FindOneAmenityRequest,
   FindAmenitiesResponse,
   FindAmenitiesByIdsRequest,
-} from 'src/grpc/proto-files/rooms/amenities.pb';
+} from 'src/grpc/rooms/amenities.pb';
 
 import { AmenitiesRepository } from './repository/amenities.repository';
+
 import { Amenity } from './entity/amenity.entity';
 
 @Injectable()
