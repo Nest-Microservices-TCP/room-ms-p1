@@ -1,5 +1,5 @@
 import { IBaseRepository } from 'src/common/repository';
-import { CreateRoomTypeRequest } from 'src/grpc/proto-files/rooms/rooms_types.pb';
+import { CreateRoomTypeRequest } from 'src/grpc/rooms/rooms_types.pb';
 import { RoomType } from 'src/rooms-types/entity/room-type.entity';
 
 export interface IRoomsTypesRepository

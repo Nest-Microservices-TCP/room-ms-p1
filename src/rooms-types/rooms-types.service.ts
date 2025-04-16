@@ -4,9 +4,10 @@ import { HandleRpcExceptions } from 'src/common/decorators';
 import {
   CreateRoomTypeRequest,
   FindOneRoomTypeRequest,
-} from 'src/grpc/proto-files/rooms/rooms_types.pb';
+} from 'src/grpc/rooms/rooms_types.pb';
 
 import { RoomsTypesRepository } from './repository/rooms-types.repository';
+
 import { RoomType } from './entity/room-type.entity';
 
 @Injectable()
