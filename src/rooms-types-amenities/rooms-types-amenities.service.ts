@@ -1,15 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
-
 import { HandleRpcExceptions } from 'src/common/decorators';
 
 import { RoomsTypesAmenitiesRepository } from './repository/rooms-types-amenities.repository';
 
-import { DeleteResultResponse } from 'src/common/dto/response';
 import {
   CreateRoomTypeAmenityDto,
   UpdateRoomTypeAmenityDto,
 } from './dto/request';
+import { DeleteResultResponse } from 'src/common/dto/response';
 import { RoomTypeAmenityResponseDto } from './dto/response/room-type-amenity.response.dto';
 
 @Injectable()

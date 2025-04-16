@@ -1,21 +1,22 @@
-import { InjectRepository } from '@nestjs/typeorm';
 import {
+  Repository,
+  QueryRunner,
   DeleteResult,
   FindOptionsWhere,
-  QueryRunner,
-  Repository,
 } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 
 import {
-  EntityNotFoundException,
   FailedRemoveException,
+  EntityNotFoundException,
 } from 'src/common/exceptions/custom';
 
-import { DeleteResultResponse } from 'src/common/dto/response';
-import { CreateRoomTypeAmenityDto } from '../dto/request';
+import { IRoomsTypesAmenities } from './interfaces/rooms-types-amenities.repository.interface';
 
 import { RoomTypeAmenity } from '../entity/room-type-amenity.entity';
-import { IRoomsTypesAmenities } from './interfaces/rooms-types-amenities.repository.interface';
+
+import { CreateRoomTypeAmenityDto } from '../dto/request';
+import { DeleteResultResponse } from 'src/common/dto/response';
 
 export class RoomsTypesAmenitiesRepository implements IRoomsTypesAmenities {
   private roomsTypesAmenitiesRepository: Repository<RoomTypeAmenity>;

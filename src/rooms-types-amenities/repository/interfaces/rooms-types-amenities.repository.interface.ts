@@ -1,7 +1,5 @@
 import { IBaseRepository } from 'src/common/repository';
-
 import { CreateRoomTypeAmenityDto } from 'src/rooms-types-amenities/dto/request';
-
 import { RoomTypeAmenity } from 'src/rooms-types-amenities/entity/room-type-amenity.entity';
 
 export interface IRoomsTypesAmenities

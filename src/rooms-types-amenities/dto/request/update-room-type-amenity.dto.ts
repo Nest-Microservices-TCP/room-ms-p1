@@ -1,5 +1,5 @@
-import { PartialType } from '@nestjs/mapped-types';
 import { IsUUID } from 'class-validator';
+import { PartialType } from '@nestjs/mapped-types';
 
 import { CreateRoomTypeAmenityDto } from './create-room-type-amenity.dto';
 

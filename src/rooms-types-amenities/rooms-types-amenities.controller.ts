@@ -3,11 +3,11 @@ import { MessagePattern, Payload } from '@nestjs/microservices';
 
 import { RoomsTypesAmenitiesService } from './rooms-types-amenities.service';
 
-import { DeleteResultResponse } from 'src/common/dto/response';
 import {
   CreateRoomTypeAmenityDto,
   UpdateRoomTypeAmenityDto,
 } from './dto/request';
+import { DeleteResultResponse } from 'src/common/dto/response';
 import { RoomTypeAmenityResponseDto } from './dto/response/room-type-amenity.response.dto';
 
 @Controller()
