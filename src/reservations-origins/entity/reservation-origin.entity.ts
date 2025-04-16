@@ -1,5 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { ReservationOrigin as IReservationOrigin } from 'src/grpc/proto-files/rooms/reservations_origins.pb';
+import { ReservationOrigin as IReservationOrigin } from 'src/grpc/rooms/reservations_origins.pb';
 import { BaseEntity } from 'src/common/entity';
 
 @Entity({ name: 'reservations_origins' })

@@ -6,9 +6,10 @@ import {
   FindOneReservationOriginRequest,
   FindReservationsOriginsResponse,
   FindReservationsOriginsByIdsRequest,
-} from 'src/grpc/proto-files/rooms/reservations_origins.pb';
+} from 'src/grpc/rooms/reservations_origins.pb';
 
 import { ReservationsOriginsRepository } from './repository/reservations-origins.repository';
+
 import { ReservationOrigin } from './entity/reservation-origin.entity';
 
 @Injectable()
