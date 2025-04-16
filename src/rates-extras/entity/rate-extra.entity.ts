@@ -1,14 +1,16 @@
-import { Extra } from 'src/extras/entity/extra.entity';
-import { Extra as IExtra } from 'src/grpc/proto-files/rooms/extras.pb';
-import { Rate as IRate } from 'src/grpc/proto-files/rooms/rates.pb';
-import { Rate } from 'src/rates/entity/rate.entity';
 import {
   Column,
   Entity,
-  JoinColumn,
   ManyToOne,
+  JoinColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+
+import { Rate as IRate } from 'src/grpc/rooms/rates.pb';
+import { Extra as IExtra } from 'src/grpc/rooms/extras.pb';
+
+import { Rate } from 'src/rates/entity/rate.entity';
+import { Extra } from 'src/extras/entity/extra.entity';
 
 @Entity({ name: 'rates_extras' })
 export class RateExtra {
