@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-
 import { HandleRpcExceptions } from 'src/common/decorators';
 
 import {
@@ -7,7 +6,7 @@ import {
   CreateRoomRequest,
   FindOneRoomRequest,
   FindRoomsByIdsRequest,
-} from 'src/grpc/proto-files/rooms/rooms.pb';
+} from 'src/grpc/rooms/rooms.pb';
 
 import { RoomsRepository } from './repositories/rooms.repository';
 

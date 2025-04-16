@@ -15,7 +15,7 @@ import {
   FailedSoftDeleteException,
 } from 'src/common/exceptions/custom';
 
-import { CreateRoomRequest } from 'src/grpc/proto-files/rooms/rooms.pb';
+import { CreateRoomRequest } from 'src/grpc/rooms/rooms.pb';
 
 import { IRoomsRepository } from './interfaces/rooms.repository.interface';
 
