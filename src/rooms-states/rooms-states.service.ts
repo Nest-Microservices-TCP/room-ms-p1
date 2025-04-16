@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-
 import { HandleRpcExceptions } from 'src/common/decorators';
 
 import {
@@ -7,9 +6,10 @@ import {
   FindOneRoomStateRequest,
   FindRoomsStatesResponse,
   FindRoomsStatesByIdsRequest,
-} from 'src/grpc/proto-files/rooms/rooms_states.pb';
+} from 'src/grpc/rooms/rooms_states.pb';
 
 import { RoomsStatesRepository } from './repository/rooms-states.repository';
+
 import { RoomState } from './entity/room-state.entity';
 
 @Injectable()

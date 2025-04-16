@@ -9,7 +9,7 @@ import {
   FindRoomsStatesByIdsRequest,
   RoomsStatesServiceController,
   RoomsStatesServiceControllerMethods,
-} from 'src/grpc/proto-files/rooms/rooms_states.pb';
+} from 'src/grpc/rooms/rooms_states.pb';
 
 import { RoomsStatesService } from './rooms-states.service';
 

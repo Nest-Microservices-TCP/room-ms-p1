@@ -1,5 +1,3 @@
-import { InjectRepository } from '@nestjs/typeorm';
-import { ConflictException, Injectable } from '@nestjs/common';
 import {
   In,
   Repository,
@@ -8,6 +6,8 @@ import {
   UpdateResult,
   FindOptionsWhere,
 } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import { ConflictException, Injectable } from '@nestjs/common';
 
 import {
   FailedRemoveException,
@@ -16,7 +16,8 @@ import {
   FailedSoftDeleteException,
 } from 'src/common/exceptions/custom';
 
-import { CreateRoomStateRequest } from 'src/grpc/proto-files/rooms/rooms_states.pb';
+import { CreateRoomStateRequest } from 'src/grpc/rooms/rooms_states.pb';
+
 import { IRoomsStateRepository } from './interfaces/rooms-states.repository.interface';
 
 import { Status } from 'src/common/enums';

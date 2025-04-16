@@ -1,5 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { RoomState as IRoomState } from 'src/grpc/proto-files/rooms/rooms_states.pb';
+
+import { RoomState as IRoomState } from 'src/grpc/rooms/rooms_states.pb';
 
 import { BaseEntity } from 'src/common/entity';
 import { Room } from 'src/rooms/entity/room.entity';
