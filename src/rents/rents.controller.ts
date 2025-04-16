@@ -1,15 +1,20 @@
 import { Controller } from '@nestjs/common';
-import { MessagePattern, Payload } from '@nestjs/microservices';
+import { Payload } from '@nestjs/microservices';
+
+import {
+  CreateRentRequest,
+  RentsServiceController,
+  RentsServiceControllerMethods,
+} from 'src/grpc/rooms/rents.pb';
 
 import { RentsService } from './rents.service';
-import { CreateRentDto } from './dto/request';
 
 @Controller()
-export class RentsController {
+@RentsServiceControllerMethods()
+export class RentsController implements RentsServiceController {
   constructor(private readonly rentsService: RentsService) {}
 
-  @MessagePattern('rents.save')
-  async save(@Payload() request: CreateRentDto): Promise<void> {
+  async save(@Payload() request: CreateRentRequest): Promise<void> {
     this.rentsService.save(request);
   }
 }
