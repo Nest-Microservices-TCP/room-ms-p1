@@ -1,5 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { ReservationState as IReservationState } from 'src/grpc/proto-files/rooms/reservations_states.pb';
+import { ReservationState as IReservationState } from 'src/grpc/rooms/reservations_states.pb';
 import { BaseEntity } from 'src/common/entity';
 
 @Entity({ name: 'reservations_states' })

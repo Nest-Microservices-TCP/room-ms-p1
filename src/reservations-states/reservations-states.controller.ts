@@ -7,7 +7,7 @@ import {
   FindOneReservationStateRequest,
   ReservationsStatesServiceController,
   ReservationsStatesServiceControllerMethods,
-} from 'src/grpc/proto-files/rooms/reservations_states.pb';
+} from 'src/grpc/rooms/reservations_states.pb';
 
 import { ReservationsStatesService } from './reservations-states.service';
 

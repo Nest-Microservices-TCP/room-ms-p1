@@ -4,9 +4,10 @@ import { HandleRpcExceptions } from 'src/common/decorators';
 import {
   CreateReservationStateRequest,
   FindOneReservationStateRequest,
-} from 'src/grpc/proto-files/rooms/reservations_states.pb';
+} from 'src/grpc/rooms/reservations_states.pb';
 
 import { ReservationsStatesRepository } from './repository/reservations-states.repository';
+
 import { ReservationState } from './entity/reservation-state.entity';
 
 @Injectable()
