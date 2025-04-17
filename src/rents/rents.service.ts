@@ -1,66 +1,74 @@
-import { Injectable } from '@nestjs/common';
-import { plainToInstance } from 'class-transformer';
-
 import { HandleRpcExceptions } from 'src/common/decorators';
+import { ConflictException, Injectable } from '@nestjs/common';
 
 import { RentsRepository } from './repository/rents.repository';
 
-import { CreateRentDto, UpdateRentDto } from './dto/request';
-import { RentResponseDto } from './dto/response';
+import { CreateRentRequest } from 'src/grpc/rooms/rents.pb';
+
+import { RatesService } from 'src/rates/rates.service';
+import { RoomsService } from 'src/rooms/rooms.service';
+import { RentsExtrasService } from 'src/rents-extras/rents-extras.service';
+
+import { addHoursToDate } from 'src/utils';
 
 @Injectable()
 export class RentsService {
-  constructor(private readonly rentsRepository: RentsRepository) {}
+  constructor(
+    private readonly rentsRepository: RentsRepository,
 
-  private plainToInstanceDto(data: unknown): any {
-    return plainToInstance(RentResponseDto, data, {
-      excludeExtraneousValues: true,
+    private readonly ratesService: RatesService,
+    private readonly roomsService: RoomsService,
+    private readonly rentsExtrasService: RentsExtrasService,
+  ) {}
+
+  @HandleRpcExceptions()
+  async save(request: CreateRentRequest): Promise<void> {
+    /**
+     * TODO:
+     *  1.- Obtener el usuario_id para el created_by desde el token
+     */
+    console.log(request);
+
+    const { rate_id, room_id, accommodation_type, entry_type } = request;
+
+    const rate = await this.ratesService.findOne({ rate_id });
+    const room = await this.roomsService.findOne({ room_id });
+
+    if (rate.accommodation_type !== accommodation_type) {
+      throw new ConflictException(
+        'Conflict: The accommodation type is different from the rate',
+      );
+    }
+
+    // Verificar que las fechas de entrada y salida sean coherentes
+
+    // La fecha_condensada seria la fecha_fin definida por la tarifa mas las horas_extra y hospedajes_extra comprados v
+
+    // Verificar que la habitación esta disponible en las fechas_calculadas (que no este rentada)
+
+    // En un futuro, quizá verificar un limite de horas_extra por tarifa
+    // En un futuro, quizá validar un limite de personas_extra
+
+    // Almacenar la renta
+    const checkInDate = new Date();
+    const checkoutDate = addHoursToDate(checkInDate, rate.duration);
+
+    await this.rentsRepository.save({
+      accommodation_type: request.accommodation_type,
+      total_income: rate.accommodation_cost,
+      entry_type,
+      checkout_date: checkoutDate,
+      room,
     });
-  }
 
-  @HandleRpcExceptions()
-  async findAll(): Promise<RentResponseDto[]> {
-    const rents = await this.rentsRepository.findAll();
+    // Almacenar los subtotales de la renta
 
-    return this.plainToInstanceDto(rents);
-  }
+    // Almacenar los extras de la renta
+    // this.rentsExtrasService.createMany({
+    //   rents_extras: request.rent_extras,
+    //   rate_id: request.rate_id,
+    // });
 
-  @HandleRpcExceptions()
-  async findOne(rentId: string): Promise<RentResponseDto> {
-    const rent = await this.rentsRepository.findOne(rentId);
-
-    return this.plainToInstanceDto(rent);
-  }
-
-  @HandleRpcExceptions()
-  async findByIds(rentsIds: string[]): Promise<RentResponseDto[]> {
-    const rents = await this.rentsRepository.findByIds(rentsIds);
-
-    return this.plainToInstanceDto(rents);
-  }
-
-  @HandleRpcExceptions()
-  async save(request: CreateRentDto): Promise<RentResponseDto> {
-    const newRent = await this.rentsRepository.save(request);
-
-    return this.plainToInstanceDto(newRent);
-  }
-
-  @HandleRpcExceptions()
-  async update(request: UpdateRentDto): Promise<RentResponseDto> {
-    const { rentId, ...rest } = request;
-
-    const updatedRent = await this.rentsRepository.update({ rentId }, rest);
-
-    return this.plainToInstanceDto(updatedRent);
-  }
-
-  @HandleRpcExceptions()
-  async remove(rentId: string): Promise<RentResponseDto> {
-    const rent = await this.rentsRepository.remove(rentId);
-
-    return plainToInstance(RentResponseDto, rent, {
-      excludeExtraneousValues: true,
-    });
+    // Registrar los pagos de los conceptos (renta, extras)
   }
 }
