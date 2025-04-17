@@ -1,8 +1,8 @@
 import {
   Column,
   Entity,
-  JoinColumn,
   OneToOne,
+  JoinColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -81,7 +81,7 @@ export class RentSubtotals extends BaseEntity {
   @OneToOne(() => Rent, (rent) => rent.rentSubtotals)
   @JoinColumn({
     name: 'rent_id',
-    referencedColumnName: 'rentId',
+    referencedColumnName: 'rent_id',
     foreignKeyConstraintName: 'FK_Rent_Subtotals',
   })
   rent: Rent;
