@@ -1,27 +1,27 @@
-import { InjectRepository } from '@nestjs/typeorm';
 import {
-  EntityNotFoundException,
-  FailedRemoveException,
-  FailedRestoreException,
-  FailedSoftDeleteException,
-} from 'src/common/exceptions/custom';
-import {
+  In,
+  Repository,
+  QueryRunner,
+  UpdateResult,
   DeleteResult,
   FindOptionsWhere,
-  In,
-  QueryRunner,
-  Repository,
-  UpdateResult,
 } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+
+import {
+  FailedRemoveException,
+  FailedRestoreException,
+  EntityNotFoundException,
+  FailedSoftDeleteException,
+} from 'src/common/exceptions/custom';
 
 import { IRentsRepository } from './interfaces/rents.repository.interface';
 
-import { DeleteResultResponse } from 'src/common/dto/response';
-// import { CreateRentDto } from '../dto/request';
-
-import { Status } from 'src/common/enums';
 import { Rent } from '../entity';
-import { NotImplementedException } from '@nestjs/common';
+import { Status } from 'src/common/enums';
+
+import { SaveRentDto } from '../dto/request';
+import { DeleteResultResponse } from 'src/common/dto/response';
 
 export class RentsRepository implements IRentsRepository {
   private rentsRepository: Repository<Rent>;
@@ -49,10 +49,10 @@ export class RentsRepository implements IRentsRepository {
     });
   }
 
-  async findOne(rentId: string): Promise<Rent> {
+  async findOne(rent_id: string): Promise<Rent> {
     const rent = await this.rentsRepository.findOne({
       where: {
-        rentId,
+        rent_id,
       },
     });
 
@@ -67,9 +67,8 @@ export class RentsRepository implements IRentsRepository {
     return this.rentsRepository.create(request);
   }
 
-  save(): Promise<Rent> {
-    // return this.rentsRepository.save(request);
-    throw new NotImplementedException();
+  save(rent: SaveRentDto): Promise<Rent> {
+    return this.rentsRepository.save(rent);
   }
 
   async update(
@@ -83,10 +82,10 @@ export class RentsRepository implements IRentsRepository {
     return this.rentsRepository.save(rent);
   }
 
-  async remove(rentId: string): Promise<DeleteResultResponse> {
-    await this.findOne(rentId);
+  async remove(rent_id: string): Promise<DeleteResultResponse> {
+    await this.findOne(rent_id);
 
-    const result: DeleteResult = await this.rentsRepository.delete(rentId);
+    const result: DeleteResult = await this.rentsRepository.delete(rent_id);
 
     if (result.affected === 0) {
       throw new FailedRemoveException('rent');
@@ -95,10 +94,10 @@ export class RentsRepository implements IRentsRepository {
     return { deleted: true, affected: result.affected };
   }
 
-  findByIds(rentsIds: string[]): Promise<Rent[]> {
+  findByIds(rents_ids: string[]): Promise<Rent[]> {
     return this.rentsRepository.find({
       where: {
-        rentId: In(rentsIds),
+        rent_id: In(rents_ids),
       },
     });
   }
@@ -134,10 +133,10 @@ export class RentsRepository implements IRentsRepository {
     return count > 0;
   }
 
-  async softDelete(rentId: string): Promise<Rent> {
-    await this.findOne(rentId);
+  async softDelete(rent_id: string): Promise<Rent> {
+    await this.findOne(rent_id);
 
-    const result: UpdateResult = await this.rentsRepository.update(rentId, {
+    const result: UpdateResult = await this.rentsRepository.update(rent_id, {
       status: Status.DELETED,
       deletedAt: new Date(),
     });
@@ -146,13 +145,13 @@ export class RentsRepository implements IRentsRepository {
       throw new FailedSoftDeleteException('rent');
     }
 
-    return this.findOne(rentId);
+    return this.findOne(rent_id);
   }
 
-  async restore(rentId: string): Promise<Rent> {
-    await this.findOne(rentId);
+  async restore(rent_id: string): Promise<Rent> {
+    await this.findOne(rent_id);
 
-    const result: UpdateResult = await this.rentsRepository.update(rentId, {
+    const result: UpdateResult = await this.rentsRepository.update(rent_id, {
       status: Status.ACTIVE,
       deletedAt: null,
     });
@@ -161,7 +160,7 @@ export class RentsRepository implements IRentsRepository {
       throw new FailedRestoreException('rent');
     }
 
-    return this.findOne(rentId);
+    return this.findOne(rent_id);
   }
 
   bulkSave(rents: Rent[]): Promise<Rent[]> {
