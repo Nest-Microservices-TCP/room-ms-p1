@@ -10,20 +10,23 @@ import {
 
 import { BaseEntity } from 'src/common/entity';
 
-import { AccommodationType, EntryType, PaymentState, RentState } from '../enum';
+import { Rent as IRent } from 'src/grpc/rooms/rents.pb';
+import { AccommodationType } from 'src/grpc/rooms/rates.pb';
+import { EntryType, RentState } from 'src/grpc/rooms/rents.pb';
+import { Currency, PaymentState } from 'src/grpc/common/common_enums.pb';
 
 import { Room } from 'src/rooms/entity/room.entity';
 import { RentSubtotals } from './rent-subtotals.entity';
 import { RentExtra } from 'src/rents-extras/entity/rent-extra.entity';
 
 @Entity({ name: 'rents' })
-export class Rent extends BaseEntity {
+export class Rent extends BaseEntity implements IRent {
   @PrimaryGeneratedColumn('uuid', {
     primaryKeyConstraintName: 'PK_Rents',
-    name: 'rent_id',
   })
-  rentId: string;
+  rent_id: string;
 
+  //TODO: Usar secuencias o la parte del manejador de folios
   @Column({
     name: 'folio',
     type: 'integer',
@@ -33,70 +36,69 @@ export class Rent extends BaseEntity {
   folio: number;
 
   @Column({
-    name: 'checkout_date',
     type: 'timestamp with time zone',
     nullable: false,
   })
-  checkoutDate: Date;
+  checkout_date: Date;
 
   @Column({
-    name: 'departure_at',
     type: 'timestamp with time zone',
     nullable: false,
   })
-  departureAt: Date;
+  departure_at: Date;
 
   @Column({
-    name: 'entry_type',
     type: 'enum',
     enum: EntryType,
     nullable: false,
   })
-  entryType: EntryType;
+  entry_type: EntryType;
 
   @Column({
-    name: 'total_income',
     type: 'numeric',
     precision: 9,
     scale: 2,
     nullable: false,
   })
-  totalIncome: number;
+  total_income_cents: number;
 
   @Column({
-    name: 'rent_state',
+    type: 'enum',
+    enum: Currency,
+    nullable: false,
+  })
+  currency: Currency;
+
+  @Column({
     type: 'enum',
     enum: RentState,
     nullable: false,
     default: RentState.ACTIVE,
   })
-  rentState: RentState;
+  rent_state: RentState;
 
   @Column({
-    name: 'payment_state',
     type: 'enum',
     enum: PaymentState,
     default: PaymentState.PENDING_PAYMENT,
     nullable: false,
   })
-  paymentSate: PaymentState;
+  payment_state: PaymentState;
 
   @Column({
-    name: 'guest_name',
     type: 'varchar',
     length: 255,
     nullable: true,
     default: null,
   })
-  guestName: string;
+  guest_name: string;
 
   @Column({
-    name: 'accommodation_type',
     type: 'enum',
     enum: AccommodationType,
     nullable: false,
   })
-  accommodationType: AccommodationType;
+  accommodation_type: AccommodationType;
 
   /**
    * @OneToOne Relación 1:1
