@@ -1,4 +1,4 @@
-import { HandleRpcExceptions } from 'src/common/decorators';
+import { HandleGrpcExceptions } from 'src/common/decorators';
 import { ConflictException, Injectable } from '@nestjs/common';
 
 import { RentsRepository } from './repository/rents.repository';
@@ -21,7 +21,7 @@ export class RentsService {
     private readonly rentsExtrasService: RentsExtrasService,
   ) {}
 
-  @HandleRpcExceptions()
+  @HandleGrpcExceptions()
   async save(request: CreateRentRequest): Promise<void> {
     /**
      * TODO:
