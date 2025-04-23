@@ -6,6 +6,7 @@ import {
   CreateReservationStateRequest,
   FindOneReservationStateRequest,
   FindReservationsStatesResponse,
+  FindReservationsStatesByIdsRequest,
   ReservationsStatesServiceController,
   ReservationsStatesServiceControllerMethods,
 } from 'src/grpc/rooms/reservations_states.pb';
@@ -37,5 +38,13 @@ export class ReservationsStatesController
     | Observable<FindReservationsStatesResponse>
     | FindReservationsStatesResponse {
     return this.reservationsStatesService.find();
+  }
+  findByIds(
+    request: FindReservationsStatesByIdsRequest,
+  ):
+    | Promise<FindReservationsStatesResponse>
+    | Observable<FindReservationsStatesResponse>
+    | FindReservationsStatesResponse {
+    return this.reservationsStatesService.findByIds(request);
   }
 }
