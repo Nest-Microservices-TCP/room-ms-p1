@@ -8,6 +8,7 @@ import {
   CreateReservationStateRequest,
   FindOneReservationStateRequest,
   FindReservationsStatesResponse,
+  FindReservationsStatesByIdsRequest,
 } from 'src/grpc/rooms/reservations_states.pb';
 
 import { ReservationsStatesRepository } from './repository/reservations-states.repository';
@@ -35,6 +36,20 @@ export class ReservationsStatesService {
   @HandleGrpcExceptions()
   async find(): Promise<FindReservationsStatesResponse> {
     const reservations_states = await this.reservationsStatesRepository.find();
+
+    return { reservations_states };
+  }
+
+  @HandleGrpcExceptions()
+  async findByIds(
+    request: FindReservationsStatesByIdsRequest,
+  ): Promise<FindReservationsStatesResponse> {
+    const { reservations_states_ids } = request;
+
+    const reservations_states =
+      await this.reservationsStatesRepository.findByIds(
+        reservations_states_ids,
+      );
 
     return { reservations_states };
   }
