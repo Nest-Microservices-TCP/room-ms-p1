@@ -1,9 +1,13 @@
+import {
+  HandleRpcExceptions,
+  HandleGrpcExceptions,
+} from 'src/common/decorators';
 import { Injectable } from '@nestjs/common';
-import { HandleRpcExceptions } from 'src/common/decorators';
 
 import {
   CreateReservationStateRequest,
   FindOneReservationStateRequest,
+  FindReservationsStatesResponse,
 } from 'src/grpc/rooms/reservations_states.pb';
 
 import { ReservationsStatesRepository } from './repository/reservations-states.repository';
@@ -26,5 +30,12 @@ export class ReservationsStatesService {
     const { reservation_state_id } = request;
 
     return this.reservationsStatesRepository.findOne(reservation_state_id);
+  }
+
+  @HandleGrpcExceptions()
+  async find(): Promise<FindReservationsStatesResponse> {
+    const reservations_states = await this.reservationsStatesRepository.find();
+
+    return { reservations_states };
   }
 }
