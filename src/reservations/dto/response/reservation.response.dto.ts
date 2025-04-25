@@ -1,28 +1,14 @@
 import { ReservationOrigin, ReservationState } from 'src/reservations/enum';
-import { Expose } from 'class-transformer';
+import { ReservationResponse } from 'src/grpc/rooms/reservations.pb';
+import { Money } from 'src/grpc/common/common_types.pb';
 
-export class ReservationResponseDto {
-  @Expose()
-  reservationId: string;
-
-  @Expose()
-  checkoutDate: Date;
-
-  @Expose()
-  departureDate: Date;
-
-  @Expose()
-  peopleQuantity: number;
-
-  @Expose()
+export class ReservationResponseDto implements ReservationResponse {
+  reservation_id: string;
+  checkout_date: Date;
+  departure_at: Date;
+  people_quantity: number;
   state: ReservationState;
-
-  @Expose()
-  total: number;
-
-  @Expose()
+  total: Money;
   origin: ReservationOrigin;
-
-  @Expose()
-  balance: number;
+  outstanding_balance: Money;
 }
