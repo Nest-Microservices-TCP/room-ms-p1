@@ -43,7 +43,14 @@ export class Reservation extends BaseEntity {
     precision: 9,
     scale: 2,
   })
-  total: number;
+  total_cents: number;
+
+  @Column({
+    type: 'varchar',
+    length: '3',
+    nullable: false,
+  })
+  total_currency: string;
 
   @Column({
     name: 'origin',
@@ -58,5 +65,12 @@ export class Reservation extends BaseEntity {
     precision: 9,
     scale: 2,
   })
-  balance: number;
+  outstanding_balance_cents: number;
+
+  @Column({
+    type: 'varchar',
+    length: '3',
+    nullable: false,
+  })
+  outstanding_balance_currency: string;
 }
