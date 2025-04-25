@@ -1,34 +1,35 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-
 import { BaseEntity } from 'src/common/entity';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 import { ReservationOrigin, ReservationState } from '../enum';
 
+import { Reservation as IReservation } from 'src/grpc/rooms/reservations.pb';
+
 @Entity({ name: 'reservations' })
-export class Reservation extends BaseEntity {
+export class Reservation extends BaseEntity implements IReservation {
   @PrimaryGeneratedColumn('uuid', {
     primaryKeyConstraintName: 'PK_Reservations',
     name: 'reservation_id',
   })
-  reservationId: string;
+  reservation_id: string;
 
   @Column({
     name: 'checkout_date',
     type: 'timestamp with time zone',
   })
-  checkoutDate: Date;
+  checkout_date: Date;
 
   @Column({
     name: 'departure_at',
     type: 'timestamp with time zone',
   })
-  departureDate: Date;
+  departure_at: Date;
 
   @Column({
     name: 'people_quantity',
     type: 'smallint',
   })
-  peopleQuantity: number;
+  people_quantity: number;
 
   @Column({
     name: 'state',
