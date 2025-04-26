@@ -20,7 +20,7 @@ import { IReservationsRepository } from './interfaces/reservations.repository.in
 import { Status } from 'src/common/enums';
 import { Reservation } from '../entity/reservation.entity';
 
-import { CreateReservationDto } from '../dto/request';
+import { SaveReservationType } from '../types';
 import { DeleteResultResponse } from 'src/common/dto/response';
 
 export class ReservationsRepository implements IReservationsRepository {
@@ -49,10 +49,10 @@ export class ReservationsRepository implements IReservationsRepository {
     });
   }
 
-  async findOne(reservationId: string): Promise<Reservation> {
+  async findOne(reservation_id: string): Promise<Reservation> {
     const reservation = await this.reservationsRepository.findOne({
       where: {
-        reservationId,
+        reservation_id,
       },
     });
 
@@ -67,7 +67,7 @@ export class ReservationsRepository implements IReservationsRepository {
     return this.reservationsRepository.create(request);
   }
 
-  save(request: CreateReservationDto): Promise<Reservation> {
+  save(request: SaveReservationType): Promise<Reservation> {
     return this.reservationsRepository.save(request);
   }
 
@@ -82,11 +82,11 @@ export class ReservationsRepository implements IReservationsRepository {
     return this.reservationsRepository.save(reservation);
   }
 
-  async remove(reservationId: string): Promise<DeleteResultResponse> {
-    await this.findOne(reservationId);
+  async remove(reservation_id: string): Promise<DeleteResultResponse> {
+    await this.findOne(reservation_id);
 
     const result: DeleteResult = await this.reservationsRepository.delete({
-      reservationId,
+      reservation_id,
     });
 
     if (result?.affected === 0) {
@@ -96,10 +96,10 @@ export class ReservationsRepository implements IReservationsRepository {
     return { deleted: true, affected: result.affected };
   }
 
-  findByIds(reservationsIds: string[]): Promise<Reservation[]> {
+  findByIds(reservations_ids: string[]): Promise<Reservation[]> {
     return this.reservationsRepository.find({
       where: {
-        reservationId: In(reservationsIds),
+        reservation_id: In(reservations_ids),
       },
     });
   }
