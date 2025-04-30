@@ -2,6 +2,10 @@ import { Logger } from '@nestjs/common';
 import { AppModule } from './app.module';
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
+import {
+  HttpExceptionFilter,
+  TypeORMExceptionsFilter,
+} from './common/exceptions/filters';
 
 import { join } from 'path';
 import { envs } from './config';
@@ -53,6 +57,11 @@ async function bootstrap() {
         },
       },
     },
+  );
+
+  grpcApp.useGlobalFilters(
+    new HttpExceptionFilter(),
+    new TypeORMExceptionsFilter(),
   );
 
   // Iniciar la comunicación con RabbitMQ
