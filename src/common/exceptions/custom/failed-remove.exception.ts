@@ -1,7 +1,12 @@
 import { InternalServerErrorException } from '@nestjs/common';
+import { getCallerInfo } from 'src/common/utils';
 
 export class FailedRemoveException extends InternalServerErrorException {
   constructor(entityName: string) {
-    super(`Error to remoce the ${entityName}, try again`);
+    const { className, methodName } = getCallerInfo();
+
+    const message = `Error to remove the ${entityName}, try again`;
+
+    super({ className, methodName, message });
   }
 }
