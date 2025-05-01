@@ -2,11 +2,13 @@ import { throwError } from 'rxjs';
 import { status } from '@grpc/grpc-js';
 import { QueryFailedError } from 'typeorm';
 import { RpcException } from '@nestjs/microservices';
-import { Catch, ExceptionFilter } from '@nestjs/common';
+import { Catch, ExceptionFilter, Logger } from '@nestjs/common';
 import { CustomExceptionDetails } from '../interfaces';
 
 @Catch(QueryFailedError)
 export class TypeORMExceptionsFilter implements ExceptionFilter {
+  private readonly logger = new Logger(TypeORMExceptionsFilter.name);
+
   catch(exception: QueryFailedError) {
     const details: CustomExceptionDetails = {
       details: exception?.message || 'Unexpected error',
@@ -16,6 +18,8 @@ export class TypeORMExceptionsFilter implements ExceptionFilter {
 
     const code = status.INTERNAL;
     const message = JSON.stringify(details);
+
+    this.logger.error(`TypeORMException: ${exception.message}`);
 
     return throwError(
       () =>
