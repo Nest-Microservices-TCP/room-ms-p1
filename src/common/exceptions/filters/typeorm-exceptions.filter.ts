@@ -10,23 +10,17 @@ export class TypeORMExceptionsFilter implements ExceptionFilter {
   private readonly logger = new Logger(TypeORMExceptionsFilter.name);
 
   catch(exception: QueryFailedError) {
-    const details: CustomExceptionDetails = {
-      details: exception?.message || 'Unexpected error',
-      cause: 'Esta es la causa',
-      metadata: { service: 'Un servicio' },
+    const exception_message = exception?.message || 'Unexpected error';
+
+    const response: CustomExceptionDetails = {
+      exception_message,
     };
 
     const code = status.INTERNAL;
-    const message = JSON.stringify(details);
+    const message = JSON.stringify(response);
 
-    this.logger.error(`TypeORMException: ${exception.message}`);
+    this.logger.error(`TypeORMException: ${exception_message}`);
 
-    return throwError(
-      () =>
-        new RpcException({
-          message,
-          code,
-        }),
-    );
+    return throwError(() => new RpcException({ message, code }));
   }
 }
