@@ -1,5 +1,9 @@
+export interface MetadataException {
+  className: string;
+  methodName: string;
+}
+
 export interface CustomExceptionDetails {
-  details: string;
-  cause: string;
-  metadata: { service: string };
+  exception_message: string;
+  metadata?: MetadataException;
 }
