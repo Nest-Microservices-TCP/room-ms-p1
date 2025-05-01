@@ -1,6 +1,7 @@
 import { throwError } from 'rxjs';
 import { RpcException } from '@nestjs/microservices';
 import { Catch, ExceptionFilter, HttpException, Logger } from '@nestjs/common';
+import { CustomExceptionDetails } from '../interfaces';
 import { mapStatusCodeToGrpcCode } from 'src/common/utils';
 
 @Catch(HttpException)
@@ -15,19 +16,21 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const statusCode =
       exception['status'] || exceptionResponse['statusCode'] || 500;
 
-    const message =
+    const exception_message =
       exceptionResponse['message'] || exception.message || 'Unexpected error';
 
+    const response: CustomExceptionDetails = {
+      exception_message,
+      metadata: {
+        className: exceptionResponse['className'],
+        methodName: exceptionResponse['methodName'],
+      },
+    };
+
+    this.logger.error(`HttpException: ${exception_message}`);
+
     const code = mapStatusCodeToGrpcCode(statusCode);
-
-    // const response = {
-    //   className: responseData['className'],
-    //   methodName: responseData['methodName'],
-    //   message: exception['message'],
-    //   origin: stackList[1].trim(),
-    // };
-
-    this.logger.error(`HttpException: ${message}`);
+    const message = JSON.stringify(response);
 
     /**
      * La razón de usar throwError es que este devuelve un observable que emite
