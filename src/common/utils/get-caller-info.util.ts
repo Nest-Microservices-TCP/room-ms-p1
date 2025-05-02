@@ -1,7 +1,4 @@
-interface GetCallerInfoResponse {
-  className?: string;
-  methodName?: string;
-}
+import { GetCallerInfoResponse } from 'src/grpc/common/common_exceptions.pb';
 
 export function getCallerInfo(level: number = 2): GetCallerInfoResponse {
   const stack = new Error().stack;
@@ -22,7 +19,7 @@ export function getCallerInfo(level: number = 2): GetCallerInfoResponse {
   const parts = fullMethod.split('.');
 
   return {
-    className: parts.length > 1 ? parts[0] : undefined,
-    methodName: parts[parts.length - 1],
+    class_name: parts.length > 1 ? parts[0] : undefined,
+    method_name: parts[parts.length - 1],
   };
 }
