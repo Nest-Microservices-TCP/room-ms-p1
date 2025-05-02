@@ -3,7 +3,7 @@ import { status } from '@grpc/grpc-js';
 import { QueryFailedError } from 'typeorm';
 import { RpcException } from '@nestjs/microservices';
 import { Catch, ExceptionFilter, Logger } from '@nestjs/common';
-import { CustomExceptionDetails } from '../interfaces';
+import { CustomExceptionDetails } from 'src/grpc/common/common_exceptions.pb';
 
 @Catch(QueryFailedError)
 export class TypeORMExceptionsFilter implements ExceptionFilter {
