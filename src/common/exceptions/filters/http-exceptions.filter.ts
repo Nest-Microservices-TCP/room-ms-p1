@@ -1,7 +1,10 @@
 import { throwError } from 'rxjs';
 import { RpcException } from '@nestjs/microservices';
 import { Catch, ExceptionFilter, HttpException, Logger } from '@nestjs/common';
-import { CustomExceptionDetails } from '../interfaces';
+import {
+  CustomExceptionDetails,
+  CustomHttpExceptionResponse,
+} from 'src/grpc/common/common_exceptions.pb';
 import { mapStatusCodeToGrpcCode } from 'src/common/utils';
 
 @Catch(HttpException)
@@ -9,27 +12,32 @@ export class HttpExceptionFilter implements ExceptionFilter {
   private readonly logger = new Logger(HttpExceptionFilter.name);
 
   catch(exception: HttpException) {
-    console.log({ exception });
+    const exceptionResponse: CustomHttpExceptionResponse =
+      exception['response'] || {};
 
-    const exceptionResponse = exception['response'] || {};
+    const statusCode = exception['status'] ?? 500;
 
-    const statusCode =
-      exception['status'] || exceptionResponse['statusCode'] || 500;
+    const {
+      class_name = 'Unknown service',
+      method_name = 'Unknown method',
+      message: exception_message = 'Unexpected error',
+    } = exceptionResponse;
 
-    const exception_message =
-      exceptionResponse['message'] || exception.message || 'Unexpected error';
+    const code = mapStatusCodeToGrpcCode(statusCode);
 
     const response: CustomExceptionDetails = {
       exception_message,
       metadata: {
-        className: exceptionResponse['className'],
-        methodName: exceptionResponse['methodName'],
+        class_name,
+        method_name,
+        grpc_code: code,
       },
     };
 
-    this.logger.error(`HttpException: ${exception_message}`);
+    this.logger.error(
+      `[${class_name}.${method_name}] HttpException: ${exception_message}`,
+    );
 
-    const code = mapStatusCodeToGrpcCode(statusCode);
     const message = JSON.stringify(response);
 
     /**
