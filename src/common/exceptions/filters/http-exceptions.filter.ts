@@ -8,8 +8,8 @@ import {
 import { mapStatusCodeToGrpcCode } from 'src/common/utils';
 
 @Catch(HttpException)
-export class HttpExceptionFilter implements ExceptionFilter {
-  private readonly logger = new Logger(HttpExceptionFilter.name);
+export class HttpExceptionsFilter implements ExceptionFilter {
+  private readonly logger = new Logger(HttpExceptionsFilter.name);
 
   catch(exception: HttpException) {
     const exceptionResponse: CustomHttpExceptionResponse =

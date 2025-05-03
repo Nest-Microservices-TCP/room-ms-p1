@@ -2,8 +2,9 @@ import { Logger } from '@nestjs/common';
 import { AppModule } from './app.module';
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
+
 import {
-  HttpExceptionFilter,
+  HttpExceptionsFilter,
   TypeORMExceptionsFilter,
 } from './common/exceptions/filters';
 
@@ -60,7 +61,7 @@ async function bootstrap() {
   );
 
   grpcApp.useGlobalFilters(
-    new HttpExceptionFilter(),
+    new HttpExceptionsFilter(),
     new TypeORMExceptionsFilter(),
   );
 
